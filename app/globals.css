@@ -2,6 +2,92 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-	background-color: #000;
+@layer base {
+  :root {
+    --primary-red: #8e1616;
+    --secondary-red: #d84040;
+    --accent-red: #ff6b6b;
+    --dark-bg: #1d1616;
+    --darker-bg: #0a0808;
+    --card-bg: rgba(142, 22, 22, 0.05);
+    --card-hover: rgba(142, 22, 22, 0.1);
+    --text-primary: #eeeeee;
+    --text-secondary: rgba(238, 238, 238, 0.7);
+    --text-muted: rgba(238, 238, 238, 0.5);
+  }
+
+  * {
+    @apply border-gray-800;
+  }
+
+  body {
+    @apply bg-[#1D1616] text-[#EEEEEE] font-sans;
+    background: linear-gradient(135deg, #0a0808 0%, #1d1616 100%);
+    min-height: 100vh;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .gradient-text {
+    @apply bg-gradient-to-r from-[#8E1616] via-[#D84040] to-[#FF6B6B] bg-clip-text text-transparent;
+  }
+
+  .card-glass {
+    @apply bg-[rgba(142,22,22,0.05)] backdrop-blur-sm border border-[rgba(142,22,22,0.1)];
+  }
+
+  .card-glass-hover {
+    @apply hover:bg-[rgba(142,22,22,0.1)] hover:border-[rgba(142,22,22,0.2)] transition-all duration-300;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-[#8E1616] to-[#D84040] hover:from-[#D84040] hover:to-[#FF6B6B] text-white font-medium px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-[#8E1616]/25;
+  }
+
+  .btn-secondary {
+    @apply bg-[rgba(142,22,22,0.1)] hover:bg-[rgba(142,22,22,0.2)] text-[#EEEEEE] border border-[rgba(142,22,22,0.3)] hover:border-[rgba(142,22,22,0.5)] font-medium px-6 py-3 rounded-full transition-all duration-300;
+  }
+
+  .section-gradient {
+    background: linear-gradient(
+      135deg,
+      rgba(10, 8, 8, 0.9) 0%,
+      rgba(29, 22, 22, 0.8) 50%,
+      rgba(142, 22, 22, 0.1) 100%
+    );
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1d1616;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #8e1616, #d84040);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #d84040, #ff6b6b);
+}
+
+/* Selection styling */
+::selection {
+  background-color: rgba(142, 22, 22, 0.3);
+  color: #eeeeee;
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid #d84040;
+  outline-offset: 2px;
 }
