@@ -31,7 +31,7 @@ export default function ContactSection() {
               Let's Connect
             </h2>
             <p className="text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed">
-              Have a project in mind? I'd love to hear about it. Let's create
+              Have something in mind? I'd love to hear about it. Let's create
               something amazing together.
             </p>
           </motion.div>
@@ -69,7 +69,7 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <p className="font-medium text-text-primary">Location</p>
-                  <p className="text-text-secondary">San Francisco, CA</p>
+                  <p className="text-text-secondary">Kelowna, BC</p>
                 </div>
               </div>
 
@@ -88,41 +88,14 @@ export default function ContactSection() {
                 <div>
                   <p className="font-medium text-text-primary">Email</p>
                   <a
-                    href="mailto:john@example.com"
+                    href="mailto:ariqmuldi@gmail.com"
                     className="text-accent-red-medium hover:text-accent-red transition-colors"
                   >
-                    john@example.com
+                    ariqmuldi@gmail.com
                   </a>
                 </div>
               </div>
 
-              {/* Phone */}
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-accent-red-dark to-accent-red-medium rounded-lg flex items-center justify-center">
-                  <svg
-                    className="w-6 h-6 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <p className="font-medium text-text-primary">Phone</p>
-                  <a
-                    href="tel:+1234567890"
-                    className="text-accent-red-medium hover:text-accent-red transition-colors"
-                  >
-                    +1 (234) 567-8900
-                  </a>
-                </div>
-              </div>
             </div>
           </motion.div>
 
@@ -141,7 +114,7 @@ export default function ContactSection() {
             <div className="space-y-4">
               {/* Email button */}
               <a
-                href="mailto:john@example.com"
+                href="mailto:ariqmuldi@gmail.com"
                 className="w-full flex items-center gap-4 p-4 bg-gradient-to-r from-accent-red-dark to-accent-red-medium hover:from-accent-red-medium hover:to-accent-red text-white rounded-xl transition-all duration-300 transform hover:scale-105 group"
               >
                 <svg
@@ -170,7 +143,7 @@ export default function ContactSection() {
 
               {/* Resume button */}
               <a
-                href="/resume.pdf"
+                href="/master-resume.pdf"
                 target="_blank"
                 className="w-full flex items-center gap-4 p-4 bg-background-card-hover hover:bg-accent-red-dark/20 border border-accent-red-dark/30 hover:border-accent-red-dark/50 text-text-primary rounded-xl transition-all duration-300 group"
               >
@@ -183,7 +156,7 @@ export default function ContactSection() {
                   <path d="M8 11a1 1 0 100 2h4a1 1 0 100-2H8z" />
                   <path d="M8 7a1 1 0 100 2h4a1 1 0 100-2H8z" />
                 </svg>
-                <span className="font-medium">Download Resume</span>
+                <span className="font-medium">Download Master Resume</span>
                 <svg
                   className="w-4 h-4 ml-auto transition-transform group-hover:translate-x-1"
                   fill="none"
@@ -199,39 +172,7 @@ export default function ContactSection() {
                 </svg>
               </a>
 
-              {/* Schedule meeting */}
-              <a
-                href="#"
-                className="w-full flex items-center gap-4 p-4 bg-background-card-hover hover:bg-accent-red-dark/20 border border-accent-red-dark/30 hover:border-accent-red-dark/50 text-text-primary rounded-xl transition-all duration-300 group"
-              >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-                <span className="font-medium">Schedule Meeting</span>
-                <svg
-                  className="w-4 h-4 ml-auto transition-transform group-hover:translate-x-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </svg>
-              </a>
+              
             </div>
           </motion.div>
         </div>
@@ -245,13 +186,13 @@ export default function ContactSection() {
           className="text-center"
         >
           <p className="text-text-secondary mb-6">
-            Follow me on social media for updates and insights
+            Follow me for updates and insights
           </p>
           <div className="flex justify-center gap-4">
             {[
               {
                 name: "GitHub",
-                url: "https://github.com",
+                url: "https://github.com/ariqmuldi",
                 icon: (
                   <svg
                     className="w-6 h-6"
@@ -264,7 +205,7 @@ export default function ContactSection() {
               },
               {
                 name: "LinkedIn",
-                url: "https://linkedin.com",
+                url: "https://www.linkedin.com/in/ariqmuldi",
                 icon: (
                   <svg
                     className="w-6 h-6"
@@ -272,32 +213,6 @@ export default function ContactSection() {
                     viewBox="0 0 24 24"
                   >
                     <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                  </svg>
-                ),
-              },
-              {
-                name: "Twitter",
-                url: "https://twitter.com",
-                icon: (
-                  <svg
-                    className="w-6 h-6"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                  </svg>
-                ),
-              },
-              {
-                name: "Dribbble",
-                url: "https://dribbble.com",
-                icon: (
-                  <svg
-                    className="w-6 h-6"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 0C5.374 0 0 5.373 0 12s5.374 12 12 12 12-5.373 12-12S18.626 0 12 0zm9.568 7.375c.77 1.423 1.216 3.041 1.216 4.763 0 .619-.061 1.224-.166 1.812-.247-.053-2.73-.612-5.232-.612-1.043 0-2.056.082-3.017.22-.058-.141-.114-.283-.174-.426-.194-.469-.401-.933-.621-1.393 3.014-1.228 4.381-2.97 4.994-3.364zm-1.595-1.595c-.498.317-1.717 1.788-4.512 2.847C14.225 4.885 12.146 2.408 12 2.204c3.965.321 7.322 2.84 8.973 5.576zM10.56 2.508c.183.239 2.235 2.681 3.475 6.406C11.023 9.75 7.646 10.045 4.5 10.045c-.301 0-.591-.008-.877-.021C4.61 6.998 7.196 4.174 10.56 2.508zM3.375 12c0-.099.008-.198.015-.297.315.015.651.024 1.006.024 3.662 0 7.403-.344 10.329-1.22.173.341.335.686.483 1.033-.069.021-.141.046-.211.069C11.65 12.657 8.469 16.87 6.905 19.407 4.781 17.637 3.375 14.979 3.375 12zm4.125 8.625c1.168-2.016 3.838-5.604 7.244-6.906 2.93-.112 5.503.465 5.89.583-.421 3.061-2.567 5.651-5.49 6.843-.316-.896-.711-1.896-1.128-2.946-.388.885-.787 1.727-1.194 2.528-1.674-.344-3.174-1.213-4.322-2.102z" />
                   </svg>
                 ),
               },
