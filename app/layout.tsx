@@ -56,7 +56,7 @@ export const metadata: Metadata = {
 		siteName: 'Ariq Muldi - Portfolio',
 		images: [
 			{
-				url: '/profile-photo.jpg',
+				url: '/for-metadata-picture.jpg',
 				width: 1200,
 				height: 630,
 				alt: 'Ariq Muldi - Computer Science Student & Aspiring Software Engineer',
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
 		title: 'Ariq Muldi - Aspiring Software Engineer & UBC Student',
 		description: 'Computer Science student building production systems for 1,000+ users. Passionate about full-stack development and educational technology.',
 		creator: '@ariqmuldi',
-		images: ['/profile-photo.jpg'],
+		images: ['/for-metadata-picture-photo.jpg'],
 	},
 	robots: {
 		index: true,
