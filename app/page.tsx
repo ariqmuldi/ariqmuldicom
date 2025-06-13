@@ -2,7 +2,7 @@
 
 import HeroSection from './components/HeroSection';
 import ProjectsSection from './components/ProjectsSection';
-import SkillsSection from './components/SkillsSection';
+import SkillsSection from './components/ExperienceSection';
 import ContactSection from './components/ContactSection';
 import EducationSection from './components/EducationSection';
 
@@ -12,8 +12,8 @@ export default function MinimalModernPortfolio() {
 			<HeroSection />
 			<ProjectsSection />
 			<SkillsSection />
-			<ContactSection />
 			<EducationSection />
+			<ContactSection />
 		</div>
 	);
 }
