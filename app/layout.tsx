@@ -13,11 +13,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-	title: '[Your Name] - Software Developer',
+	title: 'Ariq Muldi - Aspiring Software Engineer and Developer',
 	description:
 		'Welcome to my portfolio! I am a passionate software developer with a focus on clean, minimal, and effective solutions. I believe in the power of simplicity and thoughtful design to create impactful digital experiences.',
 	keywords: [
 		'Software Developer',
+		'Software Engineer',
 		'Clean Code',
 		'Minimal Design',
 		'Modern Development',
@@ -31,10 +32,10 @@ export const metadata: Metadata = {
 		'Performance',
 		'Accessibility',
 		'Minimalist Portfolio',
-		'[Your Name]',
+		'Ariq Muldi',
 	],
-	authors: [{ name: '[Your Name]' }],
-	creator: '[Your Name]',
+	authors: [{ name: 'Ariq Muldi' }],
+	creator: 'Ariq Muldi',
 	openGraph: {
 		title: '[Your Name] - Software Developer Portfolio',
 		description: 'Passionate software developer creating clean, minimal, and effective digital solutions. Explore my work and development philosophy.',
