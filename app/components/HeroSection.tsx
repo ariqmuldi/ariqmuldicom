@@ -57,7 +57,7 @@ export default function HeroSection() {
 							<h1 className="text-3xl md:text-5xl font-bold mt-2 mb-2 gradient-text">
 								Ariq Muldi
 							</h1>
-							<p className="text-text-secondary mb-3">Full Stack Developer & Computer Science Student</p>
+							<p className="text-text-secondary mb-3">Computer Science Student @ UBC | Undergraduate Research and Teaching Assistant @ UBC | Aspiring Software Engineer</p>
 						</motion.div>
 
 						{!showAllSkills ? (
@@ -166,7 +166,6 @@ export default function HeroSection() {
 										<span className="px-2 py-1 bg-accent-red-dark/20 rounded-md border border-accent-red-dark/30 text-xs">Plotly</span>
 										<span className="px-2 py-1 bg-accent-red-dark/20 rounded-md border border-accent-red-dark/30 text-xs">smtplib</span>
 										<span className="px-2 py-1 bg-accent-red-dark/20 rounded-md border border-accent-red-dark/30 text-xs">Jupyter Notebook</span>
-										<span className="px-2 py-1 bg-accent-red-dark/20 rounded-md border border-accent-red-dark/30 text-xs">REST APIs</span>
 									</div>
 								</motion.div>
 
@@ -197,7 +196,6 @@ export default function HeroSection() {
 										<span className="px-2 py-1 bg-accent-red-dark/20 rounded-md border border-accent-red-dark/30 text-xs">Firebase</span>
 										<span className="px-2 py-1 bg-accent-red-dark/20 rounded-md border border-accent-red-dark/30 text-xs">Vercel</span>
 										<span className="px-2 py-1 bg-accent-red-dark/20 rounded-md border border-accent-red-dark/30 text-xs">Fly.io</span>
-										<span className="px-2 py-1 bg-accent-red-dark/20 rounded-md border border-accent-red-dark/30 text-xs">Tkinter</span>
 									</div>
 								</motion.div>
 
