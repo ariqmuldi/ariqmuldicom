@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function HeroSection() {
   const [showAllSkills, setShowAllSkills] = useState(false);
@@ -68,10 +69,13 @@ export default function HeroSection() {
                   className="relative"
                 >
                   <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-accent-red-dark/30 hover:border-accent-red-medium/50 transition-all duration-300 shadow-glow flex-shrink-0">
-                    <img
+                    <Image
                       src="/profile-photo.jpg"
                       alt="Ariq Muldi"
+                      width={96}
+                      height={96}
                       className="w-full h-full object-cover object-[center_15%] hover:scale-110 transition-transform duration-300"
+                      priority
                     />
                   </div>
                   <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-gradient-to-br from-accent-red-dark to-accent-red-medium rounded-full border-2 border-background-primary flex items-center justify-center">
