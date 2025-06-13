@@ -7,39 +7,102 @@ import Link from "next/link";
 const projects = [
   {
     id: 1,
-    title: "E-Commerce Platform",
+    title: "MSYK Membership System",
     description:
-      "A modern e-commerce platform built with Next.js and Stripe integration, featuring advanced product filtering and seamless checkout experience.",
+      "Automated membership management system built for Makerspace Yellowknife serving 1,000+ users. Features user authentication with Prisma ORM, workshop registration, equipment bookings, Stripe payment processing, and comprehensive admin dashboard with real-time settings and report generation capabilities.",
     image: "/code.jpg",
-    technologies: ["Next.js", "TypeScript", "Stripe", "Tailwind"],
+    technologies: [
+      "TypeScript",
+      "React Router v7",
+      "PostgreSQL",
+      "Docker",
+      "Prisma",
+      "Vitest",
+      "Zod",
+    ],
     featured: true,
+    github:
+      "https://github.com/University-of-British-Columbia-Okanagan/MSYK_Membership",
   },
   {
     id: 2,
-    title: "AI Chat Application",
+    title: "LearnCoding Platform",
     description:
-      "Real-time chat application powered by OpenAI with intelligent conversation routing and context-aware responses.",
+      "Adaptive learning platform adopted by UBC's Faculty of Applied Science, benefiting 500+ students with code visualizers, sandboxes, and courseware. Integrated UBC Canvas API for automated grading, Matomo Analytics for user tracking, and secure authentication for 60+ faculty members.",
     image: "/laptop.jpg",
-    technologies: ["React", "Node.js", "OpenAI", "Socket.io"],
+    technologies: [
+      "PHP",
+      "JavaScript",
+      "Laravel",
+      "Blade",
+      "jQuery",
+      "MySQL",
+      "CSS",
+    ],
     featured: true,
+    github: "#", // Private UBC repository
   },
   {
     id: 3,
-    title: "Task Management System",
+    title: "Ponotodoro",
     description:
-      "Collaborative task management tool with real-time updates, team collaboration features, and advanced analytics.",
+      "Full-stack productivity application integrating Pomodoro technique with note-taking and to-do lists functionality. Combines time management and task tracking techniques to improve personal productivity for 10+ users with efficient data management and secure user authentication.",
     image: "/code.jpg",
-    technologies: ["Vue.js", "Express", "MongoDB", "WebSocket"],
+    technologies: [
+      "JavaScript",
+      "React",
+      "Node.js",
+      "PostgreSQL",
+      "Bootstrap",
+      "HTML/CSS",
+    ],
     featured: false,
+    github: "https://github.com/ariqmuldi/ponotodoro",
   },
   {
     id: 4,
-    title: "Portfolio Generator",
+    title: "Flight Hub",
     description:
-      "Dynamic portfolio generator for developers with customizable themes, drag-and-drop interface, and SEO optimization.",
+      "Full-stack web application that streamlines flight offers by integrating Amadeus and Twilio APIs. Features a comprehensive blog system enabling users to create, edit, and manage flight-related posts with secure authentication and responsive design.",
     image: "/laptop.jpg",
-    technologies: ["React", "GraphQL", "AWS", "PostgreSQL"],
+    technologies: [
+      "Python",
+      "JavaScript",
+      "Flask",
+      "React",
+      "SQLite",
+      "Bootstrap",
+      "HTML/CSS",
+      "REST APIs",
+    ],
     featured: false,
+    github: "https://github.com/ariqmuldi/flight-hub",
+  },
+  {
+    id: 5,
+    title: "ChatterBox",
+    description:
+      "Full-stack chat application replicating core Discord functionalities with real-time messaging, user authentication, and channel management. Facilitates communication for 5+ active users across 5+ channels, managing 100+ messages with Firebase backend.",
+    image: "/code.jpg",
+    technologies: [
+      "JavaScript",
+      "React",
+      "Firebase",
+      "Tailwind CSS",
+      "HTML/SCSS",
+    ],
+    featured: false,
+    github: "https://github.com/namekeptanonymous/Error404",
+  },
+  {
+    id: 6,
+    title: "MoodiJawoodi",
+    description:
+      "Full-stack e-commerce platform facilitating the purchase of 100+ Middle Eastern products. Features responsive interface with Java JDBC API integration and optimized MySQL backend for efficient data handling and product processing.",
+    image: "/laptop.jpg",
+    technologies: ["Java", "HTML/CSS", "MySQL", "Docker", "JDBC API"],
+    featured: false,
+    github: "https://github.com/ariqmuldi/moodi-jawoodi-grocery",
   },
 ];
 
@@ -67,8 +130,8 @@ export default function ProjectsSection() {
               Featured Projects
             </h2>
             <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-              A collection of my recent work showcasing modern web development
-              practices and innovative solutions
+              Software applications built during my Computer Science journey,
+              featuring real-world solutions that have served 1,000+ users
             </p>
           </motion.div>
         </div>
@@ -106,29 +169,14 @@ export default function ProjectsSection() {
                     </div>
                   )}
 
-                  {/* Overlay on hover */}
+                  {/* Overlay on hover - Only show if project has public link */}
+                  {project.github !== "#" && (
                   <div className="absolute inset-0 bg-accent-red-dark/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                     <div className="flex gap-3">
                       <Link
-                        href="#"
-                        className="p-3 bg-white/10 backdrop-blur-sm rounded-full hover:bg-white/20 transition-colors"
-                      >
-                        <svg
-                          className="w-5 h-5"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                          />
-                        </svg>
-                      </Link>
-                      <Link
-                        href="#"
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="p-3 bg-white/10 backdrop-blur-sm rounded-full hover:bg-white/20 transition-colors"
                       >
                         <svg
@@ -141,6 +189,7 @@ export default function ProjectsSection() {
                       </Link>
                     </div>
                   </div>
+                  )}
                 </div>
 
                 {/* Project content */}
@@ -164,20 +213,22 @@ export default function ProjectsSection() {
                     ))}
                   </div>
 
-                  {/* Action buttons */}
+                  {/* Action buttons - Shows different button if project has public link or not */}
                   <div className="flex gap-3">
-                    <Link
-                      href="#"
-                      className="flex-1 text-center py-2 px-4 bg-gradient-to-r from-accent-red-dark to-accent-red-medium hover:from-accent-red-medium hover:to-accent-red text-white text-sm font-medium rounded-lg transition-all duration-300 transform hover:scale-105"
-                    >
-                      View Project
-                    </Link>
-                    <Link
-                      href="#"
-                      className="py-2 px-4 border border-accent-red-dark/30 hover:border-accent-red-dark text-text-secondary hover:text-text-primary text-sm font-medium rounded-lg transition-colors"
-                    >
-                      Code
-                    </Link>
+                    {project.github !== "#" ? (
+                      <Link
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 text-center py-2 px-4 bg-gradient-to-r from-accent-red-dark to-accent-red-medium hover:from-accent-red-medium hover:to-accent-red text-white text-sm font-medium rounded-lg transition-all duration-300 transform hover:scale-105"
+                      >
+                        View Project
+                      </Link>
+                    ) : (
+                      <div className="flex-1 text-center py-2 px-4 bg-accent-red-dark/10 text-text-muted text-sm font-medium rounded-lg border border-accent-red-dark/20">
+                        Private Repository
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -185,34 +236,7 @@ export default function ProjectsSection() {
           ))}
         </div>
 
-        {/* View all projects button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center"
-        >
-          <Link
-            href="#"
-            className="btn-secondary inline-flex items-center gap-2"
-          >
-            View All Projects
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              />
-            </svg>
-          </Link>
-        </motion.div>
+        
       </div>
     </section>
   );
