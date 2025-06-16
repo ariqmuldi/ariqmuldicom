@@ -17,7 +17,7 @@ const experiences = [
       "Developed user authentication with Prisma ORM, ensuring secure access control for different user roles",
       "Conducted testing with Vitest and validation with Zod, improving system adoption and reducing user onboarding time",
       "Created admin control panel with real-time settings management and data export capabilities, reducing administrative overhead by enabling 10+ admins to configure user experiences and generate presentation-ready reports",
-      "Refactored LearnCoding's UI using PHP, JavaScript, and CSS, improving user experience for 500+ students",
+      "Refactored LearnCoding's UI, a UBC learning platorm, using PHP, JavaScript, and CSS, improving user experience for 500+ students",
       "Developed comprehensive landing page with platform features, FAQs, and contact info, enhancing onboarding for 60+ faculty",
       "Built admin functionality with PHP and MySQL, enabling instructors to toggle platform settings dynamically",
       "Completed Privacy and Risk Assessment documentation, transitioning LearnCoding from UBC VPN to public deployment",
