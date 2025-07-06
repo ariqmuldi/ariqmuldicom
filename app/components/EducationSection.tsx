@@ -20,7 +20,8 @@ export default function EducationSection() {
     "Computer Ethics",
     "Applied Regression Analysis",
     "Introduction to Data Analytics",
-    "Applied Time Series and Forecasting"
+    "Applied Time Series and Forecasting",
+    "Sampling and Design",
   ];
 
   return (

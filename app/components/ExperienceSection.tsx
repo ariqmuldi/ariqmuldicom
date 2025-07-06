@@ -5,6 +5,39 @@ import { motion } from "framer-motion";
 const experiences = [
   {
     id: 1,
+    title: "Web Application Developer",
+    company: "University of British Columbia",
+    department: "Work Study Program",
+    location: "Kelowna, BC",
+    period: "Jul. 2025 -- Present",
+    current: true,
+    accomplishments: [
+      "Designed and developed a full-stack web application for managing CSV data with role-based access controls, enabling 5+ user roles to perform specific actions (view, edit, delete, comment) while ensuring data consistency and security",
+      "Implemented comprehensive data validation and database integration system using Python, JavaScript, PostgreSQL, and Flask, processing and validating 10,000+ records for graduate program admission applications",
+      "Built advanced search, filter, and CRUD functionality with commenting system, improving data accessibility and collaboration for 20+ faculty and staff members in the admission review process",
+      "Developed automated reporting system generating data summaries and status reports, reducing manual report creation time by 75% and enabling data-driven decision making for program administrators",
+      "Created multi-format data export capabilities (CSV, PDF) with audit logging system, tracking 500+ user actions for security compliance and providing offline analysis tools for stakeholders",
+      "Architected scalable, secure web application following industry best practices, supporting concurrent access for 50+ users and integrating with existing UBC systems for seamless workflow integration",
+    ],
+    technologies: [
+      "Python",
+      "JavaScript",
+      "PostgreSQL",
+      "Django",
+      "Flask",
+      "React",
+      "Vue.js",
+      "Git",
+      "GitHub",
+      "Data Validation",
+      "Role-based Access Control",
+      "Audit Logging",
+      "CSV Processing",
+      "PDF Generation",
+    ],
+  },
+  {
+    id: 2,
     title: "Software Developer",
     company: "University of British Columbia",
     department: "Undergraduate Research Assistant",
@@ -21,12 +54,24 @@ const experiences = [
       "Developed comprehensive landing page with platform features, FAQs, and contact info, enhancing onboarding for 60+ faculty",
       "Built admin functionality with PHP and MySQL, enabling instructors to toggle platform settings dynamically",
       "Completed Privacy and Risk Assessment documentation, transitioning LearnCoding from UBC VPN to public deployment",
-      "Tested Matomo Analytics and CSV export across dev/production environments, ensuring data accuracy for academic reporting"
+      "Tested Matomo Analytics and CSV export across dev/production environments, ensuring data accuracy for academic reporting",
     ],
-    technologies: ["TypeScript", "React Router v7", "PostgreSQL", "Docker", "Prisma", "Vitest", "Zod", "PHP", "JavaScript", "CSS", "MySQL"]
+    technologies: [
+      "TypeScript",
+      "React Router v7",
+      "PostgreSQL",
+      "Docker",
+      "Prisma",
+      "Vitest",
+      "Zod",
+      "PHP",
+      "JavaScript",
+      "CSS",
+      "MySQL",
+    ],
   },
   {
-    id: 2,
+    id: 3,
     title: "Software Developer",
     company: "University of British Columbia",
     department: "Directed Studies",
@@ -36,12 +81,21 @@ const experiences = [
     accomplishments: [
       "Improved adaptive learning platform called LearnCoding, adopted by UBC's Faculty of Applied Science and UBC's largest computer science sections, benefiting 500+ students with tools like code visualizers, sandboxes, parallel courseware, and badges",
       "Integrated UBC Canvas API and Matomo Analytics for automated grading, multi-platform access between LearnCoding and UBC systems, and user behavior tracking, replacing manual CSV processes and reducing instructor overhead",
-      "Developed authentication features using PHP, JavaScript, Laravel, Blade, jQuery, and MySQL, securing access for 60+ faculty members"
+      "Developed authentication features using PHP, JavaScript, Laravel, Blade, jQuery, and MySQL, securing access for 60+ faculty members",
     ],
-    technologies: ["PHP", "JavaScript", "Laravel", "Blade", "jQuery", "MySQL", "UBC Canvas API", "Matomo Analytics"]
+    technologies: [
+      "PHP",
+      "JavaScript",
+      "Laravel",
+      "Blade",
+      "jQuery",
+      "MySQL",
+      "UBC Canvas API",
+      "Matomo Analytics",
+    ],
   },
   {
-    id: 3,
+    id: 4,
     title: "Undergraduate Teaching Assistant",
     company: "University of British Columbia",
     department: "",
@@ -50,10 +104,10 @@ const experiences = [
     current: true,
     accomplishments: [
       "Facilitated interactive lab sessions and tutoring for over 60+ students, employing hands-on exercises and real-time coding challenges to enhance understanding of machine architecture, Java programming, and general coding concepts",
-      "Designed and graded assignments and exams for 300+ students for the two largest computer science courses at UBC"
+      "Designed and graded assignments and exams for 300+ students for the two largest computer science courses at UBC",
     ],
-    technologies: ["Java", "Machine Architecture", "Educational Technology"]
-  }
+    technologies: ["Java", "Machine Architecture", "Educational Technology"],
+  },
 ];
 
 export default function ExperienceSection() {
@@ -82,7 +136,8 @@ export default function ExperienceSection() {
               Experience
             </h2>
             <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-              Building systems and mentoring students while pursuing my Computer Science degree
+              Building systems and mentoring students while pursuing my Computer
+              Science degree
             </p>
           </motion.div>
         </div>
@@ -104,7 +159,7 @@ export default function ExperienceSection() {
               >
                 {/* Timeline dot */}
                 <div className="absolute left-6 top-8 w-4 h-4 bg-gradient-to-br from-accent-red-dark to-accent-red-medium rounded-full border-4 border-background-primary hidden md:block" />
-                
+
                 <div className="md:ml-20">
                   <div className="card-glass card-glass-hover rounded-2xl p-8">
                     {/* Header */}
@@ -142,35 +197,56 @@ export default function ExperienceSection() {
                     {/* Accomplishments */}
                     <div className="mb-6">
                       <h5 className="text-lg font-semibold text-text-primary mb-4 flex items-center">
-                        <svg className="w-5 h-5 mr-2 text-accent-red-medium" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        <svg
+                          className="w-5 h-5 mr-2 text-accent-red-medium"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            clipRule="evenodd"
+                          />
                         </svg>
                         Key Accomplishments
                       </h5>
                       <div className="space-y-3">
-                        {experience.accomplishments.map((accomplishment, accIndex) => (
-                          <motion.div
-                            key={accIndex}
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: index * 0.2 + accIndex * 0.1 }}
-                            className="flex items-start gap-3"
-                          >
-                            <div className="w-2 h-2 bg-accent-red-medium rounded-full flex-shrink-0 mt-2" />
-                            <p className="text-text-secondary leading-relaxed text-sm">
-                              {accomplishment}
-                            </p>
-                          </motion.div>
-                        ))}
+                        {experience.accomplishments.map(
+                          (accomplishment, accIndex) => (
+                            <motion.div
+                              key={accIndex}
+                              initial={{ opacity: 0, x: -20 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              viewport={{ once: true }}
+                              transition={{
+                                duration: 0.5,
+                                delay: index * 0.2 + accIndex * 0.1,
+                              }}
+                              className="flex items-start gap-3"
+                            >
+                              <div className="w-2 h-2 bg-accent-red-medium rounded-full flex-shrink-0 mt-2" />
+                              <p className="text-text-secondary leading-relaxed text-sm">
+                                {accomplishment}
+                              </p>
+                            </motion.div>
+                          )
+                        )}
                       </div>
                     </div>
 
                     {/* Technologies */}
                     <div>
                       <h5 className="text-lg font-semibold text-text-primary mb-4 flex items-center">
-                        <svg className="w-5 h-5 mr-2 text-accent-red-medium" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                        <svg
+                          className="w-5 h-5 mr-2 text-accent-red-medium"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
+                            clipRule="evenodd"
+                          />
                         </svg>
                         Technologies Used
                       </h5>
@@ -181,7 +257,10 @@ export default function ExperienceSection() {
                             initial={{ opacity: 0, scale: 0.8 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.3, delay: index * 0.2 + techIndex * 0.05 }}
+                            transition={{
+                              duration: 0.3,
+                              delay: index * 0.2 + techIndex * 0.05,
+                            }}
                             className="px-3 py-1 bg-accent-red-dark/20 text-accent-red-medium text-sm rounded-full border border-accent-red-dark/30 hover:bg-accent-red-dark/30 transition-colors"
                           >
                             {tech}
@@ -209,7 +288,15 @@ export default function ExperienceSection() {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="text-center">
-              <div className="text-3xl font-bold gradient-text mb-2">1,000+</div>
+              <div className="text-3xl font-bold gradient-text mb-2">
+                10,000+
+              </div>
+              <div className="text-sm text-text-muted">Records Processed</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold gradient-text mb-2">
+                1,000+
+              </div>
               <div className="text-sm text-text-muted">Users Served</div>
             </div>
             <div className="text-center">
@@ -217,11 +304,7 @@ export default function ExperienceSection() {
               <div className="text-sm text-text-muted">Students Impacted</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold gradient-text mb-2">60+</div>
-              <div className="text-sm text-text-muted">Faculty Supported</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold gradient-text mb-2">3</div>
+              <div className="text-3xl font-bold gradient-text mb-2">4</div>
               <div className="text-sm text-text-muted">Active Roles</div>
             </div>
           </div>
