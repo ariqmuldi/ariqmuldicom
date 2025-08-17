@@ -179,7 +179,7 @@ export default function ProjectsSection() {
                   </p>
 
                   {/* Technologies */}
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex flex-wrap gap-2 mb-4 min-h-[3.5rem] content-start">
                     {project.technologies.map((tech) => (
                       <span
                         key={tech}

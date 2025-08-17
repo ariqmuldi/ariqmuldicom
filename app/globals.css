@@ -83,11 +83,11 @@
   }
 
   .skill-badge {
-    @apply px-3 py-1 bg-[#555879]/10 rounded-md border border-[#555879]/20 text-sm text-[#555879] hover:bg-[#555879]/15 hover:border-[#555879]/30 transition-all duration-200;
+    @apply px-3 py-1 bg-white/80 rounded-md border border-[#98A1BC]/30 text-sm text-[#555879] hover:bg-white/90 hover:border-[#555879]/40 transition-all duration-200;
   }
 
   .skill-badge-small {
-    @apply px-2 py-1 bg-[#98A1BC]/10 rounded-md border border-[#98A1BC]/20 text-xs text-[#555879] hover:bg-[#98A1BC]/15 transition-all duration-200;
+    @apply px-2 py-1 bg-white/80 rounded-md border border-[#98A1BC]/30 text-xs text-[#555879] hover:bg-white/90 hover:border-[#555879]/40 transition-all duration-200;
   }
 }
 

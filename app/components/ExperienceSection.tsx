@@ -5,26 +5,43 @@ import { motion } from "framer-motion";
 const experiences = [
   {
     id: 1,
-    title: "IT Support and Development",
-    company: "Capilano University",
-    department: "Bosa Centre for Film and Animation",
-    location: "North Vancouver, BC",
-    period: "July 2022 -- August 2024",
-    current: false,
+    title: "Web Application Developer",
+    company: "University of British Columbia",
+    department: "Work Study Program",
+    location: "Kelowna, BC",
+    period: "Jul. 2025 -- Present",
+    current: true,
     accomplishments: [
-      "Managed 10,000+ records using Python automation and PowerShell scripts, improving data processing efficiency by 25%",
-      "Provided technical support for 20+ faculty members and 500+ students, resolving 100+ hardware/software issues weekly",
-      "Deployed software and updates across 100+ workstations using centralized management tools",
-      "Documented technical processes and created training materials, reducing support ticket volume by 30%",
+      "Designed and developed a full-stack web application for managing CSV data with role-based access controls, enabling 5+ user roles to perform specific actions (view, edit, delete, comment) while ensuring data consistency and security",
+      "Implemented comprehensive data validation and database integration system using Python, JavaScript, PostgreSQL, and Flask, processing and validating 10,000+ records for graduate program admission applications",
+      "Built advanced search, filter, and CRUD functionality with commenting system, improving data accessibility and collaboration for 20+ faculty and staff members in the admission review process",
+      "Developed automated reporting system generating data summaries and status reports, reducing manual report creation time by 75% and enabling data-driven decision making for program administrators",
+      "Created multi-format data export capabilities (CSV, PDF) with audit logging system, tracking 500+ user actions for security compliance and providing offline analysis tools for stakeholders",
+      "Architected scalable, secure web application following industry best practices, supporting concurrent access for 50+ users and integrating with existing UBC systems for seamless workflow integration",
     ],
-    technologies: ["Python", "PowerShell", "Windows Server", "Active Directory"],
+    technologies: [
+      "Python",
+      "JavaScript",
+      "PostgreSQL",
+      "Django",
+      "Flask",
+      "React",
+      "Vue.js",
+      "Git",
+      "GitHub",
+      "Data Validation",
+      "Role-based Access Control",
+      "Audit Logging",
+      "CSV Processing",
+      "PDF Generation",
+    ],
   },
   {
     id: 2,
-    title: "Undergraduate Research Assistant",
+    title: "Software Developer",
     company: "University of British Columbia",
-    department: "Computer Science Department",
-    location: "Kelowna, BC",
+    department: "Undergraduate Research Assistant",
+    location: "Makerspace Yellowknife, Remote",
     period: "Jan. 2025 -- Present",
     current: true,
     accomplishments: [
@@ -181,7 +198,7 @@ export default function ExperienceSection() {
 
                     {/* Accomplishments */}
                     <div className="space-y-3 mb-6">
-                      {experience.accomplishments.slice(0, 3).map((accomplishment, idx) => (
+                      {experience.accomplishments.map((accomplishment, idx) => (
                         <div key={idx} className="flex items-start gap-3">
                           <div className="w-1.5 h-1.5 bg-accent-purple rounded-full mt-2 flex-shrink-0" />
                           <p className="text-text-secondary text-sm leading-relaxed">
@@ -193,7 +210,7 @@ export default function ExperienceSection() {
 
                     {/* Technologies */}
                     <div className="flex flex-wrap gap-2">
-                      {experience.technologies.slice(0, 6).map((tech) => (
+                      {experience.technologies.map((tech) => (
                         <span
                           key={tech}
                           className="px-3 py-1 bg-accent-beige/20 text-accent-purple text-xs rounded-md border border-accent-beige/30"
@@ -201,11 +218,6 @@ export default function ExperienceSection() {
                           {tech}
                         </span>
                       ))}
-                      {experience.technologies.length > 6 && (
-                        <span className="px-3 py-1 text-text-muted text-xs">
-                          +{experience.technologies.length - 6} more
-                        </span>
-                      )}
                     </div>
                   </div>
                 </div>
