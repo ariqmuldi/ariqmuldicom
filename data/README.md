@@ -542,7 +542,6 @@ The parser generates three files:
 ```typescript
 // THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
 // Generated from: /data/master-resume.tex
-// Last updated: 2026-01-17T15:30:00Z
 
 export interface Experience {
   id: number;
@@ -566,7 +565,6 @@ export const experiences: Experience[] = [
 ```typescript
 // THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
 // Generated from: /data/master-resume.tex
-// Last updated: 2026-01-17T15:30:00Z
 
 export interface SkillCategory {
   name: string;
@@ -589,7 +587,6 @@ export const skills: Skills = {
 ```typescript
 // THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
 // Generated from: /data/master-resume.tex
-// Last updated: 2026-01-17T15:30:00Z
 
 export interface Education {
   school: string;

@@ -108,17 +108,17 @@ The Experience section, Hero Section skills display, and Education section are a
 3. **Experience extraction**:
    - Extracts experience data: title, company, department, location, dates, accomplishments
    - Auto-detects technologies from accomplishments using 300+ keyword matching
-   - Generates type-safe TypeScript file at `/app/data/experiences.ts`
+   - Generates type-safe TypeScript file at `/app/data/experiences.ts` (without timestamps)
    - ExperienceSection component imports and renders the data
 4. **Skills extraction**:
    - Extracts all skill categories from Technical Skills section
    - Preserves nested skills with parentheses (e.g., "SQL (PostgreSQL, MySQL)")
-   - Generates type-safe TypeScript file at `/app/data/skills.ts`
+   - Generates type-safe TypeScript file at `/app/data/skills.ts` (without timestamps)
    - HeroSection component imports and renders in "show all skills" view
 5. **Education extraction**:
    - Extracts education data: school, location, degree, minor, graduation date, GPA, coursework
    - Pulls certifications from Skills section (Certifications & Courses category)
-   - Generates type-safe TypeScript file at `/app/data/education.ts`
+   - Generates type-safe TypeScript file at `/app/data/education.ts` (without timestamps)
    - EducationSection component imports and renders the data dynamically
 
 ### Configuration System

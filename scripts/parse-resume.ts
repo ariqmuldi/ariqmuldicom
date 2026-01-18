@@ -701,11 +701,8 @@ function applyConfig(experiences: Experience[], config: ResumeConfig | null): Ex
 }
 
 function generateTypeScriptFile(experiences: Experience[], outputPath: string): void {
-  const timestamp = new Date().toISOString();
-
   const content = `// THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
 // Generated from: /data/master-resume.tex
-// Last updated: ${timestamp}
 
 export interface Experience {
   id: number;
@@ -726,11 +723,8 @@ export const experiences: Experience[] = ${JSON.stringify(experiences, null, 2)}
 }
 
 function generateSkillsTypeScriptFile(skills: Skills, outputPath: string): void {
-  const timestamp = new Date().toISOString();
-
   const content = `// THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
 // Generated from: /data/master-resume.tex
-// Last updated: ${timestamp}
 
 export interface SkillCategory {
   name: string;
@@ -748,11 +742,8 @@ export const skills: Skills = ${JSON.stringify(skills, null, 2)};
 }
 
 function generateEducationTypeScriptFile(education: Education, outputPath: string): void {
-  const timestamp = new Date().toISOString();
-
   const content = `// THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
 // Generated from: /data/master-resume.tex
-// Last updated: ${timestamp}
 
 export interface Education {
   school: string;
