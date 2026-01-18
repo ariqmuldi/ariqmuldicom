@@ -87,6 +87,65 @@ Next.js images are configured with `unoptimized: true` in `next.config.ts`, like
 - Path alias: `@/*` maps to root directory
 - Module resolution: bundler (Next.js default)
 
+## LaTeX Resume Parser
+
+The Experience section is automatically generated from a LaTeX master resume file, ensuring the website stays in sync with the canonical resume.
+
+### Overview
+
+- **Source of Truth**: `/data/master-resume.tex` (LaTeX resume from Overleaf)
+- **Generated Output**: `/app/data/experiences.ts` (TypeScript data file)
+- **Parser Script**: `/scripts/parse-resume.ts` (Build-time parser)
+- **Configuration**: `/data/resume-config.json` (Control visibility of experiences and accomplishments)
+
+### How It Works
+
+1. LaTeX resume is stored in `/data/master-resume.tex`
+2. Parser runs automatically on `npm run dev` and `npm run build` (via prebuild/predev hooks)
+3. Extracts experience data: title, company, department, location, dates, accomplishments
+4. Auto-detects technologies from accomplishments using 300+ keyword matching
+5. Generates type-safe TypeScript file at `/app/data/experiences.ts`
+6. ExperienceSection component imports and renders the data
+
+### Configuration System
+
+The parser supports fine-grained control over what appears on the website via `/data/resume-config.json`:
+
+- **Hide entire experiences**: `hidden: true`
+- **Hide all accomplishments**: `hideAllAccomplishments: true` (keeps technologies visible)
+- **Hide specific accomplishments**: `hideAccomplishments: [1, 3, 5]` (1-based indices)
+- **Hide technologies**: `hideTechnologies: true`
+
+**Auto-update feature**: Configuration file automatically updates when new experiences are added to the LaTeX resume, preserving existing settings.
+
+### Workflow
+
+1. Edit resume on Overleaf
+2. Download updated `.tex` file
+3. Replace `/data/master-resume.tex`
+4. Run `npm run dev` or `npm run build`
+5. Parser automatically extracts and updates experience data
+6. Website reflects latest resume content
+
+### Technology Extraction
+
+The parser includes 300+ technology keywords covering:
+- Programming languages (JavaScript, TypeScript, Python, Java, C++, PHP, etc.)
+- Frameworks (React, Next.js, Flask, Django, Laravel, etc.)
+- Databases (PostgreSQL, MySQL, MongoDB, Firebase, etc.)
+- Cloud platforms (Google Cloud, AWS, Azure, Vercel, etc.)
+- Tools and platforms (Docker, Git, Stripe, Shopify, etc.)
+
+Technologies are extracted using case-insensitive word boundary matching from accomplishment text.
+
+### Manual Parser Execution
+
+```bash
+npm run parse:resume
+```
+
+For detailed documentation, see [`/data/README.md`](/data/README.md).
+
 ## Key Development Notes
 
 1. **Client Components**: All interactive components require 'use client' directive due to Framer Motion and hooks usage

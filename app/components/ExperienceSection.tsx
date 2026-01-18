@@ -1,7 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { experiences } from "@/app/data/experiences";
 
+/* Experiences are now imported from the auto-generated file at app/data/experiences.ts
+   which is generated from the LaTeX resume at data/master-resume.tex */
+
+/*
 const experiences = [
   {
     id: 1,
@@ -109,6 +114,7 @@ const experiences = [
     technologies: ["Java", "Machine Architecture", "Educational Technology"],
   },
 ];
+*/
 
 export default function ExperienceSection() {
   return (
