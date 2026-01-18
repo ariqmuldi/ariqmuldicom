@@ -6,7 +6,7 @@ import ExperienceSection from './components/ExperienceSection';
 import EducationSection from './components/EducationSection';
 import ContactSection from './components/ContactSection';
 
-export default function MinimalModernPortfolio() {
+export default function Portfolio() {
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-background-primary via-background-secondary to-background-primary">
 			<HeroSection />
