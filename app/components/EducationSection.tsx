@@ -78,14 +78,14 @@ export default function EducationSection() {
                     Kelowna, BC • Expected Graduation: May 2026
                   </p>
                 </div>
-                <div className="mt-4 md:mt-0">
+                {/* <div className="mt-4 md:mt-0">
                   <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2">
                     <div>
                       <p className="font-bold text-lg">4.21/4.33</p>
                       <p className="text-xs text-white/80">Current GPA</p>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
 
@@ -150,7 +150,7 @@ export default function EducationSection() {
         </motion.div>
 
         {/* Certifications */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -197,7 +197,7 @@ export default function EducationSection() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );
