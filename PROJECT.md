@@ -89,12 +89,14 @@ Next.js images are configured with `unoptimized: true` in `next.config.ts`, like
 
 ## LaTeX Resume Parser
 
-The Experience section is automatically generated from a LaTeX master resume file, ensuring the website stays in sync with the canonical resume.
+The Experience section and Hero Section skills display are automatically generated from a LaTeX master resume file, ensuring the website stays in sync with the canonical resume.
 
 ### Overview
 
 - **Source of Truth**: `/data/master-resume.tex` (LaTeX resume from Overleaf)
-- **Generated Output**: `/app/data/experiences.ts` (TypeScript data file)
+- **Generated Output**:
+  - `/app/data/experiences.ts` (Experience data)
+  - `/app/data/skills.ts` (Skills data)
 - **Parser Script**: `/scripts/parse-resume.ts` (Build-time parser)
 - **Configuration**: `/data/resume-config.json` (Control visibility of experiences and accomplishments)
 
@@ -102,10 +104,16 @@ The Experience section is automatically generated from a LaTeX master resume fil
 
 1. LaTeX resume is stored in `/data/master-resume.tex`
 2. Parser runs automatically on `npm run dev` and `npm run build` (via prebuild/predev hooks)
-3. Extracts experience data: title, company, department, location, dates, accomplishments
-4. Auto-detects technologies from accomplishments using 300+ keyword matching
-5. Generates type-safe TypeScript file at `/app/data/experiences.ts`
-6. ExperienceSection component imports and renders the data
+3. **Experience extraction**:
+   - Extracts experience data: title, company, department, location, dates, accomplishments
+   - Auto-detects technologies from accomplishments using 300+ keyword matching
+   - Generates type-safe TypeScript file at `/app/data/experiences.ts`
+   - ExperienceSection component imports and renders the data
+4. **Skills extraction**:
+   - Extracts all skill categories from Technical Skills section
+   - Preserves nested skills with parentheses (e.g., "SQL (PostgreSQL, MySQL)")
+   - Generates type-safe TypeScript file at `/app/data/skills.ts`
+   - HeroSection component imports and renders in "show all skills" view
 
 ### Configuration System
 
@@ -120,12 +128,14 @@ The parser supports fine-grained control over what appears on the website via `/
 
 ### Workflow
 
-1. Edit resume on Overleaf
+1. Edit resume on Overleaf (Experience section and/or Technical Skills section)
 2. Download updated `.tex` file
 3. Replace `/data/master-resume.tex`
 4. Run `npm run dev` or `npm run build`
-5. Parser automatically extracts and updates experience data
-6. Website reflects latest resume content
+5. Parser automatically extracts and updates:
+   - Experience data → `/app/data/experiences.ts`
+   - Skills data → `/app/data/skills.ts`
+6. Website reflects latest resume content in Experience section and Hero Section skills
 
 ### Technology Extraction
 
@@ -143,6 +153,12 @@ Technologies are extracted using case-insensitive word boundary matching from ac
 ```bash
 npm run parse:resume
 ```
+
+This command:
+- Parses Experience section → generates `/app/data/experiences.ts`
+- Parses Technical Skills section → generates `/app/data/skills.ts`
+- Applies configuration filters from `/data/resume-config.json`
+- Prints summary of parsed entries
 
 For detailed documentation, see [`/data/README.md`](/data/README.md).
 

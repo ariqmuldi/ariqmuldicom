@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import Image from "next/image";
+import { skills } from "@/app/data/skills";
 
 export default function HeroSection() {
   const [showAllSkills, setShowAllSkills] = useState(false);
@@ -135,94 +136,33 @@ export default function HeroSection() {
             ) : (
               /* Expanded skills view */
               <div className="space-y-4">
-                {/* Programming Languages */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.4 }}
-                >
-                  <p className="text-accent-purple-light mb-2">
-                    $ cat programming-languages.txt
-                  </p>
-                  <div className="pl-4 flex flex-wrap gap-1.5">
-                    {[
-                      "JavaScript",
-                      "TypeScript",
-                      "Python",
-                      "Java",
-                      "C",
-                      "PHP",
-                      "SQL",
-                      "HTML/CSS",
-                      "MIPS",
-                    ].map((skill) => (
-                      <span key={skill} className="skill-badge-small">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
+                {skills.categories.map((category, index) => {
+                  // Convert category name to slug for terminal command
+                  const categorySlug = category.name
+                    .toLowerCase()
+                    .replace(/\s+&\s+/g, '-')
+                    .replace(/\s+/g, '-');
 
-                {/* Frameworks & Libraries */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.4, delay: 0.1 }}
-                >
-                  <p className="text-accent-purple-light mb-2">
-                    $ cat frameworks-libraries.txt
-                  </p>
-                  <div className="pl-4 flex flex-wrap gap-1.5">
-                    {[
-                      "React",
-                      "Node.js",
-                      "Express.js",
-                      "Prisma",
-                      "React Router v7",
-                      "Redux.js",
-                      "Flask",
-                      "Laravel",
-                      "Tailwind CSS",
-                      "Bootstrap",
-                      "jQuery",
-                    ].map((skill) => (
-                      <span key={skill} className="skill-badge-small">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
-
-                {/* Developer Tools */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.4, delay: 0.2 }}
-                >
-                  <p className="text-accent-purple-light mb-2">
-                    $ cat developer-tools.txt
-                  </p>
-                  <div className="pl-4 flex flex-wrap gap-1.5">
-                    {[
-                      "Git",
-                      "Docker",
-                      "GitHub",
-                      "VS Code",
-                      "IntelliJ IDEA",
-                      "PostgreSQL",
-                      "MySQL",
-                      "Firebase",
-                      "Postman",
-                      "Linux",
-                      "Vitest",
-                      "Zod",
-                    ].map((skill) => (
-                      <span key={skill} className="skill-badge-small">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
+                  return (
+                    <motion.div
+                      key={category.name}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                    >
+                      <p className="text-accent-purple-light mb-2">
+                        $ cat {categorySlug}.txt
+                      </p>
+                      <div className="pl-4 flex flex-wrap gap-1.5">
+                        {category.skills.map((skill) => (
+                          <span key={skill} className="skill-badge-small">
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </motion.div>
+                  );
+                })}
 
                 <button
                   onClick={() => setShowAllSkills(false)}

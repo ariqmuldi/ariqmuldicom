@@ -13,6 +13,15 @@ interface Experience {
   technologies: string[];
 }
 
+interface SkillCategory {
+  name: string;
+  skills: string[];
+}
+
+interface Skills {
+  categories: SkillCategory[];
+}
+
 // Common technology keywords to extract from accomplishments
 const TECH_KEYWORDS = [
   // Programming Languages
@@ -328,6 +337,74 @@ function parseResume(latexContent: string): Experience[] {
   return experiences;
 }
 
+function parseSkills(latexContent: string): Skills {
+  // Find the Technical Skills section
+  const skillsSectionMatch = latexContent.match(/\\section\{Technical Skills\}([\s\S]*?)(?=\\section|\\end\{document\})/);
+
+  if (!skillsSectionMatch) {
+    throw new Error('Could not find Technical Skills section in LaTeX file');
+  }
+
+  const skillsSection = skillsSectionMatch[1];
+
+  // Extract categories using regex pattern
+  // Pattern: \textbf{Category Name}{: skill1, skill2, skill3}
+  const categoryRegex = /\\textbf\{([^}]+)\}\{:\s*([^}]+)\}/g;
+
+  const categories: SkillCategory[] = [];
+  let match;
+
+  while ((match = categoryRegex.exec(skillsSection)) !== null) {
+    const categoryName = cleanLatexText(match[1]);
+    const skillsRaw = match[2];
+
+    // Split skills by comma, but preserve commas inside parentheses
+    const skills: string[] = [];
+    let currentSkill = '';
+    let parenDepth = 0;
+
+    for (let i = 0; i < skillsRaw.length; i++) {
+      const char = skillsRaw[i];
+
+      if (char === '(') {
+        parenDepth++;
+        currentSkill += char;
+      } else if (char === ')') {
+        parenDepth--;
+        currentSkill += char;
+      } else if (char === ',' && parenDepth === 0) {
+        // Only split on commas outside of parentheses
+        const cleanedSkill = cleanLatexText(currentSkill.trim());
+        if (cleanedSkill.length > 0) {
+          skills.push(cleanedSkill);
+        }
+        currentSkill = '';
+      } else {
+        currentSkill += char;
+      }
+    }
+
+    // Don't forget the last skill
+    const cleanedSkill = cleanLatexText(currentSkill.trim());
+    if (cleanedSkill.length > 0) {
+      skills.push(cleanedSkill);
+    }
+
+    if (categoryName && skills.length > 0) {
+      categories.push({
+        name: categoryName,
+        skills
+      });
+    }
+  }
+
+  if (categories.length === 0) {
+    throw new Error('No skill categories found in Technical Skills section');
+  }
+
+  return { categories };
+}
+
 interface ExperienceConfig {
   hidden?: boolean;
   hideAllAccomplishments?: boolean;
@@ -554,6 +631,28 @@ export const experiences: Experience[] = ${JSON.stringify(experiences, null, 2)}
   fs.writeFileSync(outputPath, content, 'utf-8');
 }
 
+function generateSkillsTypeScriptFile(skills: Skills, outputPath: string): void {
+  const timestamp = new Date().toISOString();
+
+  const content = `// THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
+// Generated from: /data/master-resume.tex
+// Last updated: ${timestamp}
+
+export interface SkillCategory {
+  name: string;
+  skills: string[];
+}
+
+export interface Skills {
+  categories: SkillCategory[];
+}
+
+export const skills: Skills = ${JSON.stringify(skills, null, 2)};
+`;
+
+  fs.writeFileSync(outputPath, content, 'utf-8');
+}
+
 function main() {
   try {
     console.log('Reading LaTeX resume file...');
@@ -562,6 +661,7 @@ function main() {
     const latexPath = path.join(projectRoot, 'data', 'master-resume.tex');
     const configPath = path.join(projectRoot, 'data', 'resume-config.json');
     const outputPath = path.join(projectRoot, 'app', 'data', 'experiences.ts');
+    const skillsOutputPath = path.join(projectRoot, 'app', 'data', 'skills.ts');
 
     if (!fs.existsSync(latexPath)) {
       throw new Error(`LaTeX file not found at: ${latexPath}`);
@@ -599,6 +699,20 @@ function main() {
     generateTypeScriptFile(experiences, outputPath);
 
     console.log(`Successfully generated: ${outputPath}`);
+
+    // Parse and generate skills
+    console.log('\nParsing skills data...');
+    const skills = parseSkills(latexContent);
+
+    console.log(`Successfully parsed ${skills.categories.length} skill categories from LaTeX:`);
+    skills.categories.forEach(cat => {
+      console.log(`   - ${cat.name}: ${cat.skills.length} skills`);
+    });
+
+    console.log('\nGenerating skills TypeScript file...');
+    generateSkillsTypeScriptFile(skills, skillsOutputPath);
+
+    console.log(`Successfully generated: ${skillsOutputPath}`);
     console.log('\nResume parsing completed successfully!');
 
   } catch (error) {
