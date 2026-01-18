@@ -22,6 +22,18 @@ interface Skills {
   categories: SkillCategory[];
 }
 
+interface Education {
+  school: string;
+  location: string;
+  degree: string;
+  minor: string;
+  graduationDate: string;
+  gpa: string;
+  gpaPercentage: string;
+  relevantCoursework: string[];
+  certifications: string[];
+}
+
 // Common technology keywords to extract from accomplishments
 const TECH_KEYWORDS = [
   // Programming Languages
@@ -405,6 +417,88 @@ function parseSkills(latexContent: string): Skills {
   return { categories };
 }
 
+function parseEducation(latexContent: string, skills: Skills): Education {
+  // Find the Education section
+  const educationSectionMatch = latexContent.match(/\\section\{Education\}([\s\S]*?)(?=\\section|\\end\{document\})/);
+
+  if (!educationSectionMatch) {
+    throw new Error('Could not find Education section in LaTeX file');
+  }
+
+  const educationSection = educationSectionMatch[1];
+
+  // Extract school name and location from \resumeSubheading
+  // Pattern: \resumeSubheading{School Name}{Location}{Degree Info}{Graduation Date}
+  const subheadingRegex = /\\resumeSubheading\s*\n?\s*\{([^{}]*(?:\{[^}]*\}[^{}]*)*)\}\s*\{([^{}]*(?:\{[^}]*\}[^{}]*)*)\}\s*\n?\s*\{([^{}]*(?:\{[^}]*\}[^{}]*)*)\}\s*\{([^}]+)\}/;
+
+  const subheadingMatch = educationSection.match(subheadingRegex);
+  if (!subheadingMatch) {
+    throw new Error('Could not parse education subheading');
+  }
+
+  const school = cleanLatexText(subheadingMatch[1]);
+  const location = cleanLatexText(subheadingMatch[2]);
+  const degreeInfo = cleanLatexText(subheadingMatch[3]);
+  const graduationDate = cleanLatexText(subheadingMatch[4]);
+
+  // Parse degree info: "Bachelor of Science Major in Computer Science, Minor in Data Science"
+  let degree = '';
+  let minor = '';
+
+  const degreeMatch = degreeInfo.match(/^([^,]+)(?:,\s*(.+))?$/);
+  if (degreeMatch) {
+    degree = degreeMatch[1].trim();
+    minor = degreeMatch[2] ? degreeMatch[2].trim() : '';
+  } else {
+    degree = degreeInfo;
+  }
+
+  // Extract GPA from \resumeItem
+  let gpa = '';
+  let gpaPercentage = '';
+  const gpaRegex = /\\textbf\{GPA:\}\s*([0-9.]+\/[0-9.]+)\s*\(([0-9.]+)\\?%\)/;
+  const gpaMatch = educationSection.match(gpaRegex);
+  if (gpaMatch) {
+    gpa = gpaMatch[1];
+    gpaPercentage = gpaMatch[2] + '%';
+  }
+
+  // Extract relevant coursework from \resumeItem
+  let relevantCoursework: string[] = [];
+  // Pattern: \resumeItem{\textbf{Relevant Coursework:} course1, course2, ...}
+  const courseworkRegex = /\\resumeItem\{\\textbf\{Relevant Coursework:\}\s*([^}]+)\}/;
+  const courseworkMatch = educationSection.match(courseworkRegex);
+  if (courseworkMatch) {
+    const courseworkText = courseworkMatch[1];
+    // Split by commas and clean each course
+    relevantCoursework = courseworkText
+      .split(',')
+      .map(course => cleanLatexText(course.trim()))
+      .filter(course => course.length > 0);
+  }
+
+  // Extract certifications from the Skills object (Certifications & Courses category)
+  const certifications: string[] = [];
+  const certificationsCategory = skills.categories.find(
+    cat => cat.name === 'Certifications & Courses'
+  );
+  if (certificationsCategory) {
+    certifications.push(...certificationsCategory.skills);
+  }
+
+  return {
+    school,
+    location,
+    degree,
+    minor,
+    graduationDate,
+    gpa,
+    gpaPercentage,
+    relevantCoursework,
+    certifications
+  };
+}
+
 interface ExperienceConfig {
   hidden?: boolean;
   hideAllAccomplishments?: boolean;
@@ -653,6 +747,31 @@ export const skills: Skills = ${JSON.stringify(skills, null, 2)};
   fs.writeFileSync(outputPath, content, 'utf-8');
 }
 
+function generateEducationTypeScriptFile(education: Education, outputPath: string): void {
+  const timestamp = new Date().toISOString();
+
+  const content = `// THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
+// Generated from: /data/master-resume.tex
+// Last updated: ${timestamp}
+
+export interface Education {
+  school: string;
+  location: string;
+  degree: string;
+  minor: string;
+  graduationDate: string;
+  gpa: string;
+  gpaPercentage: string;
+  relevantCoursework: string[];
+  certifications: string[];
+}
+
+export const education: Education = ${JSON.stringify(education, null, 2)};
+`;
+
+  fs.writeFileSync(outputPath, content, 'utf-8');
+}
+
 function main() {
   try {
     console.log('Reading LaTeX resume file...');
@@ -662,6 +781,7 @@ function main() {
     const configPath = path.join(projectRoot, 'data', 'resume-config.json');
     const outputPath = path.join(projectRoot, 'app', 'data', 'experiences.ts');
     const skillsOutputPath = path.join(projectRoot, 'app', 'data', 'skills.ts');
+    const educationOutputPath = path.join(projectRoot, 'app', 'data', 'education.ts');
 
     if (!fs.existsSync(latexPath)) {
       throw new Error(`LaTeX file not found at: ${latexPath}`);
@@ -713,6 +833,23 @@ function main() {
     generateSkillsTypeScriptFile(skills, skillsOutputPath);
 
     console.log(`Successfully generated: ${skillsOutputPath}`);
+
+    // Parse and generate education
+    console.log('\nParsing education data...');
+    const education = parseEducation(latexContent, skills);
+
+    console.log('Successfully parsed education:');
+    console.log(`   - School: ${education.school}`);
+    console.log(`   - Degree: ${education.degree}`);
+    console.log(`   - Minor: ${education.minor}`);
+    console.log(`   - GPA: ${education.gpa} (${education.gpaPercentage})`);
+    console.log(`   - Coursework: ${education.relevantCoursework.length} courses`);
+    console.log(`   - Certifications: ${education.certifications.length} certifications`);
+
+    console.log('\nGenerating education TypeScript file...');
+    generateEducationTypeScriptFile(education, educationOutputPath);
+
+    console.log(`Successfully generated: ${educationOutputPath}`);
     console.log('\nResume parsing completed successfully!');
 
   } catch (error) {

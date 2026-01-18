@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
 // Generated from: /data/master-resume.tex
-// Last updated: 2026-01-18T08:04:26.710Z
+// Last updated: 2026-01-18T08:18:26.481Z
 
 export interface Experience {
   id: number;

@@ -10,16 +10,17 @@ This directory contains the LaTeX source file for your master resume, which serv
 
 ## How It Works
 
-The Experience section and Skills display on your website are automatically generated from your LaTeX resume:
+The Experience section, Skills display, and Education section on your website are automatically generated from your LaTeX resume:
 
-1. Edit your resume on **Overleaf**
+1. Edit your resume on **Overleaf** (Experience, Technical Skills, and/or Education sections)
 2. **Download** the updated `.tex` file
 3. **Replace** `/data/master-resume.tex` with the new file
 4. **Commit** to Git or just run `npm run dev` or `npm run build`
 5. The parser automatically runs and updates:
    - `/app/data/experiences.ts` - Experience data
    - `/app/data/skills.ts` - Skills data
-6. Your website's Experience section and Skills display now reflect the latest resume
+   - `/app/data/education.ts` - Education data
+6. Your website's Experience, Education sections and Skills display now reflect the latest resume
 
 ## Expected LaTeX Structure
 
@@ -78,6 +79,117 @@ Technologies are automatically detected from your accomplishment text using keyw
 - **And many more...**
 
 Technologies are case-insensitive and extracted using word boundary matching (so "JavaScript" in text becomes "JavaScript" in the output).
+
+## Education Extraction
+
+The Education section is automatically generated from your LaTeX resume, displaying school information, degree details, GPA, relevant coursework, and certifications dynamically.
+
+### Overview
+
+- **Source**: Education section in `/data/master-resume.tex`
+- **Generated Output**: `/app/data/education.ts`
+- **Component**: `EducationSection.tsx` imports and displays education data
+- **Certifications**: Extracted from Skills section (Certifications & Courses category)
+
+### What Gets Extracted
+
+| Field | Description | Example |
+|-------|-------------|---------|
+| **school** | University name | "University of British Columbia" |
+| **location** | School location | "Kelowna, BC" |
+| **degree** | Degree program | "Bachelor of Science Major in Computer Science" |
+| **minor** | Minor program (if applicable) | "Minor in Data Science" |
+| **graduationDate** | Graduation date | "Expected Graduation, May 2026" |
+| **gpa** | GPA value | "4.21/4.33" |
+| **gpaPercentage** | GPA percentage | "90.6%" |
+| **relevantCoursework** | Array of courses | ["Software Engineering", "Machine Learning", ...] |
+| **certifications** | Array of certifications | ["Udemy Web Development Bootcamp", ...] |
+
+### Expected LaTeX Structure for Education
+
+```latex
+\section{Education}
+\resumeSubHeadingListStart
+
+\resumeSubheading
+{University of British Columbia}{Kelowna, BC}
+{Bachelor of Science Major in Computer Science, Minor in Data Science}{Expected Graduation, May 2026}
+\resumeItemListStart
+    \resumeItem{\textbf{GPA:} 4.21/4.33 (90.6\%)}
+    \resumeItem{\textbf{Relevant Coursework:} Software Engineering, Data Structures, Machine Learning, etc.}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+```
+
+### How Education Is Parsed
+
+1. Parser finds `\section{Education}` in your LaTeX resume
+2. Extracts school name and location from `\resumeSubheading` (1st and 2nd arguments)
+3. Parses degree info from 3rd argument, splitting on comma for degree and minor
+4. Extracts graduation date from 4th argument
+5. Finds GPA from `\resumeItem{\textbf{GPA:} ...}` pattern
+6. Extracts relevant coursework from `\resumeItem{\textbf{Relevant Coursework:} ...}` pattern
+7. Pulls certifications from Skills section (Certifications & Courses category)
+8. Generates `/app/data/education.ts` with all data
+
+### Dynamic Display in EducationSection
+
+The EducationSection component imports education data and displays:
+
+- **GPA Achievement Card**: Shows `{education.gpa} GPA` with `{education.gpaPercentage} Average`
+- **Degree Information**: Shows `{education.degree}` and `{education.minor}`
+- **School Header**: Shows `{education.school}` and `{education.location}` with `{education.graduationDate}`
+- **Relevant Coursework Grid**: Maps over `education.relevantCoursework` array dynamically
+- **Certifications**: Available in education object (currently not displayed in component)
+
+### Editing Education Data
+
+To update education information on your website:
+
+1. Edit your LaTeX resume's Education section on Overleaf
+2. Update school, degree, GPA, coursework, or other fields
+3. Download and replace `/data/master-resume.tex`
+4. Run `npm run parse:resume` or `npm run build`
+5. The EducationSection component automatically reflects the changes
+
+### Adding/Removing Coursework
+
+Simply edit your LaTeX resume's Relevant Coursework list:
+
+```latex
+\resumeItem{\textbf{Relevant Coursework:} Software Engineering, Machine Learning, Data Structures}
+```
+
+- Add courses: Append to comma-separated list
+- Remove courses: Delete from list
+- Reorder courses: Change order in list (display order matches LaTeX order)
+
+Run `npm run parse:resume` to regenerate `/app/data/education.ts`.
+
+### Certifications Source
+
+Certifications are automatically pulled from your Technical Skills section. The parser looks for a category named "Certifications & Courses":
+
+```latex
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0.15in, label={}]
+  \small{\item{
+    \textbf{Certifications & Courses}{: Udemy Web Development Bootcamp, Python Pro Bootcamp} \\
+  }}
+\end{itemize}
+```
+
+The certifications are available in the education object but are not currently displayed in the EducationSection component.
+
+### Education Parsing Notes
+
+- GPA format: Must match pattern `\textbf{GPA:} X.XX/X.XX (XX.X\%)`
+- Coursework: Comma-separated list automatically split into array
+- LaTeX formatting automatically removed from all fields
+- Single education entry supported (parser takes first `\resumeSubheading` in Education section)
+- Certifications pulled from Skills section eliminate duplication
+- No configuration needed - education displayed as-is from LaTeX resume
 
 ## Skills Extraction
 
@@ -350,6 +462,8 @@ This will:
 - Generate `/app/data/experiences.ts`
 - Parse skills from Technical Skills section
 - Generate `/app/data/skills.ts`
+- Parse education from Education section
+- Generate `/app/data/education.ts`
 - Print a summary of parsed and filtered entries
 
 ## Automatic Execution
@@ -421,7 +535,7 @@ If validation fails, the build will fail with a clear error message.
 
 ## Generated Output
 
-The parser generates two files:
+The parser generates three files:
 
 ### `/app/data/experiences.ts`
 
@@ -470,6 +584,30 @@ export const skills: Skills = {
 };
 ```
 
+### `/app/data/education.ts`
+
+```typescript
+// THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
+// Generated from: /data/master-resume.tex
+// Last updated: 2026-01-17T15:30:00Z
+
+export interface Education {
+  school: string;
+  location: string;
+  degree: string;
+  minor: string;
+  graduationDate: string;
+  gpa: string;
+  gpaPercentage: string;
+  relevantCoursework: string[];
+  certifications: string[];
+}
+
+export const education: Education = {
+  // ... your parsed education data
+};
+```
+
 **Do not edit these files manually** - they will be overwritten on the next parse.
 
 ## Workflow Summary
@@ -487,8 +625,9 @@ Parser runs automatically
     ↓
 app/data/experiences.ts updated
 app/data/skills.ts updated
+app/data/education.ts updated
     ↓
-Website displays latest experience & skills
+Website displays latest experience, skills & education
 ```
 
 ## Notes
@@ -497,7 +636,9 @@ Website displays latest experience & skills
 - Keep this file in sync with your actual resume for accuracy
 - **Experience data**: Technologies are auto-extracted, but you can manually add keywords to the parser if needed
 - **Skills data**: All categories from Technical Skills section are automatically extracted and displayed
+- **Education data**: School, degree, GPA, and coursework are extracted from Education section; certifications come from Skills section
 - The parser removes LaTeX formatting commands (`\textbf`, `\textcolor`, etc.) automatically
 - Generated IDs for experiences are sequential (1, 2, 3...) based on order in LaTeX file
 - Skills maintain the category order from your LaTeX resume
 - Top skills in Hero Section remain hardcoded; "show all skills" view is dynamic
+- Education section displays all extracted data dynamically from your LaTeX resume
