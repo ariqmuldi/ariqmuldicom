@@ -75,6 +75,18 @@ The hero section features a terminal-style design:
 - Terminal commands as UI elements (`$ whoami`, `$ git status`, `$ ls top-skills/`)
 - Monospace font (Geist Mono) for terminal text
 - Dark background (`#2c2e3f`) with cream text (`#F4EBD3`)
+- **Profile Picture Integration**:
+  - Located in the top-right corner of the terminal
+  - Responsive: Smaller on mobile, larger on desktop
+  - Interactive: Hover effect triggers scale, rotation, and glow
+  - Animation: Spring-based entrance animation
+
+### Favicon System
+
+The site uses Next.js 16's dynamic icon generation:
+- **File**: `app/icon.tsx`
+- **Mechanism**: Uses `ImageResponse` to generate the favicon on the fly
+- **Design**: "AM" initials in a circular badge matching the site's dark purple/cream theme
 
 ### Image Configuration
 
@@ -86,6 +98,99 @@ Next.js images are configured with `unoptimized: true` in `next.config.ts`, like
 - JSX: react-jsx (React 19's automatic JSX transform)
 - Path alias: `@/*` maps to root directory
 - Module resolution: bundler (Next.js default)
+
+## LaTeX Resume Parser
+
+The Experience section, Hero Section skills display, Education section, and Projects section are automatically generated from a LaTeX master resume file, ensuring the website stays in sync with the canonical resume.
+
+### Overview
+
+- **Source of Truth**: `/data/master-resume.tex` (LaTeX resume from Overleaf)
+- **Generated Output**:
+  - `/app/data/experiences.ts` (Experience data)
+  - `/app/data/skills.ts` (Skills data)
+  - `/app/data/education.ts` (Education data)
+  - `/app/data/projects.ts` (Projects data)
+  - **Note:** `/app/data/professional-contributions.ts` is **manually curated** and NOT auto-generated.
+- **Parser Script**: `/scripts/parse-resume.ts` (Build-time parser)
+- **Configuration**: `/data/resume-config.json` (Control visibility of experiences and accomplishments)
+
+### How It Works
+
+1. LaTeX resume is stored in `/data/master-resume.tex`
+2. Parser runs automatically on `npm run dev` and `npm run build` (via prebuild/predev hooks)
+3. **Experience extraction**:
+   - Extracts experience data: title, company, department, location, dates, accomplishments
+   - Auto-detects technologies from accomplishments using 300+ keyword matching
+   - Generates type-safe TypeScript file at `/app/data/experiences.ts` (without timestamps)
+   - ExperienceSection component imports and renders the data
+4. **Skills extraction**:
+   - Extracts all skill categories from Technical Skills section
+   - Preserves nested skills with parentheses (e.g., "SQL (PostgreSQL, MySQL)")
+   - Generates type-safe TypeScript file at `/app/data/skills.ts` (without timestamps)
+   - HeroSection component imports and renders in "show all skills" view
+5. **Education extraction**:
+   - Extracts education data: school, location, degree, minor, graduation date, GPA, coursework
+   - Pulls certifications from Skills section (Certifications & Courses category)
+   - Generates type-safe TypeScript file at `/app/data/education.ts` (without timestamps)
+   - EducationSection component imports and renders the data dynamically
+6. **Projects extraction**:
+   - Extracts project data: title, GitHub link, technologies, accomplishments
+   - Joins accomplishments with ". " to create flowing paragraph descriptions
+   - Auto-generates image paths from project titles (e.g., "/ponotodoropicture.jpg")
+   - Generates type-safe TypeScript file at `/app/data/projects.ts` (without timestamps)
+   - ProjectsSection component imports and renders the data
+
+### Configuration System
+
+The parser supports fine-grained control over what appears on the website via `/data/resume-config.json`:
+
+- **Hide entire experiences**: `hidden: true`
+- **Hide all accomplishments**: `hideAllAccomplishments: true` (keeps technologies visible)
+- **Hide specific accomplishments**: `hideAccomplishments: [1, 3, 5]` (1-based indices)
+- **Hide technologies**: `hideTechnologies: true`
+
+**Auto-update feature**: Configuration file automatically updates when new experiences are added to the LaTeX resume, preserving existing settings.
+
+### Workflow
+
+1. Edit resume on Overleaf (Experience, Technical Skills, Education, and/or Projects sections)
+2. Download updated `.tex` file
+3. Replace `/data/master-resume.tex`
+4. Run `npm run dev` or `npm run build`
+5. Parser automatically extracts and updates:
+   - Experience data → `/app/data/experiences.ts`
+   - Skills data → `/app/data/skills.ts`
+   - Education data → `/app/data/education.ts`
+   - Projects data → `/app/data/projects.ts`
+6. Website reflects latest resume content in Experience, Education, Projects sections and Hero Section skills
+
+### Technology Extraction
+
+The parser includes 300+ technology keywords covering:
+- Programming languages (JavaScript, TypeScript, Python, Java, C++, PHP, etc.)
+- Frameworks (React, Next.js, Flask, Django, Laravel, etc.)
+- Databases (PostgreSQL, MySQL, MongoDB, Firebase, etc.)
+- Cloud platforms (Google Cloud, AWS, Azure, Vercel, etc.)
+- Tools and platforms (Docker, Git, Stripe, Shopify, etc.)
+
+Technologies are extracted using case-insensitive word boundary matching from accomplishment text.
+
+### Manual Parser Execution
+
+```bash
+npm run parse:resume
+```
+
+This command:
+- Parses Experience section → generates `/app/data/experiences.ts`
+- Parses Technical Skills section → generates `/app/data/skills.ts`
+- Parses Education section → generates `/app/data/education.ts`
+- Parses Projects section → generates `/app/data/projects.ts`
+- Applies configuration filters from `/data/resume-config.json`
+- Prints summary of parsed entries
+
+For detailed documentation, see [`/data/README.md`](/data/README.md).
 
 ## Key Development Notes
 

@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Claude
+.claude/
+
+# Gemini
+.gemini/
+.gemini-clipboard/

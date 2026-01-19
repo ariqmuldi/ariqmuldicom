@@ -1,114 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-
-const experiences = [
-  {
-    id: 1,
-    title: "Web Application Developer",
-    company: "University of British Columbia",
-    department: "Work Study Program",
-    location: "Kelowna, BC",
-    period: "Jul. 2025 -- Present",
-    current: true,
-    accomplishments: [
-      "Designed and developed a full-stack web application for managing CSV data with role-based access controls, enabling 5+ user roles to perform specific actions (view, edit, delete, comment) while ensuring data consistency and security",
-      "Implemented comprehensive data validation and database integration system using Python, JavaScript, PostgreSQL, and Flask, processing and validating 10,000+ records for graduate program admission applications",
-      "Built advanced search, filter, and CRUD functionality with commenting system, improving data accessibility and collaboration for 20+ faculty and staff members in the admission review process",
-      "Developed automated reporting system generating data summaries and status reports, reducing manual report creation time by 75% and enabling data-driven decision making for program administrators",
-      "Created multi-format data export capabilities (CSV, PDF) with audit logging system, tracking 500+ user actions for security compliance and providing offline analysis tools for stakeholders",
-      "Architected scalable, secure web application following industry best practices, supporting concurrent access for 50+ users and integrating with existing UBC systems for seamless workflow integration",
-    ],
-    technologies: [
-      "Python",
-      "JavaScript",
-      "PostgreSQL",
-      "Django",
-      "Flask",
-      "React",
-      "Vue.js",
-      "Git",
-      "GitHub",
-      "Data Validation",
-      "Role-based Access Control",
-      "Audit Logging",
-      "CSV Processing",
-      "PDF Generation",
-    ],
-  },
-  {
-    id: 2,
-    title: "Software Developer",
-    company: "University of British Columbia",
-    department: "Undergraduate Research Assistant",
-    location: "Makerspace Yellowknife, Remote",
-    period: "Jan. 2025 -- Present",
-    current: true,
-    accomplishments: [
-      "Developed an automated membership management system using TypeScript, React Router v7, PostgreSQL, and Docker, optimizing user data tracking, user workshop registration and equipment bookings, Stripe payment processing, and event scheduling for 1,000+ users",
-      "Implemented a membership portal, enabling admins to manage workshops and equipments and for users to manage their memberships, view/register for workshops, and update personal details, reducing overhead for 10+ admins",
-      "Developed user authentication with Prisma ORM, ensuring secure access control for different user roles",
-      "Conducted testing with Vitest and validation with Zod, improving system adoption and reducing user onboarding time",
-      "Created admin control panel with real-time settings management and data export capabilities, reducing administrative overhead by enabling 10+ admins to configure user experiences and generate presentation-ready reports",
-      "Refactored LearnCoding's UI, a UBC learning platorm, using PHP, JavaScript, and CSS, improving user experience for 500+ students",
-      "Developed comprehensive landing page with platform features, FAQs, and contact info, enhancing onboarding for 60+ faculty",
-      "Built admin functionality with PHP and MySQL, enabling instructors to toggle platform settings dynamically",
-      "Completed Privacy and Risk Assessment documentation, transitioning LearnCoding from UBC VPN to public deployment",
-      "Tested Matomo Analytics and CSV export across dev/production environments, ensuring data accuracy for academic reporting",
-    ],
-    technologies: [
-      "TypeScript",
-      "React Router v7",
-      "PostgreSQL",
-      "Docker",
-      "Prisma",
-      "Vitest",
-      "Zod",
-      "PHP",
-      "JavaScript",
-      "CSS",
-      "MySQL",
-    ],
-  },
-  {
-    id: 3,
-    title: "Software Developer",
-    company: "University of British Columbia",
-    department: "Directed Studies",
-    location: "Kelowna, BC",
-    period: "Sept. 2024 -- Dec. 2024",
-    current: false,
-    accomplishments: [
-      "Improved adaptive learning platform called LearnCoding, adopted by UBC's Faculty of Applied Science and UBC's largest computer science sections, benefiting 500+ students with tools like code visualizers, sandboxes, parallel courseware, and badges",
-      "Integrated UBC Canvas API and Matomo Analytics for automated grading, multi-platform access between LearnCoding and UBC systems, and user behavior tracking, replacing manual CSV processes and reducing instructor overhead",
-      "Developed authentication features using PHP, JavaScript, Laravel, Blade, jQuery, and MySQL, securing access for 60+ faculty members",
-    ],
-    technologies: [
-      "PHP",
-      "JavaScript",
-      "Laravel",
-      "Blade",
-      "jQuery",
-      "MySQL",
-      "UBC Canvas API",
-      "Matomo Analytics",
-    ],
-  },
-  {
-    id: 4,
-    title: "Undergraduate Teaching Assistant",
-    company: "University of British Columbia",
-    department: "",
-    location: "Kelowna, BC",
-    period: "Sept. 2024 -- Present",
-    current: true,
-    accomplishments: [
-      "Facilitated interactive lab sessions and tutoring for over 60+ students, employing hands-on exercises and real-time coding challenges to enhance understanding of machine architecture, Java programming, and general coding concepts",
-      "Designed and graded assignments and exams for 300+ students for the two largest computer science courses at UBC",
-    ],
-    technologies: ["Java", "Machine Architecture", "Educational Technology"],
-  },
-];
+import { experiences } from "@/app/data/experiences";
 
 export default function ExperienceSection() {
   return (
@@ -153,6 +46,7 @@ export default function ExperienceSection() {
             {experiences.map((experience, index) => (
               <motion.div
                 key={experience.id}
+                id={`experience-${experience.id}`}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -238,7 +132,7 @@ export default function ExperienceSection() {
             { value: "10,000+", label: "Records Processed" },
             { value: "1,000+", label: "Users Served" },
             { value: "500+", label: "Students Impacted" },
-            { value: "4", label: "Active Roles" },
+            { value: "5", label: "Active Roles" },
           ].map((stat, index) => (
             <div key={index} className="card-glass rounded-xl p-6 text-center">
               <div className="text-2xl md:text-3xl font-bold gradient-text mb-2">
