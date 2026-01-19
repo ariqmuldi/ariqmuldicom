@@ -10,9 +10,9 @@ This directory contains the LaTeX source file for your master resume, which serv
 
 ## How It Works
 
-The Experience section, Skills display, and Education section on your website are automatically generated from your LaTeX resume:
+The Experience section, Skills display, Education section, and Projects section on your website are automatically generated from your LaTeX resume:
 
-1. Edit your resume on **Overleaf** (Experience, Technical Skills, and/or Education sections)
+1. Edit your resume on **Overleaf** (Experience, Technical Skills, Education, and/or Projects sections)
 2. **Download** the updated `.tex` file
 3. **Replace** `/data/master-resume.tex` with the new file
 4. **Commit** to Git or just run `npm run dev` or `npm run build`
@@ -20,7 +20,8 @@ The Experience section, Skills display, and Education section on your website ar
    - `/app/data/experiences.ts` - Experience data
    - `/app/data/skills.ts` - Skills data
    - `/app/data/education.ts` - Education data
-6. Your website's Experience, Education sections and Skills display now reflect the latest resume
+   - `/app/data/projects.ts` - Projects data
+6. Your website's Experience, Education, Projects sections and Skills display now reflect the latest resume
 
 ## Expected LaTeX Structure
 
@@ -190,6 +191,147 @@ The certifications are available in the education object but are not currently d
 - Single education entry supported (parser takes first `\resumeSubheading` in Education section)
 - Certifications pulled from Skills section eliminate duplication
 - No configuration needed - education displayed as-is from LaTeX resume
+
+## Projects Extraction
+
+The Projects section is automatically generated from your LaTeX resume's Projects section, displaying project titles, descriptions, technologies, GitHub links, and images dynamically.
+
+### Overview
+
+- **Source**: Projects section in `/data/master-resume.tex`
+- **Generated Output**: `/app/data/projects.ts`
+- **Component**: `ProjectsSection.tsx` imports and displays projects data
+- **Description**: Automatically created by joining accomplishment bullets with periods
+
+### What Gets Extracted
+
+| Field | Description | Example |
+|-------|-------------|---------|
+| **id** | Sequential ID | 1, 2, 3, 4 |
+| **title** | Project name from `\textbf{...}` | "Ponotodoro" |
+| **description** | Accomplishments joined with ". " | "Developed a full-stack app..." |
+| **image** | Auto-generated path | "/ponotodoropicture.jpg" |
+| **technologies** | Tech stack from `\emph{...}` | ["JavaScript", "React", "Node.js"] |
+| **featured** | Featured flag (defaults to false) | false |
+| **github** | GitHub link or "#" for private | "https://github.com/..." or "#" |
+
+### Expected LaTeX Structure for Projects
+
+```latex
+\section{Projects}
+\resumeSubHeadingListStart
+
+\resumeProjectHeading
+{\textbf{Ponotodoro} \githubLink{https://github.com/ariqmuldi/ponotodoro} $|$ \emph{JavaScript, React, Node.js, PostgreSQL, Bootstrap, HTML/CSS}}{Aug. 2024 -- Oct. 2024}
+\resumeItemListStart
+    \resumeItem{Developed a full-stack app integrating the Pomodoro technique with note-taking and to-do lists functionality}
+    \resumeItem{Engineered frontend with React and Bootstrap to structure the platform's task management system}
+    \resumeItem{Designed backend using Node.js and PostgreSQL for efficient data management}
+\resumeItemListEnd
+
+% More projects...
+
+\resumeSubHeadingListEnd
+```
+
+### How Projects Are Parsed
+
+1. Parser finds `\section{Projects}` in your LaTeX resume
+2. Extracts all `\resumeProjectHeading` blocks
+3. For each project:
+   - Extracts title from `\textbf{Project Name}`
+   - Extracts GitHub link from `\githubLink{url}` (defaults to "#" if missing)
+   - Extracts technologies from `\emph{tech1, tech2, ...}` after `$|$` separator
+   - Finds all `\resumeItem{...}` accomplishments
+   - Joins accomplishments with ". " to create a flowing paragraph description
+   - Generates image path as `/{projectname}picture.jpg` (lowercase, no spaces)
+4. Generates `/app/data/projects.ts` with all projects
+
+### Description Generation
+
+Project descriptions are automatically created by joining accomplishment bullets:
+
+**LaTeX Input:**
+```latex
+\resumeItem{Developed a full-stack app integrating the Pomodoro technique}
+\resumeItem{Engineered frontend with React and Bootstrap}
+\resumeItem{Designed backend using Node.js and PostgreSQL}
+```
+
+**Generated Description:**
+```
+"Developed a full-stack app integrating the Pomodoro technique. Engineered frontend with React and Bootstrap. Designed backend using Node.js and PostgreSQL."
+```
+
+### Image Path Generation
+
+Image paths are automatically generated from project titles:
+
+- **Ponotodoro** → `/ponotodoropicture.jpg`
+- **Flight Hub** → `/flighthubpicture.jpg`
+- **ChatterBox** → `/chatterboxpicture.jpg`
+- **MoodiJawoodi** → `/moodijawoodipicture.jpg`
+
+**Pattern**: Lowercase title with spaces/special characters removed + "picture.jpg"
+
+Place project images in `/public/` directory with these exact filenames.
+
+### GitHub Link Handling
+
+- **With GitHub link**: `\githubLink{https://github.com/user/repo}` → Displays "View on GitHub" button
+- **Without GitHub link**: No `\githubLink{...}` command → Defaults to "#", displays "Private Repository"
+
+### Technologies Display
+
+Technologies are extracted from the inline `\emph{...}` tag after the `$|$` separator:
+
+```latex
+{\textbf{Ponotodoro} \githubLink{...} $|$ \emph{JavaScript, React, Node.js, PostgreSQL}}
+```
+
+This extracts: `["JavaScript", "React", "Node.js", "PostgreSQL"]`
+
+Technologies appear as colored badges in the project card.
+
+### Featured Projects
+
+All projects default to `featured: false` for the MVP. To mark a project as featured, you would need to:
+
+1. Edit the generated `/app/data/projects.ts` file manually (not recommended)
+2. Or wait for future enhancement to add configuration support
+
+Featured projects display a "Featured" badge in the top-right corner.
+
+### Editing Projects Data
+
+To update projects on your website:
+
+1. Edit your LaTeX resume's Projects section on Overleaf
+2. Update project names, accomplishments, technologies, or GitHub links
+3. Download and replace `/data/master-resume.tex`
+4. Run `npm run parse:resume` or `npm run build`
+5. The ProjectsSection component automatically reflects the changes
+
+### Adding/Removing Projects
+
+Simply edit your LaTeX resume's Projects section:
+
+- **Add project**: Add new `\resumeProjectHeading` block with accomplishments
+- **Remove project**: Delete the entire project block
+- **Reorder projects**: Move blocks up/down (display order matches LaTeX order)
+
+Run `npm run parse:resume` to regenerate `/app/data/projects.ts`.
+
+### Projects Parsing Notes
+
+- Description automatically cleans up double periods
+- LaTeX formatting automatically removed from all fields
+- Technologies extracted from inline `\emph{...}` tag (not from accomplishment text)
+- GitHub links default to "#" for private/unavailable repos
+- Image paths must match generated pattern (place images in `/public/`)
+- Featured flag defaults to `false` for all projects
+- No configuration needed - projects displayed as-is from LaTeX resume
+- Projects are shown in the order they appear in your LaTeX file
 
 ## Skills Extraction
 
@@ -464,6 +606,8 @@ This will:
 - Generate `/app/data/skills.ts`
 - Parse education from Education section
 - Generate `/app/data/education.ts`
+- Parse projects from Projects section
+- Generate `/app/data/projects.ts`
 - Print a summary of parsed and filtered entries
 
 ## Automatic Execution
@@ -535,7 +679,7 @@ If validation fails, the build will fail with a clear error message.
 
 ## Generated Output
 
-The parser generates three files:
+The parser generates four files:
 
 ### `/app/data/experiences.ts`
 
@@ -605,6 +749,27 @@ export const education: Education = {
 };
 ```
 
+### `/app/data/projects.ts`
+
+```typescript
+// THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
+// Generated from: /data/master-resume.tex
+
+export interface Project {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  technologies: string[];
+  featured: boolean;
+  github: string;
+}
+
+export const projects: Project[] = [
+  // ... your parsed projects
+];
+```
+
 **Do not edit these files manually** - they will be overwritten on the next parse.
 
 ## Workflow Summary
@@ -623,8 +788,9 @@ Parser runs automatically
 app/data/experiences.ts updated
 app/data/skills.ts updated
 app/data/education.ts updated
+app/data/projects.ts updated
     ↓
-Website displays latest experience, skills & education
+Website displays latest experience, skills, education & projects
 ```
 
 ## Notes
@@ -634,8 +800,10 @@ Website displays latest experience, skills & education
 - **Experience data**: Technologies are auto-extracted, but you can manually add keywords to the parser if needed
 - **Skills data**: All categories from Technical Skills section are automatically extracted and displayed
 - **Education data**: School, degree, GPA, and coursework are extracted from Education section; certifications come from Skills section
+- **Projects data**: Descriptions are generated from accomplishments; technologies come from inline `\emph{...}` tag; images auto-generated from project title
 - The parser removes LaTeX formatting commands (`\textbf`, `\textcolor`, etc.) automatically
-- Generated IDs for experiences are sequential (1, 2, 3...) based on order in LaTeX file
+- Generated IDs for experiences and projects are sequential (1, 2, 3...) based on order in LaTeX file
 - Skills maintain the category order from your LaTeX resume
 - Top skills in Hero Section remain hardcoded; "show all skills" view is dynamic
 - Education section displays all extracted data dynamically from your LaTeX resume
+- Projects section displays all projects from your LaTeX resume with auto-generated descriptions

@@ -34,6 +34,16 @@ interface Education {
   certifications: string[];
 }
 
+interface Project {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  technologies: string[];
+  featured: boolean;
+  github: string;
+}
+
 // Common technology keywords to extract from accomplishments
 const TECH_KEYWORDS = [
   // Programming Languages
@@ -247,6 +257,33 @@ function extractTechnologies(accomplishments: string[]): string[] {
 
   // Sort technologies alphabetically and return
   return Array.from(foundTech).sort();
+}
+
+function extractGitHubLink(text: string): string {
+  const githubMatch = text.match(/\\githubLink\{([^}]+)\}/);
+  return githubMatch ? githubMatch[1] : '#';
+}
+
+function extractInlineTechnologies(text: string): string[] {
+  const techMatch = text.match(/\$\|\$\s*\\emph\{([^}]+)\}/);
+  if (!techMatch) return [];
+
+  return techMatch[1]
+    .split(',')
+    .map(tech => cleanLatexText(tech.trim()))
+    .filter(tech => tech.length > 0);
+}
+
+function generateDescription(accomplishments: string[]): string {
+  let description = accomplishments.join('. ');
+  description = description.replace(/\.\s*\./g, '.'); // Clean double periods
+  if (!description.endsWith('.')) description += '.';
+  return description;
+}
+
+function generateImagePath(title: string): string {
+  const slug = title.toLowerCase().replace(/[^a-z0-9]/g, '');
+  return `/${slug}picture.jpg`;
 }
 
 function parseResume(latexContent: string): Experience[] {
@@ -497,6 +534,104 @@ function parseEducation(latexContent: string, skills: Skills): Education {
     relevantCoursework,
     certifications
   };
+}
+
+function parseProjects(latexContent: string): Project[] {
+  const projects: Project[] = [];
+
+  // Find the Projects section
+  const projectsSectionMatch = latexContent.match(/\\section\{Projects\}([\s\S]*?)(?=\\section|\\end\{document\})/);
+
+  if (!projectsSectionMatch) {
+    throw new Error('Could not find Projects section in LaTeX file');
+  }
+
+  const projectsSection = projectsSectionMatch[1];
+
+  // Extract all resumeProjectHeading blocks
+  // Pattern: \resumeProjectHeading{content}{dateRange}
+  // Content includes: \textbf{Title} \githubLink{url} $|$ \emph{tech1, tech2, ...}
+  const projectHeadingRegex = /\\resumeProjectHeading\s*\n?\s*\{([^{}]*(?:\{[^}]*\}[^{}]*)*)\}\s*\{([^}]+)\}/g;
+
+  let match;
+  let id = 1;
+
+  while ((match = projectHeadingRegex.exec(projectsSection)) !== null) {
+    const headingContent = match[1];
+    const dateRange = cleanLatexText(match[2]);
+
+    // Extract title from \textbf{Title}
+    const titleMatch = headingContent.match(/\\textbf\{([^}]+)\}/);
+    if (!titleMatch) {
+      console.warn(`Warning: Could not extract title for project at position ${id}, skipping...`);
+      continue;
+    }
+    const title = cleanLatexText(titleMatch[1]);
+
+    // Extract GitHub link (default to "#" if missing)
+    const github = extractGitHubLink(headingContent);
+
+    // Extract inline technologies from \emph{...} after $|$
+    const technologies = extractInlineTechnologies(headingContent);
+
+    // Find accomplishments for this project
+    // They appear between \resumeItemListStart and \resumeItemListEnd after the heading
+    const startPos = match.index + match[0].length;
+    const nextProjectMatch = projectHeadingRegex.exec(projectsSection);
+    const endPos = nextProjectMatch ? nextProjectMatch.index : projectsSection.length;
+
+    // Reset regex to continue from where we were
+    projectHeadingRegex.lastIndex = match.index + match[0].length;
+
+    const blockContent = projectsSection.substring(startPos, endPos);
+
+    // Extract accomplishments
+    const accomplishments: string[] = [];
+    const itemRegex = /\\resumeItem\{([^}]*(?:\{[^}]*\}[^}]*)*)\}/g;
+
+    let itemMatch;
+    while ((itemMatch = itemRegex.exec(blockContent)) !== null) {
+      const accomplishment = cleanLatexText(itemMatch[1]);
+      if (accomplishment) {
+        accomplishments.push(accomplishment);
+      }
+    }
+
+    // Generate description from accomplishments
+    const description = generateDescription(accomplishments);
+
+    // Generate image path from title
+    const image = generateImagePath(title);
+
+    // All projects default to not featured (for MVP)
+    const featured = false;
+
+    // Validate required fields
+    if (!title) {
+      throw new Error(`Missing title for project at position ${id}`);
+    }
+    if (accomplishments.length === 0) {
+      throw new Error(`No accomplishments found for project: ${title}`);
+    }
+
+    projects.push({
+      id,
+      title,
+      description,
+      image,
+      technologies,
+      featured,
+      github
+    });
+
+    id++;
+  }
+
+  if (projects.length === 0) {
+    throw new Error('No project entries found in resume');
+  }
+
+  return projects;
 }
 
 interface ExperienceConfig {
@@ -763,6 +898,26 @@ export const education: Education = ${JSON.stringify(education, null, 2)};
   fs.writeFileSync(outputPath, content, 'utf-8');
 }
 
+function generateProjectsTypeScriptFile(projects: Project[], outputPath: string): void {
+  const content = `// THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
+// Generated from: /data/master-resume.tex
+
+export interface Project {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  technologies: string[];
+  featured: boolean;
+  github: string;
+}
+
+export const projects: Project[] = ${JSON.stringify(projects, null, 2)};
+`;
+
+  fs.writeFileSync(outputPath, content, 'utf-8');
+}
+
 function main() {
   try {
     console.log('Reading LaTeX resume file...');
@@ -773,6 +928,7 @@ function main() {
     const outputPath = path.join(projectRoot, 'app', 'data', 'experiences.ts');
     const skillsOutputPath = path.join(projectRoot, 'app', 'data', 'skills.ts');
     const educationOutputPath = path.join(projectRoot, 'app', 'data', 'education.ts');
+    const projectsOutputPath = path.join(projectRoot, 'app', 'data', 'projects.ts');
 
     if (!fs.existsSync(latexPath)) {
       throw new Error(`LaTeX file not found at: ${latexPath}`);
@@ -841,6 +997,20 @@ function main() {
     generateEducationTypeScriptFile(education, educationOutputPath);
 
     console.log(`Successfully generated: ${educationOutputPath}`);
+
+    // Parse and generate projects
+    console.log('\nParsing projects data...');
+    const projects = parseProjects(latexContent);
+
+    console.log(`Successfully parsed ${projects.length} projects from LaTeX:`);
+    projects.forEach(p => {
+      console.log(`   - ${p.title}: ${p.technologies.length} technologies`);
+    });
+
+    console.log('\nGenerating projects TypeScript file...');
+    generateProjectsTypeScriptFile(projects, projectsOutputPath);
+
+    console.log(`Successfully generated: ${projectsOutputPath}`);
     console.log('\nResume parsing completed successfully!');
 
   } catch (error) {

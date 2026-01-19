@@ -89,7 +89,7 @@ Next.js images are configured with `unoptimized: true` in `next.config.ts`, like
 
 ## LaTeX Resume Parser
 
-The Experience section, Hero Section skills display, and Education section are automatically generated from a LaTeX master resume file, ensuring the website stays in sync with the canonical resume.
+The Experience section, Hero Section skills display, Education section, and Projects section are automatically generated from a LaTeX master resume file, ensuring the website stays in sync with the canonical resume.
 
 ### Overview
 
@@ -98,6 +98,7 @@ The Experience section, Hero Section skills display, and Education section are a
   - `/app/data/experiences.ts` (Experience data)
   - `/app/data/skills.ts` (Skills data)
   - `/app/data/education.ts` (Education data)
+  - `/app/data/projects.ts` (Projects data)
 - **Parser Script**: `/scripts/parse-resume.ts` (Build-time parser)
 - **Configuration**: `/data/resume-config.json` (Control visibility of experiences and accomplishments)
 
@@ -120,6 +121,12 @@ The Experience section, Hero Section skills display, and Education section are a
    - Pulls certifications from Skills section (Certifications & Courses category)
    - Generates type-safe TypeScript file at `/app/data/education.ts` (without timestamps)
    - EducationSection component imports and renders the data dynamically
+6. **Projects extraction**:
+   - Extracts project data: title, GitHub link, technologies, accomplishments
+   - Joins accomplishments with ". " to create flowing paragraph descriptions
+   - Auto-generates image paths from project titles (e.g., "/ponotodoropicture.jpg")
+   - Generates type-safe TypeScript file at `/app/data/projects.ts` (without timestamps)
+   - ProjectsSection component imports and renders the data
 
 ### Configuration System
 
@@ -134,7 +141,7 @@ The parser supports fine-grained control over what appears on the website via `/
 
 ### Workflow
 
-1. Edit resume on Overleaf (Experience, Technical Skills, and/or Education sections)
+1. Edit resume on Overleaf (Experience, Technical Skills, Education, and/or Projects sections)
 2. Download updated `.tex` file
 3. Replace `/data/master-resume.tex`
 4. Run `npm run dev` or `npm run build`
@@ -142,7 +149,8 @@ The parser supports fine-grained control over what appears on the website via `/
    - Experience data → `/app/data/experiences.ts`
    - Skills data → `/app/data/skills.ts`
    - Education data → `/app/data/education.ts`
-6. Website reflects latest resume content in Experience, Education sections and Hero Section skills
+   - Projects data → `/app/data/projects.ts`
+6. Website reflects latest resume content in Experience, Education, Projects sections and Hero Section skills
 
 ### Technology Extraction
 
@@ -165,6 +173,7 @@ This command:
 - Parses Experience section → generates `/app/data/experiences.ts`
 - Parses Technical Skills section → generates `/app/data/skills.ts`
 - Parses Education section → generates `/app/data/education.ts`
+- Parses Projects section → generates `/app/data/projects.ts`
 - Applies configuration filters from `/data/resume-config.json`
 - Prints summary of parsed entries
 

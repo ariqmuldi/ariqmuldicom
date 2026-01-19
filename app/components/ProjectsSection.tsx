@@ -3,108 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-
-const projects = [
-  {
-    id: 1,
-    title: "MSYK Membership System",
-    description:
-      "Automated membership management system built for Makerspace Yellowknife serving 1,000+ users. Features user authentication with Prisma ORM, workshop registration, equipment bookings, Stripe payment processing, and comprehensive admin dashboard with real-time settings and report generation capabilities.",
-    image: "/msykpicture.png",
-    technologies: [
-      "TypeScript",
-      "React Router v7",
-      "PostgreSQL",
-      "Docker",
-      "Prisma",
-      "Vitest",
-      "Zod",
-    ],
-    featured: true,
-    github:
-      "https://github.com/University-of-British-Columbia-Okanagan/MSYK_Membership",
-  },
-  {
-    id: 2,
-    title: "LearnCoding Platform",
-    description:
-      "Adaptive learning platform adopted by UBC's Faculty of Applied Science, benefiting 500+ students with code visualizers, sandboxes, and courseware. Integrated UBC Canvas API for automated grading, Matomo Analytics for user tracking, and secure authentication for 60+ faculty members.",
-    image: "/learncodingpicture.png",
-    technologies: [
-      "PHP",
-      "JavaScript",
-      "Laravel",
-      "Blade",
-      "jQuery",
-      "MySQL",
-      "CSS",
-    ],
-    featured: true,
-    github: "#",
-  },
-  {
-    id: 3,
-    title: "Ponotodoro",
-    description:
-      "Full-stack productivity application integrating Pomodoro technique with note-taking and to-do lists functionality. Combines time management and task tracking techniques to improve personal productivity for 10+ users with efficient data management and secure user authentication.",
-    image: "/ponotodoropicture.jpg",
-    technologies: [
-      "JavaScript",
-      "React",
-      "Node.js",
-      "PostgreSQL",
-      "Bootstrap",
-      "HTML/CSS",
-    ],
-    featured: false,
-    github: "https://github.com/ariqmuldi/ponotodoro",
-  },
-  {
-    id: 4,
-    title: "Flight Hub",
-    description:
-      "Full-stack web application that streamlines flight offers by integrating Amadeus and Twilio APIs. Features a comprehensive blog system enabling users to create, edit, and manage flight-related posts with secure authentication and responsive design.",
-    image: "/flighthubpicture.jpg",
-    technologies: [
-      "Python",
-      "JavaScript",
-      "Flask",
-      "React",
-      "SQLite",
-      "Bootstrap",
-      "HTML/CSS",
-      "REST APIs",
-    ],
-    featured: false,
-    github: "https://github.com/ariqmuldi/flight-hub",
-  },
-  {
-    id: 5,
-    title: "ChatterBox",
-    description:
-      "Full-stack chat application replicating core Discord functionalities with real-time messaging, user authentication, and channel management. Facilitates communication for 5+ active users across 5+ channels, managing 100+ messages with Firebase backend.",
-    image: "/chatterboxpicture.jpg",
-    technologies: [
-      "JavaScript",
-      "React",
-      "Firebase",
-      "Tailwind CSS",
-      "HTML/SCSS",
-    ],
-    featured: false,
-    github: "https://github.com/namekeptanonymous/Error404",
-  },
-  {
-    id: 6,
-    title: "MoodiJawoodi",
-    description:
-      "Full-stack e-commerce platform facilitating the purchase of 100+ Middle Eastern products. Features responsive interface with Java JDBC API integration and optimized MySQL backend for efficient data handling and product processing.",
-    image: "/moodijawoodipicture.jpg",
-    technologies: ["Java", "HTML/CSS", "MySQL", "Docker", "JDBC API"],
-    featured: false,
-    github: "https://github.com/ariqmuldi/moodi-jawoodi-grocery",
-  },
-];
+import { projects } from "@/app/data/projects";
 
 export default function ProjectsSection() {
   return (
@@ -138,7 +37,7 @@ export default function ProjectsSection() {
         </div>
 
         {/* Projects grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8 xl:[&>*:last-child:nth-child(3n+1)]:col-start-2">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
