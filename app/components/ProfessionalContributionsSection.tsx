@@ -1,4 +1,3 @@
-// @/app/components/ProfessionalContributionsSection.tsx
 "use client";
 
 import { motion } from "framer-motion";
