@@ -44,6 +44,15 @@ export const contributionGroups: ContributionGroup[] = [
         technologies: ["PHP", "Laravel", "MySQL", "JavaScript", "Docker", "UBC Canvas API", "Matomo Analytics", "AI (LLMs)", "Apache"],
         websiteUrl: "https://learncoding.ok.ubc.ca",
         experienceAnchor: "#experience-4"
+      },
+      {
+        id: 3,
+        title: "MDS Application",
+        description: "A full-stack admissions management platform automating workflows for 1,000+ annual applicants. Features include a 3-tier role-based authentication system, AJAX-driven applicant filtering, atomic CSV batch processing, and an automated reporting dashboard.",
+        image: "/mdsapppicture.png",
+        technologies: ["Python", "PostgreSQL", "JavaScript", "Flask", "Tailwind CSS", "Flask Blueprints", "bcrypt", "AJAX", "HTML/CSS"],
+        githubUrl: "https://github.com/marga120/mds-application",
+        experienceAnchor: "#experience-2"
       }
     ]
   }

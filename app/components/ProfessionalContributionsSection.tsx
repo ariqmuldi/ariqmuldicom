@@ -61,7 +61,7 @@ export default function ProfessionalContributionsSection() {
               </h3>
             </motion.div>
             
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto lg:[&>*:last-child:nth-child(2n+1)]:col-span-2 lg:[&>*:last-child:nth-child(2n+1)]:justify-self-center lg:[&>*:last-child:nth-child(2n+1)]:w-[calc(50%-1rem)]">
               {group.contributions.map((contribution, contribIndex) => (
                 <motion.div
                   key={contribution.id}
@@ -69,6 +69,7 @@ export default function ProfessionalContributionsSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: contribIndex * 0.15 }}
+                  className="w-full"
                 >
                   <div className="group h-full card-glass card-glass-hover rounded-2xl overflow-hidden flex flex-col">
                     {/* Contribution image */}
@@ -79,7 +80,6 @@ export default function ProfessionalContributionsSection() {
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-background-dark/70 to-transparent" />
                     </div>
 
                     {/* Contribution content */}
@@ -111,7 +111,7 @@ export default function ProfessionalContributionsSection() {
                         >
                           Learn More
                         </Link>
-                        {contribution.websiteUrl && (
+                        {contribution.websiteUrl ? (
                           <Link
                             href={contribution.websiteUrl}
                             target="_blank"
@@ -121,6 +121,13 @@ export default function ProfessionalContributionsSection() {
                             View Website
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                           </Link>
+                        ) : (
+                          <span className="inline-flex items-center gap-2 text-text-muted text-sm">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                            Private Website
+                          </span>
                         )}
                         {contribution.githubUrl ? (
                            <Link
