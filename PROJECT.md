@@ -99,6 +99,7 @@ The Experience section, Hero Section skills display, Education section, and Proj
   - `/app/data/skills.ts` (Skills data)
   - `/app/data/education.ts` (Education data)
   - `/app/data/projects.ts` (Projects data)
+  - **Note:** `/app/data/professional-contributions.ts` is **manually curated** and NOT auto-generated.
 - **Parser Script**: `/scripts/parse-resume.ts` (Build-time parser)
 - **Configuration**: `/data/resume-config.json` (Control visibility of experiences and accomplishments)
 

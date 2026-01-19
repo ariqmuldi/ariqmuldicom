@@ -21,6 +21,7 @@ The Experience section, Skills display, Education section, and Projects section 
    - `/app/data/skills.ts` - Skills data
    - `/app/data/education.ts` - Education data
    - `/app/data/projects.ts` - Projects data
+   - **Note:** `/app/data/professional-contributions.ts` is **manually curated** and NOT auto-generated.
 6. Your website's Experience, Education, Projects sections and Skills display now reflect the latest resume
 
 ## Expected LaTeX Structure

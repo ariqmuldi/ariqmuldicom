@@ -11,6 +11,7 @@ export interface Contribution {
   githubUrl?: string;
   websiteUrl?: string;
   experienceAnchor: string;
+  comingSoon?: boolean;
 }
 
 export interface ContributionGroup {
@@ -21,6 +22,22 @@ export interface ContributionGroup {
 }
 
 export const contributionGroups: ContributionGroup[] = [
+  {
+    id: 3,
+    organization: "DOUBL",
+    logo: "/doubl-logo.png",
+    contributions: [
+      {
+        id: 4,
+        title: "Professional Showcase (TBA)",
+        description: "A comprehensive showcase featuring multiple engineering projects developed during my tenure at DOUBL is coming soon. This will include full-stack applications, B2B integrations, and automated pipelines currently in production.",
+        image: "/doublpicture.jpeg",
+        technologies: ["Python", "Google Cloud", "Next.js", "TypeScript", "Shopify API", "Machine Learning", "Zoho"],
+        experienceAnchor: "#experience-1",
+        comingSoon: true
+      }
+    ]
+  },
   {
     id: 1,
     organization: "University of British Columbia",
