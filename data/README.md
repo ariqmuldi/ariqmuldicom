@@ -366,6 +366,31 @@ The Hero Section "show all skills" view is automatically generated from your LaT
 - **Terminal Formatting**: Each category appears as a terminal command (e.g., `$ cat programming-languages.txt`)
 - **Staggered Animations**: Categories animate in sequence with 0.1s delays
 
+### Profile Picture Display
+
+The Hero Section now features a responsive profile picture:
+- **Source**: `/public/profile-photo.jpg`
+- **Location**: Top-right corner of the terminal window
+- **Responsive Behavior**:
+  - **Mobile**: Smaller (20x20), positioned at top-16 right-4
+  - **Desktop**: Larger (32x32), positioned at top-20 right-8
+- **Interactions**:
+  - **Entrance Animation**: Spring-based pop-in effect (0.5s delay)
+  - **Hover Effect**: Scales up, rotates slightly, glows, and brightens border
+  - **Positioning**: Uses `object-[50%_15%]` to perfectly frame face and upper body
+
+### Favicon Generation
+
+The website uses a dynamically generated favicon:
+- **Source**: `/app/icon.tsx` (Next.js ImageResponse)
+- **Output**: Generates `favicon.ico` / `icon.png` automatically
+- **Design**:
+  - Circular badge with "AM" initials
+  - Dark purple background (`#2c2e3f`)
+  - Cream text (`#F4EBD3`)
+  - Border: 1px solid `#555879`
+  - Font: Bold (900 weight), 12px size
+
 ### Adding/Removing Skill Categories
 
 Simply edit your LaTeX resume's Technical Skills section:

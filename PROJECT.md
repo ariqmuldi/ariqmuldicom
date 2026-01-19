@@ -75,6 +75,18 @@ The hero section features a terminal-style design:
 - Terminal commands as UI elements (`$ whoami`, `$ git status`, `$ ls top-skills/`)
 - Monospace font (Geist Mono) for terminal text
 - Dark background (`#2c2e3f`) with cream text (`#F4EBD3`)
+- **Profile Picture Integration**:
+  - Located in the top-right corner of the terminal
+  - Responsive: Smaller on mobile, larger on desktop
+  - Interactive: Hover effect triggers scale, rotation, and glow
+  - Animation: Spring-based entrance animation
+
+### Favicon System
+
+The site uses Next.js 16's dynamic icon generation:
+- **File**: `app/icon.tsx`
+- **Mechanism**: Uses `ImageResponse` to generate the favicon on the fly
+- **Design**: "AM" initials in a circular badge matching the site's dark purple/cream theme
 
 ### Image Configuration
 
