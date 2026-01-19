@@ -46,6 +46,7 @@ export default function ExperienceSection() {
             {experiences.map((experience, index) => (
               <motion.div
                 key={experience.id}
+                id={`experience-${experience.id}`}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}

@@ -183,6 +183,12 @@ export default function HeroSection() {
               <p className="text-accent-purple-light mb-3">$ next --action</p>
               <div className="pl-4 flex flex-wrap gap-3">
                 <a
+                  href="#contributions"
+                  className="px-4 py-2 bg-accent-purple/20 hover:bg-accent-purple/30 rounded-lg border border-accent-purple/40 hover:border-accent-purple/60 transition-all duration-300 text-sm"
+                >
+                  View Contributions
+                </a>
+                <a
                   href="#projects"
                   className="px-4 py-2 bg-accent-purple/20 hover:bg-accent-purple/30 rounded-lg border border-accent-purple/40 hover:border-accent-purple/60 transition-all duration-300 text-sm"
                 >
