@@ -77,11 +77,10 @@ export default function HeroSection() {
                   Ariq Muldi
                 </h1>
                 <p className="text-accent-cream/90">
-                  Aspiring Software Engineer & Developer | Building Scalable
-                  Applications
+                  Software Engineer | Full Stack Developer | Cloud & DevOps Specialist
                 </p>
                 <p className="text-accent-cream/70 text-sm mt-2">
-                  4+ Years of Experience, 7+ Projects Completed, 4+ Professional
+                  5+ Years of Experience, 15+ Projects Completed, 5+ Professional
                   Roles
                 </p>
               </div>

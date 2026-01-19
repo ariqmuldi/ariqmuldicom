@@ -228,7 +228,7 @@ export default function ContactSection() {
           className="text-center mt-16 pt-8 border-t border-accent-purple/10"
         >
           <p className="text-text-muted text-sm">
-            © 2025 Ariq Muldi. Built with Next.js, TypeScript, and Tailwind CSS.
+            © 2026 Ariq Muldi. Built with Next.js, TypeScript, and Tailwind CSS.
           </p>
         </motion.div>
       </div>

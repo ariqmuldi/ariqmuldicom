@@ -132,7 +132,7 @@ export default function ExperienceSection() {
             { value: "10,000+", label: "Records Processed" },
             { value: "1,000+", label: "Users Served" },
             { value: "500+", label: "Students Impacted" },
-            { value: "4", label: "Active Roles" },
+            { value: "5", label: "Active Roles" },
           ].map((stat, index) => (
             <div key={index} className="card-glass rounded-xl p-6 text-center">
               <div className="text-2xl md:text-3xl font-bold gradient-text mb-2">
