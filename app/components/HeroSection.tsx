@@ -79,7 +79,7 @@ export default function HeroSection() {
               boxShadow: "0 0 25px rgba(152, 161, 188, 0.4)",
               transition: { duration: 0.2 }
             }}
-            className="absolute top-20 right-8 w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-accent-purple/30 shadow-xl hidden md:block z-10 cursor-pointer"
+            className="absolute top-16 right-4 w-20 h-20 md:top-20 md:right-8 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-accent-purple/30 shadow-xl z-10 cursor-pointer"
           >
             <Image
               src="/profile-photo.jpg"
