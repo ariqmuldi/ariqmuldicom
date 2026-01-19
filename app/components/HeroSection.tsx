@@ -51,7 +51,7 @@ export default function HeroSection() {
             type: "spring",
             stiffness: 100,
           }}
-          className="terminal-window p-4 shadow-2xl"
+          className="terminal-window p-4 shadow-2xl relative"
         >
           {/* Terminal header */}
           <div className="flex items-center gap-2 mb-6 pb-3 border-b border-accent-purple/20">
@@ -62,6 +62,32 @@ export default function HeroSection() {
               ~/ariq-muldi-portfolio
             </span>
           </div>
+
+          {/* Profile Photo */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0, rotate: -10 }}
+            animate={{ 
+              opacity: 1, 
+              scale: 1, 
+              rotate: 0,
+              transition: { duration: 0.5, delay: 0.5, type: "spring" }
+            }}
+            whileHover={{ 
+              scale: 1.1, 
+              rotate: 5,
+              borderColor: "rgba(152, 161, 188, 0.8)",
+              boxShadow: "0 0 25px rgba(152, 161, 188, 0.4)",
+              transition: { duration: 0.2 }
+            }}
+            className="absolute top-20 right-8 w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-accent-purple/30 shadow-xl hidden md:block z-10 cursor-pointer"
+          >
+            <Image
+              src="/profile-photo.jpg"
+              alt="Ariq Muldi"
+              fill
+              className="object-cover object-[50%_15%]"
+            />
+          </motion.div>
 
           {/* Terminal content */}
           <div className="font-mono space-y-4 text-accent-cream">
