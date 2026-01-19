@@ -293,15 +293,6 @@ This extracts: `["JavaScript", "React", "Node.js", "PostgreSQL"]`
 
 Technologies appear as colored badges in the project card.
 
-### Featured Projects
-
-All projects default to `featured: false` for the MVP. To mark a project as featured, you would need to:
-
-1. Edit the generated `/app/data/projects.ts` file manually (not recommended)
-2. Or wait for future enhancement to add configuration support
-
-Featured projects display a "Featured" badge in the top-right corner.
-
 ### Editing Projects Data
 
 To update projects on your website:

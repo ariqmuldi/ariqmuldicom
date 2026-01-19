@@ -27,7 +27,7 @@ export default function ProjectsSection() {
               Portfolio
             </span>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text-alt">
-              Featured Projects
+              Personal Projects
             </h2>
             <p className="text-lg text-text-secondary max-w-2xl mx-auto">
               Software applications built during my Computer Science journey,
