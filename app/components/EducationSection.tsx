@@ -8,10 +8,6 @@ export default function EducationSection() {
     { title: "2x Dean's List", description: "Academic Excellence" },
     { title: "Top 5%", description: "Class Ranking" },
     { title: "1x Dean's Scholar", description: "Academic Excellence" },
-    {
-      title: `${education.gpa} GPA`,
-      description: education.gpaPercentage + " Average",
-    },
   ];
 
   return (
@@ -62,14 +58,16 @@ export default function EducationSection() {
                     Kelowna, BC • Expected Graduation: May 2026
                   </p>
                 </div>
-                {/* <div className="mt-4 md:mt-0">
+                <div className="mt-4 md:mt-0">
                   <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2">
                     <div>
-                      <p className="font-bold text-lg">4.21/4.33</p>
-                      <p className="text-xs text-white/80">Current GPA</p>
+                      <p className="font-bold text-lg">{education.gpa} GPA</p>
+                      <p className="text-xs text-white/80">
+                        {education.gpaPercentage} Average
+                      </p>
                     </div>
                   </div>
-                </div> */}
+                </div>
               </div>
             </div>
 
@@ -85,7 +83,7 @@ export default function EducationSection() {
               </div>
 
               {/* Academic Achievements Grid */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
                 {achievements.map((achievement, index) => (
                   <motion.div
                     key={index}
