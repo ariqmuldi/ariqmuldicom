@@ -79,6 +79,13 @@ export default function HeroSection() {
               boxShadow: "0 0 25px rgba(152, 161, 188, 0.4)",
               transition: { duration: 0.2 }
             }}
+            whileTap={{ 
+              scale: 1.1, 
+              rotate: 5,
+              borderColor: "rgba(152, 161, 188, 0.8)",
+              boxShadow: "0 0 25px rgba(152, 161, 188, 0.4)",
+              transition: { duration: 0.2 }
+            }}
             className="absolute top-16 right-4 w-20 h-20 md:top-20 md:right-8 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-accent-purple/30 shadow-xl z-10 cursor-pointer"
           >
             <Image
