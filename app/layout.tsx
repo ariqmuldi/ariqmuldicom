@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+	metadataBase: new URL('https://ariqmuldi.com'),
 	title: 'Ariq Muldi - Software Engineer | Full Stack Developer | Cloud & DevOps Specialist',
 	description:
 		'Software Engineer and Computer Science student at UBC with 5+ years of experience. Currently working as a Software Engineer at DOUBL and Undergraduate Research Assistant at UBC. Specialized in Full Stack Development, Cloud Computing, and DevOps.',
@@ -58,7 +59,7 @@ export const metadata: Metadata = {
 		siteName: 'Ariq Muldi - Portfolio',
 		images: [
 			{
-				url: '/for-metadata-picture.jpg',
+				url: '/for-metadata-picture.png',
 				width: 1200,
 				height: 630,
 				alt: 'Ariq Muldi - Software Engineer & Full Stack Developer',
@@ -72,6 +73,7 @@ export const metadata: Metadata = {
 		title: 'Ariq Muldi - Software Engineer | Full Stack Developer',
 		description: 'Software Engineer at DOUBL & UBC Student. Passionate about full-stack development, cloud computing, and building scalable solutions.',
 		creator: '@ariqmuldi',
+		images: ['/for-metadata-picture.png'],
 	},
 	robots: {
 		index: true,
