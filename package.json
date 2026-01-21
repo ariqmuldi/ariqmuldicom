@@ -4,7 +4,6 @@
 	"private": true,
 	"scripts": {
 		"parse:resume": "tsx scripts/parse-resume.ts",
-		"prebuild": "npm run parse:resume",
 		"predev": "npm run parse:resume",
 		"dev": "next dev --turbopack",
 		"build": "next build",
