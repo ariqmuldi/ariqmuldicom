@@ -9,7 +9,7 @@ function folder(name: string): string {
 	return `${first}/`;
 }
 
-export default function StackSection() {
+export default function SkillsSection() {
 	const categories = skills.categories;
 
 	return (

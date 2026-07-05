@@ -1,8 +1,8 @@
-// @/app/data/professional-contributions.ts
+// @/app/data/work.ts
 // This file is manually curated and is not auto-generated.
-// It showcases specific high-impact projects from work experience.
+// It showcases specific high-impact projects from work experience (the "Work" section).
 
-export interface Contribution {
+export interface WorkItem {
   id: number;
   title: string;
   description: string;
@@ -21,22 +21,22 @@ export interface Contribution {
   overlayLabel?: string;
 }
 
-export interface ContributionGroup {
+export interface WorkGroup {
   id: number;
   organization: string;
   logo?: string;
   // Short display name used in article meta rows (e.g. "UBC").
   shortName?: string;
-  contributions: Contribution[];
+  workItems: WorkItem[];
 }
 
-export const contributionGroups: ContributionGroup[] = [
+export const workGroups: WorkGroup[] = [
   {
     id: 3,
     organization: "DOUBL",
     shortName: "DOUBL",
     logo: "/doubl-logo.png",
-    contributions: [
+    workItems: [
       {
         id: 4,
         title: "Professional Showcase (TBA)",
@@ -56,7 +56,7 @@ export const contributionGroups: ContributionGroup[] = [
     organization: "University of British Columbia",
     shortName: "UBC",
     logo: "/ubc-logo.png",
-    contributions: [
+    workItems: [
       {
         id: 1,
         title: "Makerspace Platform",

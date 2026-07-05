@@ -1,16 +1,16 @@
 'use client';
 
 import Image from 'next/image';
-import { contributionGroups, type Contribution } from '@/app/data/professional-contributions';
+import { workGroups, type WorkItem } from '@/app/data/work';
 
-// Flatten every contribution across groups, tagging each with its org short name.
+// Flatten every work item across groups, tagging each with its org short name.
 // Live/shipped work first, "coming soon" showcases last — a presentation rule that
 // works for any number of groups/items, not a hardcoded order.
-type FlatContribution = Contribution & { org: string };
+type FlatWorkItem = WorkItem & { org: string };
 
-const items: FlatContribution[] = contributionGroups
+const items: FlatWorkItem[] = workGroups
 	.flatMap((group) =>
-		group.contributions.map((c) => ({
+		group.workItems.map((c) => ({
 			...c,
 			org: group.shortName ?? group.organization,
 		}))
@@ -30,7 +30,7 @@ function TechLine({ tech }: { tech: string[] }) {
 	);
 }
 
-export default function ProfessionalContributionsSection() {
+export default function WorkSection() {
 	return (
 		<section id="work" className="section">
 			<div className="section-grid">

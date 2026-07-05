@@ -2,10 +2,10 @@
 
 import TopBar from './components/TopBar';
 import HeroSection from './components/HeroSection';
-import ProfessionalContributionsSection from './components/ProfessionalContributionsSection';
+import WorkSection from './components/WorkSection';
 import ExperienceSection from './components/ExperienceSection';
 import ProjectsSection from './components/ProjectsSection';
-import StackSection from './components/StackSection';
+import SkillsSection from './components/SkillsSection';
 import EducationSection from './components/EducationSection';
 import ContactSection from './components/ContactSection';
 import { useActiveSection, useScrollReveal } from './lib/hooks';
@@ -19,10 +19,10 @@ export default function Portfolio() {
 			<TopBar activeSection={activeSection} />
 			<main>
 				<HeroSection />
-				<ProfessionalContributionsSection />
+				<WorkSection />
 				<ExperienceSection />
 				<ProjectsSection />
-				<StackSection />
+				<SkillsSection />
 				<EducationSection />
 				<ContactSection />
 			</main>
