@@ -2,14 +2,11 @@
 
 import { useClock } from '@/app/lib/hooks';
 
-// Contact links are static site config (not resume-data driven).
-// TODO(ariq): confirm email + LinkedIn are the handles you want public
-// (both carried over from the previous site).
+// Contact links are static site config (not resume-data driven)
 const links = [
 	{ label: '01 / EMAIL', value: 'ariqmuldi@gmail.com', href: 'mailto:ariqmuldi@gmail.com', external: false },
 	{ label: '02 / GITHUB', value: 'github.com/ariqmuldi', href: 'https://github.com/ariqmuldi', external: true },
 	{ label: '03 / LINKEDIN', value: 'in/ariqmuldi', href: 'https://linkedin.com/in/ariqmuldi', external: true },
-	// Served from /public/master-resume.pdf.
 	{ label: '04 / MASTER RESUME', value: 'download .pdf', href: '/master-resume.pdf', external: true },
 ];
 
