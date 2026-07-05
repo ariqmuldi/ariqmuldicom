@@ -1,0 +1,106 @@
+{
+  "doubl": {
+    "experienceId": 1,
+    "sourceHash": "2fd0eb35",
+    "approved": true,
+    "technologies": [
+      "API",
+      "API Gateway",
+      "APIs",
+      "Agile",
+      "Android",
+      "CSS",
+      "Cloud Run",
+      "Deluge",
+      "Firestore",
+      "GitHub",
+      "GitHub Pages",
+      "Google Cloud",
+      "Google Cloud Run",
+      "HMAC",
+      "HMAC signature",
+      "HTML",
+      "JavaScript",
+      "Liquid",
+      "Machine Learning",
+      "Middleware",
+      "Next.js",
+      "Proxy",
+      "Python",
+      "React",
+      "Shopify",
+      "Shopify App Proxy",
+      "Shopify Editor",
+      "Size Stream",
+      "Trello",
+      "TypeScript",
+      "Webhooks",
+      "Zoho",
+      "Zoho Deluge",
+      "Zoho Flow",
+      "Zoho Inventory",
+      "iOS",
+      "webhooks"
+    ]
+  },
+  "mds": {
+    "experienceId": 2,
+    "sourceHash": "969cde6f",
+    "approved": true,
+    "technologies": [
+      "Python",
+      "PostgreSQL",
+      "JavaScript",
+      "Flask",
+      "Tailwind CSS",
+      "Flask Blueprints",
+      "bcrypt",
+      "AJAX",
+      "HTML/CSS"
+    ],
+    "description": "A full-stack admissions management platform automating workflows for 1,000+ annual applicants. Features include a 3-tier role-based authentication system, AJAX-driven applicant filtering, atomic CSV batch processing, and an automated reporting dashboard."
+  },
+  "makerspace": {
+    "experienceId": 3,
+    "sourceHash": "8295f252",
+    "approved": true,
+    "technologies": [
+      "TypeScript",
+      "React Router v7",
+      "PostgreSQL",
+      "Prisma",
+      "Node.js",
+      "Stripe",
+      "IoT (ESP32)",
+      "Docker",
+      "Zod",
+      "Jest"
+    ],
+    "description": "A comprehensive membership and equipment management system serving 1,000+ members. Features include digital workshop enrollment, Stripe payment processing with tokenization, automated IoT access control via ESP32, and an admin dashboard for operational metrics."
+  },
+  "learncoding": {
+    "experienceId": 4,
+    "sourceHash": "81e26194",
+    "approved": true,
+    "technologies": [
+      "PHP",
+      "Laravel",
+      "MySQL",
+      "JavaScript",
+      "Docker",
+      "UBC Canvas API",
+      "Matomo Analytics",
+      "AI (LLMs)",
+      "Apache"
+    ],
+    "description": "An adaptive learning platform serving 500+ students with code visualizers, sandbox environments, and AI-powered content generation. Integrated with the UBC Canvas gradebook for automated assessment syncing and features role-based access control for faculty management."
+  },
+  "teaching-assistant": {
+    "experienceId": 5,
+    "sourceHash": "fe540cc9",
+    "approved": true,
+    "technologies": [
+      "Java"
+    ]
+  }
+}
