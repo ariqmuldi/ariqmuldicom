@@ -1,6 +1,6 @@
 {
   "experiences": {
-    "Junior Software Developer": {
+    "Lead Software Developer": {
       "hidden": false,
       "hideAllAccomplishments": true,
       "hideAccomplishments": [],
@@ -41,7 +41,7 @@
     },
     "examples": {
       "hideEntireExperience": {
-        "Undergraduate Teaching Assistant": {
+        "Example Role (Department)": {
           "hidden": true,
           "hideAllAccomplishments": false,
           "hideAccomplishments": [],
@@ -49,7 +49,7 @@
         }
       },
       "hideAllAccomplishmentsKeepTech": {
-        "Junior Software Developer": {
+        "Example Role": {
           "hidden": false,
           "hideAllAccomplishments": true,
           "hideAccomplishments": [],
@@ -57,7 +57,7 @@
         }
       },
       "hideAccomplishmentsAndTech": {
-        "Junior Software Developer": {
+        "Example Role": {
           "hidden": false,
           "hideAllAccomplishments": true,
           "hideAccomplishments": [],
@@ -65,7 +65,7 @@
         }
       },
       "hideSpecificAccomplishments": {
-        "Software Developer (Work Study Program)": {
+        "Another Role (Department)": {
           "hidden": false,
           "hideAllAccomplishments": false,
           "hideAccomplishments": [
@@ -87,7 +87,7 @@
       "This file is auto-updated when new experiences are added to your LaTeX resume",
       "Your existing settings are preserved when the config is updated",
       "Current experience keys:",
-      "  - Junior Software Developer",
+      "  - Lead Software Developer",
       "  - Software Developer (Work Study Program)",
       "  - Software Developer -- Makerspace Platform (Undergraduate Research Assistant & Directed Studies)",
       "  - Software Developer -- LearnCoding Platform (Undergraduate Research Assistant & Directed Studies)",

@@ -16,7 +16,7 @@ export interface Experience {
 export const experiences: Experience[] = [
   {
     "id": 1,
-    "title": "Junior Software Developer",
+    "title": "Lead Software Developer",
     "company": "DOUBL",
     "department": "",
     "location": "Remote",
@@ -209,14 +209,16 @@ export const experiences: Experience[] = [
     "company": "University of British Columbia",
     "department": "",
     "location": "Kelowna, BC",
-    "period": "Sept. 2024 -- Present",
-    "current": true,
+    "period": "Sept. 2024 -- Sept. 2025",
+    "current": false,
     "accomplishments": [
-      "Facilitated interactive lab sessions and tutoring for over 60+ students, employing hands-on exercises and real-time coding challenges to enhance understanding of machine architecture, Java programming, and general coding concepts",
+      "Facilitated lab sessions and tutoring for over 60+ students, employing exercises and coding challenges to enhance understanding of machine architecture using MIPS Assembly, Java programming, and general coding concepts",
       "Designed and graded assignments and exams for 300+ students for the two largest computer science courses at UBC"
     ],
     "technologies": [
-      "Java"
+      "Assembly",
+      "Java",
+      "MIPS Assembly"
     ]
   }
 ];
