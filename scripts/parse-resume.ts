@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-interface Experience {
+export interface Experience {
   id: number;
   title: string;
   company: string;
@@ -214,7 +214,7 @@ const TECH_KEYWORDS = [
   'Proxy', 'Load Balancer', 'CDN', 'Cloudflare', 'FastlyEdge Computing'
 ];
 
-function cleanLatexText(text: string): string {
+export function cleanLatexText(text: string): string {
   // Remove LaTeX color commands
   text = text.replace(/\\textcolor\{[^}]+\}\{([^}]+)\}/g, '$1');
 
@@ -286,7 +286,7 @@ function generateImagePath(title: string): string {
   return `/${slug}picture.jpg`;
 }
 
-function parseResume(latexContent: string): Experience[] {
+export function parseResume(latexContent: string): Experience[] {
   const experiences: Experience[] = [];
 
   // Find the Experience section
@@ -704,9 +704,12 @@ function updateConfigFile(configPath: string, experiences: Experience[], existin
         hideAccomplishments: "Array of accomplishment indices (1-based) to hide. Example: [1, 3, 5] hides the 1st, 3rd, and 5th accomplishments. Ignored if hideAllAccomplishments is true.",
         hideTechnologies: "Set to true to hide the technologies section for this experience."
       },
+      // These example keys are generic placeholders — replace with your actual experience
+      // keys (see the "Current experience keys" list in notes below). Role titles change, so
+      // examples intentionally don't hardcode a real title.
       examples: {
         hideEntireExperience: {
-          "Undergraduate Teaching Assistant": {
+          "Example Role (Department)": {
             hidden: true,
             hideAllAccomplishments: false,
             hideAccomplishments: [],
@@ -714,7 +717,7 @@ function updateConfigFile(configPath: string, experiences: Experience[], existin
           }
         },
         hideAllAccomplishmentsKeepTech: {
-          "Junior Software Developer": {
+          "Example Role": {
             hidden: false,
             hideAllAccomplishments: true,
             hideAccomplishments: [],
@@ -722,7 +725,7 @@ function updateConfigFile(configPath: string, experiences: Experience[], existin
           }
         },
         hideAccomplishmentsAndTech: {
-          "Junior Software Developer": {
+          "Example Role": {
             hidden: false,
             hideAllAccomplishments: true,
             hideAccomplishments: [],
@@ -730,7 +733,7 @@ function updateConfigFile(configPath: string, experiences: Experience[], existin
           }
         },
         hideSpecificAccomplishments: {
-          "Software Developer (Work Study Program)": {
+          "Another Role (Department)": {
             hidden: false,
             hideAllAccomplishments: false,
             hideAccomplishments: [2, 4, 6, 8],
@@ -1020,4 +1023,9 @@ function main() {
   }
 }
 
-main();
+// Only run the full parse pipeline when executed directly (e.g. `tsx scripts/parse-resume.ts`
+// or `npm run parse:resume`). When imported by another script (e.g. generate-role-content.ts),
+// the exported helpers are used without re-running main() and rewriting app/data/*.ts.
+if (require.main === module) {
+  main();
+}
