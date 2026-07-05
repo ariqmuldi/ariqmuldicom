@@ -1,6 +1,14 @@
 // @/app/data/work.ts
 // This file is manually curated and is not auto-generated.
 // It showcases specific high-impact projects from work experience (the "Work" section).
+//
+// `description` and `technologies` are AI-owned: generated per-role into
+// role-content.json by `npm run generate:content` (see
+// docs/implementations/ROLE-CONTENT-AND-EXPANDABLE-EXPERIENCE.md). They are merged in at
+// module load, keyed by `contentKey`. To hand-override either field for an item, just set
+// it inline below — an inline value always wins over the AI value (see resolve()).
+
+import roleContent from './role-content.json';
 
 export interface WorkItem {
   id: number;
@@ -12,6 +20,9 @@ export interface WorkItem {
   websiteUrl?: string;
   experienceAnchor: string;
   comingSoon?: boolean;
+  // Stable role slug joining this item to its role-content.json entry (shared with the
+  // Experience section, which joins the same entry by experienceId).
+  contentKey?: string;
   // --- Optional presentation fields for the Selected Work section ---
   // Short role label shown in the article meta row (e.g. "Research Assistant").
   role?: string;
@@ -30,9 +41,35 @@ export interface WorkGroup {
   workItems: WorkItem[];
 }
 
-export const workGroups: WorkGroup[] = [
+type RoleContent = {
+  experienceId: number;
+  sourceHash: string;
+  approved: boolean;
+  technologies: string[];
+  description?: string;
+};
+const contentByKey = roleContent as Record<string, RoleContent>;
+
+// Curated data may omit the two AI-owned fields; the exported WorkItem keeps them required.
+type CuratedWorkItem = Omit<WorkItem, 'description' | 'technologies'> & {
+  description?: string;
+  technologies?: string[];
+};
+type CuratedWorkGroup = Omit<WorkGroup, 'workItems'> & { workItems: CuratedWorkItem[] };
+
+// Precedence: inline hand-written value → AI value → empty.
+function resolve(item: CuratedWorkItem): WorkItem {
+  const ai = item.contentKey ? contentByKey[item.contentKey] : undefined;
+  return {
+    ...item,
+    description: item.description ?? ai?.description ?? '',
+    technologies: item.technologies ?? ai?.technologies ?? [],
+  };
+}
+
+const curatedGroups: CuratedWorkGroup[] = [
   {
-    id: 3,
+    id: 2,
     organization: "DOUBL",
     shortName: "DOUBL",
     logo: "/doubl-logo.png",
@@ -40,12 +77,12 @@ export const workGroups: WorkGroup[] = [
       {
         id: 4,
         title: "Professional Showcase (TBA)",
-        description: "A comprehensive showcase featuring multiple engineering projects developed during my tenure at DOUBL is coming soon. This will include full-stack applications, B2B integrations, and automated pipelines currently in production.",
+        // description + technologies are AI-generated (role-content.json, key "doubl").
         image: "/doublpicture.jpeg",
-        technologies: ["Python", "Google Cloud", "Next.js", "TypeScript", "Shopify API", "Machine Learning", "Zoho"],
         experienceAnchor: "#experience-1",
+        contentKey: "doubl",
         comingSoon: true,
-        role: "Junior SWE",
+        role: "Lead Software Developer",
         figLabel: "DOUBL",
         overlayLabel: "IN PRODUCTION"
       }
@@ -60,37 +97,43 @@ export const workGroups: WorkGroup[] = [
       {
         id: 1,
         title: "Makerspace Platform",
-        description: "A comprehensive membership and equipment management system serving 1,000+ members. Features include digital workshop enrollment, Stripe payment processing with tokenization, automated IoT access control via ESP32, and an admin dashboard for operational metrics.",
+        // description + technologies are AI-generated (role-content.json, key "makerspace").
         image: "/msykpicture.png",
-        technologies: ["TypeScript", "React Router v7", "PostgreSQL", "Prisma", "Node.js", "Stripe", "IoT (ESP32)", "Docker", "Zod", "Jest"],
         githubUrl: "https://github.com/University-of-British-Columbia-Okanagan/MSYK_Membership",
         websiteUrl: "https://my.makerspaceyk.com",
         experienceAnchor: "#experience-3",
+        contentKey: "makerspace",
         role: "Research Assistant",
         figLabel: "MSYK.MEMBERSHIP"
       },
       {
         id: 2,
         title: "LearnCoding Platform",
-        description: "An adaptive learning platform serving 500+ students with code visualizers, sandbox environments, and AI-powered content generation. Integrated with the UBC Canvas gradebook for automated assessment syncing and features role-based access control for faculty management.",
+        // description + technologies are AI-generated (role-content.json, key "learncoding").
         image: "/learncodingpicture.png",
-        technologies: ["PHP", "Laravel", "MySQL", "JavaScript", "Docker", "UBC Canvas API", "Matomo Analytics", "AI (LLMs)", "Apache"],
         websiteUrl: "https://learncoding.ok.ubc.ca",
         experienceAnchor: "#experience-4",
+        contentKey: "learncoding",
         role: "Research Assistant",
         figLabel: "LEARNCODING"
       },
       {
         id: 3,
         title: "MDS Application",
-        description: "A full-stack admissions management platform automating workflows for 1,000+ annual applicants. Features include a 3-tier role-based authentication system, AJAX-driven applicant filtering, atomic CSV batch processing, and an automated reporting dashboard.",
+        // description + technologies are AI-generated (role-content.json, key "mds").
         image: "/mdsapppicture.png",
-        technologies: ["Python", "PostgreSQL", "JavaScript", "Flask", "Tailwind CSS", "Flask Blueprints", "bcrypt", "AJAX", "HTML/CSS"],
         githubUrl: "https://github.com/marga120/mds-application",
         experienceAnchor: "#experience-2",
+        contentKey: "mds",
         role: "Work Study",
         figLabel: "MDS.APPLICATION"
       }
     ]
   }
 ];
+
+// Merge AI-owned description/technologies (role-content.json) into the curated data at load.
+export const workGroups: WorkGroup[] = curatedGroups.map((group) => ({
+  ...group,
+  workItems: group.workItems.map(resolve),
+}));
