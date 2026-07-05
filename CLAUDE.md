@@ -30,7 +30,13 @@ Every section `.map()`s over a module in `app/data/`:
   `skills.ts`, `education.ts`, `projects.ts`. **Never hand-edit these** — they are overwritten
   on every parse. Any presentation the design needs from them is derived in the component, not
   stored in the data file
-- **Manually curated**: `work.ts` (the Work case studies) — safe to edit
+- **Manually curated**: `work.ts` (the Work case studies) — safe to edit. Its `description`
+  and `technologies` are **AI-owned**: generated per-role into `role-content.json` and merged
+  in at module load, keyed by a stable `contentKey`. An inline value on a work item overrides
+  the AI value (DOUBL keeps a manual `description` inline, since its card is coming-soon)
+- **AI-generated** by `scripts/generate-role-content.ts`: `role-content.json` — per-role
+  `technologies` (shared by both the Work and Experience sections) plus a `description` for
+  roles with a live Work card. Committed to git, hand-editable, carries an `approved` flag
 
 ## Résumé parser gotchas
 
@@ -39,6 +45,21 @@ Every section `.map()`s over a module in `app/data/`:
 - After editing `data/master-resume.tex` or `data/master-resume.pdf`: run `npm run parse:resume`
   (or restart `npm run dev`), then **commit** the regenerated `app/data/*.ts` and the synced
   `public/master-resume.pdf` so production builds pick them up
+
+## AI role content (`role-content.json`)
+
+- `npm run generate:content` is the **only** command that calls the AI (Gemini 2.5 Flash-Lite
+  via REST, reading `GEMINI_API_KEY` from `.env`). `dev`, `build`, and Vercel never call it —
+  they only read the committed `app/data/role-content.json`
+- Drafts land as `approved: false`; review them, then set `approved: true` on the good ones.
+  Re-running skips approved roles whose bullets are unchanged (a `sourceHash` guard); editing a
+  role's bullets forces a re-draft. `--force [slug]` redrafts regardless; `--seed` fills the
+  file from current values without calling the API
+- The same generated `technologies` list feeds both sections (Work joins by `contentKey`,
+  Experience by `experienceId`). **Commit `role-content.json`** after approving, like the
+  regenerated `app/data/*.ts`
+- The Experience `git log` ledger is collapsed by default (headline + tech + dates); clicking a
+  row expands its remaining résumé bullets
 
 ## Design constraints (do not reintroduce the old look)
 
