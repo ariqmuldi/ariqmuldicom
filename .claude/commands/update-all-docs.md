@@ -23,7 +23,7 @@ For every changed file (code, config, scripts — not markdowns), read it comple
 This includes:
 - React/TypeScript source under `app/` — `app/page.tsx`, `app/layout.tsx`, `app/icon.tsx`, `app/components/*.tsx`, `app/lib/*.ts`
 - Styling: `app/globals.css` (design tokens + all section styles), `tailwind.config.ts`
-- Content/data modules under `app/data/` — note which are auto-generated vs manually curated (`professional-contributions.ts` is curated; the rest are generated)
+- Content/data modules under `app/data/` — note which are auto-generated vs manually curated (`work.ts` is curated; the rest are generated)
 - The resume parser `scripts/parse-resume.ts` and its inputs under `data/` (`master-resume.tex`, `resume-config.json`, `master-resume.pdf`)
 - Config: `next.config.ts`, `package.json` (scripts + dependencies), `tsconfig.json`, `postcss.config.mjs`, `eslint.config.mjs`
 
