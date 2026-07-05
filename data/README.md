@@ -22,7 +22,7 @@ The Experience section, Skills display, Education section, and Projects section 
    - `/app/data/skills.ts` - Skills data
    - `/app/data/education.ts` - Education data
    - `/app/data/projects.ts` - Projects data
-   - **Note:** `/app/data/professional-contributions.ts` is **manually curated** and NOT auto-generated.
+   - **Note:** `/app/data/work.ts` is **manually curated** and NOT auto-generated.
 6. Your website's Experience, Education, Projects sections and Skills display now reflect the latest resume
 
 ## Expected LaTeX Structure
@@ -329,7 +329,7 @@ Run `npm run parse:resume` to regenerate `/app/data/projects.ts`.
 
 ## Skills Extraction
 
-The **Skills section** (`StackSection.tsx`, rendered as `tree` output) is automatically generated from your LaTeX resume's Technical Skills section.
+The **Skills section** (`SkillsSection.tsx`, rendered as `tree` output) is automatically generated from your LaTeX resume's Technical Skills section.
 
 ### Expected LaTeX Structure for Skills
 
@@ -363,7 +363,7 @@ The **Skills section** (`StackSection.tsx`, rendered as `tree` output) is automa
 
 ### Skills Display Behavior
 
-- **Dedicated Skills section**: `StackSection.tsx` renders all categories from your LaTeX resume — there is no separate "top skills" list, and skills are no longer shown in the Hero
+- **Dedicated Skills section**: `SkillsSection.tsx` renders all categories from your LaTeX resume — there is no separate "top skills" list, and skills are no longer shown in the Hero
 - **Tree output**: a `~/stack` root line followed by one row per category, prefixed with tree glyphs (`├──` / `└──`, the last row uses `└──`)
 - **Folder labels**: each category name is reduced to a lowercased first-word folder, e.g. "Programming Languages" → `programming/`, "Cloud & Deployment" → `cloud/`
 - **Reveal**: the whole tree fades in on scroll (IntersectionObserver), respecting reduced motion — no Framer Motion / staggered per-item animation
@@ -404,7 +404,7 @@ Run `npm run parse:resume` or `npm run dev` to regenerate `/app/data/skills.ts`.
 - Skills with parentheses are preserved: "SQL (PostgreSQL, MySQL)" stays as one skill
 - LaTeX formatting is automatically removed: `\textbf`, `\textit`, etc.
 - Empty categories are skipped
-- The Skills section derives a folder label from each category's first word ("Frameworks & Libraries" → "frameworks/"); the mapping lives in `StackSection.tsx`, not in the data
+- The Skills section derives a folder label from each category's first word ("Frameworks & Libraries" → "frameworks/"); the mapping lives in `SkillsSection.tsx`, not in the data
 - No configuration needed - skills are displayed as-is from your LaTeX resume
 
 ## Configuration: Hiding Experiences and Accomplishments

@@ -30,7 +30,7 @@ Every section `.map()`s over a module in `app/data/`:
   `skills.ts`, `education.ts`, `projects.ts`. **Never hand-edit these** — they are overwritten
   on every parse. Any presentation the design needs from them is derived in the component, not
   stored in the data file
-- **Manually curated**: `professional-contributions.ts` (the Work case studies) — safe to edit
+- **Manually curated**: `work.ts` (the Work case studies) — safe to edit
 
 ## Résumé parser gotchas
 

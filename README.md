@@ -52,10 +52,10 @@ Everything lives under `app/` (Next.js App Router):
 |---------|-----------|-------------|-------|
 | Top bar | `TopBar.tsx` | static nav config | sticky nav, scroll-spy highlight, live `~/path` crumb |
 | Hero | `HeroSection.tsx` | static + `experiences` count | typed `whoami`, framed avatar, metric strip |
-| Work | `ProfessionalContributionsSection.tsx` | `professional-contributions.ts` | case-study articles, `● LIVE` / `○ SHOWCASE TBA` |
+| Work | `WorkSection.tsx` | `work.ts` | case-study articles, `● LIVE` / `○ SHOWCASE TBA` |
 | Experience | `ExperienceSection.tsx` | `experiences.ts` | `git log` ledger with decorative commit hashes |
 | Projects | `ProjectsSection.tsx` | `projects.ts` | compact index rows linking to GitHub |
-| Skills | `StackSection.tsx` | `skills.ts` | `tree`-style output, one row per category |
+| Skills | `SkillsSection.tsx` | `skills.ts` | `tree`-style output, one row per category |
 | Education | `EducationSection.tsx` | `education.ts` | school/GPA header, coursework, certifications |
 | Contact | `ContactSection.tsx` | static links | dark section, live Vancouver clock, résumé download |
 
@@ -67,14 +67,14 @@ Education → Contact. Navigation is anchor-based (`#work`, `#experience`, `#pro
 
 Every section `.map()`s over its data module — no content is hardcoded in JSX. Component
 count follows array length, so adding/removing an experience, project, skill category, or
-contribution changes the page automatically.
+work item changes the page automatically.
 
 - **Auto-generated** from `data/master-resume.tex`: `experiences.ts`, `skills.ts`,
   `education.ts`, `projects.ts`. **Do not edit these by hand** — they are overwritten on
   every parse. See [`data/README.md`](data/README.md).
-- **Manually curated**: `professional-contributions.ts` (the "Work" case studies). It carries
+- **Manually curated**: `work.ts` (the "Work" case studies). It carries
   optional presentation fields the design needs — `role`, `figLabel`, `overlayLabel` (per
-  contribution) and `shortName` (per organization group).
+  work item) and `shortName` (per organization group).
 
 Because the auto-generated files are regenerated on `predev`, any presentation the design
 needs from them (commit hashes, company abbreviation, date splitting, skill folder labels)

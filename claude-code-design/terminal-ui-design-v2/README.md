@@ -24,7 +24,7 @@ app/
   globals.css
   components/    HeroSection.tsx, ExperienceSection.tsx, ProjectsSection.tsx, ...
   data/          experiences.ts, projects.ts, skills.ts, education.ts,
-                 professional-contributions.ts
+                 work.ts
 public/          profile-photo.jpg, *picture.png/jpg, logos
 ```
 **The task is to recreate this design inside that existing Next.js codebase**, using its
