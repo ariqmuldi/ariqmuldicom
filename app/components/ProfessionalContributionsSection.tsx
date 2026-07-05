@@ -42,7 +42,7 @@ export default function ProfessionalContributionsSection() {
 
 				<div>
 					<p className="intro-copy" data-reveal>
-						Production systems shipped in research and industry roles. Real users, real money, real uptime.
+						Production systems I&apos;ve shipped across research, academic, and industry roles — real users, real stakes, real uptime on the line.
 					</p>
 
 					{items.map((item, i) => {
