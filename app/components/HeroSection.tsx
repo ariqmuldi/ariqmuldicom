@@ -10,7 +10,7 @@ const metrics = [
 	{ num: '10,000+', label: 'RECORDS PROCESSED' },
 	{ num: '500+', label: 'STUDENTS IMPACTED' },
 	// Role count is derived from the experiences data so it stays in sync.
-	{ num: String(experiences.length).padStart(2, '0'), label: 'ACTIVE ROLES' },
+	{ num: `${String(experiences.length).padStart(2, '0')}+`, label: 'ROLES' },
 ];
 
 export default function HeroSection() {
@@ -36,14 +36,14 @@ export default function HeroSection() {
 					</div>
 
 					<p className="hero__intro" data-reveal style={{ '--reveal-delay': '220ms' } as React.CSSProperties}>
-						I build full-stack platforms that move real people through real systems — graduate admissions,
-						makerspace memberships, adaptive learning — and I care about the infrastructure underneath: schemas,
-						auth, payments, deploys.
+						I build production software for problems that have nothing in common — fit preference, graduate
+						admissions, makerspace operations, adaptive learning, and a shelf of side projects — and ship every
+						one end to end.
 					</p>
 
 					<div className="hero__status" data-reveal style={{ '--reveal-delay': '280ms' } as React.CSSProperties}>
 						<span>
-							<span className="dot-green">●</span> Available — 2026 new-grad SWE roles
+							<span className="dot-green">●</span> Available — 2027 new-grad SWE roles
 						</span>
 						<span className="sep">|</span>
 						<span>
