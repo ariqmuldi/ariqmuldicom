@@ -571,6 +571,60 @@
   line-height: 1.5;
 }
 
+/* Expand/collapse affordance — accent glyph in the git/tree language, near the hash. */
+.gitlog__toggle {
+  color: var(--accent);
+  white-space: pre;
+}
+.gitlog__row[data-expandable] {
+  cursor: pointer;
+}
+.gitlog__row:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Expanded "commit body" — the role's remaining bullets under the summary column. */
+.gitlog__body {
+  list-style: none;
+  margin: 12px 0 2px;
+  padding: 12px 0 0;
+  border-top: 1px solid var(--rule);
+}
+.gitlog__body-item {
+  position: relative;
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  max-width: 66ch;
+  padding-left: 16px;
+  margin-top: 8px;
+}
+.gitlog__body-item:first-child {
+  margin-top: 0;
+}
+.gitlog__body-item::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: var(--ink-faint);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .gitlog__body {
+    animation: gitlogExpand 0.24s ease;
+  }
+}
+@keyframes gitlogExpand {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* ============================================================
    Projects — index rows
    ============================================================ */
