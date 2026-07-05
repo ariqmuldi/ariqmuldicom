@@ -4,18 +4,16 @@ import Image from 'next/image';
 import { workGroups, type WorkItem } from '@/app/data/work';
 
 // Flatten every work item across groups, tagging each with its org short name.
-// Live/shipped work first, "coming soon" showcases last — a presentation rule that
-// works for any number of groups/items, not a hardcoded order.
+// Display order follows the authored order of `workGroups` in work.ts (DOUBL first, then
+// UBC), so reordering is a matter of reordering the groups/items in the data.
 type FlatWorkItem = WorkItem & { org: string };
 
-const items: FlatWorkItem[] = workGroups
-	.flatMap((group) =>
-		group.workItems.map((c) => ({
-			...c,
-			org: group.shortName ?? group.organization,
-		}))
-	)
-	.sort((a, b) => Number(a.comingSoon ?? false) - Number(b.comingSoon ?? false));
+const items: FlatWorkItem[] = workGroups.flatMap((group) =>
+	group.workItems.map((c) => ({
+		...c,
+		org: group.shortName ?? group.organization,
+	}))
+);
 
 function TechLine({ tech }: { tech: string[] }) {
 	return (
