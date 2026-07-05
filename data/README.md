@@ -5,6 +5,7 @@ This directory contains the LaTeX source file for your master resume, which serv
 ## Files
 
 - **master-resume.tex** - Your master resume LaTeX file from Overleaf
+- **master-resume.pdf** - The downloadable résumé, synced to `/public/master-resume.pdf` by the parser
 - **resume-config.json** - Configuration file to control which experiences and accomplishments are shown
 - **README.md** - This file
 
@@ -15,7 +16,7 @@ The Experience section, Skills display, Education section, and Projects section 
 1. Edit your resume on **Overleaf** (Experience, Technical Skills, Education, and/or Projects sections)
 2. **Download** the updated `.tex` file
 3. **Replace** `/data/master-resume.tex` with the new file
-4. **Commit** to Git or just run `npm run dev` or `npm run build`
+4. **Commit** to Git or just run `npm run dev`
 5. The parser automatically runs and updates:
    - `/app/data/experiences.ts` - Experience data
    - `/app/data/skills.ts` - Skills data
@@ -139,11 +140,9 @@ The Education section is automatically generated from your LaTeX resume, display
 
 The EducationSection component imports education data and displays:
 
-- **GPA Achievement Card**: Shows `{education.gpa} GPA` with `{education.gpaPercentage} Average`
-- **Degree Information**: Shows `{education.degree}` and `{education.minor}`
-- **School Header**: Shows `{education.school}` and `{education.location}` with `{education.graduationDate}`
-- **Relevant Coursework Grid**: Maps over `education.relevantCoursework` array dynamically
-- **Certifications**: Available in education object (currently not displayed in component)
+- **Header block**: `{education.school}` with the degree/minor line, `{education.location}` and `{education.graduationDate}`, and a right-aligned GPA (`{education.gpa}` split into a large accent number + faint `/max`, labelled with `{education.gpaPercentage}`)
+- **Selected Coursework**: a `·`-separated line mapping over `education.relevantCoursework`
+- **Certifications**: a block mapping over `education.certifications`, one line each
 
 ### Editing Education Data
 
@@ -152,7 +151,7 @@ To update education information on your website:
 1. Edit your LaTeX resume's Education section on Overleaf
 2. Update school, degree, GPA, coursework, or other fields
 3. Download and replace `/data/master-resume.tex`
-4. Run `npm run parse:resume` or `npm run build`
+4. Run `npm run parse:resume` or `npm run dev`
 5. The EducationSection component automatically reflects the changes
 
 ### Adding/Removing Coursework
@@ -182,7 +181,7 @@ Certifications are automatically pulled from your Technical Skills section. The 
 \end{itemize}
 ```
 
-The certifications are available in the education object but are not currently displayed in the EducationSection component.
+The certifications are pulled into the education object and displayed in the EducationSection's Certifications block.
 
 ### Education Parsing Notes
 
@@ -279,8 +278,11 @@ Place project images in `/public/` directory with these exact filenames.
 
 ### GitHub Link Handling
 
-- **With GitHub link**: `\githubLink{https://github.com/user/repo}` → Displays "View on GitHub" button
-- **Without GitHub link**: No `\githubLink{...}` command → Defaults to "#", displays "Private Repository"
+Each project renders as an index row (`[0N]` · name + description · tech list · `↗`) that
+is itself a link to the project's `github` URL:
+
+- **With GitHub link**: `\githubLink{https://github.com/user/repo}` → the row links to that repo
+- **Without GitHub link**: No `\githubLink{...}` command → `github` defaults to `#`
 
 ### Technologies Display
 
@@ -292,7 +294,7 @@ Technologies are extracted from the inline `\emph{...}` tag after the `$|$` sepa
 
 This extracts: `["JavaScript", "React", "Node.js", "PostgreSQL"]`
 
-Technologies appear as colored badges in the project card.
+Technologies appear as a faint `·`-separated list in the project row.
 
 ### Editing Projects Data
 
@@ -301,7 +303,7 @@ To update projects on your website:
 1. Edit your LaTeX resume's Projects section on Overleaf
 2. Update project names, accomplishments, technologies, or GitHub links
 3. Download and replace `/data/master-resume.tex`
-4. Run `npm run parse:resume` or `npm run build`
+4. Run `npm run parse:resume` or `npm run dev`
 5. The ProjectsSection component automatically reflects the changes
 
 ### Adding/Removing Projects
@@ -327,7 +329,7 @@ Run `npm run parse:resume` to regenerate `/app/data/projects.ts`.
 
 ## Skills Extraction
 
-The Hero Section "show all skills" view is automatically generated from your LaTeX resume's Technical Skills section.
+The **Skills section** (`StackSection.tsx`, rendered as `tree` output) is automatically generated from your LaTeX resume's Technical Skills section.
 
 ### Expected LaTeX Structure for Skills
 
@@ -349,7 +351,7 @@ The Hero Section "show all skills" view is automatically generated from your LaT
 2. Extracts all `\textbf{Category Name}{: skill1, skill2, skill3}` patterns
 3. Preserves nested skills with parentheses (e.g., "SQL (PostgreSQL, MySQL)" stays together)
 4. Generates `/app/data/skills.ts` with all categories and skills
-5. Hero Section displays all categories dynamically in the "show all skills" view
+5. The Skills section renders every category as a `tree` row (all categories, in LaTeX order)
 
 ### What Gets Extracted
 
@@ -361,23 +363,18 @@ The Hero Section "show all skills" view is automatically generated from your LaT
 
 ### Skills Display Behavior
 
-- **Top Skills**: Remain hardcoded in HeroSection (TypeScript, React, Python, GCP, Node.js, SQL)
-- **Show All Skills**: Dynamically displays all categories from your LaTeX resume
-- **Terminal Formatting**: Each category appears as a terminal command (e.g., `$ cat programming-languages.txt`)
-- **Staggered Animations**: Categories animate in sequence with 0.1s delays
+- **Dedicated Skills section**: `StackSection.tsx` renders all categories from your LaTeX resume — there is no separate "top skills" list, and skills are no longer shown in the Hero
+- **Tree output**: a `~/stack` root line followed by one row per category, prefixed with tree glyphs (`├──` / `└──`, the last row uses `└──`)
+- **Folder labels**: each category name is reduced to a lowercased first-word folder, e.g. "Programming Languages" → `programming/`, "Cloud & Deployment" → `cloud/`
+- **Reveal**: the whole tree fades in on scroll (IntersectionObserver), respecting reduced motion — no Framer Motion / staggered per-item animation
 
 ### Profile Picture Display
 
-The Hero Section now features a responsive profile picture:
-- **Source**: `/public/profile-photo.jpg`
-- **Location**: Top-right corner of the terminal window
-- **Responsive Behavior**:
-  - **Mobile**: Smaller (20x20), positioned at top-16 right-4
-  - **Desktop**: Larger (32x32), positioned at top-20 right-8
-- **Interactions**:
-  - **Entrance Animation**: Spring-based pop-in effect (0.5s delay)
-  - **Hover Effect**: Scales up, rotates slightly, glows, and brightens border
-  - **Positioning**: Uses `object-[50%_15%]` to perfectly frame face and upper body
+The Hero section features a framed profile picture:
+- **Source**: `/public/profile-photo.jpg` via `next/image`
+- **Layout**: right column of the hero grid, inside a 1px hairline "passe-partout" frame with a `FIG.00 / ARIQ.MULDI.JPG` caption
+- **Rendering**: full color by default, `object-position: 50% 10%`, `aspect-ratio: 4/5`
+- **Hover**: subtle zoom (`scale(1.04)`) with a slight contrast/saturation bump (disabled under reduced motion)
 
 ### Favicon Generation
 
@@ -400,14 +397,14 @@ Simply edit your LaTeX resume's Technical Skills section:
 3. Reorder categories: Move lines up/down (display order matches LaTeX order)
 4. Update skills: Edit the comma-separated list after the colon
 
-Run `npm run parse:resume` or `npm run build` to regenerate `/app/data/skills.ts`.
+Run `npm run parse:resume` or `npm run dev` to regenerate `/app/data/skills.ts`.
 
 ### Skills Parsing Notes
 
 - Skills with parentheses are preserved: "SQL (PostgreSQL, MySQL)" stays as one skill
 - LaTeX formatting is automatically removed: `\textbf`, `\textit`, etc.
 - Empty categories are skipped
-- Category names are converted to slugs for terminal commands: "Frameworks & Libraries" → "frameworks-libraries"
+- The Skills section derives a folder label from each category's first word ("Frameworks & Libraries" → "frameworks/"); the mapping lives in `StackSection.tsx`, not in the data
 - No configuration needed - skills are displayed as-is from your LaTeX resume
 
 ## Configuration: Hiding Experiences and Accomplishments
@@ -629,12 +626,27 @@ This will:
 
 ## Automatic Execution
 
-The parser runs automatically:
+The parser runs automatically **before dev only**:
 
 - **Before dev**: `npm run dev` → runs `predev` → runs `parse:resume`
-- **Before build**: `npm run build` → runs `prebuild` → runs `parse:resume`
+- **Build does NOT run the parser**: `npm run build` runs `next build` with no `prebuild` hook
 
-This ensures your website always displays the latest resume data.
+Because build skips parsing, the generated `app/data/*.ts` files and the synced
+`public/master-resume.pdf` are committed to the repo so production builds use the latest
+data. After editing the resume, run `npm run dev` (or `npm run parse:resume`) and commit the
+regenerated files.
+
+## Résumé PDF Sync
+
+Alongside generating the data files, the parser copies the downloadable résumé PDF into
+`/public` so Next.js can serve it (files under `data/` are not web-accessible):
+
+- **Source of truth**: `data/master-resume.pdf`
+- **Synced to**: `public/master-resume.pdf`
+- **Served at**: `/master-resume.pdf` (the Contact section's "MASTER RESUME" link)
+
+To update the résumé, replace `data/master-resume.pdf` and run `npm run parse:resume` (or
+`npm run dev`). If the source PDF is missing, the parser logs a warning and skips the sync.
 
 ## Troubleshooting
 
@@ -798,7 +810,7 @@ Download .tex file
     ↓
 Replace data/master-resume.tex
     ↓
-npm run dev (or build)
+npm run dev
     ↓
 Parser runs automatically
     ↓
@@ -821,6 +833,6 @@ Website displays latest experience, skills, education & projects
 - The parser removes LaTeX formatting commands (`\textbf`, `\textcolor`, etc.) automatically
 - Generated IDs for experiences and projects are sequential (1, 2, 3...) based on order in LaTeX file
 - Skills maintain the category order from your LaTeX resume
-- Top skills in Hero Section remain hardcoded; "show all skills" view is dynamic
+- The Skills section renders every category as a `tree` row (no hardcoded "top skills"; skills are not shown in the Hero)
 - Education section displays all extracted data dynamically from your LaTeX resume
 - Projects section displays all projects from your LaTeX resume with auto-generated descriptions
