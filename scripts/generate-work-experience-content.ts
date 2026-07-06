@@ -1,17 +1,19 @@
-// scripts/generate-role-content.ts
+// scripts/generate-work-experience-content.ts
 //
-// The ONLY code path that reads GEMINI_API_KEY or hits the network. Generates the
-// per-role AI content in app/data/role-content.json (2–3 sentence project `description`
-// for Work-surfaced roles + a shared `technologies` list for every role). Never run by
-// `npm run dev`, `npm run build`, or Vercel — invoked manually via `npm run generate:content`.
+// One of two code paths that read GEMINI_API_KEY / hit the network (the other is
+// generate-project-content.ts). Generates the per-role AI content in
+// app/data/work-experience-content.json (a `commitSubject` for every role with accomplishments,
+// a 2–3 sentence project `description` for Work-surfaced roles, and a shared `technologies` list).
+// Never run by `npm run dev`, `npm run build`, or Vercel — invoked manually.
 //
-// Usage:
-//   npm run generate:content                    draft unapproved/changed roles (calls Gemini)
-//   npm run generate:content -- --force         redraft ALL roles, even approved ones
-//   npm run generate:content -- --force <key>   redraft only the named role
-//   npm run generate:content -- --seed          fill from current committed values (NO API)
+// `npm run generate:content` runs this script AND generate-project-content.ts (plain draft, no
+// flags). To pass flags, call this script's own command directly:
+//   npm run generate:work-experience-content                    draft unapproved/changed roles (calls Gemini)
+//   npm run generate:work-experience-content -- --force         redraft ALL roles, even approved ones
+//   npm run generate:work-experience-content -- --force <key>   redraft only the named role
+//   npm run generate:work-experience-content -- --seed          fill from current committed values (NO API)
 //
-// Approve a draft by setting "approved": true on its entry in role-content.json, then
+// Approve a draft by setting "approved": true on its entry in work-experience-content.json, then
 // re-run: approved + unchanged roles are skipped, so approvals are never lost. Editing a
 // role's résumé bullets changes its sourceHash and forces a re-draft (approved flips false).
 
@@ -43,11 +45,12 @@ const ROLES: RoleDef[] = [
   { contentKey: 'teaching-assistant', experienceId: 5, expectedTitleIncludes: 'Teaching Assistant' },
 ];
 
-// ── The committed data contract (app/data/role-content.json) ────────────────────────────
+// ── The committed data contract (app/data/work-experience-content.json) ────────────────────────────
 interface RoleContent {
   experienceId: number;
   sourceHash: string;
   approved: boolean;
+  commitSubject?: string;
   technologies: string[];
   description?: string;
 }
@@ -56,7 +59,7 @@ type RoleContentFile = Record<string, RoleContent>;
 const projectRoot = path.resolve(__dirname, '..');
 const latexPath = path.join(projectRoot, 'data', 'master-resume.tex');
 const envPath = path.join(projectRoot, '.env');
-const outputPath = path.join(projectRoot, 'app', 'data', 'role-content.json');
+const outputPath = path.join(projectRoot, 'app', 'data', 'work-experience-content.json');
 
 // ── Helpers ─────────────────────────────────────────────────────────────────────────────
 
@@ -89,7 +92,7 @@ function readContentFile(): RoleContentFile {
   try {
     return JSON.parse(fs.readFileSync(outputPath, 'utf-8')) as RoleContentFile;
   } catch {
-    console.warn('   Warning: could not parse role-content.json, starting fresh');
+    console.warn('   Warning: could not parse work-experience-content.json, starting fresh');
     return {};
   }
 }
@@ -110,6 +113,7 @@ function serialize(file: RoleContentFile): string {
       experienceId: entry.experienceId,
       sourceHash: entry.sourceHash,
       approved: entry.approved,
+      ...(entry.commitSubject !== undefined ? { commitSubject: entry.commitSubject } : {}),
       technologies: entry.technologies,
       ...(entry.description !== undefined ? { description: entry.description } : {}),
     };
@@ -125,7 +129,7 @@ function writeContentFile(file: RoleContentFile): void {
 function experienceForRole(experiences: Experience[], role: RoleDef): Experience {
   const exp = experiences.find((e) => e.id === role.experienceId);
   if (!exp) {
-    throw new Error(`No experience with id ${role.experienceId} for role "${role.contentKey}". Résumé changed — update ROLES in generate-role-content.ts.`);
+    throw new Error(`No experience with id ${role.experienceId} for role "${role.contentKey}". Résumé changed — update ROLES in generate-work-experience-content.ts.`);
   }
   // Guard against a résumé reorder shifting ids under a slug. Includes company so a role can
   // be pinned by employer (e.g. "DOUBL") — resilient to seniority/title changes like Junior→Lead.
@@ -142,11 +146,17 @@ function experienceForRole(experiences: Experience[], role: RoleDef): Experience
 // ── Gemini REST (structured output) ─────────────────────────────────────────────────────
 
 interface GeminiResult {
+  commitSubject?: string;
   technologies: string[];
   description?: string;
 }
 
-async function callGemini(apiKey: string, accomplishments: string[], withDescription: boolean): Promise<GeminiResult> {
+async function callGemini(
+  apiKey: string,
+  accomplishments: string[],
+  withDescription: boolean,
+  withCommitSubject: boolean
+): Promise<GeminiResult> {
   const properties: Record<string, unknown> = {
     technologies: { type: 'ARRAY', items: { type: 'STRING' } },
   };
@@ -155,19 +165,31 @@ async function callGemini(apiKey: string, accomplishments: string[], withDescrip
     properties.description = { type: 'STRING' };
     propertyOrdering = ['description', 'technologies'];
   }
+  // commitSubject leads the schema so the model drafts the headline before the longer prose.
+  if (withCommitSubject) {
+    properties.commitSubject = { type: 'STRING' };
+    propertyOrdering = ['commitSubject', ...propertyOrdering];
+  }
 
   const techInstruction =
     'List the concrete technologies used, in conventional display form (e.g. "React Router v7", "IoT (ESP32)"), deduped, cap ~10, no prose in the tech array.';
 
-  const guidance = withDescription
-    ? 'Write a 2–3 sentence third-person summary of this ENTIRE role for a portfolio case-study card. ' +
-      'Read ALL the bullets below and synthesize them into one cohesive overview of the role as a whole: ' +
-      'what the project/system fundamentally is, the full breadth of what was built across the role (not just the first few bullets), ' +
-      'and the overall scale or impact. Write at a higher altitude than any individual bullet — capture the essence of everything done, ' +
-      'do NOT stitch together or paraphrase the opening bullets and ignore the rest. Every bullet should be reflected in the gestalt, ' +
-      'even if no single achievement is named. Then ' +
-      techInstruction
-    : techInstruction;
+  const commitInstruction =
+    'Also produce `commitSubject`: one imperative Conventional-Commits subject line summarizing the role\'s most significant work — `type(scope): summary` — lowercase after the colon, no trailing period, ≤ ~72 chars. ' +
+    'Use `feat` for shipped/build work; `scope` is a short lowercase area such as admissions, makerspace, learn, teaching. ' +
+    'Style target: "feat(admissions): automate MDS review for 1,000+ applicants". ';
+
+  const guidance =
+    (withCommitSubject ? commitInstruction : '') +
+    (withDescription
+      ? 'Write a 2–3 sentence third-person summary of this ENTIRE role for a portfolio case-study card. ' +
+        'Read ALL the bullets below and synthesize them into one cohesive overview of the role as a whole: ' +
+        'what the project/system fundamentally is, the full breadth of what was built across the role (not just the first few bullets), ' +
+        'and the overall scale or impact. Write at a higher altitude than any individual bullet — capture the essence of everything done, ' +
+        'do NOT stitch together or paraphrase the opening bullets and ignore the rest. Every bullet should be reflected in the gestalt, ' +
+        'even if no single achievement is named. Then ' +
+        techInstruction
+      : techInstruction);
 
   const body = {
     systemInstruction: {
@@ -213,6 +235,9 @@ async function callGemini(apiKey: string, accomplishments: string[], withDescrip
   const parsed = JSON.parse(text) as GeminiResult;
   const technologies = Array.isArray(parsed.technologies) ? parsed.technologies.filter((t) => typeof t === 'string' && t.trim()) : [];
   const result: GeminiResult = { technologies };
+  if (withCommitSubject && typeof parsed.commitSubject === 'string' && parsed.commitSubject.trim()) {
+    result.commitSubject = parsed.commitSubject.trim();
+  }
   if (withDescription && typeof parsed.description === 'string' && parsed.description.trim()) {
     result.description = parsed.description.trim();
   }
@@ -250,11 +275,18 @@ function seed(experiences: Experience[]): void {
       approved: true,
       technologies,
     };
+    // Seed keeps any committed commitSubject (the API is never called in this mode).
+    const prevSubject = existing[role.contentKey]?.commitSubject;
+    if (prevSubject) {
+      entry.commitSubject = prevSubject;
+    }
     if (wants && workItem?.description) {
       entry.description = workItem.description;
     }
     file[role.contentKey] = entry;
-    console.log(`   seeded ${role.contentKey} (${technologies.length} tech${entry.description ? ' + description' : ''})`);
+    console.log(
+      `   seeded ${role.contentKey} (${technologies.length} tech${entry.commitSubject ? ' + subject' : ''}${entry.description ? ' + description' : ''})`
+    );
   }
 
   writeContentFile(file);
@@ -285,9 +317,11 @@ async function draft(experiences: Experience[], forceAll: boolean, forceKey: str
       continue;
     }
 
+    // Every role with accomplishments gets a commit subject; DOUBL (empty) has nothing to summarize.
+    const wantsCommitSubject = exp.accomplishments.length > 0;
     const label = prev ? (prev.sourceHash !== hash ? 'redrafted (résumé changed)' : 'redrafted') : 'drafted';
     process.stdout.write(`   ${role.contentKey}: calling Gemini… `);
-    const ai = await callGemini(apiKey, exp.accomplishments, wants);
+    const ai = await callGemini(apiKey, exp.accomplishments, wants, wantsCommitSubject);
 
     const entry: RoleContent = {
       experienceId: role.experienceId,
@@ -295,11 +329,16 @@ async function draft(experiences: Experience[], forceAll: boolean, forceKey: str
       approved: false,
       technologies: ai.technologies,
     };
+    if (ai.commitSubject) {
+      entry.commitSubject = ai.commitSubject;
+    }
     if (wants && ai.description) {
       entry.description = ai.description;
     }
     file[role.contentKey] = entry;
-    console.log(`${label} (${ai.technologies.length} tech${entry.description ? ' + description' : ''})`);
+    console.log(
+      `${label} (${ai.technologies.length} tech${entry.commitSubject ? ' + subject' : ''}${entry.description ? ' + description' : ''})`
+    );
   }
 
   writeContentFile(file);
@@ -323,17 +362,17 @@ async function main(): Promise<void> {
     forceIdx !== -1 && argv[forceIdx + 1] && !argv[forceIdx + 1].startsWith('--') ? argv[forceIdx + 1] : undefined;
 
   if (seedMode) {
-    console.log('Seeding role-content.json (no API)…');
+    console.log('Seeding work-experience-content.json (no API)…');
     seed(experiences);
     return;
   }
 
-  console.log(`Generating role content via ${GEMINI_MODEL}…`);
+  console.log(`Generating work-experience content via ${GEMINI_MODEL}…`);
   await draft(experiences, forceKey === undefined && forceAll, forceKey);
 }
 
 main().catch((err) => {
-  console.error('ERROR: role-content generation failed:');
+  console.error('ERROR: work-experience-content generation failed:');
   console.error(err instanceof Error ? err.message : String(err));
   process.exit(1);
 });
