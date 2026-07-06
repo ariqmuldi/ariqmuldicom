@@ -28,11 +28,15 @@ npm run build            # production build (does NOT run the resume parser)
 npm start                # start production server
 npm run lint             # ESLint
 npm run parse:resume     # manually regenerate app/data/*.ts + sync resume PDF
-npm run generate:content # regenerate AI role content (Work descriptions + shared tech) — calls Gemini
+npm run generate:content # regenerate ALL AI content (work-experience + project) — calls Gemini
+npm run generate:work-experience-content # AI work-experience content only (accepts --force/--seed)
+npm run generate:project-content         # AI project taglines only (accepts --force/--seed)
 ```
 
-`generate:content` is the only command that reaches the network / spends money; `dev`,
-`build`, and Vercel never call it. See the AI role content section below.
+The `generate:*` content commands are the only ones that reach the network / spend money;
+`dev`, `build`, and Vercel never call them. `generate:content` runs the other two in sequence
+(plain draft — npm does not forward `--force`/`--seed` through it, so pass those flags to the
+specific command). See the AI content section below.
 
 ## Architecture
 
@@ -56,9 +60,9 @@ Everything lives under `app/` (Next.js App Router):
 |---------|-----------|-------------|-------|
 | Top bar | `TopBar.tsx` | static nav config | sticky nav, scroll-spy highlight, live `~/path` crumb |
 | Hero | `HeroSection.tsx` | static + `experiences` count | typed `whoami`, framed avatar, metric strip |
-| Work | `WorkSection.tsx` | `work.ts` (+ `role-content.json`) | case-study articles, `● LIVE` / `○ SHOWCASE TBA`; AI `description`/`technologies` |
-| Experience | `ExperienceSection.tsx` | `experiences.ts` (+ `role-content.json`) | `git log` ledger, decorative commit hashes, collapsed rows that expand to full bullets; AI tech overlay |
-| Projects | `ProjectsSection.tsx` | `projects.ts` | compact index rows linking to GitHub |
+| Work | `WorkSection.tsx` | `work.ts` (+ `work-experience-content.json`) | case-study articles, `● LIVE` / `○ SHOWCASE TBA`; AI `description`/`technologies` |
+| Experience | `ExperienceSection.tsx` | `experiences.ts` (+ `work-experience-content.json`) | `git log` ledger: collapsed rows show an AI commit subject + `+N insertions` diffstat, expanding to a full-width `git show` body listing every bullet; AI tech + `commitSubject` overlay |
+| Projects | `ProjectsSection.tsx` | `projects.ts` (+ `project-content.json`) | expandable rows: an AI tagline collapsed, expanding to a `cat README.md` panel + GitHub links |
 | Skills | `SkillsSection.tsx` | `skills.ts` | `tree`-style output, one row per category |
 | Education | `EducationSection.tsx` | `education.ts` | school/GPA header, coursework, certifications |
 | Contact | `ContactSection.tsx` | static links | dark section, live Vancouver clock, résumé download |
@@ -81,11 +85,17 @@ work item changes the page automatically.
   `contentKey` (per work item) and `shortName` (per organization group). Work items render in
   the authored order of `workGroups` (currently DOUBL first, then UBC) — reordering is just
   reordering the data.
-- **AI-generated**: `role-content.json` — per-role `description` (Work case-study copy) and a
-  `technologies` list **shared by both the Work and Experience sections**. Produced by
-  `npm run generate:content`, committed to git, and merged into `work.ts` (by `contentKey`)
-  and overlaid onto Experience (by `experienceId`) at load. An inline value in `work.ts`
-  overrides the AI value. See the AI role content section below.
+- **AI-generated**: two JSON files, both produced by `npm run generate:content`, committed to
+  git, and hand-editable:
+  - `work-experience-content.json` — per-role `description` (Work case-study copy), a
+    `technologies` list **shared by both the Work and Experience sections**, and a
+    `commitSubject` (the Experience row's git commit subject). Merged into `work.ts` (by
+    `contentKey`) and overlaid onto Experience (by `experienceId`) at load. An inline value in
+    `work.ts` overrides the AI value
+  - `project-content.json` — per-project `tagline` (the collapsed Projects row one-liner),
+    overlaid onto Projects by `projectId`, falling back to the first sentence of the parsed
+    `description`
+  See the AI content section below.
 
 Because the auto-generated files are regenerated on `predev`, any presentation the design
 needs from them (commit hashes, company abbreviation, date splitting, skill folder labels)
@@ -97,7 +107,8 @@ is **derived in the components**, not stored in the data files.
 - `useScrollReveal()` — observes `[data-reveal]` elements and adds `.is-visible` when they enter the viewport
 - `useActiveSection()` — scroll-spy over `section[id]`; drives nav highlight and the top-bar path crumb
 - `useClock()` — live `HH:MM:SS` clock in `America/Vancouver`, ticking every second
-- `fakeCommitHash(seed)` — deterministic 7-char hex for the Experience ledger (decorative, stable, not real)
+- `fakeCommitHash(seed)` — deterministic 7-char hex for the Experience ledger row (decorative, stable, not real)
+- `fakeCommitHashLong(seed)` — a 40-char form of the above for the expanded `git show` commit header
 - `usePrefersReducedMotion()` — backing hook for the above
 
 All motion respects `prefers-reduced-motion: reduce` (reveals show immediately, typing/caret/zoom are disabled).
@@ -126,7 +137,8 @@ or blurred orbs**. The only gradient is the dark image overlay on the DOUBL work
 - **Live clock** — Vancouver time in the Contact footer
 - **Image hover** — avatar and work figures are full color by default and zoom slightly (`scale(1.04)`) on hover
 - **Row hover** — Experience/Projects rows tint and shift right, mimicking selecting a log line
-- **Expandable Experience rows** — each `git log` row is collapsed by default (headline + tech + dates); clicking (or Enter/Space on the focused row) toggles a `▸`/`▾` glyph and reveals that role's remaining résumé bullets. Independent per row (no accordion); rows with no extra bullets show no toggle. The reveal eases open unless reduced motion is set
+- **Expandable Experience rows** — each row is collapsed by default (AI commit subject + a green `+N insertions · git show ▸` diffstat + tech + dates); clicking (or Enter/Space on the focused row) toggles a `▸`/`▾` glyph and opens a full-width `git show` body — a commit/Author/Date header plus **every** résumé bullet rendered as a green `+` diff line. Independent per row (no accordion); a role with no accomplishments (DOUBL) shows `● in active development` instead and is not expandable. The reveal eases open unless reduced motion is set
+- **Expandable Projects rows** — each row is collapsed by default (AI tagline + tech + a `github ↗` link); clicking (or Enter/Space) toggles a `▸`/`▾` glyph and opens a `cat README.md` panel that lists the project's description one sentence per line, plus an `↗ open on github` link. Independent per row; the GitHub links open the repo without toggling the row
 
 ### Responsive
 
@@ -153,25 +165,35 @@ are committed to the repo for production builds. Run it manually with `npm run p
 Full workflow, LaTeX structure, extraction rules, and the config system are documented in
 [`data/README.md`](data/README.md).
 
-## AI Role Content
+## AI Content
 
-The Work section's `description` and the `technologies` list shown in **both** the Work and
-Experience sections are generated by an AI (Gemini 2.5 Flash-Lite) from the résumé bullets and
-stored in `app/data/role-content.json`.
+Two AI files (Gemini 2.5 Flash-Lite, from the résumé/project text) sit alongside the LaTeX
+pipeline, both under `app/data/`:
 
-- **Command**: `npm run generate:content` (`scripts/generate-role-content.ts`, run with `tsx`)
-  is the only code path that reads `GEMINI_API_KEY` (from `.env`) or hits the network. `dev`,
-  `build`, and Vercel only read the committed JSON — generation is a deliberate, manual step
+- `work-experience-content.json` (via `scripts/generate-work-experience-content.ts`) — per-role
+  `technologies` (shared by **both** the Work and Experience sections), a `commitSubject` for
+  the Experience row (every role with accomplishments), and a `description` for roles with a
+  live Work card
+- `project-content.json` (via `scripts/generate-project-content.ts`) — per-project `tagline`
+
+- **Command**: `npm run generate:content` runs both generators (plain draft). Each has its own
+  command — `npm run generate:work-experience-content` / `npm run generate:project-content` —
+  which accept flags. These are the only code paths that read `GEMINI_API_KEY` (from `.env`) or
+  hit the network. `dev`, `build`, and Vercel only read the committed JSON — generation is a
+  deliberate, manual step
 - **Shared tech**: one generated `technologies` list per role feeds both sections — Work joins
   it by `contentKey`, Experience overlays it by `experienceId`. `description` exists only for
   roles with a live Work card (DOUBL's coming-soon card keeps a manual `description`)
+- **Overlays / fallbacks**: Experience uses `commitSubject` (fallback `accomplishments[0]`; a
+  role with no accomplishments shows `● in active development`); Projects uses `tagline`
+  (fallback the first sentence of `description`)
 - **Approve / lock**: drafts are written with `approved: false`; set `approved: true` on the
-  good ones. Re-running skips approved roles whose bullets are unchanged (a `sourceHash`
+  good ones. Re-running skips approved entries whose source text is unchanged (a `sourceHash`
   guard) and redrafts the rest. `--force [slug]` redrafts regardless; `--seed` fills the file
   from current values without calling the API
 - **Precedence**: an inline `description`/`technologies` on a `work.ts` item overrides the AI
   value, so any field can be hand-pinned
-- **Commit** `role-content.json` after approving, like the regenerated `app/data/*.ts`
+- **Commit** both JSON files after approving, like the regenerated `app/data/*.ts`
 
 Full contract, JSON shape, and workflow are documented in [`data/README.md`](data/README.md).
 
@@ -191,8 +213,9 @@ app/
   icon.tsx            generated favicon
   lib/hooks.ts        reveal / scroll-spy / typewriter / clock / hash
   components/         TopBar + 7 section components
-  data/               content modules (4 generated, 1 curated, 1 AI-generated)
-    role-content.json AI-generated Work descriptions + shared tech (per role)
+  data/               content modules (4 generated, 1 curated, 2 AI-generated)
+    work-experience-content.json  AI Work descriptions + shared tech + commit subjects (per role)
+    project-content.json          AI project taglines (per project)
 data/
   master-resume.tex   LaTeX source of truth (Overleaf)
   master-resume.pdf   downloadable résumé (synced into /public)
@@ -200,7 +223,8 @@ data/
   README.md           resume pipeline docs
 scripts/
   parse-resume.ts        LaTeX → app/data/*.ts + PDF sync
-  generate-role-content.ts  résumé bullets → app/data/role-content.json (Gemini)
+  generate-work-experience-content.ts  résumé bullets → app/data/work-experience-content.json (Gemini)
+  generate-project-content.ts          project text → app/data/project-content.json (Gemini)
 public/               images, generated résumé PDF
 .claude/              Claude Code slash commands + config (see .claude/README.md)
 ```
