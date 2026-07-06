@@ -136,3 +136,11 @@ export function fakeCommitHash(seed: string | number): string {
 	}
 	return (h >>> 0).toString(16).padStart(8, '0').slice(0, 7);
 }
+
+/**
+ * A 40-char form of {@link fakeCommitHash} for the expanded `git show` header.
+ * Repeats/truncates the stable 7-char value to a full SHA-1 length — decorative only.
+ */
+export function fakeCommitHashLong(seed: string | number): string {
+	return fakeCommitHash(seed).repeat(6).slice(0, 40);
+}
