@@ -31,12 +31,16 @@ Every section `.map()`s over a module in `app/data/`:
   on every parse. Any presentation the design needs from them is derived in the component, not
   stored in the data file
 - **Manually curated**: `work.ts` (the Work case studies) — safe to edit. Its `description`
-  and `technologies` are **AI-owned**: generated per-role into `role-content.json` and merged
-  in at module load, keyed by a stable `contentKey`. An inline value on a work item overrides
-  the AI value (DOUBL keeps a manual `description` inline, since its card is coming-soon)
-- **AI-generated** by `scripts/generate-role-content.ts`: `role-content.json` — per-role
-  `technologies` (shared by both the Work and Experience sections) plus a `description` for
-  roles with a live Work card. Committed to git, hand-editable, carries an `approved` flag
+  and `technologies` are **AI-owned**: generated per-role into `work-experience-content.json`
+  and merged in at module load, keyed by a stable `contentKey`. An inline value on a work item
+  overrides the AI value (DOUBL keeps a manual `description` inline, since its card is coming-soon)
+- **AI-generated** by two manual generators (committed to git, hand-editable, each entry carries
+  an `approved` flag):
+  - `scripts/generate-work-experience-content.ts` → `work-experience-content.json` — per-role
+    `technologies` (shared by both the Work and Experience sections), a `commitSubject` (the
+    Experience row's git subject, for every role with accomplishments), and a `description` for
+    roles with a live Work card
+  - `scripts/generate-project-content.ts` → `project-content.json` — per-project `tagline`
 
 ## Résumé parser gotchas
 
@@ -46,20 +50,26 @@ Every section `.map()`s over a module in `app/data/`:
   (or restart `npm run dev`), then **commit** the regenerated `app/data/*.ts` and the synced
   `public/master-resume.pdf` so production builds pick them up
 
-## AI role content (`role-content.json`)
+## AI content (`work-experience-content.json`, `project-content.json`)
 
-- `npm run generate:content` is the **only** command that calls the AI (Gemini 2.5 Flash-Lite
-  via REST, reading `GEMINI_API_KEY` from `.env`). `dev`, `build`, and Vercel never call it —
-  they only read the committed `app/data/role-content.json`
+- `npm run generate:content` runs both AI generators (Gemini 2.5 Flash-Lite via REST, reading
+  `GEMINI_API_KEY` from `.env`); `generate:work-experience-content` / `generate:project-content`
+  run one each and take flags (npm does **not** forward `--force`/`--seed` through the combined
+  `generate:content`). These are the **only** commands that call the AI — `dev`, `build`, and
+  Vercel never do; they only read the committed JSON
 - Drafts land as `approved: false`; review them, then set `approved: true` on the good ones.
-  Re-running skips approved roles whose bullets are unchanged (a `sourceHash` guard); editing a
-  role's bullets forces a re-draft. `--force [slug]` redrafts regardless; `--seed` fills the
-  file from current values without calling the API
-- The same generated `technologies` list feeds both sections (Work joins by `contentKey`,
-  Experience by `experienceId`). **Commit `role-content.json`** after approving, like the
-  regenerated `app/data/*.ts`
-- The Experience `git log` ledger is collapsed by default (headline + tech + dates); clicking a
-  row expands its remaining résumé bullets
+  Re-running skips approved entries whose source text is unchanged (a `sourceHash` guard);
+  editing the source forces a re-draft. `--force [slug]` redrafts regardless; `--seed` fills the
+  file from current values without calling the API (⚠️ seed re-derives `technologies` from the
+  parser, so it will clobber a hand-curated tech list — use `--force <key>` to redraft instead)
+- The generated `technologies` list feeds both sections (Work joins by `contentKey`, Experience
+  by `experienceId`); `commitSubject` overlays Experience by `experienceId`, `tagline` overlays
+  Projects by `projectId`. **Commit both JSON files** after approving, like `app/data/*.ts`
+- The Experience `git log` ledger is collapsed by default (commit subject + `+N insertions`
+  diffstat + tech + dates); clicking a row opens a full-width `git show` body listing every
+  résumé bullet as a `+` diff line. A role with no accomplishments (DOUBL) shows
+  `● in active development` and is not expandable. Projects rows are the same pattern (tagline →
+  `cat README.md` panel)
 
 ## Design constraints (do not reintroduce the old look)
 
