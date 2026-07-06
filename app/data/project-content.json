@@ -1,0 +1,26 @@
+{
+  "ponotodoro": {
+    "projectId": 1,
+    "sourceHash": "5460475b",
+    "approved": true,
+    "tagline": "Pomodoro timer with notes and tasks"
+  },
+  "flight-hub": {
+    "projectId": 2,
+    "sourceHash": "6d74b6e7",
+    "approved": true,
+    "tagline": "Flight deal finder and blog with React, Flask, Amadeus"
+  },
+  "chatterbox": {
+    "projectId": 3,
+    "sourceHash": "263d232e",
+    "approved": true,
+    "tagline": "Discord-like real-time chat on Firebase"
+  },
+  "moodijawoodi": {
+    "projectId": 4,
+    "sourceHash": "774872ed",
+    "approved": true,
+    "tagline": "JDBC grocery storefront in Java + MySQL"
+  }
+}
