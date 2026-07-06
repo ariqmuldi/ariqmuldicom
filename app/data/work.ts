@@ -3,12 +3,12 @@
 // It showcases specific high-impact projects from work experience (the "Work" section).
 //
 // `description` and `technologies` are AI-owned: generated per-role into
-// role-content.json by `npm run generate:content` (see
+// work-experience-content.json by `npm run generate:content` (see
 // docs/implementations/ROLE-CONTENT-AND-EXPANDABLE-EXPERIENCE.md). They are merged in at
 // module load, keyed by `contentKey`. To hand-override either field for an item, just set
 // it inline below — an inline value always wins over the AI value (see resolve()).
 
-import roleContent from './role-content.json';
+import workExperienceContent from './work-experience-content.json';
 
 export interface WorkItem {
   id: number;
@@ -20,7 +20,7 @@ export interface WorkItem {
   websiteUrl?: string;
   experienceAnchor: string;
   comingSoon?: boolean;
-  // Stable role slug joining this item to its role-content.json entry (shared with the
+  // Stable role slug joining this item to its work-experience-content.json entry (shared with the
   // Experience section, which joins the same entry by experienceId).
   contentKey?: string;
   // --- Optional presentation fields for the Selected Work section ---
@@ -48,7 +48,7 @@ type RoleContent = {
   technologies: string[];
   description?: string;
 };
-const contentByKey = roleContent as Record<string, RoleContent>;
+const contentByKey = workExperienceContent as Record<string, RoleContent>;
 
 // Curated data may omit the two AI-owned fields; the exported WorkItem keeps them required.
 type CuratedWorkItem = Omit<WorkItem, 'description' | 'technologies'> & {
@@ -77,7 +77,7 @@ const curatedGroups: CuratedWorkGroup[] = [
       {
         id: 4,
         title: "Professional Showcase (TBA)",
-        // description + technologies are AI-generated (role-content.json, key "doubl").
+        // description + technologies are AI-generated (work-experience-content.json, key "doubl").
         image: "/doublpicture.jpeg",
         experienceAnchor: "#experience-1",
         contentKey: "doubl",
@@ -97,7 +97,7 @@ const curatedGroups: CuratedWorkGroup[] = [
       {
         id: 1,
         title: "Makerspace Platform",
-        // description + technologies are AI-generated (role-content.json, key "makerspace").
+        // description + technologies are AI-generated (work-experience-content.json, key "makerspace").
         image: "/msykpicture.png",
         githubUrl: "https://github.com/University-of-British-Columbia-Okanagan/MSYK_Membership",
         websiteUrl: "https://my.makerspaceyk.com",
@@ -109,7 +109,7 @@ const curatedGroups: CuratedWorkGroup[] = [
       {
         id: 2,
         title: "LearnCoding Platform",
-        // description + technologies are AI-generated (role-content.json, key "learncoding").
+        // description + technologies are AI-generated (work-experience-content.json, key "learncoding").
         image: "/learncodingpicture.png",
         websiteUrl: "https://learncoding.ok.ubc.ca",
         experienceAnchor: "#experience-4",
@@ -120,7 +120,7 @@ const curatedGroups: CuratedWorkGroup[] = [
       {
         id: 3,
         title: "MDS Application",
-        // description + technologies are AI-generated (role-content.json, key "mds").
+        // description + technologies are AI-generated (work-experience-content.json, key "mds").
         image: "/mdsapppicture.png",
         githubUrl: "https://github.com/marga120/mds-application",
         experienceAnchor: "#experience-2",
@@ -132,7 +132,7 @@ const curatedGroups: CuratedWorkGroup[] = [
   }
 ];
 
-// Merge AI-owned description/technologies (role-content.json) into the curated data at load.
+// Merge AI-owned description/technologies (work-experience-content.json) into the curated data at load.
 export const workGroups: WorkGroup[] = curatedGroups.map((group) => ({
   ...group,
   workItems: group.workItems.map(resolve),

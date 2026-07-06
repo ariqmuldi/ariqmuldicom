@@ -1024,7 +1024,7 @@ function main() {
 }
 
 // Only run the full parse pipeline when executed directly (e.g. `tsx scripts/parse-resume.ts`
-// or `npm run parse:resume`). When imported by another script (e.g. generate-role-content.ts),
+// or `npm run parse:resume`). When imported by another script (e.g. generate-work-experience-content.ts),
 // the exported helpers are used without re-running main() and rewriting app/data/*.ts.
 if (require.main === module) {
   main();
