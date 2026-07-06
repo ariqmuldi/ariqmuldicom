@@ -4,7 +4,9 @@
 	"private": true,
 	"scripts": {
 		"parse:resume": "tsx scripts/parse-resume.ts",
-		"generate:content": "tsx scripts/generate-role-content.ts",
+		"generate:content": "npm run generate:work-experience-content && npm run generate:project-content",
+		"generate:work-experience-content": "tsx scripts/generate-work-experience-content.ts",
+		"generate:project-content": "tsx scripts/generate-project-content.ts",
 		"predev": "npm run parse:resume",
 		"dev": "next dev --turbopack",
 		"build": "next build",
