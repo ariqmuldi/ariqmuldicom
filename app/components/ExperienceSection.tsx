@@ -2,18 +2,19 @@
 
 import { useState } from 'react';
 import { experiences, type Experience } from '@/app/data/experiences';
-import { fakeCommitHash } from '@/app/lib/hooks';
-import roleContent from '@/app/data/role-content.json';
+import { fakeCommitHash, fakeCommitHashLong } from '@/app/lib/hooks';
+import workExperienceContent from '@/app/data/work-experience-content.json';
 
-// The AI tech list (shared with the Work section) is keyed by experienceId in
-// role-content.json. Work joins the same entries by contentKey — both sections render the
-// identical generated list. Fall back to the keyword tech in experiences.ts if no entry exists.
-const techByExperienceId = new Map<number, string[]>(
-	Object.values(roleContent as Record<string, { experienceId: number; technologies: string[] }>).map((e) => [
-		e.experienceId,
-		e.technologies,
-	])
+// AI-generated per-role content (work-experience-content.json), keyed by experienceId. Both the
+// shared `technologies` list (also rendered by Work) and the git-log `commitSubject` are overlaid
+// here; Work joins the same entries by contentKey. Fall back to keyword tech / accomplishments[0].
+const contentByExperienceId = new Map<number, { technologies: string[]; commitSubject?: string }>(
+	Object.values(
+		workExperienceContent as Record<string, { experienceId: number; technologies: string[]; commitSubject?: string }>
+	).map((e) => [e.experienceId, { technologies: e.technologies, commitSubject: e.commitSubject }])
 );
+
+const AUTHOR = 'Ariq Muldi <ariq@ariqmuldi.com>';
 
 // Abbreviate the long institutional name for the ledger's "@ company" suffix.
 function shortCompany(company: string): string {
@@ -53,23 +54,25 @@ export default function ExperienceSection() {
 				<div className="section-index">
 					<div className="section-index__num">[ 02 ]</div>
 					<div className="section-index__label">EXPERIENCE</div>
-					<div className="section-index__cmd">$ git log</div>
+					<div className="section-index__cmd">$ git show</div>
 				</div>
 
 				<div>
 					<div className="gitlog__cmd" data-reveal>
-						git log --oneline --author=&quot;ariq&quot; main
+						git log --oneline --stat --author=&quot;ariq&quot; main
 					</div>
 
 					{experiences.map((exp) => {
 						const { role, context } = splitTitle(exp);
 						const { start, end } = splitPeriod(exp.period);
-						const tech = techByExperienceId.get(exp.id) ?? exp.technologies;
-						const headline = exp.accomplishments[0];
-						const body = exp.accomplishments.slice(1);
-						// Only rows with more than the headline bullet get the expand affordance.
-						const expandable = exp.accomplishments.length > 1;
+						const overlay = contentByExperienceId.get(exp.id);
+						const tech = overlay?.technologies ?? exp.technologies;
+						// A role with hidden/empty accomplishments (DOUBL) has nothing to `git show`.
+						const expandable = exp.accomplishments.length > 0;
 						const isOpen = expandable && openIds.has(exp.id);
+						const commitSubject = overlay?.commitSubject || exp.accomplishments[0];
+						const insertions = exp.accomplishments.length;
+						const dateLine = `${start} — ${exp.current ? 'present' : end}`;
 
 						return (
 							<div
@@ -109,23 +112,48 @@ export default function ExperienceSection() {
 											{context ? ` · ${context}` : ''}
 										</span>
 									</div>
-									{headline && <div className="gitlog__summary">{headline}</div>}
-									{tech.length > 0 && <div className="gitlog__tech">{tech.join(' · ')}</div>}
-									{isOpen && body.length > 0 && (
-										<ul className="gitlog__body">
-											{body.map((item, i) => (
-												<li className="gitlog__body-item" key={i}>
-													{item}
-												</li>
-											))}
-										</ul>
+									{expandable ? (
+										<>
+											{commitSubject && <div className="gitlog__summary">{commitSubject}</div>}
+											<div className="gitlog__hint">
+												<span className="gitlog__ins">+{insertions} insertions</span>
+												{' · '}git show ▸
+											</div>
+										</>
+									) : (
+										<div className="gitlog__active">
+											<span className="dot-green">●</span> in active development
+										</div>
 									)}
+									{tech.length > 0 && <div className="gitlog__tech">{tech.join(' · ')}</div>}
 								</div>
 								<div className="gitlog__dates">
 									{start} —
 									<br />
 									{exp.current ? <span className="dot-green">● present</span> : end}
 								</div>
+								{isOpen && (
+									<div className="gitlog__show" onClick={(e) => e.stopPropagation()}>
+										<div className="gitlog__show-line">
+											commit <span className="gitlog__show-hash">{fakeCommitHashLong(exp.id)}</span>
+										</div>
+										<div className="gitlog__show-meta">Author: {AUTHOR}</div>
+										<div className="gitlog__show-meta">Date:&nbsp;&nbsp;&nbsp;{dateLine}</div>
+										<div className="gitlog__diffstat">
+											{insertions} files changed, {insertions} insertions(+)
+										</div>
+										<div className="gitlog__difflist">
+											{exp.accomplishments.map((item, i) => (
+												<div className="gitlog__diff" key={i}>
+													<span className="gitlog__diff-plus" aria-hidden="true">
+														+
+													</span>
+													<span className="gitlog__diff-text">{item}</span>
+												</div>
+											))}
+										</div>
+									</div>
+								)}
 							</div>
 						);
 					})}
