@@ -23,9 +23,9 @@ For every changed file (code, config, scripts — not markdowns), read it comple
 This includes:
 - React/TypeScript source under `app/` — `app/page.tsx`, `app/layout.tsx`, `app/icon.tsx`, `app/components/*.tsx`, `app/lib/*.ts`
 - Styling: `app/globals.css` (design tokens + all section styles), `tailwind.config.ts`
-- Content/data modules under `app/data/` — note which are auto-generated vs manually curated vs AI-generated (`experiences.ts`/`skills.ts`/`education.ts`/`projects.ts` are LaTeX-generated; `work.ts` is curated but its `description`/`technologies` are merged from `role-content.json`; `role-content.json` is AI-generated)
+- Content/data modules under `app/data/` — note which are auto-generated vs manually curated vs AI-generated (`experiences.ts`/`skills.ts`/`education.ts`/`projects.ts` are LaTeX-generated; `work.ts` is curated but its `description`/`technologies` are merged from `work-experience-content.json`; `work-experience-content.json` and `project-content.json` are AI-generated)
 - The resume parser `scripts/parse-resume.ts` and its inputs under `data/` (`master-resume.tex`, `resume-config.json`, `master-resume.pdf`)
-- The AI content generator `scripts/generate-role-content.ts` (writes `app/data/role-content.json` from the résumé bullets via Gemini)
+- The AI content generators `scripts/generate-work-experience-content.ts` (writes `app/data/work-experience-content.json` — per-role `technologies`/`commitSubject`/`description`) and `scripts/generate-project-content.ts` (writes `app/data/project-content.json` — per-project `tagline`), both via Gemini
 - Config: `next.config.ts`, `package.json` (scripts + dependencies), `tsconfig.json`, `postcss.config.mjs`, `eslint.config.mjs`
 
 Ignore generated/build output: `.next/`, `node_modules/`, `next-env.d.ts`, `*.tsbuildinfo`.
