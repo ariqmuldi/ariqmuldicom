@@ -3,6 +3,7 @@
     "experienceId": 1,
     "sourceHash": "2fd0eb35",
     "approved": true,
+    "commitSubject": "feat(personalization): launch digital fit passport and body analysis engine",
     "technologies": [
       "Python",
       "Google Cloud Run",
@@ -19,7 +20,7 @@
       "HTML",
       "CSS",
       "Javascript",
-      "Liquid Scripting",
+      "Liquid",
       "Zoho Flow",
       "Zoho Deluge",
       "iOS",
@@ -31,21 +32,24 @@
     "experienceId": 2,
     "sourceHash": "969cde6f",
     "approved": true,
+    "commitSubject": "feat(admissions): build masters of data science admissions managment application platform",
     "technologies": [
       "Python",
+      "Flask",
       "PostgreSQL",
       "JavaScript",
-      "Flask",
-      "AJAX",
       "Tailwind CSS",
-      "Bcrypt"
+      "bcrypt",
+      "AJAX",
+      "CSV"
     ],
-    "description": "Developed a full-stack platform to manage Masters of Data Science applications, automating the admissions workflow for over 1,000 annual student applications. This system streamlined the review process for over 50 faculty members through a structured backend, secure role-based authentication, and an interactive frontend with real-time filtering and editing capabilities. Additionally, it incorporated batch processing for application data, automated reporting, audit logging, and a 7-stage review engine with automated ranking logic."
+    "description": "Developed a full-stack platform for Masters of Data Science application management, automating the admissions workflow for over 1,000 annual student applications. This system streamlined the entire process from application ingestion and faculty review to final decision-making, significantly reducing administrative overhead and manual data handling. The platform enhanced data integrity and security through a robust backend architecture, normalized database design, and role-based authentication for faculty and administrators."
   },
   "makerspace": {
     "experienceId": 3,
     "sourceHash": "8295f252",
     "approved": true,
+    "commitSubject": "feat(memberships): launch integrated platform for 1,000+ members",
     "technologies": [
       "TypeScript",
       "React Router v7",
@@ -53,35 +57,48 @@
       "Tailwind CSS",
       "Stripe",
       "pdf-lib",
-      "C++",
+      "AES-256 encryption",
       "ESP32",
+      "C++",
+      "Brivo Enterprise API",
       "Node.js",
-      "Docker"
+      "Zod",
+      "Prisma",
+      "Jest",
+      "Docker",
+      "OpenVPN",
+      "Winston",
+      "Mailgun",
+      "Google Calendar API",
+      "OAuth2"
     ],
-    "description": "Architected and developed a comprehensive membership platform, integrating physical and digital access controls, automated billing, and resource management for over 1,000 members. This full-stack system digitized workshop enrollments, equipment reservations, and membership management, processing over $1,000 in monthly revenue and enabling secure access via RFID and digital key passes. The platform features a robust admin dashboard for managing operations, including a recurring billing engine, automated notifications, and detailed analytics on member activity and resource utilization."
+    "description": "Engineered a comprehensive membership and operations platform serving over 1,000 members, automating critical functions from workshop enrollment and equipment reservations to recurring billing and physical access control. This full-stack system integrated payment processing, digital signature generation, email notifications, and IoT-based access management, significantly streamlining administrative overhead and enhancing member experience."
   },
   "learncoding": {
     "experienceId": 4,
     "sourceHash": "81e26194",
     "approved": true,
+    "commitSubject": "feat(learncoding): launch learning platform to learn programming",
     "technologies": [
       "PHP",
       "Laravel",
       "MySQL",
       "Docker",
-      "JavaScript",
-      "HTML",
-      "CSS",
       "Apache",
       "Matomo Analytics",
-      "UBC Canvas API"
+      "UBC Canvas API",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "AI"
     ],
-    "description": "Engineered and deployed a comprehensive adaptive learning platform for UBC's Faculty of Science, serving over 500 students with interactive features like code visualizers, gamification, and AI-powered content generation. Enhanced the system by integrating with the UBC Canvas API for automated grade posting, redesigning the UI for improved usability, and establishing robust authentication and access control mechanisms. Managed and migrated production infrastructure, ensuring high availability and security."
+    "description": "Developed and deployed a comprehensive adaptive learning platform for UBC's Faculty of Science, serving over 500 students. This system features interactive code visualizers, multi-language support, sandbox environments, and gamification to enhance learning. The platform integrates with the UBC Canvas API for automated grade posting, reducing manual overhead, and incorporates granular access controls for faculty management. Additionally, it includes an AI-powered content generator for personalized learning paths and code translation, while ensuring robust security, analytics, and server maintenance."
   },
   "teaching-assistant": {
     "experienceId": 5,
     "sourceHash": "4836db97",
     "approved": true,
+    "commitSubject": "feat(teaching): enhance computer science curriculum and instruction",
     "technologies": [
       "MIPS Assembly",
       "Java"
