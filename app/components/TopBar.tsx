@@ -1,43 +1,47 @@
 'use client';
 
-const NAV = [
-	{ id: 'work', label: 'Work' },
-	{ id: 'experience', label: 'Experience' },
-	{ id: 'projects', label: 'Projects' },
-	{ id: 'skills', label: 'Skills' },
-	{ id: 'education', label: 'Education' },
-] as const;
+// Shared, presentational top bar used by both the main portfolio (`/`) and `/content-generation`.
+// The brand markup lives here once; each route passes its own crumb + nav links so the two never
+// drift. `active` toggles the accent highlight; `variant: 'contact'` gets the underlined treatment.
+export interface TopBarLink {
+	href: string;
+	label: string;
+	active?: boolean;
+	variant?: 'contact';
+}
 
-export default function TopBar({ activeSection }: { activeSection: string }) {
-	const crumb = activeSection === 'top' ? '~/' : `~/${activeSection}`;
-
+export default function TopBar({
+	crumb,
+	links,
+	brandHref = '#top',
+	brandLabel = 'Back to top',
+}: {
+	crumb: string;
+	links: TopBarLink[];
+	brandHref?: string;
+	brandLabel?: string;
+}) {
 	return (
 		<header className="topbar">
 			<div className="topbar__inner">
-				<a href="#top" className="topbar__brand" aria-label="Back to top">
+				<a href={brandHref} className="topbar__brand" aria-label={brandLabel}>
 					<span className="topbar__dot" aria-hidden />
 					<span className="topbar__name">ariqmuldi</span>
 					<span className="topbar__tld">.com</span>
 					<span className="topbar__crumb">{crumb}</span>
 				</a>
 				<nav className="topbar__nav">
-					{NAV.map((item) => (
+					{links.map((link) => (
 						<a
-							key={item.id}
-							href={`#${item.id}`}
-							className={`topbar__link${activeSection === item.id ? ' is-active' : ''}`}
+							key={link.label}
+							href={link.href}
+							className={`topbar__link${link.variant === 'contact' ? ' topbar__link--contact' : ''}${
+								link.active ? ' is-active' : ''
+							}`}
 						>
-							{item.label}
+							{link.label}
 						</a>
 					))}
-					<a
-						href="#contact"
-						className={`topbar__link topbar__link--contact${
-							activeSection === 'contact' ? ' is-active' : ''
-						}`}
-					>
-						Contact
-					</a>
 				</nav>
 			</div>
 		</header>
