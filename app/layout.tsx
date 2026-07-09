@@ -15,41 +15,15 @@ export const metadata: Metadata = {
 	title: 'Ariq Muldi - Software Engineer | Full Stack Developer | Cloud & DevOps Specialist',
 	description:
 		'Software Engineer and Computer Science student at UBC with 5+ years of experience. Currently working as a Software Engineer at DOUBL and Undergraduate Research Assistant at UBC. Specialized in Full Stack Development, Cloud Computing, and DevOps.',
-	keywords: [
-		'Ariq Muldi',
-		'Software Engineer',
-		'Full Stack Developer',
-		'Cloud Specialist',
-		'DevOps Engineer',
-		'Computer Science Student',
-		'UBC Student',
-		'Undergraduate Research Assistant',
-		'DOUBL',
-		'JavaScript',
-		'TypeScript',
-		'React',
-		'Node.js',
-		'Python',
-		'Google Cloud Platform',
-		'AWS',
-		'PostgreSQL',
-		'Docker',
-		'Kubernetes',
-		'CI/CD',
-		'Web Development',
-		'Software Architecture',
-		'Vancouver Developer',
-		'Kelowna BC',
-		'Next.js',
-		'React Router',
-		'Prisma',
-		'Laravel',
-		'PHP',
-		'MySQL',
-		'Educational Technology',
-	],
+	// Note: no `keywords` field — Google states the meta keywords tag "has no effect on indexing
+	// and ranking at all" (developers.google.com/search/docs/crawling-indexing/special-tags).
 	authors: [{ name: 'Ariq Muldi' }],
 	creator: 'Ariq Muldi',
+	// Self-referencing canonical for the home page, resolved against metadataBase. Per-route
+	// metadata (e.g. /content-generation) overrides this with its own canonical.
+	alternates: {
+		canonical: '/',
+	},
 	openGraph: {
 		title: 'Ariq Muldi - Software Engineer | Full Stack Developer | Cloud & DevOps Specialist',
 		description: 'Software Engineer with 5+ years of experience. Building scalable systems at DOUBL and UBC. Specialized in modern web technologies, cloud infrastructure, and DevOps.',
@@ -57,7 +31,7 @@ export const metadata: Metadata = {
 		siteName: 'Ariq Muldi - Portfolio',
 		images: [
 			{
-				url: '/for-metadata-picture.png?v=1',
+				url: '/og-image.png',
 				width: 1200,
 				height: 630,
 				alt: 'Ariq Muldi - Software Engineer & Full Stack Developer',
@@ -70,8 +44,9 @@ export const metadata: Metadata = {
 		card: 'summary_large_image',
 		title: 'Ariq Muldi - Software Engineer | Full Stack Developer',
 		description: 'Software Engineer at DOUBL & UBC Student. Passionate about full-stack development, cloud computing, and building scalable solutions.',
+		site: '@ariqmuldi',
 		creator: '@ariqmuldi',
-		images: ['/for-metadata-picture.png?v=1'],
+		images: ['/og-image.png'],
 	},
 	robots: {
 		index: true,
