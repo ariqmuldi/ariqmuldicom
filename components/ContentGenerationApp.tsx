@@ -544,7 +544,7 @@ export default function ContentGenerationApp({
 										<>
 											This console is a live authoring tool. Run locally, it lets the owner edit the master résumé,
 											re-run the parser, review &amp; approve the AI-drafted copy, switch the Gemini model, and
-											regenerate everything. It&apos;s <span className="cg-strong">read-only in production</span> — the
+											regenerate everything. It&apos;s <span className="cg-strong">read-only in production</span>{' '}&mdash; the
 											public site can&apos;t be edited here, only viewed.
 										</>
 									) : (
