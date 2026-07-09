@@ -21,12 +21,16 @@ function shortCompany(company: string): string {
 	return company.replace('University of British Columbia', 'UBC');
 }
 
-// "Software Developer -- Makerspace Platform" → { role, context }
-// so the row reads "Software Developer @ UBC · Makerspace Platform".
+// "Software Developer -- Makerspace Platform" (+ department) → { role, context } so the row reads
+// "Software Developer @ UBC · Makerspace Platform · Undergraduate Research Assistant & Directed Studies".
+// Both the title suffix (the platform) and the department are shown when present.
 function splitTitle(exp: Experience): { role: string; context: string } {
 	const [role, suffix] = exp.title.split(' -- ');
-	const context = suffix ?? exp.department ?? '';
-	return { role: role.trim(), context: context.trim() };
+	const context = [suffix, exp.department]
+		.map((s) => s?.trim())
+		.filter(Boolean)
+		.join(' · ');
+	return { role: role.trim(), context };
 }
 
 // period is "Sept. 2025 -- Present" or "Jul. 2025 -- Sept. 2025".
