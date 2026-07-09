@@ -4,19 +4,28 @@
 import path from 'path';
 import { readFile, writeFile } from 'fs/promises';
 import { createHash } from 'crypto';
-import { CONTENT_PATHS } from '@/app/lib/content-file-names';
+import { CONTENT_PATHS, CONTENT_DIR } from '@/app/lib/content-file-names';
 
-const root = process.cwd();
-export const p = (...s: string[]) => path.join(root, ...s);
+// Compile-time guard: the literal 'data' in underData() below must stay in sync with CONTENT_DIR.
+// If CONTENT_DIR ever changes, this assignment fails to typecheck (CONTENT_DIR has the literal type
+// of its value), flagging that the literal needs updating too.
+const _contentDirIsData: 'data' = CONTENT_DIR;
+void _contentDirIsData;
 
-// Content data + résumé source live under data/, grouped into source/ · generated/ · content/.
-// CONTENT_PATHS declares each editable file's repo-relative dir/subdir/file path; split into
-// segments so path.join builds a correct absolute path on any platform.
+// Build an absolute path from a repo-relative CONTENT_PATHS entry (e.g. "data/source/résumé.tex").
+// Next's file tracer scopes tracing to the longest STATIC path prefix, so process.cwd() and the
+// literal 'data' must sit in the SAME path.join call — that keeps tracing inside data/ instead of
+// walking the whole project (the "Encountered unexpected file in NFT list" build warning). A base
+// stored in a variable, or an imported const the tracer can't fold, defeats this. The leading
+// CONTENT_DIR segment is dropped (it's the literal 'data' here) and the rest resolved under it.
+const underData = (repoRelative: string) =>
+	path.join(process.cwd(), 'data', ...repoRelative.split('/').slice(1));
+
 export const PATHS = {
-	tex: p(...CONTENT_PATHS.masterResume.split('/')),
-	config: p(...CONTENT_PATHS.resumeConfig.split('/')),
-	work: p(...CONTENT_PATHS.workContent.split('/')),
-	project: p(...CONTENT_PATHS.projectContent.split('/')),
+	tex: underData(CONTENT_PATHS.masterResume),
+	config: underData(CONTENT_PATHS.resumeConfig),
+	work: underData(CONTENT_PATHS.workContent),
+	project: underData(CONTENT_PATHS.projectContent),
 };
 
 // ── Content file shapes (mirror the generate scripts' output) ────────────────────────────
