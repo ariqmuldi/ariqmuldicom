@@ -50,4 +50,21 @@ Updates all affected markdown documentation in response to code changes. Key rul
 - Self-maintains: adds/removes entries in this file and Step 3 when docs or slash commands are added/removed
 - Leaves all changes unstaged — does not run `/commit`
 
+### /generate-og-image
+
+**File:** `commands/generate-og-image.md`
+
+Regenerates `public/og-image.png` — the 1200×630 Open Graph / social-share card — by
+screenshotting the home-page hero. Key steps it enforces:
+
+- Builds and serves a **production** build on port 3100 (the dev-only Next.js "N" indicator must not
+  appear in the card; port 3100 avoids clashing with a dev server on `:3000`)
+- Drives the **Playwright MCP tools** (Playwright is not a project dependency) at a 1200×630 viewport
+- Runs a fixed DOM-framing script: forces scroll-reveal elements visible, hides sections below the
+  hero + the hero CTA + the scrollbar, and zooms to `0.93` so the `Available … / Currently …` status
+  line clears the bottom
+- Verifies the output is exactly 1200×630 and visually clean, then stops the server and clears
+  scratch files
+- Reminds (does not auto-run) about social-scraper caching after regeneration
+
 
