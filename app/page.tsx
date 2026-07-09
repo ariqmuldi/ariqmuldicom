@@ -18,6 +18,35 @@ const NAV = [
 	{ id: 'education', label: 'Education' },
 ];
 
+// schema.org ProfilePage → Person structured data. Rendered as a JSON-LD <script> per the
+// official Next.js recommendation (nextjs.org/docs/app/guides/json-ld) and Google's ProfilePage
+// guidance. This page is statically prerendered, so the script is present in the HTML for crawlers.
+const profileJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'ProfilePage',
+	mainEntity: {
+		'@type': 'Person',
+		name: 'Ariq Muldi',
+		alternateName: 'ariqmuldi',
+		url: 'https://ariqmuldi.com',
+		image: 'https://ariqmuldi.com/profile-photo.jpg',
+		jobTitle: 'Software Engineer',
+		description:
+			'Software Engineer and Computer Science student at UBC specialized in full-stack development, cloud computing, and DevOps.',
+		worksFor: { '@type': 'Organization', name: 'DOUBL' },
+		alumniOf: { '@type': 'CollegeOrUniversity', name: 'University of British Columbia' },
+		knowsAbout: [
+			'Full Stack Development',
+			'Cloud Computing',
+			'DevOps',
+			'TypeScript',
+			'React',
+			'Node.js',
+		],
+		sameAs: ['https://github.com/ariqmuldi', 'https://linkedin.com/in/ariqmuldi'],
+	},
+};
+
 export default function Portfolio() {
 	const activeSection = useActiveSection();
 	useScrollReveal();
@@ -31,6 +60,10 @@ export default function Portfolio() {
 
 	return (
 		<>
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(profileJsonLd) }}
+			/>
 			<TopBar crumb={crumb} links={links} brandHref="#top" brandLabel="Back to top" />
 			<main>
 				<HeroSection />
