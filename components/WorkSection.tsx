@@ -91,7 +91,7 @@ export default function WorkSection() {
 											alt={item.title}
 											width={380}
 											height={238}
-											className="work-figure__img"
+											className={`work-figure__img${item.imageFit === 'contain' ? ' work-figure__img--contain' : ''}`}
 										/>
 										{item.overlayLabel && (
 											<div className="work-figure__overlay">

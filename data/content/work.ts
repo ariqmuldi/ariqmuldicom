@@ -30,12 +30,15 @@ export interface WorkItem {
   figLabel?: string;
   // Dark gradient overlay label on the figure (e.g. "IN PRODUCTION"); omit for none.
   overlayLabel?: string;
+  // How the figure image fills its 16:10 frame. Defaults to 'cover' (crop to fill, right for wide
+  // screenshots). Use 'contain' for a near-square/portrait source that cover would crop — it shows
+  // the whole image, letterboxed on the paper background (e.g. the DOUBL fit card).
+  imageFit?: 'cover' | 'contain';
 }
 
 export interface WorkGroup {
   id: number;
   organization: string;
-  logo?: string;
   // Short display name used in article meta rows (e.g. "UBC").
   shortName?: string;
   workItems: WorkItem[];
@@ -72,19 +75,19 @@ const curatedGroups: CuratedWorkGroup[] = [
     id: 2,
     organization: "DOUBL",
     shortName: "DOUBL",
-    logo: "/doubl-logo.png",
     workItems: [
       {
         id: 4,
         title: "Professional Showcase (TBA)",
         // description + technologies are AI-generated (work-experience-content.json, key "doubl").
-        image: "/doublpicture.jpeg",
+        image: "/doubl-picture.png",
         experienceAnchor: "#experience-1",
         contentKey: "doubl",
         comingSoon: true,
         role: "Lead Software Developer",
         figLabel: "DOUBL",
-        overlayLabel: "IN PRODUCTION"
+        overlayLabel: "IN PRODUCTION",
+        imageFit: "contain"
       }
     ]
   },
@@ -92,13 +95,12 @@ const curatedGroups: CuratedWorkGroup[] = [
     id: 1,
     organization: "University of British Columbia",
     shortName: "UBC",
-    logo: "/ubc-logo.png",
     workItems: [
       {
         id: 1,
         title: "Makerspace Platform",
         // description + technologies are AI-generated (work-experience-content.json, key "makerspace").
-        image: "/msykpicture.png",
+        image: "/msyk-picture.png",
         githubUrl: "https://github.com/University-of-British-Columbia-Okanagan/MSYK_Membership",
         websiteUrl: "https://my.makerspaceyk.com",
         experienceAnchor: "#experience-3",
@@ -110,7 +112,7 @@ const curatedGroups: CuratedWorkGroup[] = [
         id: 2,
         title: "LearnCoding Platform",
         // description + technologies are AI-generated (work-experience-content.json, key "learncoding").
-        image: "/learncodingpicture.png",
+        image: "/learncoding-picture.png",
         websiteUrl: "https://learncoding.ok.ubc.ca",
         experienceAnchor: "#experience-4",
         contentKey: "learncoding",
@@ -121,7 +123,7 @@ const curatedGroups: CuratedWorkGroup[] = [
         id: 3,
         title: "MDS Application",
         // description + technologies are AI-generated (work-experience-content.json, key "mds").
-        image: "/mdsapppicture.png",
+        image: "/mds-picture.png",
         githubUrl: "https://github.com/marga120/mds-application",
         experienceAnchor: "#experience-2",
         contentKey: "mds",
