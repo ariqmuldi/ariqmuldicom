@@ -21,11 +21,11 @@ If there are no changes detected, tell the user and stop.
 For every changed file (code, config, scripts — not markdowns), read it completely. Do not skim. Do not summarize from memory. The code is the source of truth. If you do not read it, you cannot update docs accurately.
 
 This includes:
-- React/TypeScript source under `app/` — `app/page.tsx`, `app/layout.tsx`, `app/icon.tsx`, `app/components/*.tsx`, `app/lib/*.ts`, plus the `/content-generation` route (`app/content-generation/**`) and its API route handlers (`app/api/content/**`)
+- React/TypeScript source under `app/` — `app/page.tsx`, `app/layout.tsx`, `app/icon.tsx`, `components/*.tsx`, `app/lib/*.ts`, plus the `/content-generation` route (`app/content-generation/**`) and its API route handlers (`app/api/content/**`)
 - Styling: `app/globals.css` (design tokens + all section styles, the `/content-generation` `.cg-*` UI, the shared `.site-footer*`), `tailwind.config.ts`
-- Content/data modules under `app/data/` — note which are auto-generated vs manually curated vs AI-generated (`experiences.ts`/`skills.ts`/`education.ts`/`projects.ts` are LaTeX-generated; `work.ts` is curated but its `description`/`technologies` are merged from `work-experience-content.json`; `work-experience-content.json` and `project-content.json` are AI-generated)
-- The resume parser `scripts/parse-resume.ts` and its inputs under `app/data/` (`master-resume.tex`, `resume-config.json`). The downloadable `public/master-resume.pdf` is maintained manually — the parser does NOT sync it
-- The AI content generators `scripts/generate-work-experience-content.ts` (writes `app/data/work-experience-content.json` — per-role `technologies`/`commitSubject`/`description`) and `scripts/generate-project-content.ts` (writes `app/data/project-content.json` — per-project `tagline`), both via Gemini
+- Content/data modules under `data/` — note which are auto-generated vs manually curated vs AI-generated (`experiences.ts`/`skills.ts`/`education.ts`/`projects.ts` are LaTeX-generated; `work.ts` is curated but its `description`/`technologies` are merged from `work-experience-content.json`; `work-experience-content.json` and `project-content.json` are AI-generated)
+- The resume parser `scripts/parse-resume.ts` and its inputs under `data/` (`master-resume.tex`, `resume-config.json`). The downloadable `public/master-resume.pdf` is maintained manually — the parser does NOT sync it
+- The AI content generators `scripts/generate-work-experience-content.ts` (writes `data/content/work-experience-content.json` — per-role `technologies`/`commitSubject`/`description`) and `scripts/generate-project-content.ts` (writes `data/content/project-content.json` — per-project `tagline`), both via Gemini
 - Config: `next.config.ts`, `package.json` (scripts + dependencies), `tsconfig.json`, `postcss.config.mjs`, `eslint.config.mjs`
 
 Ignore generated/build output: `.next/`, `node_modules/`, `next-env.d.ts`, `*.tsbuildinfo`.
@@ -43,7 +43,7 @@ find . -name "*.md" -not -path "./node_modules/*" -not -path "./.next/*" -not -p
 Classify each file against the changes. The known docs and when to touch each:
 
 - `README.md` (root) — the main project doc. Update if the tech stack, section list, architecture, data-flow, design system, hooks, interactions, responsive behavior, resume pipeline, commands, SEO, or repository layout changed
-- `app/data/README.md` — the content-data + LaTeX resume pipeline doc. Update if the parser, its LaTeX input structure, extraction rules, the config system, the downloadable PDF, the generated output shape, the AI content contract, or how a data module is consumed by a component changed
+- `data/README.md` — the content-data + LaTeX resume pipeline doc. Update if the parser, its LaTeX input structure, extraction rules, the config system, the downloadable PDF, the generated output shape, the AI content contract, or how a data module is consumed by a component changed
 - `CLAUDE.md` — the always-loaded, per-session orientation. Update **whenever a change makes its orientation inaccurate**: the project overview, the section list/order, the data-driven rule, the generated-vs-curated data module list, the parser's run/gotcha behavior, the design constraints, the doc pointers, or the doc set itself
 - `.claude/README.md` — update if a slash command was added, removed, or its behavior changed
 - `.claude/commands/*.md` — a slash command's own spec; update if that command's behavior changed
@@ -69,7 +69,7 @@ Apply the changes. Hold yourself to these standards:
 - **Follow established conventions:**
   - No trailing period at the end of table-cell descriptions or bullet-point items
   - Sentences in doc body prose may have periods; table cells and short bullets do not
-  - Folder/path subsections use a trailing slash (e.g. `### app/data/`)
+  - Folder/path subsections use a trailing slash (e.g. `### data/`)
   - Match the heading style and tone already used in the doc you're editing — don't introduce a new format
 
 ---
@@ -97,7 +97,7 @@ For every markdown file that contains a reference:
 ## Step 7 — Handle genuinely new features with no existing home
 
 If a change introduces something that has no doc coverage anywhere:
-1. First try to fit it into an existing doc (a new section/component/hook goes into `README.md`; a change to the resume parser or its data output goes into `app/data/README.md`; a new slash command goes into `.claude/README.md`)
+1. First try to fit it into an existing doc (a new section/component/hook goes into `README.md`; a change to the resume parser or its data output goes into `data/README.md`; a new slash command goes into `.claude/README.md`)
 2. If it genuinely cannot fit in any existing doc and warrants its own file, **notify the user** — explain what it is, why it doesn't fit, and suggest a file name and location. Do not create the file without their confirmation.
 
 ---

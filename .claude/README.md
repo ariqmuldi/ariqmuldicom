@@ -1,6 +1,6 @@
 # ariqmuldi.com — Claude Code
 
-**Last Updated:** July 9, 2026
+**Last Updated:** July 10, 2026
 
 Claude Code configuration for this repository. Contains custom slash commands and local permission settings.
 
@@ -44,7 +44,7 @@ Creates a pull request into `main` for the current branch. Key rules it enforces
 Updates all affected markdown documentation in response to code changes. Key rules it enforces:
 
 - Detects the full scope of changes with `git diff`/`git status`, then reads every changed source file in full (code is the source of truth)
-- Treats **every markdown file in the repo as in scope** — enumerates them all, then updates whichever the change affects: `README.md`, `app/data/README.md`, `.claude/README.md`, the slash-command specs, and the always-loaded `CLAUDE.md` session orientation
+- Treats **every markdown file in the repo as in scope** — enumerates them all, then updates whichever the change affects: `README.md`, `data/README.md`, `.claude/README.md`, the slash-command specs, and the always-loaded `CLAUDE.md` session orientation
 - Greps all other markdown for cross-references to changed component/hook/script/data names and reconciles them
 - Asks before editing an uncertain reference, and before creating any brand-new doc file
 - Self-maintains: adds/removes entries in this file and Step 3 when docs or slash commands are added/removed
