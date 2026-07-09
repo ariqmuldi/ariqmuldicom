@@ -229,7 +229,6 @@ The Projects section is automatically generated from your LaTeX resume's Project
 | **id** | Sequential ID | 1, 2, 3, 4 |
 | **title** | Project name from `\textbf{...}` | "Ponotodoro" |
 | **description** | Accomplishments joined with ". " | "Developed a full-stack app..." |
-| **image** | Auto-generated path | "/ponotodoropicture.jpg" |
 | **technologies** | Tech stack from `\emph{...}` | ["JavaScript", "React", "Node.js"] |
 | **featured** | Featured flag (defaults to false) | false |
 | **github** | GitHub link or "#" for private | "https://github.com/..." or "#" |
@@ -263,7 +262,6 @@ The Projects section is automatically generated from your LaTeX resume's Project
    - Extracts technologies from `\emph{tech1, tech2, ...}` after `$|$` separator
    - Finds all `\resumeItem{...}` accomplishments
    - Joins accomplishments with ". " to create a flowing paragraph description
-   - Generates image path as `/{projectname}picture.jpg` (lowercase, no spaces)
 4. Generates `/app/data/projects.ts` with all projects
 
 ### Description Generation
@@ -282,18 +280,9 @@ Project descriptions are automatically created by joining accomplishment bullets
 "Developed a full-stack app integrating the Pomodoro technique. Engineered frontend with React and Bootstrap. Designed backend using Node.js and PostgreSQL."
 ```
 
-### Image Path Generation
-
-Image paths are automatically generated from project titles:
-
-- **Ponotodoro** → `/ponotodoropicture.jpg`
-- **Flight Hub** → `/flighthubpicture.jpg`
-- **ChatterBox** → `/chatterboxpicture.jpg`
-- **MoodiJawoodi** → `/moodijawoodipicture.jpg`
-
-**Pattern**: Lowercase title with spaces/special characters removed + "picture.jpg"
-
-Place project images in `/public/` directory with these exact filenames.
+> **Note:** The Projects section is a text-only terminal list (title, tagline, tech, and an
+> expandable `cat README.md` panel) — it does not render project images, so the parser no longer
+> emits an `image` field.
 
 ### GitHub Link Handling
 

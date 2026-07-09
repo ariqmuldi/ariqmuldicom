@@ -38,7 +38,6 @@ interface Project {
   id: number;
   title: string;
   description: string;
-  image: string;
   technologies: string[];
   featured: boolean;
   github: string;
@@ -279,11 +278,6 @@ function generateDescription(accomplishments: string[]): string {
   description = description.replace(/\.\s*\./g, '.'); // Clean double periods
   if (!description.endsWith('.')) description += '.';
   return description;
-}
-
-function generateImagePath(title: string): string {
-  const slug = title.toLowerCase().replace(/[^a-z0-9]/g, '');
-  return `/${slug}picture.jpg`;
 }
 
 export function parseResume(latexContent: string): Experience[] {
@@ -600,9 +594,6 @@ function parseProjects(latexContent: string): Project[] {
     // Generate description from accomplishments
     const description = generateDescription(accomplishments);
 
-    // Generate image path from title
-    const image = generateImagePath(title);
-
     // All projects default to not featured (for MVP)
     const featured = false;
 
@@ -618,7 +609,6 @@ function parseProjects(latexContent: string): Project[] {
       id,
       title,
       description,
-      image,
       technologies,
       featured,
       github
@@ -909,7 +899,6 @@ export interface Project {
   id: number;
   title: string;
   description: string;
-  image: string;
   technologies: string[];
   featured: boolean;
   github: string;
