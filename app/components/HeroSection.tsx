@@ -50,6 +50,16 @@ export default function HeroSection() {
 							Currently — SWE @ <strong>DOUBL</strong> · Research Assistant @ <strong>UBC</strong>
 						</span>
 					</div>
+
+					<a
+						href="/content-generation"
+						className="hero__pipeline-link"
+						data-reveal
+						style={{ '--reveal-delay': '340ms' } as React.CSSProperties}
+					>
+						<span className="sign">$</span> ./how-content-is-generated — view the AI content pipeline &amp; editor{' '}
+						<span className="arrow">↗</span>
+					</a>
 				</div>
 
 				<figure className="hero__figure" data-reveal style={{ '--reveal-delay': '120ms' } as React.CSSProperties}>
