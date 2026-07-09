@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { experiences } from '@/app/data/experiences';
+import { experiences } from '@/data/generated/experiences';
 import { useTypewriter } from '@/app/lib/hooks';
 
 // Hero is static presentation copy (not data-file driven), per the design brief.

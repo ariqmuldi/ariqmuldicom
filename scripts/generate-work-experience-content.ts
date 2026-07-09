@@ -2,7 +2,7 @@
 //
 // One of two code paths that read GEMINI_API_KEY / hit the network (the other is
 // generate-project-content.ts). Generates the per-role AI content in
-// app/data/work-experience-content.json (a `commitSubject` for every role with accomplishments,
+// data/content/work-experience-content.json (a `commitSubject` for every role with accomplishments,
 // a 2–3 sentence project `description` for Work-surfaced roles, and a shared `technologies` list).
 // Never run by `npm run dev`, `npm run build`, or Vercel — invoked manually.
 //
@@ -21,8 +21,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { createHash } from 'crypto';
 import { parseResume, type Experience } from './parse-resume';
-import { workGroups } from '../app/data/work';
-import { experiences as builtExperiences } from '../app/data/experiences';
+import { workGroups } from '../data/content/work';
+import { experiences as builtExperiences } from '../data/generated/experiences';
 
 const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash-lite';
 const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
@@ -45,7 +45,7 @@ const ROLES: RoleDef[] = [
   { contentKey: 'teaching-assistant', experienceId: 5, expectedTitleIncludes: 'Teaching Assistant' },
 ];
 
-// ── The committed data contract (app/data/work-experience-content.json) ────────────────────────────
+// ── The committed data contract (data/content/work-experience-content.json) ────────────────────────────
 interface RoleContent {
   experienceId: number;
   sourceHash: string;
@@ -57,9 +57,9 @@ interface RoleContent {
 type RoleContentFile = Record<string, RoleContent>;
 
 const projectRoot = path.resolve(__dirname, '..');
-const latexPath = path.join(projectRoot, 'app', 'data', 'master-resume.tex');
+const latexPath = path.join(projectRoot, 'data', 'source', 'master-resume.tex');
 const envPath = path.join(projectRoot, '.env');
-const outputPath = path.join(projectRoot, 'app', 'data', 'work-experience-content.json');
+const outputPath = path.join(projectRoot, 'data', 'content', 'work-experience-content.json');
 
 // ── Helpers ─────────────────────────────────────────────────────────────────────────────
 

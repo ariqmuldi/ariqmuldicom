@@ -1,4 +1,4 @@
-// @/app/data/work.ts
+// @/data/content/work.ts
 // This file is manually curated and is not auto-generated.
 // It showcases specific high-impact projects from work experience (the "Work" section).
 //

@@ -1,6 +1,6 @@
 'use client';
 
-import { education } from '@/app/data/education';
+import { education } from '@/data/generated/education';
 
 export default function EducationSection() {
 	const [gpaMain, gpaMax] = education.gpa.split('/');

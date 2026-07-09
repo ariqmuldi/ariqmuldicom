@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { requireEditable } from '@/app/lib/content-guard';
 import { PATHS, readJson, writeText } from '@/app/lib/content-files';
 
-// Visibility toggles → app/data/resume-config.json. Merges into the `experiences` block (the parser
+// Visibility toggles → data/source/resume-config.json. Merges into the `experiences` block (the parser
 // regenerates the `_instructions` block on the next run). Changes apply on the NEXT parse, so the
 // UI prompts a re-parse after changing them.
 interface ConfigEntry {

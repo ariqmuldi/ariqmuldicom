@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { projects } from '@/app/data/projects';
-import projectContent from '@/app/data/project-content.json';
+import { projects } from '@/data/generated/projects';
+import projectContent from '@/data/content/project-content.json';
 
 // AI-generated per-project taglines (project-content.json), keyed by projectId. Fall back to
 // the first sentence of the auto-generated `description` when no approved tagline exists.

@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { experiences, type Experience } from '@/app/data/experiences';
+import { experiences, type Experience } from '@/data/generated/experiences';
 import { fakeCommitHash, fakeCommitHashLong } from '@/app/lib/hooks';
-import workExperienceContent from '@/app/data/work-experience-content.json';
+import workExperienceContent from '@/data/content/work-experience-content.json';
 
 // AI-generated per-role content (work-experience-content.json), keyed by experienceId. Both the
 // shared `technologies` list (also rendered by Work) and the git-log `commitSubject` are overlaid

@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import { experiences } from '@/app/data/experiences';
-import { projects } from '@/app/data/projects';
-import { skills } from '@/app/data/skills';
-import ContentGenerationApp from '@/app/components/ContentGenerationApp';
+import { experiences } from '@/data/generated/experiences';
+import { projects } from '@/data/generated/projects';
+import { skills } from '@/data/generated/skills';
+import ContentGenerationApp from '@/components/ContentGenerationApp';
 
 export const metadata: Metadata = {
 	title: 'Content Pipeline — ariqmuldi.com',

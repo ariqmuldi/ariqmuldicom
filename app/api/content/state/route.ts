@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { readFile } from 'fs/promises';
-import { experiences } from '@/app/data/experiences';
-import { projects } from '@/app/data/projects';
+import { experiences } from '@/data/generated/experiences';
+import { projects } from '@/data/generated/projects';
 import {
 	PATHS,
 	readJson,

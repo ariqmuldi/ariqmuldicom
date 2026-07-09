@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { fakeCommitHash } from '@/app/lib/hooks';
-import { CONTENT_DIR, CONTENT_FILES } from '@/app/lib/content-file-names';
-import type { Experience } from '@/app/data/experiences';
-import type { Project } from '@/app/data/projects';
+import { CONTENT_DIR, CONTENT_SUBDIRS, CONTENT_FILES, CONTENT_PATHS } from '@/app/lib/content-file-names';
+import type { Experience } from '@/data/generated/experiences';
+import type { Project } from '@/data/generated/projects';
 import PipelineDiagram from './PipelineDiagram';
 import ModelSelect from './ModelSelect';
 import TopBar from './TopBar';
@@ -132,7 +132,7 @@ export default function ContentGenerationApp({
 
 	const [log, setLog] = useState<LogLine[]>([
 		{ t: 'ariq@muldi:~/ariqmuldicom$ content-console --init', c: C.cmd },
-		{ t: 'loading app/data/work-experience-content.json · project-content.json …', c: C.dim },
+		{ t: `loading ${CONTENT_PATHS.workContent} · ${CONTENT_FILES.projectContent} …`, c: C.dim },
 	]);
 
 	// Bottom-right toast. 'busy' persists (no timer) while an action runs and points the user to the
@@ -298,7 +298,7 @@ export default function ContentGenerationApp({
 			}
 			const { ok } = await consumeStream(res);
 			if (ok) {
-				addLog(`parsed → regenerated ${CONTENT_DIR}/*.ts + ${CONTENT_FILES.resumeConfig}`, C.success);
+				addLog(`parsed → regenerated ${CONTENT_DIR}/${CONTENT_SUBDIRS.generated}/*.ts + ${CONTENT_FILES.resumeConfig}`, C.success);
 				await refreshState();
 				showFlash('success', '✓ parse:resume succeeded — data files regenerated');
 			} else {
@@ -526,7 +526,7 @@ export default function ContentGenerationApp({
 					<div className="cg-section__head">
 						<span className="cg-section__num">[ 02 ]</span>
 						<span className="cg-section__label">EDITOR</span>
-						<span className="cg-section__cmd">$ sudo edit ./app/data</span>
+						<span className="cg-section__cmd">$ sudo edit ./data</span>
 					</div>
 
 					{/* AUTH BAR */}
@@ -713,7 +713,7 @@ export default function ContentGenerationApp({
 				<div className="cg-tex-grid">
 					<div>
 						<div className="cg-field-head">
-							<span className="cg-field-head__label">{`${CONTENT_DIR}/${CONTENT_FILES.masterResume}`.toUpperCase()}</span>
+							<span className="cg-field-head__label">{CONTENT_PATHS.masterResume.toUpperCase()}</span>
 							<span className={`cg-dirty${texDirty ? ' is-dirty' : ''}`}>
 								{texDirty ? '● unsaved — run parse' : '✓ in sync'}
 							</span>
@@ -773,7 +773,7 @@ export default function ContentGenerationApp({
 
 				{/* resume-config visibility */}
 				<div className="cg-config">
-					<div className="cg-field-head__label">{`${CONTENT_DIR}/${CONTENT_FILES.resumeConfig}`.toUpperCase()} — VISIBILITY</div>
+					<div className="cg-field-head__label">{CONTENT_PATHS.resumeConfig.toUpperCase()} — VISIBILITY</div>
 					<div className="cg-config__lead">
 						Hide an experience, all/specific accomplishments, or its technologies. Applied by the parser on next run.
 					</div>

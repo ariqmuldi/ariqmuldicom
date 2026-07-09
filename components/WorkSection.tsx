@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { workGroups, type WorkItem } from '@/app/data/work';
+import { workGroups, type WorkItem } from '@/data/content/work';
 
 // Flatten every work item across groups, tagging each with its org short name.
 // Display order follows the authored order of `workGroups` in work.ts (DOUBL first, then

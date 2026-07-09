@@ -3,7 +3,7 @@ import { spawn } from 'child_process';
 
 // Streams `npm run parse:resume` stdout/stderr live (newline-delimited) into the in-page console,
 // with a trailing `__CG_DONE__:{json}` line carrying the outcome. parse:resume rewrites
-// app/data/*.ts and auto-updates app/data/resume-config.json; the client re-GETs /state after.
+// data/generated/*.ts and auto-updates data/source/resume-config.json; the client re-GETs /state after.
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 

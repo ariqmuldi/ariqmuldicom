@@ -840,7 +840,7 @@ function applyConfig(experiences: Experience[], config: ResumeConfig | null): Ex
 
 function generateTypeScriptFile(experiences: Experience[], outputPath: string): void {
   const content = `// THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
-// Generated from: /app/data/master-resume.tex
+// Generated from: /data/source/master-resume.tex
 
 export interface Experience {
   id: number;
@@ -862,7 +862,7 @@ export const experiences: Experience[] = ${JSON.stringify(experiences, null, 2)}
 
 function generateSkillsTypeScriptFile(skills: Skills, outputPath: string): void {
   const content = `// THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
-// Generated from: /app/data/master-resume.tex
+// Generated from: /data/source/master-resume.tex
 
 export interface SkillCategory {
   name: string;
@@ -881,7 +881,7 @@ export const skills: Skills = ${JSON.stringify(skills, null, 2)};
 
 function generateEducationTypeScriptFile(education: Education, outputPath: string): void {
   const content = `// THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
-// Generated from: /app/data/master-resume.tex
+// Generated from: /data/source/master-resume.tex
 
 export interface Education {
   school: string;
@@ -903,7 +903,7 @@ export const education: Education = ${JSON.stringify(education, null, 2)};
 
 function generateProjectsTypeScriptFile(projects: Project[], outputPath: string): void {
   const content = `// THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
-// Generated from: /app/data/master-resume.tex
+// Generated from: /data/source/master-resume.tex
 
 export interface Project {
   id: number;
@@ -926,12 +926,12 @@ function main() {
     console.log('Reading LaTeX resume file...');
 
     const projectRoot = path.resolve(__dirname, '..');
-    const latexPath = path.join(projectRoot, 'app', 'data', 'master-resume.tex');
-    const configPath = path.join(projectRoot, 'app', 'data', 'resume-config.json');
-    const outputPath = path.join(projectRoot, 'app', 'data', 'experiences.ts');
-    const skillsOutputPath = path.join(projectRoot, 'app', 'data', 'skills.ts');
-    const educationOutputPath = path.join(projectRoot, 'app', 'data', 'education.ts');
-    const projectsOutputPath = path.join(projectRoot, 'app', 'data', 'projects.ts');
+    const latexPath = path.join(projectRoot, 'data', 'source', 'master-resume.tex');
+    const configPath = path.join(projectRoot, 'data', 'source', 'resume-config.json');
+    const outputPath = path.join(projectRoot, 'data', 'generated', 'experiences.ts');
+    const skillsOutputPath = path.join(projectRoot, 'data', 'generated', 'skills.ts');
+    const educationOutputPath = path.join(projectRoot, 'data', 'generated', 'education.ts');
+    const projectsOutputPath = path.join(projectRoot, 'data', 'generated', 'projects.ts');
 
     if (!fs.existsSync(latexPath)) {
       throw new Error(`LaTeX file not found at: ${latexPath}`);
@@ -1025,7 +1025,7 @@ function main() {
 
 // Only run the full parse pipeline when executed directly (e.g. `tsx scripts/parse-resume.ts`
 // or `npm run parse:resume`). When imported by another script (e.g. generate-work-experience-content.ts),
-// the exported helpers are used without re-running main() and rewriting app/data/*.ts.
+// the exported helpers are used without re-running main() and rewriting data/generated/*.ts.
 if (require.main === module) {
   main();
 }

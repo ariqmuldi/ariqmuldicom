@@ -4,18 +4,19 @@
 import path from 'path';
 import { readFile, writeFile } from 'fs/promises';
 import { createHash } from 'crypto';
-import { CONTENT_DIR, CONTENT_FILES } from '@/app/lib/content-file-names';
+import { CONTENT_PATHS } from '@/app/lib/content-file-names';
 
 const root = process.cwd();
 export const p = (...s: string[]) => path.join(root, ...s);
 
-// All content data + résumé source now live together under app/data (CONTENT_DIR).
-const dir = CONTENT_DIR.split('/');
+// Content data + résumé source live under data/, grouped into source/ · generated/ · content/.
+// CONTENT_PATHS declares each editable file's repo-relative dir/subdir/file path; split into
+// segments so path.join builds a correct absolute path on any platform.
 export const PATHS = {
-	tex: p(...dir, CONTENT_FILES.masterResume),
-	config: p(...dir, CONTENT_FILES.resumeConfig),
-	work: p(...dir, CONTENT_FILES.workContent),
-	project: p(...dir, CONTENT_FILES.projectContent),
+	tex: p(...CONTENT_PATHS.masterResume.split('/')),
+	config: p(...CONTENT_PATHS.resumeConfig.split('/')),
+	work: p(...CONTENT_PATHS.workContent.split('/')),
+	project: p(...CONTENT_PATHS.projectContent.split('/')),
 };
 
 // ── Content file shapes (mirror the generate scripts' output) ────────────────────────────

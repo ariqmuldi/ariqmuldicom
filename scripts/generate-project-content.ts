@@ -1,7 +1,7 @@
 // scripts/generate-project-content.ts
 //
 // A network/GEMINI_API_KEY code path (sibling to generate-work-experience-content.ts). Generates
-// the per-project AI content in app/data/project-content.json — a terse GitHub-"About"-style
+// the per-project AI content in data/content/project-content.json — a terse GitHub-"About"-style
 // `tagline` for each project. Never run by `npm run dev`, `npm run build`, or Vercel — invoked
 // manually via `npm run generate:project-content` (or `npm run generate:content`, which runs both).
 //
@@ -18,12 +18,12 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { createHash } from 'crypto';
-import { projects } from '../app/data/projects';
+import { projects } from '../data/generated/projects';
 
 const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash-lite';
 const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
-// ── The committed data contract (app/data/project-content.json) ─────────────────────────
+// ── The committed data contract (data/content/project-content.json) ─────────────────────────
 interface ProjectContent {
   projectId: number;
   sourceHash: string;
@@ -34,7 +34,7 @@ type ProjectContentFile = Record<string, ProjectContent>;
 
 const projectRoot = path.resolve(__dirname, '..');
 const envPath = path.join(projectRoot, '.env');
-const outputPath = path.join(projectRoot, 'app', 'data', 'project-content.json');
+const outputPath = path.join(projectRoot, 'data', 'content', 'project-content.json');
 
 // ── Helpers ─────────────────────────────────────────────────────────────────────────────
 

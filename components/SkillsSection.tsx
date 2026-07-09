@@ -1,6 +1,6 @@
 'use client';
 
-import { skills } from '@/app/data/skills';
+import { skills } from '@/data/generated/skills';
 
 // Derive a short folder-style label from a category name, e.g.
 // "Programming Languages" → "programming/", "Cloud & Deployment" → "cloud/".
