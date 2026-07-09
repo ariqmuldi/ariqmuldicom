@@ -103,7 +103,7 @@ const curatedGroups: CuratedWorkGroup[] = [
         websiteUrl: "https://my.makerspaceyk.com",
         experienceAnchor: "#experience-3",
         contentKey: "makerspace",
-        role: "Research Assistant",
+        role: "Software Developer",
         figLabel: "MSYK.MEMBERSHIP"
       },
       {
@@ -114,7 +114,7 @@ const curatedGroups: CuratedWorkGroup[] = [
         websiteUrl: "https://learncoding.ok.ubc.ca",
         experienceAnchor: "#experience-4",
         contentKey: "learncoding",
-        role: "Research Assistant",
+        role: "Software Developer",
         figLabel: "LEARNCODING"
       },
       {
@@ -125,7 +125,7 @@ const curatedGroups: CuratedWorkGroup[] = [
         githubUrl: "https://github.com/marga120/mds-application",
         experienceAnchor: "#experience-2",
         contentKey: "mds",
-        role: "Work Study",
+        role: "Software Developer",
         figLabel: "MDS.APPLICATION"
       }
     ]
