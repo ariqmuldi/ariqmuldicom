@@ -840,7 +840,7 @@ function applyConfig(experiences: Experience[], config: ResumeConfig | null): Ex
 
 function generateTypeScriptFile(experiences: Experience[], outputPath: string): void {
   const content = `// THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
-// Generated from: /data/master-resume.tex
+// Generated from: /app/data/master-resume.tex
 
 export interface Experience {
   id: number;
@@ -862,7 +862,7 @@ export const experiences: Experience[] = ${JSON.stringify(experiences, null, 2)}
 
 function generateSkillsTypeScriptFile(skills: Skills, outputPath: string): void {
   const content = `// THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
-// Generated from: /data/master-resume.tex
+// Generated from: /app/data/master-resume.tex
 
 export interface SkillCategory {
   name: string;
@@ -881,7 +881,7 @@ export const skills: Skills = ${JSON.stringify(skills, null, 2)};
 
 function generateEducationTypeScriptFile(education: Education, outputPath: string): void {
   const content = `// THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
-// Generated from: /data/master-resume.tex
+// Generated from: /app/data/master-resume.tex
 
 export interface Education {
   school: string;
@@ -903,7 +903,7 @@ export const education: Education = ${JSON.stringify(education, null, 2)};
 
 function generateProjectsTypeScriptFile(projects: Project[], outputPath: string): void {
   const content = `// THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
-// Generated from: /data/master-resume.tex
+// Generated from: /app/data/master-resume.tex
 
 export interface Project {
   id: number;
@@ -926,8 +926,8 @@ function main() {
     console.log('Reading LaTeX resume file...');
 
     const projectRoot = path.resolve(__dirname, '..');
-    const latexPath = path.join(projectRoot, 'data', 'master-resume.tex');
-    const configPath = path.join(projectRoot, 'data', 'resume-config.json');
+    const latexPath = path.join(projectRoot, 'app', 'data', 'master-resume.tex');
+    const configPath = path.join(projectRoot, 'app', 'data', 'resume-config.json');
     const outputPath = path.join(projectRoot, 'app', 'data', 'experiences.ts');
     const skillsOutputPath = path.join(projectRoot, 'app', 'data', 'skills.ts');
     const educationOutputPath = path.join(projectRoot, 'app', 'data', 'education.ts');

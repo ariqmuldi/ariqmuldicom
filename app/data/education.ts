@@ -1,5 +1,5 @@
 // THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
-// Generated from: /data/master-resume.tex
+// Generated from: /app/data/master-resume.tex
 
 export interface Education {
   school: string;
@@ -18,7 +18,7 @@ export const education: Education = {
   "location": "Kelowna, BC",
   "degree": "Bachelor of Science Major in Computer Science",
   "minor": "Minor in Data Science",
-  "graduationDate": "Expected Graduation, May 2026",
+  "graduationDate": "Expected Graduation, May 2027",
   "gpa": "4.21/4.33",
   "gpaPercentage": "90.6%",
   "relevantCoursework": [

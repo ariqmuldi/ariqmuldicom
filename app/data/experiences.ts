@@ -1,5 +1,5 @@
 // THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
-// Generated from: /data/master-resume.tex
+// Generated from: /app/data/master-resume.tex
 
 export interface Experience {
   id: number;
