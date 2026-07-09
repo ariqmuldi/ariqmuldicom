@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:#FAF7F0; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+  ::selection{ background:rgba(85,88,121,.22); color:#2A2C3B; }
+  @keyframes blink{ 0%,48%{opacity:1} 49%,100%{opacity:0} }
+  @keyframes flowX{ 0%{left:-4%;opacity:0} 12%{opacity:1} 88%{opacity:1} 100%{left:104%;opacity:0} }
+  @keyframes spin{ to{ transform:rotate(360deg) } }
+  @keyframes cgIn{ from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+  ::-webkit-scrollbar{ width:11px; height:11px; }
+  ::-webkit-scrollbar-track{ background:#F0E8D2; }
+  ::-webkit-scrollbar-thumb{ background:#98A1BC; border:3px solid #F0E8D2; }
+  ::-webkit-scrollbar-thumb:hover{ background:#555879; }
+  textarea::-webkit-scrollbar-track{ background:#26273A; }
+  textarea::-webkit-scrollbar-thumb{ background:#454863; border:3px solid #26273A; }
+  a{ color:#555879; } a:hover{ color:#3D3F5C; }
+</style>
+</helmet>
+
+<div ref="{{ rootRef }}" style="--paper:#FAF7F0; --paper2:#F4EBD3; --ink:#2A2C3B; --ink-soft:rgba(42,44,59,.62); --ink-faint:rgba(42,44,59,.40); --accent:#555879; --accent2:#3D3F5C; --blue:#98A1BC; --beige:#DED3C4; --rule:rgba(42,44,59,.13); --rule2:rgba(42,44,59,.30); --green:#3FB27F; --dark:#23242F; background:var(--paper); color:var(--ink); font-family:'IBM Plex Mono', ui-monospace, monospace; min-height:100vh; position:relative; overflow-x:hidden; font-feature-settings:'ss01','zero';">
+
+  <!-- ============ TOP BAR ============ -->
+  <div style="position:sticky; top:0; z-index:50; background:rgba(250,247,240,.86); backdrop-filter:saturate(140%) blur(8px); -webkit-backdrop-filter:saturate(140%) blur(8px); border-bottom:1px solid var(--rule);">
+    <div style="max-width:1200px; margin:0 auto; padding:0 40px; height:54px; display:flex; align-items:center; justify-content:space-between; gap:24px;">
+      <a href="Ariq Muldi - Portfolio.dc.html" style="display:flex; align-items:baseline; gap:8px; text-decoration:none; color:var(--ink); font-size:13px; letter-spacing:.01em; white-space:nowrap;">
+        <span style="width:7px; height:7px; border-radius:50%; background:var(--green); display:inline-block; align-self:center; box-shadow:0 0 0 3px rgba(63,178,127,.16);"></span>
+        <span style="font-weight:600;">ariqmuldi</span><span style="color:var(--ink-faint);">.com</span>
+        <span style="color:var(--accent); font-size:12px; margin-left:2px;">~/content-generation</span>
+      </a>
+      <nav style="display:flex; align-items:center; gap:22px; flex-wrap:wrap; justify-content:flex-end; font-size:11px; letter-spacing:.16em;">
+        <a href="#how" style="text-decoration:none; color:var(--ink-soft);" style-hover="color:var(--ink)">HOW IT WORKS</a>
+        <a href="#editor" style="text-decoration:none; color:var(--ink-soft);" style-hover="color:var(--ink)">EDITOR</a>
+        <a href="Ariq Muldi - Portfolio.dc.html" style="text-decoration:none; color:var(--ink); border-bottom:1px solid var(--accent); padding-bottom:1px;" style-hover="color:var(--accent)">← BACK TO SITE</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- ============ PAGE HERO ============ -->
+  <section style="border-bottom:1px solid var(--rule);">
+    <div style="max-width:1200px; margin:0 auto; padding:64px 40px 52px;">
+      <div style="font-size:13px; color:var(--ink-soft); margin-bottom:26px;"><span style="color:var(--accent);">$</span> cat ./how-content-is-generated<span style="display:inline-block; width:.58em; height:1.02em; background:var(--accent); vertical-align:-3px; margin-left:.14em; animation:blink 1.05s steps(1) infinite;"></span></div>
+      <h1 style="margin:0; font-size:clamp(40px,7vw,84px); line-height:.92; font-weight:600; letter-spacing:-.045em; color:var(--ink);">CONTENT<br>PIPELINE</h1>
+      <p style="margin:24px 0 0; max-width:64ch; font-size:14.5px; line-height:1.72; color:var(--ink-soft);">The résumé and project copy on this site isn't hand-typed into components. A single LaTeX master résumé is parsed into data, an LLM drafts the prose, taglines and commit subjects, and every draft is reviewed and approved before it ships. Below: how it flows — then the console to drive it.</p>
+      <div style="margin-top:24px; display:flex; flex-wrap:wrap; gap:8px 26px; font-size:12px; color:var(--ink-soft);">
+        <span>source of truth <span style="color:var(--ink);">master-resume.tex</span></span>
+        <span style="color:var(--ink-faint);">|</span>
+        <span>drafts by <span style="color:var(--ink);">{{ modelName }}</span></span>
+        <span style="color:var(--ink-faint);">|</span>
+        <span><span style="color:var(--green);">●</span> approve-to-publish</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 01 · HOW IT WORKS (animated pipeline) ============ -->
+  <section id="how" style="scroll-margin-top:64px; border-bottom:1px solid var(--rule); background:var(--paper2);">
+    <div style="max-width:1200px; margin:0 auto; padding:72px 40px;">
+      <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:8px;">
+        <span style="font-size:11px; letter-spacing:.2em; color:var(--accent);">[ 01 ]</span>
+        <span style="font-size:11px; letter-spacing:.2em; color:var(--ink);">HOW IT WORKS</span>
+        <span style="font-size:11px; color:var(--ink-faint); margin-left:auto;">$ ./pipeline --watch</span>
+      </div>
+
+      <div ref="{{ pipeRef }}" style="margin-top:22px; border:1px solid var(--rule2); background:var(--paper); padding:30px 30px 26px;">
+
+        <!-- RAIL A -->
+        <div style="font-size:10px; letter-spacing:.18em; color:var(--ink-faint); margin-bottom:12px;">A · LATEX → DATA</div>
+        <div style="display:flex; align-items:stretch; gap:0;">
+          <div data-node="0" style="border:1px solid var(--rule2); background:var(--paper); padding:12px 14px; min-width:150px; transition:all .35s;">
+            <div style="font-size:12.5px; font-weight:600; color:var(--ink);">master-resume.tex</div>
+            <div style="font-size:10px; color:var(--ink-faint); margin-top:5px;">LaTeX · Overleaf</div>
+          </div>
+          <div style="flex:1; min-width:64px; position:relative; display:flex; align-items:center;">
+            <div style="position:absolute; top:calc(50% - 12px); left:0; right:0; text-align:center; font-size:9.5px; letter-spacing:.06em; color:var(--ink-faint);">parse:resume</div>
+            <div style="position:absolute; left:6px; right:14px; top:50%; height:1px; background:var(--rule2);"></div>
+            <span style="position:absolute; top:calc(50% - 2.5px); width:5px; height:5px; background:var(--accent); animation:flowX 2.4s linear infinite;"></span>
+            <span style="position:absolute; top:calc(50% - 2.5px); width:5px; height:5px; background:var(--accent); animation:flowX 2.4s linear infinite; animation-delay:.8s;"></span>
+            <span style="position:absolute; top:calc(50% - 2.5px); width:5px; height:5px; background:var(--accent); animation:flowX 2.4s linear infinite; animation-delay:1.6s;"></span>
+            <span style="position:absolute; right:2px; top:calc(50% - 7px); color:var(--ink-faint); font-size:13px;">→</span>
+          </div>
+          <div data-node="1" style="border:1px solid var(--rule2); background:var(--paper); padding:12px 14px; min-width:112px; transition:all .35s;">
+            <div style="font-size:12.5px; font-weight:600; color:var(--ink);">parse-resume.ts</div>
+            <div style="font-size:10px; color:var(--ink-faint); margin-top:5px;">tsx parser</div>
+          </div>
+          <div style="flex:1; min-width:64px; position:relative; display:flex; align-items:center;">
+            <div style="position:absolute; left:6px; right:14px; top:50%; height:1px; background:var(--rule2);"></div>
+            <span style="position:absolute; top:calc(50% - 2.5px); width:5px; height:5px; background:var(--accent); animation:flowX 2.6s linear infinite; animation-delay:.4s;"></span>
+            <span style="position:absolute; top:calc(50% - 2.5px); width:5px; height:5px; background:var(--accent); animation:flowX 2.6s linear infinite; animation-delay:1.5s;"></span>
+            <span style="position:absolute; right:2px; top:calc(50% - 7px); color:var(--ink-faint); font-size:13px;">→</span>
+          </div>
+          <div data-node="2" style="border:1px solid var(--rule2); background:var(--paper); padding:12px 14px; min-width:210px; transition:all .35s;">
+            <div style="font-size:11.5px; color:var(--ink); line-height:1.7;">experiences.ts · skills.ts<br>education.ts · projects.ts</div>
+            <div style="font-size:10px; color:var(--ink-faint); margin-top:5px;">+ resume-config.json · pdf sync</div>
+          </div>
+        </div>
+
+        <!-- RAIL B -->
+        <div style="font-size:10px; letter-spacing:.18em; color:var(--ink-faint); margin:26px 0 12px;">B · TEXT → AI DRAFTS</div>
+        <div style="display:flex; align-items:stretch; gap:0;">
+          <div data-node="3" style="border:1px solid var(--rule2); background:var(--paper); padding:12px 14px; min-width:150px; transition:all .35s;">
+            <div style="font-size:12.5px; font-weight:600; color:var(--ink);">résumé + project text</div>
+            <div style="font-size:10px; color:var(--ink-faint); margin-top:5px;">accomplishments · descriptions</div>
+          </div>
+          <div style="flex:1; min-width:64px; position:relative; display:flex; align-items:center;">
+            <div style="position:absolute; top:calc(50% - 12px); left:0; right:0; text-align:center; font-size:9.5px; letter-spacing:.06em; color:var(--ink-faint);">generate:content</div>
+            <div style="position:absolute; left:6px; right:14px; top:50%; height:1px; background:var(--rule2);"></div>
+            <span style="position:absolute; top:calc(50% - 2.5px); width:5px; height:5px; background:var(--green); animation:flowX 2.5s linear infinite; animation-delay:.2s;"></span>
+            <span style="position:absolute; top:calc(50% - 2.5px); width:5px; height:5px; background:var(--green); animation:flowX 2.5s linear infinite; animation-delay:1.1s;"></span>
+            <span style="position:absolute; right:2px; top:calc(50% - 7px); color:var(--ink-faint); font-size:13px;">→</span>
+          </div>
+          <div data-node="4" style="border:1px solid var(--rule2); background:var(--paper); padding:12px 14px; min-width:112px; transition:all .35s;">
+            <div style="font-size:12.5px; font-weight:600; color:var(--ink);">Gemini</div>
+            <div style="font-size:10px; color:var(--ink-faint); margin-top:5px;">{{ modelShort }}</div>
+          </div>
+          <div style="flex:1; min-width:64px; position:relative; display:flex; align-items:center;">
+            <div style="position:absolute; left:6px; right:14px; top:50%; height:1px; background:var(--rule2);"></div>
+            <span style="position:absolute; top:calc(50% - 2.5px); width:5px; height:5px; background:var(--green); animation:flowX 2.7s linear infinite; animation-delay:.6s;"></span>
+            <span style="position:absolute; top:calc(50% - 2.5px); width:5px; height:5px; background:var(--green); animation:flowX 2.7s linear infinite; animation-delay:1.7s;"></span>
+            <span style="position:absolute; right:2px; top:calc(50% - 7px); color:var(--ink-faint); font-size:13px;">→</span>
+          </div>
+          <div data-node="5" style="border:1px solid var(--rule2); background:var(--paper); padding:12px 14px; min-width:210px; transition:all .35s;">
+            <div style="font-size:11.5px; color:var(--ink); line-height:1.7;">work-experience-content.json<br>project-content.json</div>
+            <div style="font-size:10px; color:var(--accent); margin-top:5px;">approved: <span style="color:var(--ink-faint);">false</span> — awaiting review</div>
+          </div>
+        </div>
+
+        <!-- MERGE -->
+        <div style="display:flex; justify-content:center; margin:18px 0 6px;"><span style="color:var(--ink-faint); font-size:14px;">↓</span></div>
+        <div style="display:flex; align-items:stretch; gap:0;">
+          <div data-node="6" style="border:1px solid var(--rule2); background:var(--paper); padding:12px 14px; min-width:180px; transition:all .35s;">
+            <div style="font-size:12.5px; font-weight:600; color:var(--ink);">review &amp; approve</div>
+            <div style="font-size:10px; color:var(--ink-faint); margin-top:5px;">approved: <span style="color:var(--green);">true</span> · locked · committed</div>
+          </div>
+          <div style="flex:1; min-width:64px; position:relative; display:flex; align-items:center;">
+            <div style="position:absolute; left:6px; right:14px; top:50%; height:1px; background:var(--rule2);"></div>
+            <span style="position:absolute; top:calc(50% - 2.5px); width:5px; height:5px; background:var(--green); animation:flowX 2.3s linear infinite;"></span>
+            <span style="position:absolute; top:calc(50% - 2.5px); width:5px; height:5px; background:var(--green); animation:flowX 2.3s linear infinite; animation-delay:1.15s;"></span>
+            <span style="position:absolute; right:2px; top:calc(50% - 7px); color:var(--ink-faint); font-size:13px;">→</span>
+          </div>
+          <div data-node="7" style="border:1px solid var(--ink); background:var(--dark); padding:12px 14px; min-width:270px; transition:all .35s;">
+            <div style="font-size:12.5px; font-weight:600; color:#F4EBD3;">ariqmuldi.com</div>
+            <div style="font-size:10px; color:var(--blue); margin-top:5px;">renders Work · Experience · Projects</div>
+          </div>
+        </div>
+
+        <!-- console line -->
+        <div style="margin-top:24px; border-top:1px solid var(--rule); padding-top:14px; display:flex; align-items:center; gap:10px; font-size:12px;">
+          <span style="width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 0 3px rgba(63,178,127,.16);"></span>
+          <span style="color:var(--ink-faint);">stage</span>
+          <span ref="{{ stageRef }}" style="color:var(--accent);">initializing…</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 · EDITOR ============ -->
+  <section id="editor" style="scroll-margin-top:64px;">
+    <div style="max-width:1200px; margin:0 auto; padding:72px 40px 40px;">
+      <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:22px;">
+        <span style="font-size:11px; letter-spacing:.2em; color:var(--accent);">[ 02 ]</span>
+        <span style="font-size:11px; letter-spacing:.2em; color:var(--ink);">EDITOR</span>
+        <span style="font-size:11px; color:var(--ink-faint); margin-left:auto;">$ sudo edit ./app/data</span>
+      </div>
+
+      <!-- AUTH BAR -->
+      <div style="border:1px solid {{ authBorder }}; background:{{ authBg }}; padding:16px 18px; display:flex; flex-wrap:wrap; align-items:center; gap:14px 18px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="width:9px; height:9px; border-radius:2px; background:{{ lockDot }}; display:inline-block; flex:none;"></span>
+          <div>
+            <div style="font-size:12.5px; font-weight:600; color:var(--ink);">{{ authTitle }}</div>
+            <div style="font-size:11px; color:var(--ink-soft); margin-top:2px;">{{ authSub }}</div>
+          </div>
+        </div>
+        <div style="margin-left:auto; display:flex; align-items:center; gap:10px;">
+          <sc-if value="{{ locked }}" hint-placeholder-val="{{ true }}">
+            <input type="password" value="{{ pwInput }}" onInput="{{ onPw }}" onKeyDown="{{ onPwKey }}" placeholder="CONTENT_GENERATION_PASSWORD" style="font-family:inherit; font-size:12px; color:var(--ink); background:var(--paper); border:1px solid var(--rule2); padding:9px 12px; width:240px; outline:none;" style-focus="border-color:var(--accent)">
+            <button onClick="{{ onUnlock }}" style="font-family:inherit; font-size:12px; letter-spacing:.04em; color:var(--paper); background:var(--ink); border:1px solid var(--ink); padding:9px 16px; cursor:pointer;" style-hover="background:var(--accent); border-color:var(--accent)">unlock ↵</button>
+          </sc-if>
+          <sc-if value="{{ unlocked }}">
+            <span style="font-size:11px; color:var(--green); letter-spacing:.04em;">● authenticated</span>
+            <button onClick="{{ onLock }}" style="font-family:inherit; font-size:12px; letter-spacing:.04em; color:var(--ink); background:transparent; border:1px solid var(--rule2); padding:9px 16px; cursor:pointer;" style-hover="border-color:var(--ink)">lock</button>
+          </sc-if>
+        </div>
+        <sc-if value="{{ pwError }}"><div style="width:100%; font-size:11px; color:#C4553B;">✕ {{ pwError }}</div></sc-if>
+        <div style="width:100%; display:flex; align-items:center; gap:10px 12px; flex-wrap:wrap; border-top:1px dashed var(--rule); padding-top:12px;">
+          <span style="font-size:10px; letter-spacing:.14em; color:var(--ink-faint);">PREVIEW ENV</span>
+          <div style="display:inline-flex; border:1px solid var(--rule2);">
+            <button onClick="{{ onEnvLocal }}" style="font-family:inherit; font-size:11px; color:{{ envLocalColor }}; background:{{ envLocalBg }}; border:0; border-right:1px solid var(--rule2); padding:5px 12px; cursor:pointer;">localhost</button>
+            <button onClick="{{ onEnvProd }}" style="font-family:inherit; font-size:11px; color:{{ envProdColor }}; background:{{ envProdBg }}; border:0; padding:5px 12px; cursor:pointer;">production</button>
+          </div>
+          <span style="font-size:10px; color:var(--ink-faint);">simulates where the app runs — unlocking only works on localhost; production stays read-only. The real app detects this server-side.</span>
+        </div>
+      </div>
+
+      <!-- MODEL SELECTOR -->
+      <div style="margin-top:14px; border:1px solid var(--rule2); background:var(--paper); padding:14px 16px; display:flex; flex-wrap:wrap; align-items:center; gap:12px 16px;">
+        <div>
+          <div style="font-size:11px; letter-spacing:.14em; color:var(--ink); font-weight:600;">AI MODEL</div>
+          <div style="font-size:10.5px; color:var(--ink-soft); margin-top:3px;">used by every generate:* run — Google Gemini</div>
+        </div>
+        <div style="margin-left:auto; display:flex; align-items:center; gap:10px;">
+          <span style="font-size:10.5px; color:var(--ink-faint);">GEMINI_MODEL =</span>
+          <select value="{{ model }}" onChange="{{ onModel }}" disabled="{{ locked }}" style="font-family:inherit; font-size:12px; color:var(--ink); background:var(--paper2); border:1px solid var(--rule2); padding:8px 12px; outline:none; cursor:{{ editCursor }};">
+            <option value="gemini-2.5-flash-lite">Gemini 2.5 Flash-Lite</option>
+            <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+            <option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
+            <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- TABS -->
+      <div style="display:flex; gap:0; margin-top:24px; border-bottom:1px solid var(--rule2);">
+        <button onClick="{{ tabResume }}" style="font-family:inherit; font-size:12px; letter-spacing:.04em; color:{{ tabResumeColor }}; background:transparent; border:0; border-bottom:2px solid {{ tabResumeBorder }}; padding:12px 18px; cursor:pointer;">master.tex</button>
+        <button onClick="{{ tabWork }}" style="font-family:inherit; font-size:12px; letter-spacing:.04em; color:{{ tabWorkColor }}; background:transparent; border:0; border-bottom:2px solid {{ tabWorkBorder }}; padding:12px 18px; cursor:pointer;">work-experience.json</button>
+        <button onClick="{{ tabProjects }}" style="font-family:inherit; font-size:12px; letter-spacing:.04em; color:{{ tabProjColor }}; background:transparent; border:0; border-bottom:2px solid {{ tabProjBorder }}; padding:12px 18px; cursor:pointer;">project-content.json</button>
+      </div>
+
+      <!-- ===== TAB: MASTER.TEX ===== -->
+      <sc-if value="{{ isResume }}" hint-placeholder-val="{{ true }}">
+        <div style="padding-top:26px;">
+          <div style="display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); gap:28px; align-items:start;">
+            <!-- editor -->
+            <div>
+              <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:10px;">
+                <span style="font-size:11px; letter-spacing:.14em; color:var(--ink-faint);">DATA/MASTER-RESUME.TEX</span>
+                <span style="font-size:10.5px; color:{{ texDirtyColor }};">{{ texDirtyLabel }}</span>
+              </div>
+              <textarea value="{{ tex }}" onInput="{{ onTex }}" disabled="{{ locked }}" spellcheck="false" style="width:100%; height:440px; resize:vertical; box-sizing:border-box; font-family:inherit; font-size:11.5px; line-height:1.65; color:#E7E2D2; background:#23242F; border:1px solid var(--rule2); padding:14px 16px; outline:none; white-space:pre; overflow:auto; tab-size:2;" style-focus="border-color:var(--accent)"></textarea>
+              <div style="margin-top:12px; display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+                <button onClick="{{ onParse }}" disabled="{{ locked }}" style="font-family:inherit; font-size:12px; letter-spacing:.03em; color:{{ btnPrimaryText }}; background:{{ btnPrimaryBg }}; border:1px solid {{ btnPrimaryBg }}; padding:9px 16px; cursor:{{ editCursor }};" style-hover="opacity:.88">{{ parseLabel }}</button>
+                <span style="font-size:10.5px; color:var(--ink-faint);">runs <span style="color:var(--ink-soft);">npm run parse:resume</span> → regenerates the 4 data files</span>
+              </div>
+            </div>
+            <!-- right: view on site + analytics -->
+            <div>
+              <div style="font-size:11px; letter-spacing:.14em; color:var(--ink-faint); margin-bottom:10px;">PREVIEW YOUR CHANGES</div>
+              <div style="border:1px solid var(--rule2); background:var(--paper); padding:18px;">
+                <div style="font-size:12.5px; color:var(--ink-soft); line-height:1.7;">Editing the résumé regenerates the data files. To see how the changes look, open the live site — the Experience &amp; Projects sections render straight from this data.</div>
+                <a href="Ariq Muldi - Portfolio.dc.html" style="margin-top:16px; display:inline-flex; align-items:center; gap:8px; font-family:inherit; font-size:12px; letter-spacing:.03em; color:var(--paper); background:var(--ink); border:1px solid var(--ink); padding:10px 16px; text-decoration:none;" style-hover="background:var(--accent); border-color:var(--accent)">view on ariqmuldi.com ↗</a>
+                <div style="font-size:10px; color:var(--ink-faint); margin-top:10px;">opens the main site · changes appear after you commit the regenerated files</div>
+              </div>
+              <div style="margin-top:14px; border:1px solid var(--rule); background:var(--paper2); padding:12px 14px; font-size:11.5px; color:var(--ink-soft); line-height:1.7;">
+                <div style="color:var(--ink-faint); font-size:10px; letter-spacing:.14em; margin-bottom:6px;">LAST PARSE</div>
+                <div>experiences <span style="color:var(--ink);">{{ parsedExpCount }}</span> · projects <span style="color:var(--ink);">{{ parsedProjCount }}</span> · skills <span style="color:var(--ink);">{{ skillsCount }}</span> · education <span style="color:var(--ink);">1</span></div>
+                <div style="margin-top:4px; color:var(--ink-faint);">changed source flips affected AI entries back to <span style="color:var(--accent);">approved: false</span> for re-review.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- resume-config -->
+          <div style="margin-top:34px;">
+            <div style="font-size:11px; letter-spacing:.14em; color:var(--ink-faint); margin-bottom:4px;">DATA/RESUME-CONFIG.JSON — VISIBILITY</div>
+            <div style="font-size:11px; color:var(--ink-soft); margin-bottom:14px;">Hide an experience, all/specific accomplishments, or its technologies. Applied by the parser on next run.</div>
+            <sc-for list="{{ configRows }}" as="c" hint-placeholder-count="5">
+              <div style="border-top:1px solid var(--rule); padding:16px 0; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:18px; align-items:start;">
+                <div>
+                  <div style="font-size:13px; color:{{ c.titleColor }}; font-weight:600;">{{ c.label }}</div>
+                  <div style="font-size:10.5px; color:var(--ink-faint); margin-top:4px;">experienceId {{ c.expId }} · {{ c.accCount }} accomplishments</div>
+                  <sc-if value="{{ c.showAcc }}">
+                    <div style="margin-top:10px; display:flex; flex-wrap:wrap; gap:6px; align-items:center;">
+                      <span style="font-size:10px; color:var(--ink-faint); margin-right:2px;">hide #</span>
+                      <sc-for list="{{ c.accChips }}" as="a" hint-placeholder-count="6">
+                        <button onClick="{{ a.onToggle }}" disabled="{{ locked }}" style="font-family:inherit; font-size:10.5px; color:{{ a.color }}; background:{{ a.bg }}; border:1px solid {{ a.border }}; padding:3px 8px; cursor:{{ editCursor }};">{{ a.n }}</button>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                </div>
+                <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end;">
+                  <button onClick="{{ c.onHidden }}" disabled="{{ locked }}" style="font-family:inherit; font-size:10.5px; letter-spacing:.03em; color:{{ c.hiddenColor }}; background:{{ c.hiddenBg }}; border:1px solid {{ c.hiddenBorder }}; padding:6px 11px; cursor:{{ editCursor }};">{{ c.hiddenLabel }}</button>
+                  <button onClick="{{ c.onAll }}" disabled="{{ locked }}" style="font-family:inherit; font-size:10.5px; letter-spacing:.03em; color:{{ c.allColor }}; background:{{ c.allBg }}; border:1px solid {{ c.allBorder }}; padding:6px 11px; cursor:{{ editCursor }};">hide all bullets</button>
+                  <button onClick="{{ c.onTech }}" disabled="{{ locked }}" style="font-family:inherit; font-size:10.5px; letter-spacing:.03em; color:{{ c.techColor }}; background:{{ c.techBg }}; border:1px solid {{ c.techBorder }}; padding:6px 11px; cursor:{{ editCursor }};">hide tech</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== TAB: WORK-EXPERIENCE ===== -->
+      <sc-if value="{{ isWork }}">
+        <div style="padding-top:24px;">
+          <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px 16px; border:1px solid var(--rule); background:var(--paper2); padding:14px 16px;">
+            <span style="font-size:11px; color:var(--ink-soft);">$ npm run <span style="color:var(--ink);">generate:work-experience-content</span></span>
+            <span style="font-size:11px; color:var(--ink-faint);">{{ workApprovedCount }}/{{ workTotal }} approved</span>
+            <div style="margin-left:auto; display:flex; gap:8px;">
+              <button onClick="{{ genWork }}" disabled="{{ genWorkDisabled }}" style="font-family:inherit; font-size:11.5px; letter-spacing:.03em; color:{{ btnPrimaryText }}; background:{{ btnPrimaryBg }}; border:1px solid {{ btnPrimaryBg }}; padding:8px 14px; cursor:{{ editCursor }};" style-hover="opacity:.88">{{ genWorkLabel }}</button>
+              <button onClick="{{ genWorkForce }}" disabled="{{ locked }}" style="font-family:inherit; font-size:11.5px; letter-spacing:.03em; color:var(--ink); background:transparent; border:1px solid var(--rule2); padding:8px 14px; cursor:{{ editCursor }};" style-hover="border-color:var(--ink)">--force (redraft all)</button>
+            </div>
+          </div>
+
+          <sc-for list="{{ workItems }}" as="w" hint-placeholder-count="5">
+            <div style="border:1px solid var(--rule2); border-top:0; background:var(--paper); padding:20px 20px 22px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,420px); gap:30px; align-items:start;">
+              <!-- edit side -->
+              <div>
+                <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; margin-bottom:14px;">
+                  <span style="font-size:13px; font-weight:600; color:var(--ink);">{{ w.key }}</span>
+                  <span style="font-size:10px; color:var(--ink-faint);">experienceId {{ w.experienceId }}</span>
+                  <span style="font-size:10px; color:var(--ink-faint);">#{{ w.sourceHash }}</span>
+                  <span style="font-size:10.5px; color:{{ w.badgeColor }}; border:1px solid {{ w.badgeBorder }}; padding:2px 8px; margin-left:auto;">{{ w.badge }}</span>
+                </div>
+
+                <sc-if value="{{ w.sourceChanged }}"><div style="font-size:10.5px; color:#B26B2E; margin-bottom:12px;">⚠ source changed since approval — needs re-review</div></sc-if>
+
+                <div style="font-size:10px; letter-spacing:.12em; color:var(--ink-faint); margin-bottom:6px;">COMMIT SUBJECT <span style="color:var(--ink-faint);">· Experience row</span></div>
+                <input value="{{ w.commitSubject }}" onInput="{{ w.onCommit }}" disabled="{{ locked }}" spellcheck="false" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:12.5px; color:var(--ink); background:var(--paper2); border:1px solid var(--rule2); padding:9px 11px; outline:none;" style-focus="border-color:var(--accent)">
+
+                <div style="font-size:10px; letter-spacing:.12em; color:var(--ink-faint); margin:14px 0 6px;">TECHNOLOGIES <span style="color:var(--ink-faint);">· comma-separated · shared by Work + Experience</span></div>
+                <input value="{{ w.techStr }}" onInput="{{ w.onTech }}" disabled="{{ locked }}" spellcheck="false" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:12px; color:var(--ink); background:var(--paper2); border:1px solid var(--rule2); padding:9px 11px; outline:none;" style-focus="border-color:var(--accent)">
+
+                <sc-if value="{{ w.hasDescription }}">
+                  <div style="font-size:10px; letter-spacing:.12em; color:var(--ink-faint); margin:14px 0 6px;">DESCRIPTION <span style="color:var(--ink-faint);">· Work case-study card</span></div>
+                  <textarea value="{{ w.description }}" onInput="{{ w.onDesc }}" disabled="{{ locked }}" spellcheck="false" style="width:100%; height:96px; resize:vertical; box-sizing:border-box; font-family:inherit; font-size:12px; line-height:1.6; color:var(--ink); background:var(--paper2); border:1px solid var(--rule2); padding:9px 11px; outline:none;" style-focus="border-color:var(--accent)"></textarea>
+                </sc-if>
+                <sc-if value="{{ w.noDescNote }}"><div style="font-size:10.5px; color:var(--ink-faint); margin-top:14px;">{{ w.noDescNote }}</div></sc-if>
+
+                <div style="margin-top:16px; display:flex; flex-wrap:wrap; gap:8px;">
+                  <button onClick="{{ w.onApprove }}" disabled="{{ locked }}" style="font-family:inherit; font-size:11px; letter-spacing:.03em; color:{{ w.approveText }}; background:{{ w.approveBg }}; border:1px solid {{ w.approveBorder }}; padding:7px 13px; cursor:{{ editCursor }};" style-hover="opacity:.88">{{ w.approveLabel }}</button>
+                  <button onClick="{{ w.onRegen }}" disabled="{{ locked }}" style="font-family:inherit; font-size:11px; letter-spacing:.03em; color:var(--ink); background:transparent; border:1px solid var(--rule2); padding:7px 13px; cursor:{{ editCursor }};" style-hover="border-color:var(--ink)">regenerate --force {{ w.key }}</button>
+                </div>
+              </div>
+
+              <!-- preview side -->
+              <div style="border-left:1px solid var(--rule); padding-left:26px;">
+                <div style="font-size:10px; letter-spacing:.14em; color:var(--ink-faint); margin-bottom:12px;">LIVE PREVIEW</div>
+                <!-- experience row -->
+                <div style="display:grid; grid-template-columns:64px minmax(0,1fr); gap:12px; align-items:baseline;">
+                  <span style="color:var(--accent); font-size:11px;">{{ w.hash7 }}</span>
+                  <div>
+                    <div style="font-size:13px; font-weight:600; color:var(--ink); letter-spacing:-.01em;">{{ w.role }} <span style="color:var(--ink-faint); font-weight:400;">@ {{ w.at }}</span></div>
+                    <sc-if value="{{ w.expandable }}" hint-placeholder-val="{{ true }}">
+                      <div style="font-size:12px; color:var(--ink-soft); margin-top:5px; line-height:1.5;">{{ w.commitSubject }}</div>
+                      <div style="font-size:10.5px; color:var(--ink-faint); margin-top:5px;"><span style="color:var(--green);">+{{ w.insertions }} insertions</span> · git show ▸</div>
+                    </sc-if>
+                    <sc-if value="{{ w.activeDev }}"><div style="font-size:11px; color:var(--ink-faint); margin-top:5px;"><span style="color:var(--green);">●</span> in active development</div></sc-if>
+                    <div style="font-size:10.5px; color:var(--ink-faint); margin-top:6px;">{{ w.techLine }}</div>
+                  </div>
+                </div>
+                <!-- work card (if description) -->
+                <sc-if value="{{ w.hasDescription }}">
+                  <div style="margin-top:18px; border-top:1px solid var(--rule2); padding-top:16px;">
+                    <div style="display:flex; align-items:baseline; gap:12px; font-size:10px; letter-spacing:.14em; color:var(--ink-faint); margin-bottom:10px;">
+                      <span style="color:var(--accent); font-weight:600;">{{ w.workNum }}</span>
+                      <span>{{ w.workMeta }}</span>
+                      <span style="margin-left:auto; color:var(--green);">● LIVE</span>
+                    </div>
+                    <div style="font-size:20px; font-weight:600; letter-spacing:-.03em; color:var(--ink); line-height:1.05;">{{ w.workTitle }}</div>
+                    <div style="font-size:12.5px; line-height:1.65; color:var(--ink-soft); margin-top:10px;">{{ w.description }}</div>
+                    <div style="font-size:11px; color:var(--ink-faint); margin-top:12px; line-height:1.7;">{{ w.techLine }}</div>
+                  </div>
+                </sc-if>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <!-- ===== TAB: PROJECT-CONTENT ===== -->
+      <sc-if value="{{ isProjects }}">
+        <div style="padding-top:24px;">
+          <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px 16px; border:1px solid var(--rule); background:var(--paper2); padding:14px 16px;">
+            <span style="font-size:11px; color:var(--ink-soft);">$ npm run <span style="color:var(--ink);">generate:project-content</span></span>
+            <span style="font-size:11px; color:var(--ink-faint);">{{ projApprovedCount }}/{{ projTotal }} approved</span>
+            <div style="margin-left:auto; display:flex; gap:8px;">
+              <button onClick="{{ genProj }}" disabled="{{ genProjDisabled }}" style="font-family:inherit; font-size:11.5px; letter-spacing:.03em; color:{{ btnPrimaryText }}; background:{{ btnPrimaryBg }}; border:1px solid {{ btnPrimaryBg }}; padding:8px 14px; cursor:{{ editCursor }};" style-hover="opacity:.88">{{ genProjLabel }}</button>
+              <button onClick="{{ genProjForce }}" disabled="{{ locked }}" style="font-family:inherit; font-size:11.5px; letter-spacing:.03em; color:var(--ink); background:transparent; border:1px solid var(--rule2); padding:8px 14px; cursor:{{ editCursor }};" style-hover="border-color:var(--ink)">--force (redraft all)</button>
+            </div>
+          </div>
+
+          <sc-for list="{{ projItems }}" as="p" hint-placeholder-count="4">
+            <div style="border:1px solid var(--rule2); border-top:0; background:var(--paper); padding:20px 20px 22px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,420px); gap:30px; align-items:start;">
+              <div>
+                <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; margin-bottom:14px;">
+                  <span style="font-size:13px; font-weight:600; color:var(--ink);">{{ p.key }}</span>
+                  <span style="font-size:10px; color:var(--ink-faint);">projectId {{ p.projectId }}</span>
+                  <span style="font-size:10px; color:var(--ink-faint);">#{{ p.sourceHash }}</span>
+                  <span style="font-size:10.5px; color:{{ p.badgeColor }}; border:1px solid {{ p.badgeBorder }}; padding:2px 8px; margin-left:auto;">{{ p.badge }}</span>
+                </div>
+                <sc-if value="{{ p.sourceChanged }}"><div style="font-size:10.5px; color:#B26B2E; margin-bottom:12px;">⚠ source changed since approval — needs re-review</div></sc-if>
+                <div style="font-size:10px; letter-spacing:.12em; color:var(--ink-faint); margin-bottom:6px;">TAGLINE <span style="color:var(--ink-faint);">· collapsed Projects row</span></div>
+                <input value="{{ p.tagline }}" onInput="{{ p.onTagline }}" disabled="{{ locked }}" spellcheck="false" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:12.5px; color:var(--ink); background:var(--paper2); border:1px solid var(--rule2); padding:9px 11px; outline:none;" style-focus="border-color:var(--accent)">
+                <div style="font-size:10px; color:var(--ink-faint); margin-top:8px;">fallback: first sentence of the parsed description</div>
+                <div style="margin-top:16px; display:flex; flex-wrap:wrap; gap:8px;">
+                  <button onClick="{{ p.onApprove }}" disabled="{{ locked }}" style="font-family:inherit; font-size:11px; letter-spacing:.03em; color:{{ p.approveText }}; background:{{ p.approveBg }}; border:1px solid {{ p.approveBorder }}; padding:7px 13px; cursor:{{ editCursor }};" style-hover="opacity:.88">{{ p.approveLabel }}</button>
+                  <button onClick="{{ p.onRegen }}" disabled="{{ locked }}" style="font-family:inherit; font-size:11px; letter-spacing:.03em; color:var(--ink); background:transparent; border:1px solid var(--rule2); padding:7px 13px; cursor:{{ editCursor }};" style-hover="border-color:var(--ink)">regenerate --force {{ p.key }}</button>
+                </div>
+              </div>
+              <div style="border-left:1px solid var(--rule); padding-left:26px;">
+                <div style="font-size:10px; letter-spacing:.14em; color:var(--ink-faint); margin-bottom:12px;">LIVE PREVIEW</div>
+                <div style="display:grid; grid-template-columns:38px minmax(0,1fr) 20px; gap:12px; align-items:baseline;">
+                  <span style="font-size:10.5px; color:var(--accent);">[{{ p.num }}]</span>
+                  <div>
+                    <div style="font-size:15px; font-weight:600; color:var(--ink); letter-spacing:-.02em;">{{ p.title }}</div>
+                    <div style="font-size:12px; color:var(--ink-soft); margin-top:5px;">{{ p.tagline }}</div>
+                    <div style="font-size:10.5px; color:var(--ink-faint); margin-top:6px;">{{ p.techLine }}</div>
+                  </div>
+                  <span style="color:var(--accent); text-align:right;">↗</span>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <!-- GENERATE ALL -->
+      <div style="margin-top:30px; border:1px solid var(--rule2); background:var(--paper2); padding:20px; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:24px; align-items:center;">
+        <div>
+          <div style="font-size:11px; letter-spacing:.14em; color:var(--ink-faint); margin-bottom:8px;">GENERATE ALL CONTENT</div>
+          <div style="font-size:12.5px; color:var(--ink-soft); line-height:1.65;">Runs <span style="color:var(--ink);">npm run generate:content</span> with <span style="color:var(--ink);">GEMINI_MODEL={{ model }}</span> — drafts every unapproved or source-changed role &amp; project (approved + unchanged entries are skipped), each landing as <span style="color:var(--accent);">approved: false</span> for review above.</div>
+          <div style="font-size:11px; color:var(--ink-faint); margin-top:10px;">{{ workApprovedCount }}/{{ workTotal }} roles · {{ projApprovedCount }}/{{ projTotal }} projects approved · commit the changed files from your editor when done</div>
+        </div>
+        <button onClick="{{ genAll }}" disabled="{{ genAllDisabled }}" style="font-family:inherit; font-size:12px; letter-spacing:.03em; color:{{ btnPrimaryText }}; background:{{ btnPrimaryBg }}; border:1px solid {{ btnPrimaryBg }}; padding:11px 18px; cursor:{{ editCursor }}; white-space:nowrap;" style-hover="opacity:.9">{{ genAllLabel }}</button>
+      </div>
+
+      <!-- TERMINAL -->
+      <div style="margin-top:16px; border:1px solid var(--ink); background:var(--dark);">
+        <div style="display:flex; align-items:center; gap:8px; padding:10px 14px; border-bottom:1px solid rgba(152,161,188,.18);">
+          <span style="width:8px;height:8px;border-radius:50%;background:#E06C5B;display:inline-block;"></span>
+          <span style="width:8px;height:8px;border-radius:50%;background:#E0B85B;display:inline-block;"></span>
+          <span style="width:8px;height:8px;border-radius:50%;background:#5BB27F;display:inline-block;"></span>
+          <span style="font-size:10.5px; color:#7E86A6; margin-left:6px; letter-spacing:.1em;">ariq@muldi — content-console</span>
+        </div>
+        <div ref="{{ termRef }}" style="padding:14px 16px; max-height:200px; overflow:auto; font-size:11.5px; line-height:1.85;">
+          <sc-for list="{{ logLines }}" as="l" hint-placeholder-count="3">
+            <div style="color:{{ l.color }}; white-space:pre-wrap;">{{ l.t }}</div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="margin-top:22px; font-size:10.5px; color:var(--ink-faint); line-height:1.7; max-width:80ch;">
+        prototype note — this is a local-development authoring tool. Edits here persist in your browser; in the real app each button hits a Next.js route that runs the matching script (parse:resume · generate:* with <span style="color:var(--ink-soft);">GEMINI_MODEL</span>) and writes the files on your machine — then you commit them with git as usual. Editing only works on <span style="color:var(--ink-soft);">localhost</span>: the unlock route checks the password against <span style="color:var(--ink-soft);">process.env.CONTENT_GENERATION_PASSWORD</span> and refuses in production, so the deployed site stays read-only. No database — the password lives only on the server, never in the browser bundle.
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div style="background:var(--dark); color:#7E86A6; border-top:1px solid var(--rule2);">
+    <div style="max-width:1200px; margin:0 auto; padding:22px 40px; display:flex; flex-wrap:wrap; gap:10px 24px; font-size:11px;">
+      <span><span style="color:var(--green);">●</span> content pipeline</span>
+      <span style="color:#575E76;">|</span>
+      <a href="Ariq Muldi - Portfolio.dc.html" style="color:var(--blue); text-decoration:none;">← ariqmuldi.com</a>
+      <span style="margin-left:auto; color:#575E76;">© 2026 Ariq Muldi — built in mono.</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#555879&quot;,&quot;options&quot;:[&quot;#555879&quot;,&quot;#3D3F5C&quot;,&quot;#98A1BC&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;monoFont&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;IBM Plex Mono&quot;,&quot;JetBrains Mono&quot;,&quot;Space Mono&quot;],&quot;default&quot;:&quot;IBM Plex Mono&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;defaultModel&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;gemini-2.5-flash-lite&quot;,&quot;gemini-2.5-flash&quot;,&quot;gemini-2.5-pro&quot;,&quot;gemini-2.0-flash&quot;],&quot;default&quot;:&quot;gemini-2.5-flash-lite&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Pipeline&quot;},&quot;pipelineAutoplay&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Pipeline&quot;},&quot;demoPassword&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;ariq2026&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Auth&quot;},&quot;simulatedEnv&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;localhost&quot;,&quot;production&quot;],&quot;default&quot;:&quot;localhost&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Auth&quot;}}">
+class Component extends DCLogic {
+  rootRef = React.createRef();
+  termRef = React.createRef();
+  pipeRef = React.createRef();
+  stageRef = React.createRef();
+
+  WORK_ORDER = ['doubl','mds','makerspace','learncoding','teaching-assistant'];
+  PROJ_ORDER = ['ponotodoro','flight-hub','chatterbox','moodijawoodi'];
+  MODELS = [
+    {id:'gemini-2.5-flash-lite', label:'Gemini 2.5 Flash-Lite', short:'2.5 Flash-Lite'},
+    {id:'gemini-2.5-flash', label:'Gemini 2.5 Flash', short:'2.5 Flash'},
+    {id:'gemini-2.5-pro', label:'Gemini 2.5 Pro', short:'2.5 Pro'},
+    {id:'gemini-2.0-flash', label:'Gemini 2.0 Flash', short:'2.0 Flash'},
+  ];
+  ROLE_META = {
+    doubl:{experienceId:1,hasDescription:false},
+    mds:{experienceId:2,hasDescription:true},
+    makerspace:{experienceId:3,hasDescription:true},
+    learncoding:{experienceId:4,hasDescription:true},
+    'teaching-assistant':{experienceId:5,hasDescription:false},
+  };
+  CONFIG_KEYS = [
+    {key:'Lead Software Developer', expId:1},
+    {key:'Software Developer (Work Study Program)', expId:2},
+    {key:'Software Developer -- Makerspace Platform (Undergraduate Research Assistant & Directed Studies)', expId:3},
+    {key:'Software Developer -- LearnCoding Platform (Undergraduate Research Assistant & Directed Studies)', expId:4},
+    {key:'Undergraduate Teaching Assistant', expId:5},
+  ];
+  SKILLS = [
+    {label:'languages/', items:'TypeScript · JavaScript · Python · Java · C++ · C · PHP · SQL'},
+    {label:'frameworks/', items:'React · Next.js · Node · Express · Prisma · Flask · Laravel · Tailwind'},
+    {label:'tools/', items:'Git · Docker · Stripe · Shopify · Zod · Jest · Postman'},
+    {label:'data/', items:'Pandas · NumPy · Matplotlib · Jupyter · LLMs'},
+    {label:'cloud/', items:'Google Cloud · Firebase · Vercel · Fly.io'},
+  ];
+  ALT_COMMIT = {
+    doubl:['feat(personalization): launch digital fit passport and body analysis engine','feat(fit): ship ML sizing + Shopify app-proxy body-scan pipeline'],
+    mds:['feat(admissions): build masters of data science admissions managment application platform','feat(admissions): automate 1,000+ graduate application reviews end to end'],
+    makerspace:['feat(memberships): launch integrated platform for 1,000+ members','feat(makerspace): ship membership, billing & IoT access for 1,000+ members'],
+    learncoding:['feat(learncoding): launch learning platform to learn programming','feat(learncoding): ship adaptive platform w/ Canvas grade sync for 500+ students'],
+    'teaching-assistant':['feat(teaching): enhance computer science curriculum and instruction','feat(teaching): run labs & grading across the two largest CS courses'],
+  };
+  ALT_TAGLINE = {
+    ponotodoro:['Pomodoro timer with notes and tasks','Focus timer fused with notes & to-do lists'],
+    'flight-hub':['Flight deal finder and blog with React, Flask, Amadeus','Flight-deal finder + blog on the Amadeus & Twilio APIs'],
+    chatterbox:['Discord-like real-time chat on Firebase','Real-time Discord-style chat with channels & auth'],
+    moodijawoodi:['JDBC grocery storefront in Java + MySQL','Java + JDBC grocery storefront on MySQL'],
+  };
+  SEED_WORK = {
+    doubl:{experienceId:1,sourceHash:'2fd0eb35',approved:true,commitSubject:'feat(personalization): launch digital fit passport and body analysis engine',technologies:['Python','Google Cloud Run','Shopify App Proxy','Next.js','React','Typescript','Firestore','Zoho Flow','Zoho Deluge']},
+    mds:{experienceId:2,sourceHash:'969cde6f',approved:true,commitSubject:'feat(admissions): build masters of data science admissions managment application platform',technologies:['Python','Flask','PostgreSQL','JavaScript','Tailwind CSS','bcrypt','AJAX','CSV'],description:'Developed a full-stack platform for Masters of Data Science application management, automating the admissions workflow for over 1,000 annual student applications. This system streamlined the entire process from application ingestion and faculty review to final decision-making, significantly reducing administrative overhead and manual data handling. The platform enhanced data integrity and security through a robust backend architecture, normalized database design, and role-based authentication for faculty and administrators.'},
+    makerspace:{experienceId:3,sourceHash:'8295f252',approved:true,commitSubject:'feat(memberships): launch integrated platform for 1,000+ members',technologies:['TypeScript','React Router v7','PostgreSQL','Tailwind CSS','Stripe','pdf-lib','AES-256 encryption','ESP32','C++','Prisma','Docker'],description:'Engineered a comprehensive membership and operations platform serving over 1,000 members, automating critical functions from workshop enrollment and equipment reservations to recurring billing and physical access control. This full-stack system integrated payment processing, digital signature generation, email notifications, and IoT-based access management, significantly streamlining administrative overhead and enhancing member experience.'},
+    learncoding:{experienceId:4,sourceHash:'81e26194',approved:true,commitSubject:'feat(learncoding): launch learning platform to learn programming',technologies:['PHP','Laravel','MySQL','Docker','Apache','Matomo Analytics','UBC Canvas API','JavaScript','AI'],description:'Developed and deployed a comprehensive adaptive learning platform for UBC\u2019s Faculty of Science, serving over 500 students. This system features interactive code visualizers, multi-language support, sandbox environments, and gamification to enhance learning. The platform integrates with the UBC Canvas API for automated grade posting, reducing manual overhead, and incorporates an AI-powered content generator for personalized learning paths and code translation.'},
+    'teaching-assistant':{experienceId:5,sourceHash:'4836db97',approved:true,commitSubject:'feat(teaching): enhance computer science curriculum and instruction',technologies:['MIPS Assembly','Java']},
+  };
+  SEED_PROJ = {
+    ponotodoro:{projectId:1,sourceHash:'5460475b',approved:true,tagline:'Pomodoro timer with notes and tasks'},
+    'flight-hub':{projectId:2,sourceHash:'6d74b6e7',approved:true,tagline:'Flight deal finder and blog with React, Flask, Amadeus'},
+    chatterbox:{projectId:3,sourceHash:'263d232e',approved:true,tagline:'Discord-like real-time chat on Firebase'},
+    moodijawoodi:{projectId:4,sourceHash:'774872ed',approved:true,tagline:'JDBC grocery storefront in Java + MySQL'},
+  };
+  SEED_CONFIG = {
+    'Lead Software Developer':{hidden:false,hideAllAccomplishments:true,hideAccomplishments:[],hideTechnologies:false},
+    'Software Developer (Work Study Program)':{hidden:false,hideAllAccomplishments:false,hideAccomplishments:[],hideTechnologies:false},
+    'Software Developer -- Makerspace Platform (Undergraduate Research Assistant & Directed Studies)':{hidden:false,hideAllAccomplishments:false,hideAccomplishments:[],hideTechnologies:false},
+    'Software Developer -- LearnCoding Platform (Undergraduate Research Assistant & Directed Studies)':{hidden:false,hideAllAccomplishments:false,hideAccomplishments:[],hideTechnologies:false},
+    'Undergraduate Teaching Assistant':{hidden:false,hideAllAccomplishments:false,hideAccomplishments:[],hideTechnologies:false},
+  };
+  PROJ_SLUG_TO_TITLE = {ponotodoro:'Ponotodoro','flight-hub':'Flight Hub',chatterbox:'ChatterBox',moodijawoodi:'MoodiJawoodi'};
+
+  TEX_SEED = String.raw`%-------------------------
+% Ariq Muldi — master-resume.tex  (Overleaf source of truth)
+%-------------------------
+
+\section{Experience}
+\resumeSubHeadingListStart
+
+\resumeSubheading
+{Lead Software Developer}{\textcolor{sectionblue}{Sept. 2025 -- Present}}
+{DOUBL}{Remote}
+\resumeItemListStart
+\resumeItemListEnd
+
+\resumeSubheading
+{Software Developer}{\textcolor{sectionblue}{Jul. 2025 -- Sept. 2025}}
+{University of British Columbia, Work Study Program}{Kelowna, BC}
+\resumeItemListStart
+\resumeItem{Developed full-stack Masters of Data Science application management platform using Python, PostgreSQL, and JavaScript, automating graduate admissions workflow for 1,000+ annual student applications and eliminating manual CSV-based processes on ranking applicants}
+\resumeItem{Structured backend using Flask Blueprints to segregate APIs for distinct services, implementing a 3-tier role-based authentication system with session management and bcrypt encryption to secure data for 50+ faculty}
+\resumeItem{Designed a normalized PostgreSQL database schema with foreign key constraints and performance indexing to maintain data integrity across applicant records, test scores, and institutional transcripts}
+\resumeItem{Built frontend using JavaScript and Tailwind CSS, implementing an AJAX-driven table for 1,000+ records that features real-time multi-field filtering, inline status editing, and mobile-responsive design for 50+ reviewers}
+\resumeItem{Constructed a CSV batch processing engine with validation pipelines to sanitize and ingest 1,000+ application records, utilizing atomic database transactions to ensure all-or-nothing data integrity during bulk uploads}
+\resumeItem{Implemented an automated reporting dashboard and comprehensive audit logging system, tracking 500+ user interactions and reducing administrative reporting time from 8 hours to 2 hours weekly}
+\resumeItem{Orchestrated a 7-stage review engine enabling faculty to rate and comment on applications, utilizing automated ranking logic to prioritize candidates and streamline academic record maintenance}
+\resumeItem{Engineered a CSV export module using Python, enabling administrators to generate custom datasets of ranked applicants, test scores, and demographics to facilitate final committee decision-making}
+\resumeItemListEnd
+
+\resumeSubheading
+{Software Developer -- Makerspace Platform}{\textcolor{sectionblue}{Jan. 2025 -- Jan. 2026}}
+{University of British Columbia, Undergraduate Research Assistant \& Directed Studies}{Remote}
+\resumeItemListStart
+\resumeItem{Architected a full-stack membership platform in TypeScript, React Router v7, PostgreSQL, and Tailwind CSS serving 1,000+ members, digitizing workshop enrollments, equipment reservations, and membership management}
+\resumeItem{Integrated Stripe to process \$1,000+ monthly revenue via checkout sessions and tokenized one-click payments, generating waivers by overlaying digital signatures using pdf-lib with AES-256 encryption}
+\resumeItem{Engineered an equipment booking engine with a time-slot visualization grid, enforcing a 4-tier role-based access system and prerequisite chains to prevent unauthorized usage across 200+ daily reservations}
+\resumeItem{Programmed ESP32 firmware in C++ to authenticate RFID scans via HTTPS and log access events for restricted equipment and doors, with an admin interface for assigning per-card permissions}
+\resumeItem{Automated physical building access for 1,000+ members by integrating the Brivo Enterprise API to provision digital key passes and validate 500+ daily door-scan events using tamper-proof HMAC webhook signatures}
+\resumeItem{Designed a Node.js background job system to automate membership payment audits, access tier synchronization, and workshop lifecycle transitions, eliminating recurring manual administrative tasks}
+\resumeItem{Enforced platform-wide data integrity with Zod validation, session timeouts with per-request validation, and 100+ version-controlled Prisma schema migrations}
+\resumeItem{Built a service that automatically syncs every workshop, equipment item, and membership plan into 100+ Stripe products, enabling discount codes for specific items, with an admin panel to link all items}
+\resumeItem{Developed a centralized admin dashboard consolidating space closure management, per-occurrence workshop cancellations with automatic member notifications, CSV financial reporting, and access-limit enforcement into a single operator interface}
+\resumeItem{Implemented a Mailgun email pipeline delivering 700+ monthly notifications with iCalendar attachments, JWT-secured password reset links, and live Google Calendar syncing via a custom OAuth2 flow with AES-encrypted token storage}
+\resumeItem{Engineered a recurring billing engine supporting 4 subscription cycles with prorated upgrade charges, GST calculation, automated Stripe refunds on cancellation, and a member-controlled auto-renew toggle}
+\resumeItem{Designed multi-tier workshop pricing with independent seat limits per price level (e.g., Student, Member, General), automatically blocking purchases when any tier sells out}
+\resumeItem{Built multi-day workshop series support with automatic enrollment for newly added sessions and a re-offer system for recurring workshops, preserving all historical registration data across scheduling cycles}
+\resumeItem{Implemented an atomic admin suspension system that cancels all active plans, blocks re-enrollment, logs the admin's reason and timestamp, and notifies the member by email in a single fail-safe database transaction}
+\resumeItem{Developed a physical access analytics dashboard pairing IoT entry and exit scans to measure per-member machine usage time, with a searchable raw scan log filterable by user, equipment, and timestamp}
+\resumeItem{Established production reliability with Jest integration tests, Docker deployments over OpenVPN, and Winston structured logging with an in-browser admin log viewer for real-time production diagnostics}
+\resumeItemListEnd
+
+\resumeSubheading
+{Software Developer -- LearnCoding Platform}{\textcolor{sectionblue}{Sept. 2024 -- Sept. 2025}}
+{University of British Columbia, Undergraduate Research Assistant \& Directed Studies}{Remote}
+\resumeItemListStart
+\resumeItem{Developed adaptive learning platform serving 500+ students with code visualizers, multi-language switching, sandbox environments, and badge-based gamification to solidify coding concepts across UBC's Faculty of Science}
+\resumeItem{Integrated UBC Canvas API to automatically post assessment scores to official gradebooks, replacing manual CSV grade imports for 1,000+ monthly submissions and reducing grading overhead by 6 hours weekly}
+\resumeItem{Established secure routing authentication using Laravel and MySQL to enforce role-based access control, securing access to system-wide resources and API endpoints for 60+ faculty members}
+\resumeItem{Deployed Matomo Analytics, a self-hosted analytics platform using Docker across development and production environments to capture user navigation patterns for institutional assessments}
+\resumeItem{Redesigned user interface using HTML, CSS, and JavaScript to implement responsive layouts, restructuring navigation patterns and interactive elements to enhance usability across mobile and desktop devices}
+\resumeItem{Created a landing page showcasing the platform's core capabilities, video demos, and centralized onboarding resources, driving 20+ monthly institutional inquiries and accelerating faculty adoption}
+\resumeItem{Constructed granular access controls using PHP and MySQL to dynamically configure instructor permissions for lesson and quiz management, streamlining administrative workflows}
+\resumeItem{Engineered an AI-powered content generator orchestrating industry-leading models to automate cross-language code translation and personalize student learning paths}
+\resumeItem{Migrated platform from VPN to public access by transferring the MySQL database, Docker services, and application storage, while reconfiguring Apache, firewalls, and cron jobs in compliance with UBC protocols}
+\resumeItem{Maintained production and development servers managing Apache, MySQL, and Docker for 500+ daily sessions, performing updates and security patches, and resolving 10+ incidents via log analysis}
+\resumeItemListEnd
+
+\resumeSubheading
+{Undergraduate Teaching Assistant}{\textcolor{sectionblue}{Sept. 2024 -- Sept. 2025}}
+{University of British Columbia}{Kelowna, BC}
+\resumeItemListStart
+\resumeItem{Facilitated lab sessions and tutoring for over 60+ students, employing exercises and coding challenges to enhance understanding of machine architecture using MIPS Assembly, Java programming, and general coding concepts}
+\resumeItem{Designed and graded assignments and exams for 300+ students for the two largest computer science courses at UBC}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0.15in, label={}]
+\small{\item{
+\textbf{Programming Languages}{: TypeScript, JavaScript, Python, Java, C++, C, PHP, SQL} \\
+\textbf{Frameworks \& Libraries}{: React, Next.js, Node, Express, Prisma, Flask, Laravel, Tailwind} \\
+\textbf{Developer Tools \& Platforms}{: Git, Docker, Stripe, Shopify, Zod, Jest, Postman} \\
+\textbf{Cloud \& Deployment}{: Google Cloud, Firebase, Vercel, Fly.io} \\
+\textbf{Certifications \& Courses}{: Udemy Web Development Bootcamp, Python Pro Bootcamp} \\
+}}
+\end{itemize}
+
+
+\section{Education}
+\resumeSubHeadingListStart
+\resumeSubheading
+{University of British Columbia}{Kelowna, BC}
+{Bachelor of Science Major in Computer Science, Minor in Data Science}{Expected Graduation, May 2026}
+\resumeItemListStart
+\resumeItem{\textbf{GPA:} 4.21/4.33 (90.6\%)}
+\resumeItem{\textbf{Relevant Coursework:} Software Engineering, Data Structures, Databases, Machine Learning, Analysis of Algorithms, Networks, Machine Architecture, Human-Computer Interaction}
+\resumeItemListEnd
+\resumeSubHeadingListEnd
+
+
+\section{Projects}
+\resumeSubHeadingListStart
+
+\resumeProjectHeading
+{\textbf{Ponotodoro} \githubLink{https://github.com/ariqmuldi/ponotodoro} $|$ \emph{JavaScript, React, Node.js, Next.js, PostgreSQL, Bootstrap, HTML/CSS}}{Aug. 2024 -- Oct. 2024}
+\resumeItemListStart
+\resumeItem{Developed a full-stack app integrating the Pomodoro technique with note-taking and to-do lists functionality to combine time management and task tracking techniques to improve personal productivity for 10+ users}
+\resumeItem{Engineered frontend with React and Bootstrap, to structure the platform's task management system}
+\resumeItem{Designed backend using Node.js and PostgreSQL for efficient data management and user authentication}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{\textbf{Flight Hub} \githubLink{https://github.com/ariqmuldi/flight-hub} $|$ \emph{Python, JavaScript, Flask, React, SQLite, Bootstrap, HTML/CSS}}{Jan. 2024 -- Apr. 2024}
+\resumeItemListStart
+\resumeItem{Constructed a full-stack web application that streamlines flight offers by integrating Amadeus and Twilio API}
+\resumeItem{Produced a full-stack blog feature enabling users to create, edit, and manage posts regarding flight-related topics}
+\resumeItem{Created frontend using React and Bootstrap and backend with Flask and SQLite for usability and security}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{\textbf{ChatterBox} \githubLink{https://github.com/namekeptanonymous/Error404} $|$ \emph{JavaScript, React, Firebase, Tailwind CSS, HTML/SCSS}}{Oct. 2023 -- Dec. 2023}
+\resumeItemListStart
+\resumeItem{Developed a full-stack chat application replicating core Discord functionalities, including real-time messaging, user authentication, and channel management for 5+ active users across 5+ channels}
+\resumeItem{Engineered Discord-like frontend using React and Tailwind CSS to enhance user experience and responsiveness}
+\resumeItem{Implemented backend with Firebase managing 100+ messages, user data, channel info, and communication}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{\textbf{MoodiJawoodi} \githubLink{https://github.com/ariqmuldi/moodi-jawoodi-grocery} $|$ \emph{Java, HTML/CSS, MySQL, Docker}}{Jan. 2023 -- Apr. 2023}
+\resumeItemListStart
+\resumeItem{Produced responsive interface with HTML/CSS and Java with the JDBC API to enhance shopping experience}
+\resumeItem{Designed backend system with Java and MySQL, optimizing data handling and processing of products}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+`;
+
+  constructor(props){
+    super(props);
+    this.state = this.buildInitialState();
+  }
+
+  buildInitialState(){
+    const experiences = this.parseExperiences(this.TEX_SEED) || [];
+    const projectsData = this.parseProjects(this.TEX_SEED) || [];
+    const work = JSON.parse(JSON.stringify(this.SEED_WORK));
+    const proj = JSON.parse(JSON.stringify(this.SEED_PROJ));
+    const config = JSON.parse(JSON.stringify(this.SEED_CONFIG));
+    const srcBase = {};
+    this.WORK_ORDER.forEach((k)=>{ const e=experiences.find((x)=>x.id===this.ROLE_META[k].experienceId); srcBase['w:'+k]=this.hash((e&&e.accomplishments?e.accomplishments:[]).join('\n')); });
+    this.PROJ_ORDER.forEach((k)=>{ const p=projectsData.find((x)=>x.id===proj[k].projectId); srcBase['p:'+k]=this.hash(p?p.description:''); });
+    const st = {
+      unlocked:false, pwInput:'', pwError:'',
+      model:(this.props.defaultModel||'gemini-2.5-flash-lite'),
+      simEnv:(this.props.simulatedEnv||'localhost'),
+      activeTab:'resume',
+      tex:this.TEX_SEED, texDirty:false, parsing:false,
+      experiences, projectsData, work, proj, config,
+      srcBase, changed:{}, rot:{},
+      busy:{}, committing:false,
+      staged:{},
+      log:[
+        {t:'ariq@muldi:~/ariqmuldicom$ content-console --init', c:'#98A1BC'},
+        {t:'loaded app/data/work-experience-content.json (5 roles) · project-content.json (4 projects)', c:'#7E86A6'},
+        {t:'read-only — enter CONTENT_GENERATION_PASSWORD to enable editing', c:'#B9AE97'},
+      ],
+    };
+    return st;
+  }
+
+  // ---------- helpers ----------
+  hash(str){ let h=0x811c9dc5>>>0; for(let i=0;i<str.length;i++){ h^=str.charCodeAt(i); h=Math.imul(h,0x01000193); } return (h>>>0).toString(16).padStart(8,'0').slice(0,8); }
+  hash7(seed){ return this.hash(String(seed)).slice(0,7); }
+  cleanLatex(s){
+    if(!s) return '';
+    s = s.replace(/\\textcolor\s*\{[^}]*\}\s*\{([^}]*)\}/g,'$1');
+    s = s.replace(/\\(?:textbf|textit|emph|underline|texttt)\s*\{([^}]*)\}/g,'$1');
+    s = s.replace(/\\&/g,'&').replace(/\\%/g,'%').replace(/\\\$/g,'$').replace(/\\#/g,'#').replace(/\\_/g,'_');
+    s = s.replace(/\\[a-zA-Z]+/g,'');
+    s = s.replace(/[{}]/g,'');
+    s = s.replace(/\s+/g,' ').trim();
+    return s;
+  }
+  readBraces(s, from){
+    let i = s.indexOf('{', from);
+    if(i<0) return null;
+    let depth=0; const start=i;
+    for(; i<s.length; i++){ const c=s[i]; if(c==='{') depth++; else if(c==='}'){ depth--; if(depth===0) return {content:s.slice(start+1,i), end:i+1}; } }
+    return null;
+  }
+  readN(s, from, n){ const out=[]; let cur=from; for(let k=0;k<n;k++){ const r=this.readBraces(s,cur); if(!r) return null; out.push(r.content); cur=r.end; } return {groups:out,end:cur}; }
+
+  parseExperiences(tex){
+    const secStart = tex.indexOf('\\section{Experience}');
+    if(secStart<0) return null;
+    let secEnd = tex.indexOf('\\resumeSubHeadingListEnd', secStart);
+    if(secEnd<0) secEnd = tex.length;
+    const region = tex.slice(secStart, secEnd);
+    const positions=[]; const re=/\\resumeSubheading/g; let m;
+    while((m=re.exec(region))) positions.push(m.index);
+    const out=[]; let id=0;
+    for(let p=0;p<positions.length;p++){
+      const from = positions[p] + '\\resumeSubheading'.length;
+      const g = this.readN(region, from, 4); if(!g) continue;
+      const title = this.cleanLatex(g.groups[0]);
+      const period = this.cleanLatex(g.groups[1]);
+      let company = this.cleanLatex(g.groups[2]);
+      const location = this.cleanLatex(g.groups[3]);
+      const blockEnd = (p+1<positions.length) ? positions[p+1] : region.length;
+      const block = region.slice(g.end, blockEnd);
+      const acc=[]; const ire=/\\resumeItem(?!List)/g; let im;
+      while((im=ire.exec(block))){ const r=this.readBraces(block, im.index+'\\resumeItem'.length); if(r){ const t=this.cleanLatex(r.content); if(t) acc.push(t); } }
+      let dept=''; const ci=company.indexOf(',');
+      if(ci>=0){ dept=company.slice(ci+1).trim(); company=company.slice(0,ci).trim(); }
+      id++;
+      out.push({id,title,company,department:dept,location,period,current:/present/i.test(period),accomplishments:acc,technologies:[]});
+    }
+    return out.length?out:null;
+  }
+  parseProjects(tex){
+    const secStart = tex.indexOf('\\section{Projects}');
+    if(secStart<0) return null;
+    const region = tex.slice(secStart);
+    const positions=[]; const re=/\\resumeProjectHeading/g; let m;
+    while((m=re.exec(region))) positions.push(m.index);
+    const out=[]; let id=0;
+    for(let p=0;p<positions.length;p++){
+      const from = positions[p] + '\\resumeProjectHeading'.length;
+      const g = this.readN(region, from, 1); if(!g) continue;
+      const head = g.groups[0];
+      const tm = head.match(/\\textbf\s*\{([^}]*)\}/); const title = tm?this.cleanLatex(tm[1]):'';
+      const gm = head.match(/\\githubLink\s*\{([^}]*)\}/); const github = gm?gm[1].trim():'#';
+      const em = head.match(/\\emph\s*\{([^}]*)\}/); const tech = em?em[1].split(',').map((x)=>this.cleanLatex(x)).filter(Boolean):[];
+      const blockEnd = (p+1<positions.length) ? positions[p+1] : region.length;
+      const block = region.slice(g.end, blockEnd);
+      const items=[]; const ire=/\\resumeItem(?!List)/g; let im;
+      while((im=ire.exec(block))){ const r=this.readBraces(block, im.index+'\\resumeItem'.length); if(r){ const t=this.cleanLatex(r.content); if(t) items.push(t); } }
+      let desc = items.join('. '); if(desc && !/[.!?]$/.test(desc)) desc+='.';
+      id++;
+      out.push({id,title,description:desc,technologies:tech,github});
+    }
+    return out.length?out:null;
+  }
+
+  expById(id){ return this.state.experiences.find((e)=>e.id===id); }
+  projById(id){ return this.state.projectsData.find((p)=>p.id===id); }
+  shortCompany(c){ return (c||'').replace('University of British Columbia','UBC'); }
+  splitTitle(exp){ const parts=(exp.title||'').split(' -- '); const role=parts[0]; const context=parts[1]||exp.department||''; return {role:role.trim(), context:context.trim()}; }
+  splitPeriod(period){ const parts=(period||'').split('--').map((s)=>s.replace(/\./g,'').trim()); return {start:parts[0]||'', end:parts[1]||''}; }
+
+  log(t, color){ this.setState((s)=>({log:[...s.log, {t, c:color||'#B9AE97'}]})); }
+  stage(name){ if(!name){}; if(name) this.setState((s)=>({staged:{...s.staged, [name]:true}})); }
+
+  // ---------- lifecycle ----------
+  componentDidMount(){ this.applyTheme(); this.loadPersisted(); this.startPipeline(); }
+  componentDidUpdate(){ this.applyTheme(); this.autoscroll(); this.persist(); }
+  componentWillUnmount(){ if(this._pipe) clearInterval(this._pipe); if(this._t) this._t.forEach((x)=>clearTimeout(x)); }
+
+  applyTheme(){
+    const el=this.rootRef.current; if(!el) return;
+    const font=this.props.monoFont||'IBM Plex Mono';
+    el.style.fontFamily = "'"+font+"', ui-monospace, monospace";
+    if(this.props.accent){ el.style.setProperty('--accent', this.props.accent); }
+  }
+  autoscroll(){ const el=this.termRef.current; if(el) el.scrollTop=el.scrollHeight; }
+
+  persist(){ try{ const {tex,work,proj,config,experiences,projectsData,staged,srcBase,changed,rot,model}=this.state; localStorage.setItem('cg_state_v2', JSON.stringify({_v:4,tex,work,proj,config,experiences,projectsData,staged,srcBase,changed,rot,model})); }catch(e){} }
+  loadPersisted(){ try{ const raw=localStorage.getItem('cg_state_v2'); if(!raw) return; const d=JSON.parse(raw); if(d&&d._v===4&&d.work&&d.proj){ this.setState({tex:d.tex||this.state.tex, work:d.work, proj:d.proj, config:d.config||this.state.config, experiences:d.experiences||this.state.experiences, projectsData:d.projectsData||this.state.projectsData, staged:d.staged||{}, srcBase:d.srcBase||this.state.srcBase, changed:d.changed||{}, rot:d.rot||{}, model:d.model||this.state.model}); this.log('restored local draft from previous session', '#7E86A6'); } }catch(e){} }
+
+  startPipeline(){
+    if(this.props.pipelineAutoplay===false){ if(this.stageRef.current) this.stageRef.current.textContent='autoplay off'; return; }
+    this._t=this._t||[];
+    const stages=[
+      {n:0,label:'read data/master-resume.tex'},
+      {n:1,label:'$ npm run parse:resume — parsing LaTeX'},
+      {n:2,label:'write experiences.ts · skills.ts · education.ts · projects.ts'},
+      {n:3,label:'collect résumé + project text'},
+      {n:4,label:'$ npm run generate:content — Gemini 2.5 Flash-Lite'},
+      {n:5,label:'draft *-content.json (approved: false)'},
+      {n:6,label:'review & approve (approved: true, locked)'},
+      {n:7,label:'ariqmuldi.com renders Work · Experience · Projects'},
+    ];
+    let i=0;
+    const tick=()=>{
+      const root=this.pipeRef.current; if(!root) return;
+      const nodes=root.querySelectorAll('[data-node]');
+      nodes.forEach((el)=>{
+        const idx=parseInt(el.getAttribute('data-node'),10);
+        const dark=(idx===7);
+        if(idx===stages[i].n){
+          el.style.borderColor='var(--accent)';
+          el.style.boxShadow='inset 0 0 0 1px var(--accent)';
+          el.style.background= dark? '#2C2E3B' : 'rgba(85,88,121,.06)';
+        } else {
+          el.style.borderColor= dark? 'var(--ink)' : 'var(--rule2)';
+          el.style.boxShadow='none';
+          el.style.background= dark? 'var(--dark)' : 'var(--paper)';
+          el.style.opacity='1';
+        }
+      });
+      let lbl=stages[i].label; if(stages[i].n===4) lbl='$ npm run generate:content — '+this.modelLabel(); if(this.stageRef.current) this.stageRef.current.textContent=lbl;
+      i=(i+1)%stages.length;
+    };
+    tick();
+    this._pipe=setInterval(tick, 1500);
+  }
+
+  // ---------- auth ----------
+  demoPass(){ return this.props.demoPassword || 'ariq2026'; }
+  modelObj(){ return this.MODELS.find((m)=>m.id===this.state.model) || this.MODELS[0]; }
+  modelLabel(){ return this.modelObj().label; }
+  onModel=(e)=>{ if(!this.guard()) return; const id=e.target.value; this.setState({model:id}); this.log('set GEMINI_MODEL='+id, '#B9AE97'); };
+  onPw=(e)=>{ this.setState({pwInput:e.target.value, pwError:''}); };
+  onPwKey=(e)=>{ if(e.key==='Enter') this.onUnlock(); };
+  onUnlock=()=>{
+    if(this.state.pwInput!==this.demoPass()){ this.setState({pwError:'incorrect password — editing stays disabled'}); this.log('auth failed — incorrect password', '#E0806B'); return; }
+    if(this.state.simEnv==='production'){ this.setState({pwError:'password correct, but content editing is disabled in production — run the site locally (localhost) to unlock'}); this.log('auth blocked — editing only works on local development (localhost)', '#E0806B'); return; }
+    this.setState({unlocked:true, pwError:'', pwInput:''}); this.log('$ auth --unlock', '#98A1BC'); this.log('authenticated ✓ — edit mode enabled (localhost)', '#3FB27F');
+  };
+  onLock=()=>{ this.setState({unlocked:false}); this.log('locked — back to read-only', '#B9AE97'); };
+  onSetEnv=(env)=>{ this.setState((s)=>({ simEnv:env, pwError:'', ...(env==='production'?{unlocked:false}:{}) })); this.log('preview environment → '+env+(env==='production'?' — editing disabled (production)':' — editing allowed (localhost)'), '#B9AE97'); };
+  onEnvLocal=()=>this.onSetEnv('localhost');
+  onEnvProd=()=>this.onSetEnv('production');
+  guard(){ if(!this.state.unlocked){ return false; } return true; }
+
+  // ---------- tabs ----------
+  setTab=(t)=>this.setState({activeTab:t});
+
+  // ---------- resume tab ----------
+  onTex=(e)=>{ if(!this.guard()) return; this.setState({tex:e.target.value, texDirty:true}); };
+  onParse=()=>{
+    if(!this.guard()) return;
+    if(this.state.parsing) return;
+    this.setState({parsing:true});
+    this.log('$ npm run parse:resume', '#98A1BC');
+    this._t=this._t||[];
+    this._t.push(setTimeout(()=>{
+      const exps=this.parseExperiences(this.state.tex);
+      const projs=this.parseProjects(this.state.tex);
+      if(!exps){ this.log('✕ parse failed — no experience entries found; keeping previous data', '#E0806B'); this.setState({parsing:false}); return; }
+      const srcBase={...this.state.srcBase}; const work={...this.state.work}; const proj={...this.state.proj}; const changed={...this.state.changed}; const staged={...this.state.staged};
+      let flips=0;
+      this.WORK_ORDER.forEach((k)=>{ const e=exps.find((x)=>x.id===this.ROLE_META[k].experienceId); const h=this.hash((e&&e.accomplishments?e.accomplishments:[]).join('\n')); if(h!==srcBase['w:'+k]){ srcBase['w:'+k]=h; if(work[k]){ work[k]={...work[k], approved:false, sourceHash:h}; changed['w:'+k]=true; staged['work-experience-content.json']=true; flips++; } } });
+      if(projs){ this.PROJ_ORDER.forEach((k)=>{ const pd=projs.find((x)=>x.id===proj[k].projectId); const h=this.hash(pd?pd.description:''); if(h!==srcBase['p:'+k]){ srcBase['p:'+k]=h; if(proj[k]){ proj[k]={...proj[k], approved:false, sourceHash:h}; changed['p:'+k]=true; staged['project-content.json']=true; flips++; } } }); }
+      staged['app/data/experiences.ts']=true; staged['app/data/projects.ts']=true; staged['app/data/skills.ts']=true; staged['app/data/education.ts']=true;
+      this.setState({experiences:exps, projectsData:projs||this.state.projectsData, parsing:false, texDirty:false, srcBase, work, proj, changed, staged});
+      this.log('parsed '+exps.length+' experiences, '+(projs?projs.length:0)+' projects, '+this.SKILLS.length+' skill groups', '#7E86A6');
+      this.log('regenerated app/data/*.ts'+(flips?(' · '+flips+' AI entr'+(flips>1?'ies':'y')+' flipped to approved:false'):''), flips?'#B9AE97':'#7E86A6');
+    }, 850));
+  };
+
+  // config toggles
+  toggleHidden=(key)=>{ if(!this.guard()) return; const config={...this.state.config}; config[key]={...config[key], hidden:!config[key].hidden}; this.setState({config, staged:{...this.state.staged,'data/resume-config.json':true}}); this.log('config: '+key+' hidden='+config[key].hidden, '#B9AE97'); };
+  toggleAll=(key)=>{ if(!this.guard()) return; const config={...this.state.config}; config[key]={...config[key], hideAllAccomplishments:!config[key].hideAllAccomplishments}; this.setState({config, staged:{...this.state.staged,'data/resume-config.json':true}}); this.log('config: '+key+' hideAllAccomplishments='+config[key].hideAllAccomplishments, '#B9AE97'); };
+  toggleTech=(key)=>{ if(!this.guard()) return; const config={...this.state.config}; config[key]={...config[key], hideTechnologies:!config[key].hideTechnologies}; this.setState({config, staged:{...this.state.staged,'data/resume-config.json':true}}); this.log('config: '+key+' hideTechnologies='+config[key].hideTechnologies, '#B9AE97'); };
+  toggleAcc=(key, n)=>{ if(!this.guard()) return; const config={...this.state.config}; const arr=new Set(config[key].hideAccomplishments||[]); if(arr.has(n)) arr.delete(n); else arr.add(n); config[key]={...config[key], hideAccomplishments:[...arr].sort((a,b)=>a-b)}; this.setState({config, staged:{...this.state.staged,'data/resume-config.json':true}}); };
+
+  // ---------- work tab ----------
+  onCommit=(key,e)=>{ if(!this.guard()) return; const work={...this.state.work}; work[key]={...work[key], commitSubject:e.target.value}; this.setState({work, staged:{...this.state.staged,'work-experience-content.json':true}}); };
+  onTech=(key,e)=>{ if(!this.guard()) return; const work={...this.state.work}; work[key]={...work[key], technologies:e.target.value.split(',').map((t)=>t.trim()).filter(Boolean)}; this.setState({work, staged:{...this.state.staged,'work-experience-content.json':true}}); };
+  onDesc=(key,e)=>{ if(!this.guard()) return; const work={...this.state.work}; work[key]={...work[key], description:e.target.value}; this.setState({work, staged:{...this.state.staged,'work-experience-content.json':true}}); };
+  approveWork=(key)=>{ if(!this.guard()) return; const work={...this.state.work}; const nowA=!work[key].approved; work[key]={...work[key], approved:nowA}; const changed={...this.state.changed}; if(nowA) delete changed['w:'+key]; this.setState({work, changed, staged:{...this.state.staged,'work-experience-content.json':true}}); this.log((nowA?'approved':'unapproved')+' work['+key+']'+(nowA?' — locked (approved:true)':''), nowA?'#3FB27F':'#B9AE97'); };
+  regenWork=(key)=>{ if(!this.guard()) return; this.draftWork([key], true); };
+  genWork=()=>{ if(!this.guard()) return; this.log('$ GEMINI_MODEL='+this.state.model+' npm run generate:work-experience-content', '#98A1BC'); this.draftWork(this.WORK_ORDER, false); };
+  genWorkForce=()=>{ if(!this.guard()) return; this.log('$ GEMINI_MODEL='+this.state.model+' npm run generate:work-experience-content --force', '#98A1BC'); this.draftWork(this.WORK_ORDER, true); };
+  draftWork(keys, force){
+    if(this.state.busy.work) return;
+    this.setState((s)=>({busy:{...s.busy, work:true}}));
+    this._t=this._t||[];
+    this._t.push(setTimeout(()=>{
+      const work={...this.state.work}; const rot={...this.state.rot}; const changed={...this.state.changed};
+      let drafted=0, skipped=0;
+      keys.forEach((k)=>{
+        const item=work[k]; const isChanged=!!changed['w:'+k];
+        if(!force && item.approved && !isChanged){ skipped++; this.log('  skip  '+k+' (approved, source unchanged)', '#575E76'); return; }
+        const alts=this.ALT_COMMIT[k]||[item.commitSubject]; const idx=((rot['w:'+k]||0)+1)%alts.length; rot['w:'+k]=idx;
+        work[k]={...item, commitSubject:alts[idx], approved:false}; drafted++;
+        this.log('  draft '+k+' → approved:false', '#B9AE97');
+      });
+      this.setState((s)=>({work, rot, busy:{...s.busy, work:false}, staged:{...s.staged,'work-experience-content.json':true}}));
+      this.log('done — '+drafted+' drafted, '+skipped+' skipped', '#7E86A6');
+    }, 950));
+  }
+
+  // ---------- projects tab ----------
+  onTagline=(key,e)=>{ if(!this.guard()) return; const proj={...this.state.proj}; proj[key]={...proj[key], tagline:e.target.value}; this.setState({proj, staged:{...this.state.staged,'project-content.json':true}}); };
+  approveProj=(key)=>{ if(!this.guard()) return; const proj={...this.state.proj}; const nowA=!proj[key].approved; proj[key]={...proj[key], approved:nowA}; const changed={...this.state.changed}; if(nowA) delete changed['p:'+key]; this.setState({proj, changed, staged:{...this.state.staged,'project-content.json':true}}); this.log((nowA?'approved':'unapproved')+' project['+key+']'+(nowA?' — locked (approved:true)':''), nowA?'#3FB27F':'#B9AE97'); };
+  regenProj=(key)=>{ if(!this.guard()) return; this.draftProj([key], true); };
+  genProj=()=>{ if(!this.guard()) return; this.log('$ GEMINI_MODEL='+this.state.model+' npm run generate:project-content', '#98A1BC'); this.draftProj(this.PROJ_ORDER, false); };
+  genProjForce=()=>{ if(!this.guard()) return; this.log('$ GEMINI_MODEL='+this.state.model+' npm run generate:project-content --force', '#98A1BC'); this.draftProj(this.PROJ_ORDER, true); };
+  draftProj(keys, force){
+    if(this.state.busy.proj) return;
+    this.setState((s)=>({busy:{...s.busy, proj:true}}));
+    this._t=this._t||[];
+    this._t.push(setTimeout(()=>{
+      const proj={...this.state.proj}; const rot={...this.state.rot}; const changed={...this.state.changed};
+      let drafted=0, skipped=0;
+      keys.forEach((k)=>{
+        const item=proj[k]; const isChanged=!!changed['p:'+k];
+        if(!force && item.approved && !isChanged){ skipped++; this.log('  skip  '+k+' (approved, source unchanged)', '#575E76'); return; }
+        const alts=this.ALT_TAGLINE[k]||[item.tagline]; const idx=((rot['p:'+k]||0)+1)%alts.length; rot['p:'+k]=idx;
+        proj[k]={...item, tagline:alts[idx], approved:false}; drafted++;
+        this.log('  draft '+k+' → approved:false', '#B9AE97');
+      });
+      this.setState((s)=>({proj, rot, busy:{...s.busy, proj:false}, staged:{...s.staged,'project-content.json':true}}));
+      this.log('done — '+drafted+' drafted, '+skipped+' skipped', '#7E86A6');
+    }, 950));
+  }
+
+  genAll=()=>{ if(!this.guard()) return; this.log('$ GEMINI_MODEL='+this.state.model+' npm run generate:content', '#98A1BC'); this.draftWork(this.WORK_ORDER, false); this._t=this._t||[]; this._t.push(setTimeout(()=>this.draftProj(this.PROJ_ORDER, false), 1100)); };
+
+  onCommit=()=>{
+    if(!this.guard()) return;
+    const files=Object.keys(this.state.staged);
+    if(!files.length) return;
+    if(this.state.committing) return;
+    this.setState({committing:true});
+    this.log('$ git add '+files.join(' '), '#98A1BC');
+    this._t=this._t||[];
+    this._t.push(setTimeout(()=>{
+      this.log('$ git commit -m "chore(content): update generated content"', '#98A1BC');
+      this.log('['+ 'main '+this.hash7(Date.now())+'] chore(content): update generated content', '#EDE7D6');
+      this.log(' '+files.length+' files changed', '#7E86A6');
+      this.log('pushed to origin/main ✓ — Vercel will redeploy', '#3FB27F');
+      this.setState({staged:{}, committing:false});
+    }, 900));
+  };
+
+  // ---------- render ----------
+  renderVals(){
+    const s=this.state;
+    const locked=!s.unlocked;
+    const editCursor = locked ? 'not-allowed' : 'pointer';
+    const overlayById=new Map(); Object.keys(s.work).forEach((k)=>{ overlayById.set(s.work[k].experienceId, s.work[k]); });
+    const tagById=new Map(); Object.keys(s.proj).forEach((k)=>{ tagById.set(s.proj[k].projectId, s.proj[k].tagline); });
+
+    // resume preview
+    const previewExp=s.experiences.map((exp)=>{
+      const {role,context}=this.splitTitle(exp); const {start,end}=this.splitPeriod(exp.period);
+      const ov=overlayById.get(exp.id); const tech=(ov&&ov.technologies&&ov.technologies.length)?ov.technologies:exp.technologies;
+      const expandable=exp.accomplishments.length>0;
+      const at=this.shortCompany(exp.company)+(context?(' · '+context):'');
+      return {hash7:this.hash7(exp.id), role, at, expandable, activeDev:!expandable, commitSubject:(ov&&ov.commitSubject)||exp.accomplishments[0]||'', insertions:exp.accomplishments.length, techLine:tech.slice(0,6).join(' · '), start, end, current:exp.current};
+    });
+    const previewProj=s.projectsData.map((p,i)=>({num:String(i+1).padStart(2,'0'), title:p.title, tagline:tagById.get(p.id)|| (p.description.split(/(?<=[.!?])\s+/)[0]||''), techLine:p.technologies.join(' · ')}));
+
+    // work items
+    const workItems=this.WORK_ORDER.map((k)=>{
+      const w=s.work[k]; const meta=this.ROLE_META[k]; const exp=this.expById(meta.experienceId)||{accomplishments:[],title:'',company:'',period:'',current:false};
+      const {role,context}=this.splitTitle(exp); const {start,end}=this.splitPeriod(exp.period);
+      const expandable=exp.accomplishments.length>0;
+      const idx=this.WORK_ORDER.indexOf(k);
+      return {
+        key:k, experienceId:w.experienceId, sourceHash:w.sourceHash, approved:w.approved,
+        commitSubject:w.commitSubject||'', techStr:(w.technologies||[]).join(', '), techLine:(w.technologies||[]).join(' · '),
+        description:w.description||'', hasDescription:meta.hasDescription, noDescNote: meta.hasDescription? '' : (k==='doubl'?'no Work card · commit subject unused while accomplishments are hidden (config: hideAllAccomplishments)':'no Work card — technologies shown in Experience only'),
+        sourceChanged:!!s.changed['w:'+k], locked,
+        badge: w.approved?'● approved':'○ draft', badgeColor: w.approved?'#3FB27F':'var(--accent)', badgeBorder: w.approved?'rgba(63,178,127,.5)':'var(--rule2)',
+        approveLabel: w.approved?'✓ approved — unlock':'approve & lock', approveText: w.approved?'var(--ink)':'var(--paper)', approveBg: w.approved?'transparent':'var(--green)', approveBorder: w.approved?'var(--rule2)':'var(--green)',
+        role, at:this.shortCompany(exp.company)+(context?(' · '+context):''), expandable, activeDev:!expandable, insertions:exp.accomplishments.length, hash7:this.hash7(exp.id),
+        workNum:String(idx+1).padStart(2,'0'), workMeta:(this.shortCompany(exp.company)+' · '+role).toUpperCase(), workTitle:role,
+        onCommit:(e)=>this.onCommit_field(k,e), onTech:(e)=>this.onTech(k,e), onDesc:(e)=>this.onDesc(k,e), onApprove:()=>this.approveWork(k), onRegen:()=>this.regenWork(k),
+      };
+    });
+
+    const projItems=this.PROJ_ORDER.map((k)=>{
+      const p=s.proj[k]; const pd=this.projById(p.projectId)||{title:this.PROJ_SLUG_TO_TITLE[k],technologies:[],github:'#'};
+      const num=String(this.PROJ_ORDER.indexOf(k)+1).padStart(2,'0');
+      return {
+        key:k, projectId:p.projectId, sourceHash:p.sourceHash, approved:p.approved, tagline:p.tagline||'',
+        sourceChanged:!!s.changed['p:'+k], locked,
+        badge:p.approved?'● approved':'○ draft', badgeColor:p.approved?'#3FB27F':'var(--accent)', badgeBorder:p.approved?'rgba(63,178,127,.5)':'var(--rule2)',
+        approveLabel:p.approved?'✓ approved — unlock':'approve & lock', approveText:p.approved?'var(--ink)':'var(--paper)', approveBg:p.approved?'transparent':'var(--green)', approveBorder:p.approved?'var(--rule2)':'var(--green)',
+        num, title:pd.title, techLine:pd.technologies.join(' · '),
+        onTagline:(e)=>this.onTagline(k,e), onApprove:()=>this.approveProj(k), onRegen:()=>this.regenProj(k),
+      };
+    });
+
+    const configRows=this.CONFIG_KEYS.map(({key,expId})=>{
+      const c=s.config[key]||{hidden:false,hideAllAccomplishments:false,hideAccomplishments:[],hideTechnologies:false};
+      const exp=this.expById(expId)||{accomplishments:[]}; const accCount=exp.accomplishments.length;
+      const hiddenSet=new Set(c.hideAccomplishments||[]);
+      const accChips=[]; if(!c.hideAllAccomplishments){ for(let n=1;n<=accCount;n++){ const on=hiddenSet.has(n); accChips.push({n, on, color:on?'var(--paper)':'var(--ink-soft)', bg:on?'var(--accent)':'transparent', border:on?'var(--accent)':'var(--rule2)', onToggle:()=>this.toggleAcc(key,n)}); } }
+      return {
+        key, label:key, expId, accCount, titleColor:c.hidden?'var(--ink-faint)':'var(--ink)',
+        showAcc: accCount>0 && !c.hideAllAccomplishments, accChips,
+        hiddenLabel:c.hidden?'● hidden':'hide role', hiddenColor:c.hidden?'var(--paper)':'var(--ink)', hiddenBg:c.hidden?'var(--ink)':'transparent', hiddenBorder:c.hidden?'var(--ink)':'var(--rule2)',
+        allColor:c.hideAllAccomplishments?'var(--paper)':'var(--ink)', allBg:c.hideAllAccomplishments?'var(--accent)':'transparent', allBorder:c.hideAllAccomplishments?'var(--accent)':'var(--rule2)',
+        techColor:c.hideTechnologies?'var(--paper)':'var(--ink)', techBg:c.hideTechnologies?'var(--accent)':'transparent', techBorder:c.hideTechnologies?'var(--accent)':'var(--rule2)',
+        onHidden:()=>this.toggleHidden(key), onAll:()=>this.toggleAll(key), onTech:()=>this.toggleTech(key),
+      };
+    });
+
+    const workApprovedCount=this.WORK_ORDER.filter((k)=>s.work[k].approved).length;
+    const projApprovedCount=this.PROJ_ORDER.filter((k)=>s.proj[k].approved).length;
+    const stagedList=Object.keys(s.staged); const stagedCount=stagedList.length;
+
+    const activeCol='var(--accent)', idleCol='var(--ink-faint)';
+    return {
+      rootRef:this.rootRef, termRef:this.termRef, pipeRef:this.pipeRef, stageRef:this.stageRef,
+      // auth
+      locked, unlocked:s.unlocked, pwInput:s.pwInput, pwError:s.pwError, demoPass:this.demoPass(),
+      onPw:this.onPw, onPwKey:this.onPwKey, onUnlock:this.onUnlock, onLock:this.onLock,
+      lockDot: locked?'var(--ink-faint)':'var(--green)', authTitle: locked?'READ-ONLY':'EDIT MODE',
+      model:s.model, modelName:this.modelLabel(), modelShort:this.modelObj().short, onModel:this.onModel,
+      simEnv:s.simEnv, onEnvLocal:this.onEnvLocal, onEnvProd:this.onEnvProd,
+      envLocalColor: s.simEnv==='localhost'?'var(--paper)':'var(--ink-soft)', envLocalBg: s.simEnv==='localhost'?'var(--accent)':'transparent',
+      envProdColor: s.simEnv==='production'?'var(--paper)':'var(--ink-soft)', envProdBg: s.simEnv==='production'?'var(--accent)':'transparent',
+      genAllDisabled: locked || !!s.busy.work || !!s.busy.proj,
+      genAllLabel: (s.busy.work||s.busy.proj)?'generating…':'$ npm run generate:content',
+      authSub: locked?'Viewing the pipeline. Enter the password to edit and generate.':'Authenticated — editing and generation are enabled (localhost).',
+      authBorder: locked?'var(--rule2)':'rgba(63,178,127,.5)', authBg: locked?'var(--paper2)':'rgba(63,178,127,.07)',
+      editCursor,
+      // tabs
+      isResume:s.activeTab==='resume', isWork:s.activeTab==='work', isProjects:s.activeTab==='projects',
+      tabResume:()=>this.setTab('resume'), tabWork:()=>this.setTab('work'), tabProjects:()=>this.setTab('projects'),
+      tabResumeColor:s.activeTab==='resume'?activeCol:idleCol, tabResumeBorder:s.activeTab==='resume'?activeCol:'transparent',
+      tabWorkColor:s.activeTab==='work'?activeCol:idleCol, tabWorkBorder:s.activeTab==='work'?activeCol:'transparent',
+      tabProjColor:s.activeTab==='projects'?activeCol:idleCol, tabProjBorder:s.activeTab==='projects'?activeCol:'transparent',
+      // buttons common
+      btnPrimaryText: locked?'var(--ink-faint)':'var(--paper)', btnPrimaryBg: locked?'var(--rule2)':'var(--ink)',
+      // resume
+      tex:s.tex, onTex:this.onTex, onParse:this.onParse, parseLabel:s.parsing?'parsing…':'$ parse:resume',
+      texDirtyLabel:s.texDirty?'● unsaved — run parse':'✓ in sync', texDirtyColor:s.texDirty?'var(--accent)':'var(--green)',
+      parsedExpCount:s.experiences.length, parsedProjCount:s.projectsData.length, skillsCount:this.SKILLS.length,
+      previewExp, previewProj, configRows,
+      // work
+      workItems, workApprovedCount, workTotal:this.WORK_ORDER.length,
+      genWork:this.genWork, genWorkForce:this.genWorkForce, genWorkDisabled:locked||!!s.busy.work,
+      genWorkLabel:s.busy.work?'generating…':'generate (drafts)',
+      // projects
+      projItems, projApprovedCount, projTotal:this.PROJ_ORDER.length,
+      genProj:this.genProj, genProjForce:this.genProjForce, genProjDisabled:locked||!!s.busy.proj,
+      genProjLabel:s.busy.proj?'generating…':'generate (drafts)',
+      // global
+      genAll:this.genAll,
+      // terminal
+      logLines:s.log.map((l)=>({t:l.t, color:l.c})),
+    };
+  }
+  onCommit_field(k,e){ return this.onCommitSubject(k,e); }
+  onCommitSubject(key,e){ if(!this.guard()) return; const work={...this.state.work}; work[key]={...work[key], commitSubject:e.target.value}; this.setState({work, staged:{...this.state.staged,'work-experience-content.json':true}}); }
+}
+</script>
+</body>
+</html>
