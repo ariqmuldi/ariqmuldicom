@@ -20,7 +20,7 @@ import * as path from 'path';
 import { createHash } from 'crypto';
 import { projects } from '../app/data/projects';
 
-const GEMINI_MODEL = 'gemini-2.5-flash-lite';
+const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash-lite';
 const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
 // ── The committed data contract (app/data/project-content.json) ─────────────────────────

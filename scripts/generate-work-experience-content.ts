@@ -24,7 +24,7 @@ import { parseResume, type Experience } from './parse-resume';
 import { workGroups } from '../app/data/work';
 import { experiences as builtExperiences } from '../app/data/experiences';
 
-const GEMINI_MODEL = 'gemini-2.5-flash-lite';
+const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash-lite';
 const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
 // ── Canonical role list (hand-maintained; see the plan's Section 4 mapping) ─────────────
@@ -57,7 +57,7 @@ interface RoleContent {
 type RoleContentFile = Record<string, RoleContent>;
 
 const projectRoot = path.resolve(__dirname, '..');
-const latexPath = path.join(projectRoot, 'data', 'master-resume.tex');
+const latexPath = path.join(projectRoot, 'app', 'data', 'master-resume.tex');
 const envPath = path.join(projectRoot, '.env');
 const outputPath = path.join(projectRoot, 'app', 'data', 'work-experience-content.json');
 
@@ -182,7 +182,9 @@ async function callGemini(
   const guidance =
     (withCommitSubject ? commitInstruction : '') +
     (withDescription
-      ? 'Write a 2–3 sentence third-person summary of this ENTIRE role for a portfolio case-study card. ' +
+      ? 'Write a 2–3 sentence résumé-style summary of this ENTIRE role for a portfolio case-study card. ' +
+        'Begin the first sentence with a strong past-tense action verb and an IMPLIED subject — e.g. "Led …", "Engineered …", "Architected …", "Built …", "Developed …". ' +
+        'Do NOT open with, or use anywhere, a subject noun such as "The developer", "This engineer", "The engineer", "This developer", or "They" — the subject is always implied, exactly like a résumé bullet. ' +
         'Read ALL the bullets below and synthesize them into one cohesive overview of the role as a whole: ' +
         'what the project/system fundamentally is, the full breadth of what was built across the role (not just the first few bullets), ' +
         'and the overall scale or impact. Write at a higher altitude than any individual bullet — capture the essence of everything done, ' +
@@ -196,7 +198,8 @@ async function callGemini(
       parts: [
         {
           text:
-            'You write concise, high-altitude third-person summaries of software engineering roles for a portfolio. ' +
+            'You write concise, high-altitude, résumé-style summaries of software engineering roles for a portfolio. ' +
+            'Each summary opens with a strong past-tense action verb and an implied subject — like a résumé bullet ("Led…", "Engineered…") — and NEVER uses a subject noun such as "The developer" or "This engineer". ' +
             'Your summaries synthesize the WHOLE of a person\'s work across all their résumé bullets into a cohesive overview of what they built and its impact — ' +
             'you never simply paraphrase or restate the first few bullets.',
         },
