@@ -3,7 +3,7 @@
 Guidance for Claude Code (and any agent) working in this repository. This file is loaded into
 every session, so it carries the always-relevant context. For full documentation see
 [README.md](./README.md); for the résumé pipeline and all content data see
-[app/data/README.md](./app/data/README.md).
+[data/README.md](./data/README.md).
 
 ## What this is
 
@@ -16,7 +16,7 @@ throughout, a two-column grid, hairline rules instead of cards, and terminal acc
 
 - Two routes: `app/page.tsx` (the main portfolio, `/`) and `app/content-generation/page.tsx`
   (the content pipeline explainer + local authoring UI, `/content-generation` — see below)
-- Sections live in `app/components/` and are composed, in order, by `app/page.tsx`:
+- Sections live in `components/` and are composed, in order, by `app/page.tsx`:
   Hero → Work → Experience → Projects → Skills → Education → Contact. `TopBar.tsx` and
   `Footer.tsx` are **shared presentational components** used by both routes (each passes its own
   crumb + nav links / footer items), so the header/footer never drift between pages
@@ -30,17 +30,21 @@ throughout, a two-column grid, hairline rules instead of cards, and terminal acc
 
 ## Content is data-driven — do not hardcode
 
-Every section `.map()`s over a module in `app/data/`:
+Every section `.map()`s over a module in `data/`:
 
-- **Generated** from `app/data/master-resume.tex` by `scripts/parse-resume.ts`: `experiences.ts`,
+- **Generated** from `data/source/master-resume.tex` by `scripts/parse-resume.ts`: `experiences.ts`,
   `skills.ts`, `education.ts`, `projects.ts`. **Never hand-edit these** — they are overwritten
   on every parse. Any presentation the design needs from them is derived in the component, not
-  stored in the data file. (The `.tex` source, the `resume-config.json` visibility config, and
-  the generated/AI/curated data modules all now live together under `app/data/`)
+  stored in the data file. `projects.ts` carries **no** `image` field — the Projects section is a
+  text-only terminal list — so the parser no longer emits one. (Everything lives under `data/`,
+  grouped by pipeline role: `source/` — the `.tex` + `resume-config.json`; `generated/` — the parser
+  output; `content/` — curated `work.ts` + the AI JSON; `deprecated/` — archived snapshots)
 - **Manually curated**: `work.ts` (the Work case studies) — safe to edit. Its `description`
   and `technologies` are **AI-owned**: generated per-role into `work-experience-content.json`
   and merged in at module load, keyed by a stable `contentKey`. An inline value on a work item
-  overrides the AI value (DOUBL keeps a manual `description` inline, since its card is coming-soon)
+  overrides the AI value (precedence: inline → AI → empty). Optional presentation fields include
+  `role`, `figLabel`, `overlayLabel`, and `imageFit` (`'contain'` shows a near-square figure whole
+  instead of cropping it — used for the DOUBL card)
 - **AI-generated** by two manual generators (committed to git, hand-editable, each entry carries
   an `approved` flag):
   - `scripts/generate-work-experience-content.ts` → `work-experience-content.json` — per-role
@@ -53,8 +57,8 @@ Every section `.map()`s over a module in `app/data/`:
 
 - Runs automatically **only on `npm run dev`** (the `predev` hook). It does **not** run on
   `npm run build`, and it does **not** watch files
-- After editing `app/data/master-resume.tex`: run `npm run parse:resume` (or restart
-  `npm run dev`), then **commit** the regenerated `app/data/*.ts` so production builds pick them up
+- After editing `data/source/master-resume.tex`: run `npm run parse:resume` (or restart
+  `npm run dev`), then **commit** the regenerated `data/generated/*.ts` so production builds pick them up
 - The parser does **not** touch the downloadable PDF. `public/master-resume.pdf` (served at
   `/master-resume.pdf` by the Contact section) is maintained manually — replace it when the résumé
   changes and commit it
@@ -76,7 +80,7 @@ Every section `.map()`s over a module in `app/data/`:
   parser, so it will clobber a hand-curated tech list — use `--force <key>` to redraft instead)
 - The generated `technologies` list feeds both sections (Work joins by `contentKey`, Experience
   by `experienceId`); `commitSubject` overlays Experience by `experienceId`, `tagline` overlays
-  Projects by `projectId`. **Commit both JSON files** after approving, like `app/data/*.ts`
+  Projects by `projectId`. **Commit both JSON files** after approving, like `data/generated/*.ts`
 - The Experience `git log` ledger is collapsed by default (commit subject + `+N insertions`
   diffstat + tech + dates); clicking a row opens a full-width `git show` body listing every
   résumé bullet as a `+` diff line. A role with no accomplishments (DOUBL) shows
@@ -85,7 +89,7 @@ Every section `.map()`s over a module in `app/data/`:
 
 ## Content pipeline route (`/content-generation`)
 
-A second route (`app/content-generation/page.tsx` + `app/components/ContentGenerationApp.tsx`,
+A second route (`app/content-generation/page.tsx` + `components/ContentGenerationApp.tsx`,
 `PipelineDiagram.tsx`, `ModelSelect.tsx`) that is **both** a public explainer of how this site's
 content is generated **and** a local, password-gated UI over the whole pipeline (edit the `.tex`,
 run `parse:resume`, review/approve the AI drafts per role & project, pick the Gemini model, run
@@ -107,6 +111,21 @@ run `parse:resume`, review/approve the AI drafts per role & project, pick the Ge
   in production** — the route is read-only there regardless. Committing stays manual (no commit UI)
 - Entry points on the main site: a `Content` link in the top-bar nav and a
   `$ ./how-content-is-generated` button in the hero (`HeroSection.tsx`)
+
+## SEO & social metadata
+
+- `app/layout.tsx` holds the home metadata: Open Graph + Twitter, `metadataBase`, a self-referencing
+  canonical, `robots: index/follow`, and the OG image `/og-image.png` (1200×630). No `keywords`
+  field — Google ignores the meta keywords tag
+- `app/page.tsx` renders `ProfilePage` → `Person` JSON-LD as a server `<script>` (the home page is
+  statically prerendered, so it's in the crawlable HTML)
+- `app/sitemap.ts` → `/sitemap.xml` (home only); `app/robots.ts` → `/robots.txt` (allow all,
+  disallow `/api/`, link the sitemap)
+- `app/content-generation/layout.tsx` scopes that route to `robots: noindex, nofollow` (read-only
+  showcase, kept out of search) with its own canonical + OG card — **its metadata lives in the
+  layout, not the page**
+- `public/og-image.png` is a screenshot of the home hero. Regenerate it with the `/generate-og-image`
+  slash command (`.claude/commands/generate-og-image.md`) — it needs the Playwright MCP server
 
 ## Design constraints (do not reintroduce the old look)
 

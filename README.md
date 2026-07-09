@@ -5,7 +5,7 @@ Router) and React. The design is a **Swiss-mono engineering manifest**: one warm
 canvas, `IBM Plex Mono` throughout, a strict two-column grid, hairline rules instead of
 cards, and terminal motifs used only as accents (a typed `whoami`, a `git log` experience
 ledger, a `tree` skills list, a live clock). All content is rendered dynamically from
-`app/data/*.ts`, most of which is generated from a LaTeX master resume.
+`data/generated/*.ts`, most of which is generated from a LaTeX master resume.
 
 ## Tech Stack
 
@@ -27,7 +27,7 @@ npm run dev              # parse resume (predev) then start dev server (Turbopac
 npm run build            # production build (does NOT run the resume parser)
 npm start                # start production server
 npm run lint             # ESLint
-npm run parse:resume     # manually regenerate app/data/*.ts from the LaTeX résumé
+npm run parse:resume     # manually regenerate data/generated/*.ts from the LaTeX résumé
 npm run generate:content # regenerate ALL AI content (work-experience + project) — calls Gemini
 npm run generate:work-experience-content # AI work-experience content only (accepts --force/--seed)
 npm run generate:project-content         # AI project taglines only (accepts --force/--seed)
@@ -42,10 +42,13 @@ specific command). See the AI content section below.
 
 ### App Structure
 
-Everything lives under `app/` (Next.js App Router):
+The code is split across three top-level directories — `app/` (Next.js App Router routes, layout,
+API, and server helpers), `components/` (all React components), and `data/` (content + résumé
+source):
 
-- `app/page.tsx` — the main portfolio (`/`): client component that composes the sections in order
-  and runs the page-level hooks (`useActiveSection`, `useScrollReveal`)
+- `app/page.tsx` — the main portfolio (`/`): client component that composes the sections in order,
+  runs the page-level hooks (`useActiveSection`, `useScrollReveal`), and emits the `ProfilePage`
+  JSON-LD structured data
 - `app/content-generation/page.tsx` — a second route (`/content-generation`): the content pipeline
   explainer + local authoring UI (see [Content pipeline route](#content-pipeline-route))
 - `app/api/content/*` — route handlers backing the content-generation editor (state/session/auth,
@@ -55,14 +58,17 @@ Everything lives under `app/` (Next.js App Router):
   scroll-reveal, per-section styles, the `/content-generation` UI (`.cg-*`), the shared footer
   (`.site-footer*`), responsive collapse, and reduced-motion handling
 - `app/icon.tsx` — dynamically generated favicon ("AM" badge) via `ImageResponse`
+- `app/sitemap.ts` · `app/robots.ts` — generate `/sitemap.xml` and `/robots.txt` (robots allows all,
+  disallows `/api/`, and points at the sitemap; the sitemap lists only the indexable home page)
 - `app/lib/hooks.ts` — client hooks and helpers (see below)
 - `app/lib/content-*.ts` — content-generation server helpers: `content-env` (prod detection),
   `content-auth` (signed cookie), `content-guard` (`requireEditable`), `content-files` (paths +
   sourceHash), `content-file-names` (shared file/script names for the UI and diagram)
-- `app/components/` — the section components plus the shared `TopBar`/`Footer` and the
+- `components/` — the section components plus the shared `TopBar`/`Footer` and the
   content-generation client components (`ContentGenerationApp`, `PipelineDiagram`, `ModelSelect`)
-- `app/data/` — all content data (`.ts` + `.json` modules) **and** the résumé source
-  (`master-resume.tex`, `resume-config.json`)
+- `data/` — all content data + the résumé source, grouped by pipeline role: `source/`
+  (`master-resume.tex`, `resume-config.json`), `generated/` (parser output `.ts` modules),
+  `content/` (curated `work.ts` + the AI `*-content.json`), `deprecated/` (archived snapshots)
 
 ### Sections (top to bottom)
 
@@ -88,11 +94,12 @@ Every section `.map()`s over its data module — no content is hardcoded in JSX.
 count follows array length, so adding/removing an experience, project, skill category, or
 work item changes the page automatically.
 
-- **Auto-generated** from `app/data/master-resume.tex`: `experiences.ts`, `skills.ts`,
+- **Auto-generated** from `data/source/master-resume.tex`: `experiences.ts`, `skills.ts`,
   `education.ts`, `projects.ts`. **Do not edit these by hand** — they are overwritten on
-  every parse. See [`app/data/README.md`](app/data/README.md).
+  every parse. See [`data/README.md`](data/README.md).
 - **Manually curated**: `work.ts` (the "Work" case studies). It carries
-  optional presentation fields the design needs — `role`, `figLabel`, `overlayLabel`,
+  optional presentation fields the design needs — `role`, `figLabel`, `overlayLabel`, `imageFit`
+  (`'contain'` shows a near-square figure whole instead of cropping it, used for DOUBL),
   `contentKey` (per work item) and `shortName` (per organization group). Work items render in
   the authored order of `workGroups` (currently DOUBL first, then UBC) — reordering is just
   reordering the data.
@@ -162,24 +169,24 @@ drops to 2×2. At ≤700px the top-bar nav wraps below the brand. Type scales fl
 The Experience, Skills, Education, and Projects sections are generated from a single LaTeX
 resume so the site stays in sync with the canonical document.
 
-- **Source of truth**: `app/data/master-resume.tex` (exported from Overleaf)
+- **Source of truth**: `data/source/master-resume.tex` (exported from Overleaf)
 - **Parser**: `scripts/parse-resume.ts` (run with `tsx`)
-- **Config**: `app/data/resume-config.json` (hide experiences/accomplishments/technologies)
-- **Generated**: `app/data/experiences.ts`, `skills.ts`, `education.ts`, `projects.ts`
+- **Config**: `data/source/resume-config.json` (hide experiences/accomplishments/technologies)
+- **Generated**: `data/generated/experiences.ts`, `skills.ts`, `education.ts`, `projects.ts`
 - **Downloadable PDF**: `public/master-resume.pdf` (served at `/master-resume.pdf` by the Contact
   "MASTER RESUME" link) is maintained **manually** — the parser does not generate or sync it
 
 The parser runs automatically before `npm run dev` (via the `predev` hook). It does **not**
-run on `npm run build`, so the generated `app/data/*.ts` files are committed to the repo for
+run on `npm run build`, so the generated `data/generated/*.ts` files are committed to the repo for
 production builds. Run it manually with `npm run parse:resume`.
 
 Full workflow, LaTeX structure, extraction rules, and the config system are documented in
-[`app/data/README.md`](app/data/README.md).
+[`data/README.md`](data/README.md).
 
 ## AI Content
 
 Two AI files (Google Gemini, from the résumé/project text) sit alongside the LaTeX
-pipeline, both under `app/data/`:
+pipeline, both under `data/`:
 
 - `work-experience-content.json` (via `scripts/generate-work-experience-content.ts`) — per-role
   `technologies` (shared by **both** the Work and Experience sections), a `commitSubject` for
@@ -194,7 +201,7 @@ pipeline, both under `app/data/`:
   deliberate, manual step
 - **Shared tech**: one generated `technologies` list per role feeds both sections — Work joins
   it by `contentKey`, Experience overlays it by `experienceId`. `description` exists only for
-  roles with a live Work card (DOUBL's coming-soon card keeps a manual `description`)
+  roles with a live Work card (DOUBL's coming-soon card has none)
 - **Overlays / fallbacks**: Experience uses `commitSubject` (fallback `accomplishments[0]`; a
   role with no accomplishments shows `● in active development`); Projects uses `tagline`
   (fallback the first sentence of `description`)
@@ -207,14 +214,14 @@ pipeline, both under `app/data/`:
   from current values without calling the API
 - **Precedence**: an inline `description`/`technologies` on a `work.ts` item overrides the AI
   value, so any field can be hand-pinned
-- **Commit** both JSON files after approving, like the regenerated `app/data/*.ts`
+- **Commit** both JSON files after approving, like the regenerated `data/generated/*.ts`
 
-Full contract, JSON shape, and workflow are documented in [`app/data/README.md`](app/data/README.md).
+Full contract, JSON shape, and workflow are documented in [`data/README.md`](data/README.md).
 You can also drive this whole flow from a UI — see [Content pipeline route](#content-pipeline-route).
 
 ## Content pipeline route
 
-`/content-generation` (`app/content-generation/page.tsx` + `app/components/ContentGenerationApp.tsx`)
+`/content-generation` (`app/content-generation/page.tsx` + `components/ContentGenerationApp.tsx`)
 is **both** a public explainer of how this site's content is generated **and** a local,
 password-gated authoring UI over the entire pipeline. It has two sections:
 
@@ -261,35 +268,44 @@ automatically by Vercel, so no config is needed there.
 
 ## Metadata & SEO
 
-Comprehensive metadata lives in `app/layout.tsx`: Open Graph and Twitter Card tags, a keyword
-array, `metadataBase` of `https://ariqmuldi.com`, and the OG/Twitter image
-`/for-metadata-picture.png`.
+- **`app/layout.tsx`** — the home page's metadata: Open Graph + Twitter Card tags, `metadataBase`
+  of `https://ariqmuldi.com`, a self-referencing canonical, `robots: index/follow`, and the
+  OG/Twitter image `/og-image.png` (1200×630). No `keywords` array — Google ignores the meta
+  keywords tag, so it was dropped
+- **`app/page.tsx`** — emits `ProfilePage` → `Person` JSON-LD (name, `sameAs` GitHub/LinkedIn) as a
+  server-rendered `<script>`; the home page is statically prerendered, so it's in the crawlable HTML
+- **`app/sitemap.ts` / `app/robots.ts`** — generate `/sitemap.xml` (home only) and `/robots.txt`
+  (allow all, disallow `/api/`, link the sitemap)
+- **`app/content-generation/layout.tsx`** — scopes that route to `robots: noindex, nofollow` (a
+  read-only showcase kept out of search) with its own canonical + Open Graph card
+- **`public/og-image.png`** — the 1200×630 social-share card (a screenshot of the home hero);
+  regenerate it with the `/generate-og-image` Claude Code slash command
 
 ## Repository Layout
 
 ```
 app/
-  page.tsx            main portfolio: compose sections + page-level hooks
-  layout.tsx          metadata, IBM Plex Mono, root HTML
+  page.tsx            main portfolio: compose sections + page-level hooks + ProfilePage JSON-LD
+  layout.tsx          root metadata/SEO, IBM Plex Mono, root HTML
   globals.css         design tokens + all section, content-generation & footer styles
   icon.tsx            generated favicon
-  content-generation/ /content-generation route (explainer + local authoring UI)
+  sitemap.ts          /sitemap.xml (home only)
+  robots.ts           /robots.txt (allow all, disallow /api/, link the sitemap)
+  content-generation/ /content-generation route: page.tsx + layout.tsx (noindex metadata)
   api/content/        route handlers for the editor (state/session/auth + gated mutations)
   lib/hooks.ts        reveal / scroll-spy / typewriter / clock / hash
   lib/content-*.ts    content-generation server helpers (env, auth, guard, files, file-names)
-  components/         shared TopBar + Footer, 7 section components, content-generation components
-  data/               all content data + the résumé source
-    master-resume.tex             LaTeX source of truth (Overleaf)
-    resume-config.json            parser visibility config
-    experiences/skills/education/projects.ts   generated from the .tex (do not hand-edit)
-    work.ts                       curated Work case studies (merges AI description/tech)
-    work-experience-content.json  AI Work descriptions + shared tech + commit subjects (per role)
-    project-content.json          AI project taglines (per project)
-    README.md                     content data + résumé pipeline docs
+components/           shared TopBar + Footer, 7 section components, content-generation components
+data/                 all content data + the résumé source, grouped by pipeline role
+  source/             master-resume.tex (Overleaf source of truth), resume-config.json (visibility)
+  generated/          experiences/skills/education/projects.ts — from the .tex (do not hand-edit)
+  content/            work.ts (curated) + work-experience-content.json + project-content.json (AI)
+  deprecated/         archived pre-redesign content snapshots
+  README.md           content data + résumé pipeline docs
 scripts/
-  parse-resume.ts        LaTeX → app/data/*.ts
-  generate-work-experience-content.ts  résumé bullets → app/data/work-experience-content.json (Gemini)
-  generate-project-content.ts          project text → app/data/project-content.json (Gemini)
-public/               images + master-resume.pdf (downloadable résumé, maintained manually)
+  parse-resume.ts        LaTeX → data/generated/*.ts
+  generate-work-experience-content.ts  résumé bullets → data/content/work-experience-content.json (Gemini)
+  generate-project-content.ts          project text → data/content/project-content.json (Gemini)
+public/               og-image.png, profile-photo.jpg, work images + master-resume.pdf (manual)
 .claude/              Claude Code slash commands + config (see .claude/README.md)
 ```
