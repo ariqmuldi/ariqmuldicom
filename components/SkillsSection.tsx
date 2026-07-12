@@ -15,18 +15,18 @@ export default function SkillsSection() {
 	return (
 		<section id="skills" className="section section--warm">
 			<div className="section-grid">
-				<div className="section-index">
+				<div className="section-index reveal--left" data-reveal>
 					<div className="section-index__num">[ 04 ]</div>
 					<div className="section-index__label">SKILLS</div>
 					<div className="section-index__cmd">$ tree</div>
 				</div>
 
-				<div className="tree" data-reveal>
-					<div className="tree__root">~/stack</div>
+				<div className="tree">
+					<div className="tree__root" data-reveal>~/stack</div>
 					{categories.map((category, i) => {
 						const isLast = i === categories.length - 1;
 						return (
-							<div className="tree__row" key={category.name}>
+							<div className="tree__row" data-reveal key={category.name}>
 								<span className="tree__glyph">{isLast ? '└──' : '├──'}</span>
 								<span className="tree__label">{folder(category.name)}</span>
 								<span className="tree__items">{category.skills.join(' · ')}</span>
