@@ -32,7 +32,7 @@ export default function WorkSection() {
 	return (
 		<section id="work" className="section">
 			<div className="section-grid">
-				<div className="section-index">
+				<div className="section-index reveal--left" data-reveal>
 					<div className="section-index__num">[ 01 ]</div>
 					<div className="section-index__label">WORK</div>
 					<div className="section-index__cmd">$ ls ./selected-work</div>
@@ -91,6 +91,7 @@ export default function WorkSection() {
 											alt={item.title}
 											width={380}
 											height={238}
+											priority={i === 0}
 											className={`work-figure__img${item.imageFit === 'contain' ? ' work-figure__img--contain' : ''}`}
 										/>
 										{item.overlayLabel && (
