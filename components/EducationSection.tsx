@@ -8,7 +8,7 @@ export default function EducationSection() {
 	return (
 		<section id="education" className="section">
 			<div className="section-grid">
-				<div className="section-index">
+				<div className="section-index reveal--left" data-reveal>
 					<div className="section-index__num">[ 05 ]</div>
 					<div className="section-index__label">EDUCATION</div>
 					<div className="section-index__cmd">$ cat edu.md</div>
