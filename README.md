@@ -164,9 +164,18 @@ or blurred orbs**. The only gradient is the dark image overlay on the DOUBL work
 
 ### Responsive
 
-Desktop-first. At ≤860px the `132px + 1fr` section grids collapse to one column (the sticky
-index becomes an inline heading), work articles stack text-over-image, and the metric strip
-drops to 2×2. At ≤700px the top-bar nav wraps below the brand. Type scales fluidly via `clamp()`.
+Desktop-first, verified overflow-free from 280px up. At ≤860px the `132px + 1fr` section grids
+collapse to one column (the sticky index becomes an inline heading), work articles stack
+text-over-image, the metric strip drops to 2×2, and the in-content action links (`↗ live site` /
+`github` / `↗ open on github`) gain vertical padding for a comfortable tap target. At ≤700px the
+top-bar nav wraps below the brand and its links are padded to ~29px tall — clearing the WCAG 2.2
+AA 24px minimum for standalone links — with the Contact link's underline switched from a bottom
+border to a `text-decoration` so it stays snug against the padded text, and the anchored-section
+`scroll-margin-top` grows to 112px to clear the taller wrapped bar. The shared footer links carry
+the same padding site-wide. Type scales fluidly via `clamp()`, and long unbreakable tokens (the
+expanded `git show` commit hash) wrap instead of overflowing. On `/content-generation`, the editor
+grids collapse at ≤860px and the AI-model dropdown drops to its own full-width line below ~480px so
+its 190px min-width can't overflow a narrow phone.
 
 ## LaTeX Resume Pipeline
 
