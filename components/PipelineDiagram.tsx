@@ -78,7 +78,7 @@ export default function PipelineDiagram({ modelLabel, modelShort }: { modelLabel
 	);
 
 	return (
-		<div className="cg-pipe">
+		<div className="cg-pipe" data-reveal>
 			{/* RAIL A · LATEX → DATA */}
 			<div className="cg-rail-label">A · LATEX → DATA</div>
 			<div className="cg-rail">

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { fakeCommitHash } from '@/app/lib/hooks';
+import { fakeCommitHash, useScrollReveal } from '@/app/lib/hooks';
 import { CONTENT_DIR, CONTENT_SUBDIRS, CONTENT_FILES, CONTENT_PATHS } from '@/app/lib/content-file-names';
 import type { Experience } from '@/data/generated/experiences';
 import type { Project } from '@/data/generated/projects';
@@ -107,6 +107,10 @@ export default function ContentGenerationApp({
 	projects: Project[];
 	skillsCount: number;
 }) {
+	// Match the main page: fade/cascade the top-level blocks in as they enter the viewport.
+	// Purely additive — reduced motion reveals them immediately (handled inside the hook).
+	useScrollReveal();
+
 	// ── State ──────────────────────────────────────────────────────────────────────────────
 	const [loaded, setLoaded] = useState(false);
 	const [production, setProduction] = useState(false);
@@ -478,21 +482,21 @@ export default function ContentGenerationApp({
 			{/* HERO */}
 			<section className="section cg-hero">
 				<div className="cg-hero__inner">
-					<div className="cg-hero__prompt">
+					<div className="cg-hero__prompt" data-reveal>
 						<span className="hero__prompt-sign">$</span> cat ./how-content-is-generated
 						<span className="caret" aria-hidden />
 					</div>
-					<h1 className="cg-hero__h1">
+					<h1 className="cg-hero__h1" data-reveal>
 						CONTENT
 						<br />
 						PIPELINE
 					</h1>
-					<p className="cg-hero__intro">
+					<p className="cg-hero__intro" data-reveal>
 						The résumé and project copy on this site isn&apos;t hand-typed into components. A single LaTeX master résumé
 						is parsed into data, an LLM drafts the prose, taglines and commit subjects, and every draft is reviewed and
 						approved before it ships. Below: how it flows — then the console to drive it.
 					</p>
-					<div className="cg-hero__meta">
+					<div className="cg-hero__meta" data-reveal>
 						<span>
 							source of truth <span className="cg-strong">{CONTENT_FILES.masterResume}</span>
 						</span>
@@ -511,7 +515,7 @@ export default function ContentGenerationApp({
 			{/* 01 · HOW IT WORKS */}
 			<section id="how" className="section section--warm cg-section">
 				<div className="cg-section__inner">
-					<div className="cg-section__head">
+					<div className="cg-section__head" data-reveal>
 						<span className="cg-section__num">[ 01 ]</span>
 						<span className="cg-section__label">HOW IT WORKS</span>
 						<span className="cg-section__cmd">$ ./pipeline --watch</span>
@@ -523,7 +527,7 @@ export default function ContentGenerationApp({
 			{/* 02 · EDITOR */}
 			<section id="editor" className="section cg-section">
 				<div className="cg-section__inner">
-					<div className="cg-section__head">
+					<div className="cg-section__head" data-reveal>
 						<span className="cg-section__num">[ 02 ]</span>
 						<span className="cg-section__label">EDITOR</span>
 						<span className="cg-section__cmd">$ sudo edit ./data</span>
