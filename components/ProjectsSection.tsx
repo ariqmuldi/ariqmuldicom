@@ -36,7 +36,7 @@ export default function ProjectsSection() {
 	return (
 		<section id="projects" className="section">
 			<div className="section-grid">
-				<div className="section-index">
+				<div className="section-index reveal--left" data-reveal>
 					<div className="section-index__num">[ 03 ]</div>
 					<div className="section-index__label">PROJECTS</div>
 					<div className="section-index__cmd">$ ls ~/side</div>
@@ -92,7 +92,9 @@ export default function ProjectsSection() {
 										github ↗
 									</a>
 								</div>
-								{isOpen && (
+								
+									<div className={`row-collapse${isOpen ? ' is-open' : ''}`}>
+								<div className="row-collapse__inner" inert={!isOpen}>
 									<div className="proj-row__readme" onClick={(e) => e.stopPropagation()}>
 										<div className="proj-row__readme-cmd">
 											<span className="proj-row__prompt">$</span> cat ~/side/{repo}/README.md
@@ -117,7 +119,8 @@ export default function ProjectsSection() {
 											↗ open on github
 										</a>
 									</div>
-								)}
+									</div>
+								</div>
 							</div>
 						);
 					})}
