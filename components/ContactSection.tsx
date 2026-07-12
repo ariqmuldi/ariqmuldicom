@@ -30,10 +30,11 @@ export default function ContactSection() {
 						SOMETHING.
 					</h2>
 
-					<div className="contact__grid" data-reveal>
+					<div className="contact__grid">
 						{links.map((link) => (
 							<a
 								className="contact__cell"
+								data-reveal
 								href={link.href}
 								target={link.external ? '_blank' : undefined}
 								rel={link.external ? 'noopener' : undefined}
