@@ -55,7 +55,7 @@ export default function ExperienceSection() {
 	return (
 		<section id="experience" className="section section--warm">
 			<div className="section-grid">
-				<div className="section-index">
+				<div className="section-index reveal--left" data-reveal>
 					<div className="section-index__num">[ 02 ]</div>
 					<div className="section-index__label">EXPERIENCE</div>
 					<div className="section-index__cmd">$ git show</div>
@@ -136,8 +136,10 @@ export default function ExperienceSection() {
 									<br />
 									{exp.current ? <span className="dot-green">● present</span> : end}
 								</div>
-								{isOpen && (
-									<div className="gitlog__show" onClick={(e) => e.stopPropagation()}>
+								{expandable && (
+									<div className={`row-collapse${isOpen ? ' is-open' : ''}`}>
+										<div className="row-collapse__inner" inert={!isOpen}>
+											<div className="gitlog__show" onClick={(e) => e.stopPropagation()}>
 										<div className="gitlog__show-line">
 											commit <span className="gitlog__show-hash">{fakeCommitHashLong(exp.id)}</span>
 										</div>
@@ -157,6 +159,8 @@ export default function ExperienceSection() {
 											))}
 										</div>
 									</div>
+									</div>
+								</div>
 								)}
 							</div>
 						);
