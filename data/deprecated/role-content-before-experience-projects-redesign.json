@@ -1,0 +1,90 @@
+{
+  "doubl": {
+    "experienceId": 1,
+    "sourceHash": "2fd0eb35",
+    "approved": true,
+    "technologies": [
+      "Python",
+      "Google Cloud Run",
+      "Google Cloud API Gateway",
+      "Google Cloud Scheduler",
+      "Google Cloud Tasks",
+      "Shopify App Proxy",
+      "Next.js",
+      "React",
+      "Typescript",
+      "Google Cloud Build",
+      "Google Cloud Firestore",
+      "GitHub Pages",
+      "HTML",
+      "CSS",
+      "Javascript",
+      "Liquid Scripting",
+      "Zoho Flow",
+      "Zoho Deluge",
+      "iOS",
+      "Android",
+      "Trello"
+    ]
+  },
+  "mds": {
+    "experienceId": 2,
+    "sourceHash": "969cde6f",
+    "approved": true,
+    "technologies": [
+      "Python",
+      "PostgreSQL",
+      "JavaScript",
+      "Flask",
+      "AJAX",
+      "Tailwind CSS",
+      "Bcrypt"
+    ],
+    "description": "Developed a full-stack platform to manage Masters of Data Science applications, automating the admissions workflow for over 1,000 annual student applications. This system streamlined the review process for over 50 faculty members through a structured backend, secure role-based authentication, and an interactive frontend with real-time filtering and editing capabilities. Additionally, it incorporated batch processing for application data, automated reporting, audit logging, and a 7-stage review engine with automated ranking logic."
+  },
+  "makerspace": {
+    "experienceId": 3,
+    "sourceHash": "8295f252",
+    "approved": true,
+    "technologies": [
+      "TypeScript",
+      "React Router v7",
+      "PostgreSQL",
+      "Tailwind CSS",
+      "Stripe",
+      "pdf-lib",
+      "C++",
+      "ESP32",
+      "Node.js",
+      "Docker"
+    ],
+    "description": "Architected and developed a comprehensive membership platform, integrating physical and digital access controls, automated billing, and resource management for over 1,000 members. This full-stack system digitized workshop enrollments, equipment reservations, and membership management, processing over $1,000 in monthly revenue and enabling secure access via RFID and digital key passes. The platform features a robust admin dashboard for managing operations, including a recurring billing engine, automated notifications, and detailed analytics on member activity and resource utilization."
+  },
+  "learncoding": {
+    "experienceId": 4,
+    "sourceHash": "81e26194",
+    "approved": true,
+    "technologies": [
+      "PHP",
+      "Laravel",
+      "MySQL",
+      "Docker",
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "Apache",
+      "Matomo Analytics",
+      "UBC Canvas API"
+    ],
+    "description": "Engineered and deployed a comprehensive adaptive learning platform for UBC's Faculty of Science, serving over 500 students with interactive features like code visualizers, gamification, and AI-powered content generation. Enhanced the system by integrating with the UBC Canvas API for automated grade posting, redesigning the UI for improved usability, and establishing robust authentication and access control mechanisms. Managed and migrated production infrastructure, ensuring high availability and security."
+  },
+  "teaching-assistant": {
+    "experienceId": 5,
+    "sourceHash": "4836db97",
+    "approved": true,
+    "technologies": [
+      "MIPS Assembly",
+      "Java"
+    ]
+  }
+}

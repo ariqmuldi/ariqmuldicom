@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#faf7f0; --paper-2:#f4ebd3; --ink:#2a2c3b;
+    --ink-soft:rgba(42,44,59,.62); --ink-faint:rgba(42,44,59,.4);
+    --accent:#555879; --accent-deep:#3d3f5c; --blue:#98a1bc; --beige:#ded3c4;
+    --rule:rgba(42,44,59,.13); --rule-2:rgba(42,44,59,.3); --green:#3fb27f;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#e7e2d7;color:var(--ink);
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+    font-feature-settings:'ss01','zero';-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  ul{margin:0}
+  @keyframes gitlogExpand{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+  @keyframes caretBlink{0%,48%{opacity:1}49%,100%{opacity:0}}
+  .dv-opt:target .dv-oid{background:var(--accent)!important;color:var(--paper-2)!important;}
+  .gl-row:hover .gl-hint{color:var(--accent)!important;}
+</style>
+</helmet>
+
+<section id="t3" style="padding:44px 48px 40px;border-bottom:1px solid var(--rule-2);">
+  <div style="display:flex;align-items:baseline;gap:12px;margin:0 0 14px;">
+    <a href="#t3" style="font:600 11px 'IBM Plex Mono',monospace;padding:4px 8px;background:var(--ink);color:var(--paper-2);text-decoration:none;letter-spacing:.04em;">3</a>
+    <span style="font:600 14px 'IBM Plex Mono',monospace;color:var(--ink);letter-spacing:-.01em;">Projects — matched to the new <a class="dv-oid" href="#2a" style="font:600 10.5px 'IBM Plex Mono',monospace;padding:2px 6px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;">2a</a> language</span>
+  </div>
+  <p style="margin:0 0 30px;max-width:104ch;font-size:13px;line-height:1.72;color:var(--ink-soft);">
+    Same fix as Experience, applied here: the old <span style="color:var(--accent);">$ ls ~/side</span> rows clipped a 2-line description — now each repo gets a <strong style="font-weight:600;color:var(--ink);">terse one-line tagline</strong> (like a GitHub "About"), so nothing is cut. Projects have no Work-section overlap, so a tagline is enough. My pick: <a class="dv-oid" href="#3a" style="font:600 10.5px 'IBM Plex Mono',monospace;padding:2px 6px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;">3a</a>. <a class="dv-oid" href="#3b" style="font:600 10.5px 'IBM Plex Mono',monospace;padding:2px 6px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;">3b</a> mirrors the git-show expand if you want parity; <a class="dv-oid" href="#3c" style="font:600 10.5px 'IBM Plex Mono',monospace;padding:2px 6px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;">3c</a> is a denser 2-up grid.
+  </p>
+
+  <div style="display:flex;flex-wrap:wrap;gap:44px;align-items:flex-start;">
+
+    <!-- ===== 3a — matched link rows ===== -->
+    <div class="dv-opt" id="3a" style="flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px;">
+      <div style="display:flex;align-items:baseline;gap:9px;">
+        <a class="dv-oid" href="#3a" style="font:600 10.5px 'IBM Plex Mono',monospace;padding:3px 7px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;letter-spacing:.04em;">3a</a>
+        <span style="font:400 11.5px 'IBM Plex Mono',monospace;color:var(--ink-soft);">Matched link rows — one-line taglines, no cutoff, straight link out (recommended)</span>
+      </div>
+      <div style="width:1200px;max-width:1200px;border:1px solid var(--rule-2);background:var(--paper);overflow:hidden;">
+        <div style="max-width:1200px;margin:0 auto;padding:52px 40px;display:grid;grid-template-columns:132px minmax(0,1fr);gap:40px;">
+          <div style="align-self:start;">
+            <div style="font-size:11px;letter-spacing:.2em;color:var(--accent);">[ 03 ]</div>
+            <div style="font-size:11px;letter-spacing:.2em;color:var(--ink);margin-top:8px;line-height:1.7;">PROJECTS</div>
+            <div style="font-size:11px;color:var(--ink-faint);margin-top:14px;">$ ls ~/side</div>
+          </div>
+          <div>
+            <p style="margin:0 0 24px;max-width:60ch;font-size:14px;line-height:1.7;color:var(--ink-soft);">Personal builds — nights, weekends, and coursework taken further than required.</p>
+            <div style="border-bottom:1px solid var(--rule-2);">
+              <sc-for list="{{ projectsA }}" as="p" hint-placeholder-count="4">
+                <a href="{{ p.github }}" target="_blank" rel="noopener" class="gl-row" style="text-decoration:none;color:inherit;border-top:1px solid var(--rule);padding:22px 0;display:grid;grid-template-columns:52px minmax(0,1fr) minmax(0,230px) 34px;gap:20px;align-items:baseline;transition:background .2s,padding-left .2s;" style-hover="background:rgba(85,88,121,.05);">
+                  <span style="font-size:11px;color:var(--accent);letter-spacing:.1em;">[{{ p.num }}]</span>
+                  <div>
+                    <div style="font-size:17px;font-weight:600;letter-spacing:-.02em;color:var(--ink);">{{ p.title }}</div>
+                    <div style="font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.5;">{{ p.tagline }}</div>
+                  </div>
+                  <div style="font-size:11px;color:var(--ink-faint);align-self:center;line-height:1.8;">{{ p.techLine }}</div>
+                  <span class="gl-hint" style="color:var(--ink-faint);text-align:right;align-self:center;transition:color .2s;">↗</span>
+                </a>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 3b — expandable, git-show parity ===== -->
+    <div class="dv-opt" id="3b" style="flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px;">
+      <div style="display:flex;align-items:baseline;gap:9px;">
+        <a class="dv-oid" href="#3b" style="font:600 10.5px 'IBM Plex Mono',monospace;padding:3px 7px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;letter-spacing:.04em;">3b</a>
+        <span style="font:400 11.5px 'IBM Plex Mono',monospace;color:var(--ink-soft);">Expandable — ▸ toggles a README (full detail) inline, then link out. Parity with 2a</span>
+      </div>
+      <div style="width:1200px;max-width:1200px;border:1px solid var(--rule-2);background:var(--paper);overflow:hidden;">
+        <div style="max-width:1200px;margin:0 auto;padding:52px 40px;display:grid;grid-template-columns:132px minmax(0,1fr);gap:40px;">
+          <div style="align-self:start;">
+            <div style="font-size:11px;letter-spacing:.2em;color:var(--accent);">[ 03 ]</div>
+            <div style="font-size:11px;letter-spacing:.2em;color:var(--ink);margin-top:8px;line-height:1.7;">PROJECTS</div>
+            <div style="font-size:11px;color:var(--ink-faint);margin-top:14px;">$ ls ~/side</div>
+          </div>
+          <div>
+            <p style="margin:0 0 24px;max-width:60ch;font-size:14px;line-height:1.7;color:var(--ink-soft);">Personal builds — nights, weekends, and coursework taken further than required.</p>
+            <div style="border-bottom:1px solid var(--rule-2);">
+              <sc-for list="{{ projectsB }}" as="p" hint-placeholder-count="4">
+                <div class="gl-row" style="border-top:1px solid var(--rule);padding:22px 0;display:grid;grid-template-columns:56px minmax(0,1fr) 120px;gap:20px;align-items:baseline;cursor:pointer;transition:background .2s,padding-left .2s;" style-hover="background:rgba(85,88,121,.05);" onClick="{{ p.toggle }}">
+                  <span style="color:var(--accent);font-size:12px;white-space:pre;">{{ p.glyph }} [{{ p.num }}]</span>
+                  <div>
+                    <div style="font-size:17px;font-weight:600;letter-spacing:-.02em;color:var(--ink);">{{ p.title }}</div>
+                    <div style="font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.5;">{{ p.tagline }}</div>
+                    <div style="font-size:11px;color:var(--ink-faint);margin-top:8px;line-height:1.8;">{{ p.techLine }}</div>
+                  </div>
+                  <div style="text-align:right;align-self:center;"><a href="{{ p.github }}" target="_blank" rel="noopener" onClick="{{ stop }}" style="font-size:11.5px;color:var(--accent);text-decoration:none;">github ↗</a></div>
+                  <sc-if value="{{ p.open }}" hint-placeholder-val="{{ false }}">
+                    <div style="grid-column:1 / -1;margin-top:16px;border-top:1px solid var(--rule-2);padding-top:16px;animation:gitlogExpand .26s ease;" onClick="{{ stop }}">
+                      <div style="font-size:11px;color:var(--ink-faint);margin-bottom:11px;letter-spacing:.04em;"><span style="color:var(--accent);">$</span> cat ~/side/{{ p.repo }}/README.md</div>
+                      <div style="max-width:82ch;">
+                        <sc-for list="{{ p.sentences }}" as="s" hint-placeholder-count="3">
+                          <div style="position:relative;padding-left:18px;margin-top:9px;font-size:13.5px;color:var(--ink-soft);line-height:1.66;"><span style="position:absolute;left:0;color:var(--accent);">-</span>{{ s }}</div>
+                        </sc-for>
+                      </div>
+                      <a href="{{ p.github }}" target="_blank" rel="noopener" onClick="{{ stop }}" style="display:inline-block;margin-top:15px;font-size:12.5px;color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:1px;">↗ open on github</a>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 3c — 2-up grid ===== -->
+    <div class="dv-opt" id="3c" style="flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px;">
+      <div style="display:flex;align-items:baseline;gap:9px;">
+        <a class="dv-oid" href="#3c" style="font:600 10.5px 'IBM Plex Mono',monospace;padding:3px 7px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;letter-spacing:.04em;">3c</a>
+        <span style="font:400 11.5px 'IBM Plex Mono',monospace;color:var(--ink-soft);">Two-up grid — denser; good if the project list grows</span>
+      </div>
+      <div style="width:1200px;max-width:1200px;border:1px solid var(--rule-2);background:var(--paper);overflow:hidden;">
+        <div style="max-width:1200px;margin:0 auto;padding:52px 40px;display:grid;grid-template-columns:132px minmax(0,1fr);gap:40px;">
+          <div style="align-self:start;">
+            <div style="font-size:11px;letter-spacing:.2em;color:var(--accent);">[ 03 ]</div>
+            <div style="font-size:11px;letter-spacing:.2em;color:var(--ink);margin-top:8px;line-height:1.7;">PROJECTS</div>
+            <div style="font-size:11px;color:var(--ink-faint);margin-top:14px;">$ ls ~/side</div>
+          </div>
+          <div>
+            <p style="margin:0 0 24px;max-width:60ch;font-size:14px;line-height:1.7;color:var(--ink-soft);">Personal builds — nights, weekends, and coursework taken further than required.</p>
+            <div style="border-bottom:1px solid var(--rule-2);display:grid;grid-template-columns:1fr 1fr;column-gap:48px;">
+              <sc-for list="{{ projectsC }}" as="p" hint-placeholder-count="4">
+                <a href="{{ p.github }}" target="_blank" rel="noopener" class="gl-row" style="text-decoration:none;color:inherit;border-top:1px solid var(--rule);padding:22px 0;display:flex;flex-direction:column;gap:7px;transition:background .2s,padding-left .2s;" style-hover="background:rgba(85,88,121,.05);">
+                  <div style="display:flex;align-items:baseline;gap:11px;">
+                    <span style="font-size:11px;color:var(--accent);letter-spacing:.1em;">[{{ p.num }}]</span>
+                    <span style="font-size:17px;font-weight:600;letter-spacing:-.02em;color:var(--ink);">{{ p.title }}</span>
+                    <span class="gl-hint" style="margin-left:auto;color:var(--ink-faint);transition:color .2s;">↗</span>
+                  </div>
+                  <div style="font-size:13px;color:var(--ink-soft);line-height:1.5;">{{ p.tagline }}</div>
+                  <div style="font-size:11px;color:var(--ink-faint);line-height:1.8;margin-top:2px;">{{ p.techLine }}</div>
+                </a>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p style="margin:30px 0 0;font-size:12.5px;line-height:1.6;color:var(--ink-soft);">
+    Try next: "go with <a class="dv-oid" href="#3a" style="font:600 10px 'IBM Plex Mono',monospace;padding:2px 6px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;">3a</a>" ·
+    "make <a class="dv-oid" href="#3a" style="font:600 10px 'IBM Plex Mono',monospace;padding:2px 6px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;">3a</a> expandable like <a class="dv-oid" href="#3b" style="font:600 10px 'IBM Plex Mono',monospace;padding:2px 6px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;">3b</a>" ·
+    "reword the taglines" ·
+    "new directions"
+  </p>
+</section>
+
+<section id="t2" style="padding:44px 48px 40px;border-bottom:1px solid var(--rule-2);">
+  <div style="display:flex;align-items:baseline;gap:12px;margin:0 0 14px;">
+    <a href="#t2" style="font:600 11px 'IBM Plex Mono',monospace;padding:4px 8px;background:var(--ink);color:var(--paper-2);text-decoration:none;letter-spacing:.04em;">2</a>
+    <span style="font:600 14px 'IBM Plex Mono',monospace;color:var(--ink);letter-spacing:-.01em;">Riffs on <a class="dv-oid" href="#1c" style="font:600 10.5px 'IBM Plex Mono',monospace;padding:2px 6px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;">1c</a> — the collapsed line, reframed so it doesn't echo Work</span>
+  </div>
+  <p style="margin:0 0 30px;max-width:104ch;font-size:13px;line-height:1.72;color:var(--ink-soft);">
+    The <span style="color:var(--accent);">Work</span> section already tells the story in prose — so here the collapsed line stops describing the project and switches to a voice Work never uses: a <strong style="font-weight:600;color:var(--ink);">git commit subject</strong> and a <strong style="font-weight:600;color:var(--ink);">diffstat</strong>. That kills the repetition and turns the row into a teaser — a visible <span style="color:var(--green);">+N insertions</span> and a <span style="color:var(--accent);">git show ▸</span> pull that says "there's more here." All three keep the <a class="dv-oid" href="#1c" style="font:600 10.5px 'IBM Plex Mono',monospace;padding:2px 6px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;">1c</a> diff body on expand. My pick: <a class="dv-oid" href="#2a" style="font:600 10.5px 'IBM Plex Mono',monospace;padding:2px 6px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;">2a</a>.
+  </p>
+
+  <div style="display:flex;flex-wrap:wrap;gap:44px;align-items:flex-start;">
+
+    <!-- ===== 2a — commit subject + diffstat ===== -->
+    <div class="dv-opt" id="2a" style="flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px;">
+      <div style="display:flex;align-items:baseline;gap:9px;">
+        <a class="dv-oid" href="#2a" style="font:600 10.5px 'IBM Plex Mono',monospace;padding:3px 7px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;letter-spacing:.04em;">2a</a>
+        <span style="font:400 11.5px 'IBM Plex Mono',monospace;color:var(--ink-soft);">Commit subject + diffstat — reads as a git message, not a project blurb (recommended)</span>
+      </div>
+      <div style="width:1200px;max-width:1200px;border:1px solid var(--rule-2);background:var(--paper-2);overflow:hidden;">
+        <div style="max-width:1200px;margin:0 auto;padding:52px 40px;display:grid;grid-template-columns:132px minmax(0,1fr);gap:40px;">
+          <div style="align-self:start;">
+            <div style="font-size:11px;letter-spacing:.2em;color:var(--accent);">[ 02 ]</div>
+            <div style="font-size:11px;letter-spacing:.2em;color:var(--ink);margin-top:8px;line-height:1.7;">EXPERIENCE</div>
+            <div style="font-size:11px;color:var(--ink-faint);margin-top:14px;">$ git show</div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--ink-faint);margin-bottom:8px;letter-spacing:.06em;">git log --oneline --stat --author="ariq" main</div>
+            <div style="border-bottom:1px solid var(--rule-2);">
+              <sc-for list="{{ rowsV2a }}" as="row" hint-placeholder-count="5">
+                <div class="gl-row" style="border-top:1px solid var(--rule);padding:20px 0;display:grid;grid-template-columns:78px minmax(0,1fr) 128px;gap:20px;align-items:baseline;cursor:pointer;transition:background .2s,padding-left .2s;" style-hover="background:rgba(85,88,121,.05);" onClick="{{ row.toggle }}">
+                  <span style="color:var(--accent);font-size:12px;white-space:pre;"><sc-if value="{{ row.hasBody }}" hint-placeholder-val="{{ false }}"><span style="color:var(--accent);">{{ row.glyph }} </span></sc-if>{{ row.hash }}</span>
+                  <div>
+                    <div style="font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;">{{ row.role }} <span style="color:var(--ink-faint);font-weight:400;">{{ row.at }}</span></div>
+                    <sc-if value="{{ row.hasBody }}" hint-placeholder-val="{{ true }}">
+                      <div style="font-size:13px;color:var(--ink-soft);margin-top:7px;line-height:1.55;">{{ row.commit }}</div>
+                      <div class="gl-hint" style="font-size:11.5px;margin-top:8px;color:var(--ink-faint);transition:color .2s;"><span style="color:var(--green);">{{ row.insLabel }} insertions</span> &nbsp;·&nbsp; git show ▸</div>
+                    </sc-if>
+                    <sc-if value="{{ row.activeNote }}" hint-placeholder-val="{{ false }}">
+                      <div style="font-size:12px;color:var(--ink-faint);margin-top:7px;"><span style="color:var(--green);">●</span> {{ row.activeNote }}</div>
+                    </sc-if>
+                    <div style="font-size:11px;color:var(--ink-faint);margin-top:9px;line-height:1.8;">{{ row.techLine }}</div>
+                  </div>
+                  <div style="text-align:right;font-size:11px;color:var(--ink-soft);line-height:1.5;">{{ row.start }} —<br><sc-if value="{{ row.current }}" hint-placeholder-val="{{ false }}"><span style="color:var(--green);">● present</span></sc-if><sc-if value="{{ row.notCurrent }}" hint-placeholder-val="{{ true }}">{{ row.end }}</sc-if></div>
+                  <sc-if value="{{ row.open }}" hint-placeholder-val="{{ false }}">
+                    <div style="grid-column:1 / -1;margin-top:18px;border-top:1px solid var(--rule-2);padding-top:18px;animation:gitlogExpand .26s ease;" onClick="{{ stop }}">
+                      <div style="font-size:12px;color:var(--ink);">commit <span style="color:var(--accent);">{{ row.fullHash }}</span></div>
+                      <div style="font-size:12px;color:var(--ink-soft);margin-top:4px;">Author: {{ row.author }}</div>
+                      <div style="font-size:12px;color:var(--ink-soft);margin-top:1px;">Date:&nbsp;&nbsp;&nbsp;{{ row.dateLine }}</div>
+                      <div style="font-size:11px;color:var(--ink-faint);margin-top:11px;letter-spacing:.02em;">{{ row.stat1 }}</div>
+                      <div style="margin-top:14px;border:1px solid var(--rule);">
+                        <sc-for list="{{ row.allBulletsNum }}" as="b" hint-placeholder-count="6">
+                          <div style="display:grid;grid-template-columns:36px minmax(0,1fr);background:rgba(63,178,127,.05);border-bottom:1px solid var(--rule);">
+                            <span style="text-align:center;padding:10px 0;color:var(--green);background:rgba(63,178,127,.10);">+</span>
+                            <span style="padding:10px 16px;font-size:13px;color:var(--ink);line-height:1.6;">{{ b.text }}</span>
+                          </div>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 2b — diffstat teaser, no prose ===== -->
+    <div class="dv-opt" id="2b" style="flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px;">
+      <div style="display:flex;align-items:baseline;gap:9px;">
+        <a class="dv-oid" href="#2b" style="font:600 10.5px 'IBM Plex Mono',monospace;padding:3px 7px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;letter-spacing:.04em;">2b</a>
+        <span style="font:400 11.5px 'IBM Plex Mono',monospace;color:var(--ink-soft);">Diffstat teaser — no prose; +insertions, a diff bar, and 3 scope tags do the talking</span>
+      </div>
+      <div style="width:1200px;max-width:1200px;border:1px solid var(--rule-2);background:var(--paper-2);overflow:hidden;">
+        <div style="max-width:1200px;margin:0 auto;padding:52px 40px;display:grid;grid-template-columns:132px minmax(0,1fr);gap:40px;">
+          <div style="align-self:start;">
+            <div style="font-size:11px;letter-spacing:.2em;color:var(--accent);">[ 02 ]</div>
+            <div style="font-size:11px;letter-spacing:.2em;color:var(--ink);margin-top:8px;line-height:1.7;">EXPERIENCE</div>
+            <div style="font-size:11px;color:var(--ink-faint);margin-top:14px;">$ git show</div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--ink-faint);margin-bottom:8px;letter-spacing:.06em;">git log --stat --oneline --author="ariq" main</div>
+            <div style="border-bottom:1px solid var(--rule-2);">
+              <sc-for list="{{ rowsV2b }}" as="row" hint-placeholder-count="5">
+                <div class="gl-row" style="border-top:1px solid var(--rule);padding:20px 0;display:grid;grid-template-columns:78px minmax(0,1fr) 128px;gap:20px;align-items:baseline;cursor:pointer;transition:background .2s,padding-left .2s;" style-hover="background:rgba(85,88,121,.05);" onClick="{{ row.toggle }}">
+                  <span style="color:var(--accent);font-size:12px;white-space:pre;"><sc-if value="{{ row.hasBody }}" hint-placeholder-val="{{ false }}"><span style="color:var(--accent);">{{ row.glyph }} </span></sc-if>{{ row.hash }}</span>
+                  <div>
+                    <div style="font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;">{{ row.role }} <span style="color:var(--ink-faint);font-weight:400;">{{ row.at }}</span></div>
+                    <sc-if value="{{ row.hasBody }}" hint-placeholder-val="{{ true }}">
+                      <div style="display:flex;align-items:baseline;gap:14px;margin-top:9px;flex-wrap:wrap;">
+                        <span style="font-size:12.5px;color:var(--green);white-space:nowrap;">{{ row.insLabel }} <span style="letter-spacing:-2px;font-size:11px;">{{ row.squares }}</span></span>
+                        <span style="font-size:12.5px;color:var(--ink-soft);">{{ row.scopeLine }}</span>
+                        <span class="gl-hint" style="font-size:11px;color:var(--ink-faint);transition:color .2s;">git show ▸</span>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ row.activeNote }}" hint-placeholder-val="{{ false }}">
+                      <div style="font-size:12px;color:var(--ink-faint);margin-top:9px;"><span style="color:var(--green);">●</span> {{ row.activeNote }}</div>
+                    </sc-if>
+                    <div style="font-size:11px;color:var(--ink-faint);margin-top:9px;line-height:1.8;">{{ row.techLine }}</div>
+                  </div>
+                  <div style="text-align:right;font-size:11px;color:var(--ink-soft);line-height:1.5;">{{ row.start }} —<br><sc-if value="{{ row.current }}" hint-placeholder-val="{{ false }}"><span style="color:var(--green);">● present</span></sc-if><sc-if value="{{ row.notCurrent }}" hint-placeholder-val="{{ true }}">{{ row.end }}</sc-if></div>
+                  <sc-if value="{{ row.open }}" hint-placeholder-val="{{ false }}">
+                    <div style="grid-column:1 / -1;margin-top:18px;border-top:1px solid var(--rule-2);padding-top:18px;animation:gitlogExpand .26s ease;" onClick="{{ stop }}">
+                      <div style="font-size:12px;color:var(--ink);">commit <span style="color:var(--accent);">{{ row.fullHash }}</span></div>
+                      <div style="font-size:12px;color:var(--ink-soft);margin-top:4px;">Author: {{ row.author }}</div>
+                      <div style="font-size:12px;color:var(--ink-soft);margin-top:1px;">Date:&nbsp;&nbsp;&nbsp;{{ row.dateLine }}</div>
+                      <div style="font-size:11px;color:var(--ink-faint);margin-top:11px;letter-spacing:.02em;">{{ row.stat1 }}</div>
+                      <div style="margin-top:14px;border:1px solid var(--rule);">
+                        <sc-for list="{{ row.allBulletsNum }}" as="b" hint-placeholder-count="6">
+                          <div style="display:grid;grid-template-columns:36px minmax(0,1fr);background:rgba(63,178,127,.05);border-bottom:1px solid var(--rule);">
+                            <span style="text-align:center;padding:10px 0;color:var(--green);background:rgba(63,178,127,.10);">+</span>
+                            <span style="padding:10px 16px;font-size:13px;color:var(--ink);line-height:1.6;">{{ b.text }}</span>
+                          </div>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 2c — minimal oneline ===== -->
+    <div class="dv-opt" id="2c" style="flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px;">
+      <div style="display:flex;align-items:baseline;gap:9px;">
+        <a class="dv-oid" href="#2c" style="font:600 10.5px 'IBM Plex Mono',monospace;padding:3px 7px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;letter-spacing:.04em;">2c</a>
+        <span style="font:400 11.5px 'IBM Plex Mono',monospace;color:var(--ink-soft);">Minimal oneline — just the role + hidden-count; maximum reason to expand</span>
+      </div>
+      <div style="width:1200px;max-width:1200px;border:1px solid var(--rule-2);background:var(--paper-2);overflow:hidden;">
+        <div style="max-width:1200px;margin:0 auto;padding:52px 40px;display:grid;grid-template-columns:132px minmax(0,1fr);gap:40px;">
+          <div style="align-self:start;">
+            <div style="font-size:11px;letter-spacing:.2em;color:var(--accent);">[ 02 ]</div>
+            <div style="font-size:11px;letter-spacing:.2em;color:var(--ink);margin-top:8px;line-height:1.7;">EXPERIENCE</div>
+            <div style="font-size:11px;color:var(--ink-faint);margin-top:14px;">$ git show</div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--ink-faint);margin-bottom:8px;letter-spacing:.06em;">git log --oneline --author="ariq" main</div>
+            <div style="border-bottom:1px solid var(--rule-2);">
+              <sc-for list="{{ rowsV2c }}" as="row" hint-placeholder-count="5">
+                <div class="gl-row" style="border-top:1px solid var(--rule);padding:20px 0;display:grid;grid-template-columns:78px minmax(0,1fr) 128px;gap:20px;align-items:baseline;cursor:pointer;transition:background .2s,padding-left .2s;" style-hover="background:rgba(85,88,121,.05);" onClick="{{ row.toggle }}">
+                  <span style="color:var(--accent);font-size:12px;white-space:pre;"><sc-if value="{{ row.hasBody }}" hint-placeholder-val="{{ false }}"><span style="color:var(--accent);">{{ row.glyph }} </span></sc-if>{{ row.hash }}</span>
+                  <div>
+                    <div style="font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;">{{ row.role }} <span style="color:var(--ink-faint);font-weight:400;">{{ row.at }}</span></div>
+                    <sc-if value="{{ row.hasBody }}" hint-placeholder-val="{{ true }}">
+                      <div class="gl-hint" style="font-size:12px;color:var(--ink-faint);margin-top:9px;transition:color .2s;">▸ git show &nbsp;·&nbsp; <span style="color:var(--green);">{{ row.insLabel }}</span> &nbsp;·&nbsp; {{ row.hiddenLabel }} hidden</div>
+                    </sc-if>
+                    <sc-if value="{{ row.activeNote }}" hint-placeholder-val="{{ false }}">
+                      <div style="font-size:12px;color:var(--ink-faint);margin-top:9px;"><span style="color:var(--green);">●</span> {{ row.activeNote }}</div>
+                    </sc-if>
+                    <div style="font-size:11px;color:var(--ink-faint);margin-top:9px;line-height:1.8;">{{ row.techLine }}</div>
+                  </div>
+                  <div style="text-align:right;font-size:11px;color:var(--ink-soft);line-height:1.5;">{{ row.start }} —<br><sc-if value="{{ row.current }}" hint-placeholder-val="{{ false }}"><span style="color:var(--green);">● present</span></sc-if><sc-if value="{{ row.notCurrent }}" hint-placeholder-val="{{ true }}">{{ row.end }}</sc-if></div>
+                  <sc-if value="{{ row.open }}" hint-placeholder-val="{{ false }}">
+                    <div style="grid-column:1 / -1;margin-top:18px;border-top:1px solid var(--rule-2);padding-top:18px;animation:gitlogExpand .26s ease;" onClick="{{ stop }}">
+                      <div style="font-size:12px;color:var(--ink);">commit <span style="color:var(--accent);">{{ row.fullHash }}</span></div>
+                      <div style="font-size:12px;color:var(--ink-soft);margin-top:4px;">Author: {{ row.author }}</div>
+                      <div style="font-size:12px;color:var(--ink-soft);margin-top:1px;">Date:&nbsp;&nbsp;&nbsp;{{ row.dateLine }}</div>
+                      <div style="font-size:11px;color:var(--ink-faint);margin-top:11px;letter-spacing:.02em;">{{ row.stat1 }}</div>
+                      <div style="margin-top:14px;border:1px solid var(--rule);">
+                        <sc-for list="{{ row.allBulletsNum }}" as="b" hint-placeholder-count="6">
+                          <div style="display:grid;grid-template-columns:36px minmax(0,1fr);background:rgba(63,178,127,.05);border-bottom:1px solid var(--rule);">
+                            <span style="text-align:center;padding:10px 0;color:var(--green);background:rgba(63,178,127,.10);">+</span>
+                            <span style="padding:10px 16px;font-size:13px;color:var(--ink);line-height:1.6;">{{ b.text }}</span>
+                          </div>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p style="margin:30px 0 0;font-size:12.5px;line-height:1.6;color:var(--ink-soft);">
+    Try next: "go with <a class="dv-oid" href="#2a" style="font:600 10px 'IBM Plex Mono',monospace;padding:2px 6px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;">2a</a>" ·
+    "<a class="dv-oid" href="#2a" style="font:600 10px 'IBM Plex Mono',monospace;padding:2px 6px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;">2a</a> subject with <a class="dv-oid" href="#2b" style="font:600 10px 'IBM Plex Mono',monospace;padding:2px 6px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;">2b</a>'s diff bar" ·
+    "reword the commit subjects" ·
+    "new directions"
+  </p>
+</section>
+
+<section id="t1" style="padding:44px 48px 56px;">
+  <div style="display:flex;align-items:baseline;gap:12px;margin:0 0 14px;">
+    <a href="#t1" style="font:600 11px 'IBM Plex Mono',monospace;padding:4px 8px;background:var(--ink);color:var(--paper-2);text-decoration:none;letter-spacing:.04em;">1</a>
+    <span style="font:600 14px 'IBM Plex Mono',monospace;color:var(--ink);letter-spacing:-.01em;">Experience — expand / collapse redesign</span>
+  </div>
+  <p style="margin:0 0 30px;max-width:104ch;font-size:13px;line-height:1.72;color:var(--ink-soft);">
+    Same <span style="color:var(--accent);">git log</span> ledger, same tokens (IBM Plex Mono · warm paper · 1px hairlines · no radius / shadows).
+    Fixes: collapsed rows now show a <strong style="font-weight:600;color:var(--ink);">clean one-line summary that never gets cut off</strong>, and expanded content <strong style="font-weight:600;color:var(--ink);">breaks out full-width</strong> below the row instead of squeezing into the middle column. Bullets stay visually uniform. <a class="dv-oid" href="#1a" style="font:600 10.5px 'IBM Plex Mono',monospace;padding:2px 6px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;">1a</a> is your current version for reference — click any row to expand. Try the same role in each to compare.
+  </p>
+
+  <div style="display:flex;flex-wrap:wrap;gap:44px;align-items:flex-start;">
+
+    <!-- ============ 1a — CURRENT (before) ============ -->
+    <div class="dv-opt" id="1a" style="flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px;">
+      <div style="display:flex;align-items:baseline;gap:9px;">
+        <a class="dv-oid" href="#1a" style="font:600 10.5px 'IBM Plex Mono',monospace;padding:3px 7px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;letter-spacing:.04em;">1a</a>
+        <span style="font:400 11.5px 'IBM Plex Mono',monospace;color:var(--ink-soft);">Current — the problem (first bullet clipped, expand cramped in the middle column)</span>
+      </div>
+      <div style="width:1200px;max-width:1200px;border:1px solid var(--rule-2);background:var(--paper-2);overflow:hidden;">
+        <div style="max-width:1200px;margin:0 auto;padding:52px 40px;display:grid;grid-template-columns:132px minmax(0,1fr);gap:40px;">
+          <div style="align-self:start;">
+            <div style="font-size:11px;letter-spacing:.2em;color:var(--accent);">[ 02 ]</div>
+            <div style="font-size:11px;letter-spacing:.2em;color:var(--ink);margin-top:8px;line-height:1.7;">EXPERIENCE</div>
+            <div style="font-size:11px;color:var(--ink-faint);margin-top:14px;">$ git log</div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--ink-faint);margin-bottom:8px;letter-spacing:.06em;">git log --oneline --author="ariq" main</div>
+            <div style="border-bottom:1px solid var(--rule-2);">
+              <sc-for list="{{ rowsCurrent }}" as="row" hint-placeholder-count="5">
+                <div style="border-top:1px solid var(--rule);padding:20px 0;display:grid;grid-template-columns:78px minmax(0,1fr) 128px;gap:20px;align-items:baseline;cursor:pointer;transition:background .2s,padding-left .2s;" style-hover="background:rgba(85,88,121,.05);" onClick="{{ row.toggle }}">
+                  <span style="color:var(--accent);font-size:12px;white-space:pre;"><sc-if value="{{ row.hasBody }}" hint-placeholder-val="{{ false }}"><span style="color:var(--accent);">{{ row.glyph }} </span></sc-if>{{ row.hash }}</span>
+                  <div>
+                    <div style="font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;">{{ row.role }} <span style="color:var(--ink-faint);font-weight:400;">{{ row.at }}</span></div>
+                    <sc-if value="{{ row.hasBody }}" hint-placeholder-val="{{ true }}">
+                      <div style="font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.6;max-width:60ch;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ row.firstBullet }}</div>
+                    </sc-if>
+                    <div style="font-size:11px;color:var(--ink-faint);margin-top:8px;line-height:1.8;">{{ row.techLine }}</div>
+                    <sc-if value="{{ row.open }}" hint-placeholder-val="{{ false }}">
+                      <ul style="list-style:none;margin:12px 0 2px;padding:12px 0 0;border-top:1px solid var(--rule);animation:gitlogExpand .24s ease;" onClick="{{ stop }}">
+                        <sc-for list="{{ row.restBulletsNum }}" as="b" hint-placeholder-count="3">
+                          <li style="position:relative;font-size:13px;color:var(--ink-soft);line-height:1.6;max-width:66ch;padding-left:16px;margin-top:8px;"><span style="position:absolute;left:0;color:var(--ink-faint);">–</span>{{ b.text }}</li>
+                        </sc-for>
+                      </ul>
+                    </sc-if>
+                  </div>
+                  <div style="text-align:right;font-size:11px;color:var(--ink-soft);line-height:1.5;">{{ row.start }} —<br><sc-if value="{{ row.current }}" hint-placeholder-val="{{ false }}"><span style="color:var(--green);">● present</span></sc-if><sc-if value="{{ row.notCurrent }}" hint-placeholder-val="{{ true }}">{{ row.end }}</sc-if></div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1b — clean two-column breakout ============ -->
+    <div class="dv-opt" id="1b" style="flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px;">
+      <div style="display:flex;align-items:baseline;gap:9px;">
+        <a class="dv-oid" href="#1b" style="font:600 10.5px 'IBM Plex Mono',monospace;padding:3px 7px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;letter-spacing:.04em;">1b</a>
+        <span style="font:400 11.5px 'IBM Plex Mono',monospace;color:var(--ink-soft);">Clean commit — full-width, two-column bullet breakout with a commit-meta strip</span>
+      </div>
+      <div style="width:1200px;max-width:1200px;border:1px solid var(--rule-2);background:var(--paper-2);overflow:hidden;">
+        <div style="max-width:1200px;margin:0 auto;padding:52px 40px;display:grid;grid-template-columns:132px minmax(0,1fr);gap:40px;">
+          <div style="align-self:start;">
+            <div style="font-size:11px;letter-spacing:.2em;color:var(--accent);">[ 02 ]</div>
+            <div style="font-size:11px;letter-spacing:.2em;color:var(--ink);margin-top:8px;line-height:1.7;">EXPERIENCE</div>
+            <div style="font-size:11px;color:var(--ink-faint);margin-top:14px;">$ git log -p</div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--ink-faint);margin-bottom:8px;letter-spacing:.06em;">git log --stat --author="ariq" main</div>
+            <div style="border-bottom:1px solid var(--rule-2);">
+              <sc-for list="{{ rowsB }}" as="row" hint-placeholder-count="5">
+                <div style="border-top:1px solid var(--rule);padding:20px 0;display:grid;grid-template-columns:78px minmax(0,1fr) 128px;gap:20px;align-items:baseline;cursor:pointer;transition:background .2s,padding-left .2s;" style-hover="background:rgba(85,88,121,.05);" onClick="{{ row.toggle }}">
+                  <span style="color:var(--accent);font-size:12px;white-space:pre;"><sc-if value="{{ row.hasBody }}" hint-placeholder-val="{{ false }}"><span style="color:var(--accent);">{{ row.glyph }} </span></sc-if>{{ row.hash }}</span>
+                  <div>
+                    <div style="font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;">{{ row.role }} <span style="color:var(--ink-faint);font-weight:400;">{{ row.at }}</span></div>
+                    <sc-if value="{{ row.hasBody }}" hint-placeholder-val="{{ true }}">
+                      <div style="font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.6;max-width:66ch;">{{ row.summaryShort }}</div>
+                    </sc-if>
+                    <div style="font-size:11px;color:var(--ink-faint);margin-top:8px;line-height:1.8;">{{ row.techLine }}</div>
+                  </div>
+                  <div style="text-align:right;font-size:11px;color:var(--ink-soft);line-height:1.5;">{{ row.start }} —<br><sc-if value="{{ row.current }}" hint-placeholder-val="{{ false }}"><span style="color:var(--green);">● present</span></sc-if><sc-if value="{{ row.notCurrent }}" hint-placeholder-val="{{ true }}">{{ row.end }}</sc-if></div>
+                  <sc-if value="{{ row.open }}" hint-placeholder-val="{{ false }}">
+                    <div style="grid-column:1 / -1;margin-top:18px;border-top:1px solid var(--rule-2);padding-top:20px;animation:gitlogExpand .26s ease;" onClick="{{ stop }}">
+                      <div style="display:flex;flex-wrap:wrap;gap:6px 26px;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:22px;">
+                        <span>Author&nbsp;&nbsp;Ariq&nbsp;Muldi</span>
+                        <span>Date&nbsp;&nbsp;{{ row.dateLine }}</span>
+                        <span style="color:var(--accent);">{{ row.stat2 }}</span>
+                      </div>
+                      <div style="column-count:2;column-gap:54px;">
+                        <sc-for list="{{ row.allBulletsNum }}" as="b" hint-placeholder-count="6">
+                          <div style="break-inside:avoid;display:grid;grid-template-columns:auto minmax(0,1fr);gap:13px;padding:11px 0;border-top:1px solid var(--rule);">
+                            <span style="color:var(--accent);">—</span>
+                            <span style="font-size:13px;color:var(--ink-soft);line-height:1.62;">{{ b.text }}</span>
+                          </div>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1c — git show (diff) ============ -->
+    <div class="dv-opt" id="1c" style="flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px;">
+      <div style="display:flex;align-items:baseline;gap:9px;">
+        <a class="dv-oid" href="#1c" style="font:600 10.5px 'IBM Plex Mono',monospace;padding:3px 7px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;letter-spacing:.04em;">1c</a>
+        <span style="font:400 11.5px 'IBM Plex Mono',monospace;color:var(--ink-soft);">git show — each achievement as a diff addition (+ gutter), with a commit header</span>
+      </div>
+      <div style="width:1200px;max-width:1200px;border:1px solid var(--rule-2);background:var(--paper-2);overflow:hidden;">
+        <div style="max-width:1200px;margin:0 auto;padding:52px 40px;display:grid;grid-template-columns:132px minmax(0,1fr);gap:40px;">
+          <div style="align-self:start;">
+            <div style="font-size:11px;letter-spacing:.2em;color:var(--accent);">[ 02 ]</div>
+            <div style="font-size:11px;letter-spacing:.2em;color:var(--ink);margin-top:8px;line-height:1.7;">EXPERIENCE</div>
+            <div style="font-size:11px;color:var(--ink-faint);margin-top:14px;">$ git show</div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--ink-faint);margin-bottom:8px;letter-spacing:.06em;">git show --stat HEAD</div>
+            <div style="border-bottom:1px solid var(--rule-2);">
+              <sc-for list="{{ rowsC }}" as="row" hint-placeholder-count="5">
+                <div style="border-top:1px solid var(--rule);padding:20px 0;display:grid;grid-template-columns:78px minmax(0,1fr) 128px;gap:20px;align-items:baseline;cursor:pointer;transition:background .2s,padding-left .2s;" style-hover="background:rgba(85,88,121,.05);" onClick="{{ row.toggle }}">
+                  <span style="color:var(--accent);font-size:12px;white-space:pre;"><sc-if value="{{ row.hasBody }}" hint-placeholder-val="{{ false }}"><span style="color:var(--accent);">{{ row.glyph }} </span></sc-if>{{ row.hash }}</span>
+                  <div>
+                    <div style="font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;">{{ row.role }} <span style="color:var(--ink-faint);font-weight:400;">{{ row.at }}</span></div>
+                    <sc-if value="{{ row.hasBody }}" hint-placeholder-val="{{ true }}">
+                      <div style="font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.6;max-width:66ch;">{{ row.summaryShort }}</div>
+                    </sc-if>
+                    <div style="font-size:11px;color:var(--ink-faint);margin-top:8px;line-height:1.8;">{{ row.techLine }}</div>
+                  </div>
+                  <div style="text-align:right;font-size:11px;color:var(--ink-soft);line-height:1.5;">{{ row.start }} —<br><sc-if value="{{ row.current }}" hint-placeholder-val="{{ false }}"><span style="color:var(--green);">● present</span></sc-if><sc-if value="{{ row.notCurrent }}" hint-placeholder-val="{{ true }}">{{ row.end }}</sc-if></div>
+                  <sc-if value="{{ row.open }}" hint-placeholder-val="{{ false }}">
+                    <div style="grid-column:1 / -1;margin-top:18px;border-top:1px solid var(--rule-2);padding-top:18px;animation:gitlogExpand .26s ease;" onClick="{{ stop }}">
+                      <div style="font-size:12px;color:var(--ink);">commit <span style="color:var(--accent);">{{ row.fullHash }}</span></div>
+                      <div style="font-size:12px;color:var(--ink-soft);margin-top:4px;">Author: {{ row.author }}</div>
+                      <div style="font-size:12px;color:var(--ink-soft);margin-top:1px;">Date:&nbsp;&nbsp;&nbsp;{{ row.dateLine }}</div>
+                      <div style="font-size:11px;color:var(--ink-faint);margin-top:11px;letter-spacing:.02em;">{{ row.stat1 }}</div>
+                      <div style="margin-top:14px;border:1px solid var(--rule);">
+                        <sc-for list="{{ row.allBulletsNum }}" as="b" hint-placeholder-count="6">
+                          <div style="display:grid;grid-template-columns:36px minmax(0,1fr);background:rgba(63,178,127,.05);border-bottom:1px solid var(--rule);">
+                            <span style="text-align:center;padding:10px 0;color:var(--green);background:rgba(63,178,127,.10);">+</span>
+                            <span style="padding:10px 16px;font-size:13px;color:var(--ink);line-height:1.6;">{{ b.text }}</span>
+                          </div>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1d — cat file (line numbers) ============ -->
+    <div class="dv-opt" id="1d" style="flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px;">
+      <div style="display:flex;align-items:baseline;gap:9px;">
+        <a class="dv-oid" href="#1d" style="font:600 10.5px 'IBM Plex Mono',monospace;padding:3px 7px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;letter-spacing:.04em;">1d</a>
+        <span style="font:400 11.5px 'IBM Plex Mono',monospace;color:var(--ink-soft);">cat file — bullets as a line-numbered file, opened in a mini window</span>
+      </div>
+      <div style="width:1200px;max-width:1200px;border:1px solid var(--rule-2);background:var(--paper-2);overflow:hidden;">
+        <div style="max-width:1200px;margin:0 auto;padding:52px 40px;display:grid;grid-template-columns:132px minmax(0,1fr);gap:40px;">
+          <div style="align-self:start;">
+            <div style="font-size:11px;letter-spacing:.2em;color:var(--accent);">[ 02 ]</div>
+            <div style="font-size:11px;letter-spacing:.2em;color:var(--ink);margin-top:8px;line-height:1.7;">EXPERIENCE</div>
+            <div style="font-size:11px;color:var(--ink-faint);margin-top:14px;">$ cat</div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--ink-faint);margin-bottom:8px;letter-spacing:.06em;">cat ~/roles/*.md</div>
+            <div style="border-bottom:1px solid var(--rule-2);">
+              <sc-for list="{{ rowsD }}" as="row" hint-placeholder-count="5">
+                <div style="border-top:1px solid var(--rule);padding:20px 0;display:grid;grid-template-columns:78px minmax(0,1fr) 128px;gap:20px;align-items:baseline;cursor:pointer;transition:background .2s,padding-left .2s;" style-hover="background:rgba(85,88,121,.05);" onClick="{{ row.toggle }}">
+                  <span style="color:var(--accent);font-size:12px;white-space:pre;"><sc-if value="{{ row.hasBody }}" hint-placeholder-val="{{ false }}"><span style="color:var(--accent);">{{ row.glyph }} </span></sc-if>{{ row.hash }}</span>
+                  <div>
+                    <div style="font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;">{{ row.role }} <span style="color:var(--ink-faint);font-weight:400;">{{ row.at }}</span></div>
+                    <sc-if value="{{ row.hasBody }}" hint-placeholder-val="{{ true }}">
+                      <div style="font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.6;max-width:66ch;">{{ row.summaryShort }}</div>
+                    </sc-if>
+                    <div style="font-size:11px;color:var(--ink-faint);margin-top:8px;line-height:1.8;">{{ row.techLine }}</div>
+                  </div>
+                  <div style="text-align:right;font-size:11px;color:var(--ink-soft);line-height:1.5;">{{ row.start }} —<br><sc-if value="{{ row.current }}" hint-placeholder-val="{{ false }}"><span style="color:var(--green);">● present</span></sc-if><sc-if value="{{ row.notCurrent }}" hint-placeholder-val="{{ true }}">{{ row.end }}</sc-if></div>
+                  <sc-if value="{{ row.open }}" hint-placeholder-val="{{ false }}">
+                    <div style="grid-column:1 / -1;margin-top:16px;animation:gitlogExpand .26s ease;" onClick="{{ stop }}">
+                      <div style="border:1px solid var(--rule-2);">
+                        <div style="display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid var(--rule);background:rgba(42,44,59,.03);">
+                          <span style="color:var(--accent);font-size:12px;">$</span>
+                          <span style="font-size:11px;color:var(--ink-soft);letter-spacing:.04em;">cat ~/roles/{{ row.slug }}.md</span>
+                          <span style="margin-left:auto;font-size:10px;letter-spacing:.16em;color:var(--ink-faint);text-transform:uppercase;">{{ row.stat3 }}</span>
+                        </div>
+                        <sc-for list="{{ row.allBulletsNum }}" as="b" hint-placeholder-count="6">
+                          <div style="display:grid;grid-template-columns:48px minmax(0,1fr);border-top:1px solid var(--rule);">
+                            <span style="text-align:right;padding:10px 12px 10px 0;color:var(--ink-faint);font-size:12px;border-right:1px solid var(--rule);background:rgba(42,44,59,.02);">{{ b.n }}</span>
+                            <span style="padding:10px 0 10px 16px;font-size:13px;color:var(--ink-soft);line-height:1.6;">{{ b.text }}</span>
+                          </div>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1e — Projects, matched ============ -->
+    <div class="dv-opt" id="1e" style="flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px;">
+      <div style="display:flex;align-items:baseline;gap:9px;">
+        <a class="dv-oid" href="#1e" style="font:600 10.5px 'IBM Plex Mono',monospace;padding:3px 7px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;letter-spacing:.04em;">1e</a>
+        <span style="font:400 11.5px 'IBM Plex Mono',monospace;color:var(--ink-soft);">Projects, matched — same row rhythm &amp; hairlines (links out, so no expand)</span>
+      </div>
+      <div style="width:1200px;max-width:1200px;border:1px solid var(--rule-2);background:var(--paper);overflow:hidden;">
+        <div style="max-width:1200px;margin:0 auto;padding:52px 40px;display:grid;grid-template-columns:132px minmax(0,1fr);gap:40px;">
+          <div style="align-self:start;">
+            <div style="font-size:11px;letter-spacing:.2em;color:var(--accent);">[ 03 ]</div>
+            <div style="font-size:11px;letter-spacing:.2em;color:var(--ink);margin-top:8px;line-height:1.7;">PROJECTS</div>
+            <div style="font-size:11px;color:var(--ink-faint);margin-top:14px;">$ ls ~/side</div>
+          </div>
+          <div>
+            <p style="margin:0 0 30px;max-width:60ch;font-size:14px;line-height:1.7;color:var(--ink-soft);">Personal builds — nights, weekends, and coursework taken further than required.</p>
+            <sc-for list="{{ projects }}" as="p" hint-placeholder-count="4">
+              <a href="{{ p.github }}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;border-top:1px solid var(--rule);padding:22px 0;display:grid;grid-template-columns:52px minmax(0,1fr) minmax(0,240px) 24px;gap:20px;align-items:baseline;transition:background .2s,padding-left .2s;" style-hover="background:rgba(85,88,121,.05);">
+                <span style="font-size:11px;color:var(--accent);letter-spacing:.1em;">[{{ p.num }}]</span>
+                <div>
+                  <div style="font-size:17px;font-weight:600;letter-spacing:-.02em;color:var(--ink);">{{ p.title }}</div>
+                  <div style="font-size:12.5px;color:var(--ink-soft);margin-top:5px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ p.description }}</div>
+                </div>
+                <div style="font-size:11px;color:var(--ink-faint);align-self:center;line-height:1.7;">{{ p.techLine }}</div>
+                <span style="color:var(--accent);text-align:right;align-self:center;">↗</span>
+              </a>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p style="margin:30px 0 0;font-size:12.5px;line-height:1.6;color:var(--ink-soft);">
+    Try next: "go with <a class="dv-oid" href="#1b" style="font:600 10px 'IBM Plex Mono',monospace;padding:2px 6px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;">1b</a>" ·
+    "combine <a class="dv-oid" href="#1b" style="font:600 10px 'IBM Plex Mono',monospace;padding:2px 6px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;">1b</a> collapsed rows with the <a class="dv-oid" href="#1c" style="font:600 10px 'IBM Plex Mono',monospace;padding:2px 6px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;">1c</a> diff look" ·
+    "make <a class="dv-oid" href="#1d" style="font:600 10px 'IBM Plex Mono',monospace;padding:2px 6px;background:rgba(42,44,59,.09);color:var(--ink);text-decoration:none;">1d</a> use a dark window" ·
+    "new directions"
+  </p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { open: { 'current-2': true, 'b-2': true, 'c-2': true, 'd-2': true, 'v2a-2': true, 'v2b-2': true, 'v2c-2': true, 'p3b-1': true } };
+
+  data = [
+    {
+      id: 1, hash: '340ca71', slug: 'doubl',
+      role: 'Lead Software Developer', company: 'DOUBL', context: '',
+      start: 'Sept 2025', end: '', current: true,
+      summary: '',
+      tech: ['Python','Google Cloud Run','Google Cloud API Gateway','Google Cloud Scheduler','Google Cloud Tasks','Shopify App Proxy','Next.js','React','Typescript','Google Cloud Build','Google Cloud Firestore','GitHub Pages','HTML','CSS','Javascript','Liquid Scripting','Zoho Flow','Zoho Deluge','iOS','Android','Trello'],
+      bullets: []
+    },
+    {
+      id: 2, hash: '370cabd', slug: 'mds',
+      role: 'Software Developer', company: 'UBC', context: 'Work Study Program',
+      start: 'Jul 2025', end: 'Sept 2025', current: false,
+      summary: 'Full-stack MDS admissions platform automating 1,000+ annual applications',
+      tech: ['Python','PostgreSQL','JavaScript','Flask','AJAX','Tailwind CSS','Bcrypt'],
+      bullets: [
+        `Developed full-stack Masters of Data Science application management platform using Python, PostgreSQL, and JavaScript, automating graduate admissions workflow for 1,000+ annual student applications and eliminating manual CSV-based processes on ranking applicants`,
+        `Structured backend using Flask Blueprints to segregate APIs for distinct services, implementing a 3-tier role-based authentication system with session management and bcrypt encryption to secure data for 50+ faculty`,
+        `Designed a normalized PostgreSQL database schema with foreign key constraints and performance indexing to maintain data integrity across applicant records, test scores, and institutional transcripts`,
+        `Built frontend using JavaScript and Tailwind CSS, implementing an AJAX-driven table for 1,000+ records that features real-time multi-field filtering, inline status editing, and mobile-responsive design for 50+ reviewers`,
+        `Constructed a CSV batch processing engine with validation pipelines to sanitize and ingest 1,000+ application records, utilizing atomic database transactions to ensure all-or-nothing data integrity during bulk uploads`,
+        `Implemented an automated reporting dashboard and comprehensive audit logging system, tracking 500+ user interactions and reducing administrative reporting time from 8 hours to 2 hours weekly`,
+        `Orchestrated a 7-stage review engine enabling faculty to rate and comment on applications, utilizing automated ranking logic to prioritize candidates and streamline academic record maintenance`,
+        `Engineered a CSV export module using Python, enabling administrators to generate custom datasets of ranked applicants, test scores, and demographics to facilitate final committee decision-making`
+      ]
+    },
+    {
+      id: 3, hash: '360caa4', slug: 'makerspace',
+      role: 'Software Developer', company: 'UBC', context: 'Makerspace Platform',
+      start: 'Jan 2025', end: 'Jan 2026', current: false,
+      summary: 'Full-stack Makerspace membership platform serving 1,000+ members',
+      tech: ['TypeScript','React Router v7','PostgreSQL','Tailwind CSS','Stripe','pdf-lib','C++','ESP32','Node.js','Docker'],
+      bullets: [
+        `Architected a full-stack membership platform in TypeScript, React Router v7, PostgreSQL, and Tailwind CSS serving 1,000+ members, digitizing workshop enrollments, equipment reservations, and membership management`,
+        `Integrated Stripe to process $1,000+ monthly revenue via checkout sessions and tokenized one-click payments, generating waivers by overlaying digital signatures using pdf-lib with AES-256 encryption`,
+        `Built a service that automatically 100+ syncs every workshop, equipment item, and membership plan into Stripe products, enabling discount codes for specific items, with an admin panel to link all items`,
+        `Engineered an equipment booking engine with a time-slot visualization grid, enforcing a 4-tier role-based access system and prerequisite chains to prevent unauthorized usage across 200+ daily reservations`,
+        `Developed a centralized admin dashboard consolidating space closure management, per-occurrence workshop cancellations with automatic member notifications, CSV financial reporting, and access-limit enforcement into a single operator interface`,
+        `Implemented a Mailgun email pipeline delivering 700+ monthly notifications with iCalendar attachments, JWT-secured password reset links, and live Google Calendar syncing via a custom OAuth2 flow with AES-encrypted token storage`,
+        `Programmed ESP32 firmware in C++ to authenticate RFID scans via HTTPS and log access events for restricted equipment and doors, with an admin interface for assigning per-card permissions`,
+        `Automated physical building access for 1,000+ members by integrating the Brivo Enterprise API to provision digital key passes and validate 500+ daily door-scan events using tamper-proof HMAC webhook signatures`,
+        `Designed a Node.js background job system to automate membership payment audits, access tier synchronization, and workshop lifecycle transitions, eliminating recurring manual administrative tasks`,
+        `Enforced platform-wide data integrity with Zod validation, case-insensitive email normalization, 3-hour session timeouts with per-request validation, and 100+ version-controlled Prisma schema migrations`,
+        `Established production reliability with Jest integration tests, Docker deployments over OpenVPN, and Winston structured logging with an in-browser admin log viewer for real-time production diagnostics`,
+        `Engineered a recurring billing engine supporting 4 subscription cycles with prorated upgrade charges, GST calculation, automated Stripe refunds on cancellation, and a member-controlled auto-renew toggle`,
+        `Designed multi-tier workshop pricing with independent seat limits per price level (e.g., Student, Member, General), automatically blocking purchases when any tier sells out`,
+        `Built multi-day workshop series support with automatic enrollment for newly added sessions and a re-offer system for recurring workshops, preserving all historical registration data across scheduling cycles`,
+        `Implemented an atomic admin suspension system that cancels all active plans, blocks re-enrollment, logs the admin's reason and timestamp, and notifies the member by email in a single fail-safe database transaction`,
+        `Developed a physical access analytics dashboard pairing IoT entry and exit scans to measure per-member machine usage time, with a searchable raw scan log filterable by user, equipment, and timestamp`
+      ]
+    },
+    {
+      id: 4, hash: '310ca26', slug: 'learncoding',
+      role: 'Software Developer', company: 'UBC', context: 'LearnCoding Platform',
+      start: 'Sept 2024', end: 'Sept 2025', current: false,
+      summary: 'Adaptive learning platform serving 500+ students at UBC',
+      tech: ['PHP','Laravel','MySQL','Docker','JavaScript','HTML','CSS','Apache','Matomo Analytics','UBC Canvas API'],
+      bullets: [
+        `Developed adaptive learning platform serving 500+ students with code visualizers, multi-language switching, sandbox environments, and badge-based gamification to solidify coding concepts across UBC's Faculty of Science`,
+        `Integrated UBC Canvas API to automatically post assessment scores to official gradebooks, replacing manual CSV grade imports for 1,000+ monthly submissions and reducing grading overhead by 6 hours weekly`,
+        `Established secure routing authentication using Laravel and MySQL to enforce role-based access control, securing access to system-wide resources and API endpoints for 60+ faculty members`,
+        `Redesigned user interface using HTML, CSS, and JavaScript to implement responsive layouts, restructuring navigation patterns and interactive elements to enhance usability across mobile and desktop devices`,
+        `Created a landing page showcasing the platform's core capabilities, video demos, and centralized onboarding resources, driving 20+ monthly institutional inquiries and accelerating faculty adoption`,
+        `Constructed granular access controls using PHP and MySQL to dynamically configure instructor permissions for lesson and quiz management, streamlining administrative workflows`,
+        `Deployed Matomo Analytics, a self-hosted analytics platform using Docker across development and production environments to capture user navigation patterns, enabling CSV exports for route frequency analysis and institutional assessments`,
+        `Engineered an AI-powered content generator orchestrating industry-leading models to automate cross-language code translation and personalize student learning paths`,
+        `Migrated platform from VPN to public access by transferring the MySQL database, Docker services, and application storage, while reconfiguring Apache, firewalls, and cron jobs in compliance with UBC protocols`,
+        `Maintained production and development servers managing Apache, MySQL, and Docker for 500+ daily sessions, performing updates and security patches, and resolving 10+ incidents via log analysis to reduce resolution time`
+      ]
+    },
+    {
+      id: 5, hash: '300ca0d', slug: 'ta',
+      role: 'Undergraduate Teaching Assistant', company: 'UBC', context: '',
+      start: 'Sept 2024', end: 'Sept 2025', current: false,
+      summary: 'Labs & tutoring for 60+ students — MIPS Assembly & Java',
+      tech: ['MIPS Assembly','Java'],
+      bullets: [
+        `Facilitated lab sessions and tutoring for over 60+ students, employing exercises and coding challenges to enhance understanding of machine architecture using MIPS Assembly, Java programming, and general coding concepts`,
+        `Designed and graded assignments and exams for 300+ students for the two largest computer science courses at UBC`
+      ]
+    }
+  ];
+
+  projects = [
+    { id: 1, title: 'Ponotodoro', description: `Developed a full-stack app integrating the Pomodoro technique with note-taking and to-do lists functionality to combine time management and task tracking techniques to improve personal productivity for 10+ users. Engineered frontend with React and Bootstrap, to structure the platform's task management system.`, technologies: ['JavaScript','React','Node.js','Next.js','PostgreSQL','Bootstrap','HTML/CSS'], github: 'https://github.com/ariqmuldi/ponotodoro' },
+    { id: 2, title: 'Flight Hub', description: `Constructed a full-stack web application that streamlines flight offers by integrating Amadeus and Twilio API. Produced a full-stack blog feature enabling users to create, edit, and manage posts regarding flight-related topics.`, technologies: ['Python','JavaScript','Flask','React','SQLite','Bootstrap','HTML/CSS'], github: 'https://github.com/ariqmuldi/flight-hub' },
+    { id: 3, title: 'ChatterBox', description: `Developed a full-stack chat application replicating core Discord functionalities, including real-time messaging, user authentication, and channel management, facilitating communication for 5+ active users across 5+ channels.`, technologies: ['JavaScript','React','Firebase','Tailwind CSS','HTML/SCSS'], github: 'https://github.com/namekeptanonymous/Error404' },
+    { id: 4, title: 'MoodiJawoodi', description: `Produced responsive interface with HTML/CSS and Java with the JDBC API to enhance shopping experience. Designed backend system with Java and MySQL, optimizing data handling and processing of products.`, technologies: ['Java','HTML/CSS','MySQL','Docker'], github: 'https://github.com/ariqmuldi/moodi-jawoodi-grocery' }
+  ];
+
+  commitMeta = {
+    1: { commit: 'wip(doubl): build size-recommendation infrastructure', scopes: [] },
+    2: { commit: 'feat(admissions): automate MDS review for 1,000+ applicants', scopes: ['admissions', 'auth', 'reporting'] },
+    3: { commit: 'feat(makerspace): ship membership & access platform for 1,000+ members', scopes: ['billing', 'access', 'booking'] },
+    4: { commit: 'feat(learn): launch adaptive learning platform for 500+ students', scopes: ['deploy', 'canvas', 'analytics'] },
+    5: { commit: 'feat(teaching): run labs & grading for 300+ students', scopes: ['labs', 'grading'] }
+  };
+
+  projMeta = {
+    1: { tagline: 'Pomodoro timer fused with notes & to-do lists' },
+    2: { tagline: 'Flight-deal finder + blog, via Amadeus & Twilio' },
+    3: { tagline: 'Real-time, Discord-style group chat on Firebase' },
+    4: { tagline: 'JDBC grocery storefront in Java + MySQL' }
+  };
+
+  toggle(variant, id) {
+    const k = variant + '-' + id;
+    this.setState((s) => ({ open: { ...s.open, [k]: !s.open[k] } }));
+  }
+
+  buildRows(variant) {
+    const AUTHOR = 'Ariq Muldi <ariq@ariqmuldi.com>';
+    return this.data.map((e) => {
+      const hasBody = e.bullets.length > 0;
+      const open = hasBody && !!this.state.open[variant + '-' + e.id];
+      const at = '@ ' + e.company + (e.context ? ' · ' + e.context : '');
+      const dateLine = e.current ? e.start + ' — present' : e.start + ' — ' + e.end;
+      const allBulletsNum = e.bullets.map((t, i) => ({ n: String(i + 1).padStart(2, '0'), text: t }));
+      return {
+        id: e.id, hash: e.hash, fullHash: e.hash.repeat(6).slice(0, 40),
+        role: e.role, at, start: e.start, end: e.end,
+        current: e.current, notCurrent: !e.current,
+        dateLine, slug: e.slug,
+        summaryShort: e.summary, firstBullet: e.bullets[0] || '',
+        techLine: e.tech.join(' · '),
+        allBulletsNum, restBulletsNum: allBulletsNum.slice(1),
+        hasBody, open, glyph: open ? '▾' : '▸', author: AUTHOR,
+        stat1: e.bullets.length + ' files changed, ' + e.bullets.length + ' insertions(+)',
+        stat2: e.bullets.length + ' accomplishments',
+        stat3: e.bullets.length + ' lines',
+        commit: (this.commitMeta[e.id] || {}).commit || '',
+        scopeLine: ((this.commitMeta[e.id] || {}).scopes || []).join(' · '),
+        insLabel: '+' + e.bullets.length,
+        squares: '▪'.repeat(Math.min(e.bullets.length, 12)),
+        hiddenLabel: e.bullets.length + ' achievements',
+        activeNote: (e.current && !hasBody) ? 'in active development' : '',
+        toggle: hasBody ? () => this.toggle(variant, e.id) : null
+      };
+    });
+  }
+
+  buildProjects(variant) {
+    return this.projects.map((p, i) => {
+      const open = !!this.state.open[variant + '-' + p.id];
+      return {
+        ...p,
+        num: String(i + 1).padStart(2, '0'),
+        techLine: p.technologies.join(' · '),
+        tagline: (this.projMeta[p.id] || {}).tagline || '',
+        repo: p.github.split('/').pop(),
+        open, glyph: open ? '▾' : '▸',
+        sentences: (p.description || '').split(/(?<=[.!?])\s+/).map((s) => s.trim()).filter(Boolean),
+        toggle: () => this.toggle(variant, p.id)
+      };
+    });
+  }
+
+  renderVals() {
+    return {
+      rowsCurrent: this.buildRows('current'),
+      rowsB: this.buildRows('b'),
+      rowsC: this.buildRows('c'),
+      rowsD: this.buildRows('d'),
+      rowsV2a: this.buildRows('v2a'),
+      rowsV2b: this.buildRows('v2b'),
+      rowsV2c: this.buildRows('v2c'),
+      projectsA: this.buildProjects('p3a'),
+      projectsB: this.buildProjects('p3b'),
+      projectsC: this.buildProjects('p3c'),
+      projects: this.projects.map((p, i) => ({
+        ...p,
+        num: String(i + 1).padStart(2, '0'),
+        techLine: p.technologies.join(' · ')
+      })),
+      stop: (ev) => ev.stopPropagation()
+    };
+  }
+}
+</script>
+</body>
+</html>

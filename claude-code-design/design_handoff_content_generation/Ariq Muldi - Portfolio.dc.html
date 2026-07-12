@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:#FAF7F0; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+  ::selection{ background:rgba(85,88,121,.22); color:#2A2C3B; }
+  @keyframes blink{ 0%,48%{opacity:1} 49%,100%{opacity:0} }
+  ::-webkit-scrollbar{ width:11px; height:11px; }
+  ::-webkit-scrollbar-track{ background:#F0E8D2; }
+  ::-webkit-scrollbar-thumb{ background:#98A1BC; border:3px solid #F0E8D2; }
+  ::-webkit-scrollbar-thumb:hover{ background:#555879; }
+</style>
+</helmet>
+
+<div ref="{{ rootRef }}" style="--paper:#FAF7F0; --paper2:#F4EBD3; --ink:#2A2C3B; --ink-soft:rgba(42,44,59,.62); --ink-faint:rgba(42,44,59,.40); --accent:#555879; --accent2:#3D3F5C; --blue:#98A1BC; --beige:#DED3C4; --rule:rgba(42,44,59,.13); --rule2:rgba(42,44,59,.30); --img-display:block; background:var(--paper); color:var(--ink); font-family:'IBM Plex Mono', ui-monospace, monospace; min-height:100vh; position:relative; overflow-x:hidden; font-feature-settings:'ss01','zero'; ">
+
+  <!-- ============ TOP BAR ============ -->
+  <div style="position:sticky; top:0; z-index:50; background:rgba(250,247,240,.86); backdrop-filter:saturate(140%) blur(8px); -webkit-backdrop-filter:saturate(140%) blur(8px); border-bottom:1px solid var(--rule); ">
+    <div style="max-width:1200px; margin:0 auto; padding:0 40px; height:54px; display:flex; align-items:center; justify-content:space-between; gap:24px; ">
+      <a href="#top" style="display:flex; align-items:baseline; gap:8px; text-decoration:none; color:var(--ink); font-size:13px; letter-spacing:.01em; white-space:nowrap; ">
+        <span style="width:7px; height:7px; border-radius:50%; background:#3FB27F; display:inline-block; align-self:center; box-shadow:0 0 0 3px rgba(63,178,127,.16); "></span>
+        <span style="font-weight:600;">ariqmuldi</span><span style="color:var(--ink-faint);">.com</span>
+        <span ref="{{ pathRef }}" style="color:var(--accent); font-size:12px; margin-left:2px;">~/</span>
+      </a>
+      <nav style="display:flex; align-items:center; gap:22px; flex-wrap:wrap; justify-content:flex-end; font-size:11px; letter-spacing:.16em; ">
+        <a data-nav="work" href="#work" style="text-decoration:none; color:var(--ink-soft); transition:color .2s;" style-hover="color:var(--ink)">WORK</a>
+        <a data-nav="experience" href="#experience" style="text-decoration:none; color:var(--ink-soft); transition:color .2s;" style-hover="color:var(--ink)">EXPERIENCE</a>
+        <a data-nav="projects" href="#projects" style="text-decoration:none; color:var(--ink-soft); transition:color .2s;" style-hover="color:var(--ink)">PROJECTS</a>
+        <a data-nav="stack" href="#stack" style="text-decoration:none; color:var(--ink-soft); transition:color .2s;" style-hover="color:var(--ink)">STACK</a>
+        <a data-nav="education" href="#education" style="text-decoration:none; color:var(--ink-soft); transition:color .2s;" style-hover="color:var(--ink)">EDU</a>
+        <a href="Content Generation.dc.html" style="text-decoration:none; color:var(--ink-soft); transition:color .2s;" style-hover="color:var(--ink)">CONTENT</a>
+        <a data-nav="contact" href="#contact" style="text-decoration:none; color:var(--ink); border-bottom:1px solid var(--accent); padding-bottom:1px; transition:color .2s;" style-hover="color:var(--accent)">CONTACT</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- ============ HERO / INDEX ============ -->
+  <section id="top" style="scroll-margin-top:54px; border-bottom:1px solid var(--rule); ">
+    <div style="max-width:1200px; margin:0 auto; padding:76px 40px 68px; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:48px; align-items:start; ">
+      <div>
+        <div data-reveal data-delay="0" style="font-size:13px; color:var(--ink-soft); margin-bottom:34px; ">
+          <span style="color:var(--accent);">$</span> <span ref="{{ typedRef }}">whoami</span><span style="display:inline-block; width:.58em; height:1.02em; background:var(--accent); vertical-align:-3px; margin-left:.14em; animation:blink 1.05s steps(1) infinite;"></span>
+        </div>
+
+        <h1 data-reveal data-delay="80" style="margin:0; font-size:clamp(56px,10.5vw,132px); line-height:.9; font-weight:600; letter-spacing:-.045em; color:var(--ink); ">
+          ARIQ<br>MULDI
+        </h1>
+
+        <div data-reveal data-delay="160" style="margin-top:30px; font-size:clamp(15px,1.6vw,19px); font-weight:500; color:var(--ink); letter-spacing:.01em; ">
+          Software Engineer <span style="color:var(--ink-faint);">/</span> Full-Stack <span style="color:var(--ink-faint);">·</span> Cloud &amp; DevOps
+        </div>
+
+        <p data-reveal data-delay="220" style="margin:22px 0 0; max-width:56ch; font-size:14.5px; line-height:1.7; color:var(--ink-soft); ">
+          I build full-stack platforms that move real people through real systems — graduate
+          admissions, makerspace memberships, adaptive learning — and I care about the
+          infrastructure underneath: schemas, auth, payments, deploys.
+        </p>
+
+        <div data-reveal data-delay="280" style="margin-top:26px; display:flex; flex-wrap:wrap; gap:8px 26px; font-size:12.5px; color:var(--ink-soft); ">
+          <span><span style="color:#3FB27F;">●</span> Available — 2026 new-grad SWE roles</span>
+          <span style="color:var(--ink-faint);">|</span>
+          <span>Currently — SWE @ <span style="color:var(--ink);">DOUBL</span> · Research Assistant @ <span style="color:var(--ink);">UBC</span></span>
+        </div>
+
+        <a data-reveal data-delay="320" href="Content Generation.dc.html" style="margin-top:24px; display:inline-flex; align-items:center; gap:10px; font-size:12.5px; color:var(--ink); text-decoration:none; border:1px solid var(--rule2); padding:11px 16px; transition:border-color .2s, background .2s;" style-hover="border-color:var(--accent); background:rgba(85,88,121,.05)"><span style="color:var(--accent);">$</span> ./how-content-is-generated <span style="color:var(--ink-faint);">— view the AI content pipeline &amp; editor</span> <span style="color:var(--accent);">↗</span></a>
+      </div>
+
+      <!-- avatar figure -->
+      <figure data-reveal data-delay="120" style="margin:0; width:clamp(120px,15vw,168px); ">
+        <div style="border:1px solid var(--rule2); padding:6px; background:var(--paper); ">
+          <div style="overflow:hidden; ">
+            <img src="public/profile-photo.jpg" alt="Ariq Muldi" style="width:100%; display:block; aspect-ratio:4/5; object-fit:cover; object-position:50% 10%; filter:grayscale(1) contrast(1.03) brightness(1.02); transition:filter .5s ease, transform .6s cubic-bezier(.2,.6,.2,1); " style-hover="filter:none; transform:scale(1.03)">
+          </div>
+        </div>
+        <figcaption style="margin-top:8px; font-size:10px; letter-spacing:.16em; color:var(--ink-faint); ">FIG.00 / ARIQ.MULDI.JPG</figcaption>
+      </figure>
+    </div>
+
+    <!-- metric strip -->
+    <div style="max-width:1200px; margin:0 auto; padding:0 40px 40px; ">
+      <div data-reveal style="display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--rule2); ">
+        <div style="padding:22px 22px 4px 0; border-right:1px solid var(--rule); ">
+          <div style="font-size:clamp(24px,2.6vw,32px); font-weight:600; letter-spacing:-.03em; color:var(--ink);">1,000+</div>
+          <div style="font-size:10.5px; letter-spacing:.16em; color:var(--ink-faint); margin-top:4px;">USERS SERVED</div>
+        </div>
+        <div style="padding:22px 22px 4px; border-right:1px solid var(--rule); ">
+          <div style="font-size:clamp(24px,2.6vw,32px); font-weight:600; letter-spacing:-.03em; color:var(--ink);">10,000+</div>
+          <div style="font-size:10.5px; letter-spacing:.16em; color:var(--ink-faint); margin-top:4px;">RECORDS PROCESSED</div>
+        </div>
+        <div style="padding:22px 22px 4px; border-right:1px solid var(--rule); ">
+          <div style="font-size:clamp(24px,2.6vw,32px); font-weight:600; letter-spacing:-.03em; color:var(--ink);">500+</div>
+          <div style="font-size:10.5px; letter-spacing:.16em; color:var(--ink-faint); margin-top:4px;">STUDENTS IMPACTED</div>
+        </div>
+        <div style="padding:22px 0 4px 22px; ">
+          <div style="font-size:clamp(24px,2.6vw,32px); font-weight:600; letter-spacing:-.03em; color:var(--ink);">05</div>
+          <div style="font-size:10.5px; letter-spacing:.16em; color:var(--ink-faint); margin-top:4px;">ACTIVE ROLES</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SELECTED WORK ============ -->
+  <section id="work" style="scroll-margin-top:54px; border-bottom:1px solid var(--rule); ">
+    <div style="max-width:1200px; margin:0 auto; padding:80px 40px; display:grid; grid-template-columns:132px minmax(0,1fr); gap:40px; ">
+      <div style="position:sticky; top:86px; align-self:start; ">
+        <div style="font-size:11px; letter-spacing:.2em; color:var(--accent); ">[ 01 ]</div>
+        <div style="font-size:11px; letter-spacing:.2em; color:var(--ink); margin-top:8px; line-height:1.7;">SELECTED<br>WORK</div>
+        <div style="font-size:11px; color:var(--ink-faint); margin-top:14px;">$ ls ./work</div>
+      </div>
+
+      <div>
+        <p data-reveal style="margin:0 0 40px; max-width:60ch; font-size:14px; line-height:1.7; color:var(--ink-soft); ">
+          Production systems shipped in research and industry roles. Real users, real
+          money, real uptime.
+        </p>
+
+        <!-- WORK 01 -->
+        <article data-reveal style="border-top:1px solid var(--rule2); padding:28px 0 44px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,380px); gap:44px; align-items:start; ">
+          <div>
+            <div style="display:flex; align-items:baseline; gap:14px; font-size:11px; letter-spacing:.14em; color:var(--ink-faint); margin-bottom:14px; ">
+              <span style="color:var(--accent); font-weight:600;">01</span>
+              <span>UBC · RESEARCH ASSISTANT</span>
+              <span style="margin-left:auto; color:#3FB27F;">● LIVE</span>
+            </div>
+            <h3 style="margin:0; font-size:clamp(26px,3.4vw,38px); font-weight:600; letter-spacing:-.035em; line-height:1.02; color:var(--ink);">Makerspace Platform</h3>
+            <p style="margin:16px 0 0; font-size:14px; line-height:1.72; color:var(--ink-soft); max-width:52ch;">
+              Membership &amp; equipment management platform serving 1,000+ members —
+              workshop enrolment, Stripe checkout ($1k+/mo), and ESP32/RFID access
+              control wired to a Node background-job system.
+            </p>
+            <div style="margin:20px 0 0; font-size:12px; color:var(--ink); line-height:1.9;">TypeScript <span style="color:var(--ink-faint);">·</span> React Router v7 <span style="color:var(--ink-faint);">·</span> PostgreSQL <span style="color:var(--ink-faint);">·</span> Prisma <span style="color:var(--ink-faint);">·</span> Stripe <span style="color:var(--ink-faint);">·</span> IoT (ESP32) <span style="color:var(--ink-faint);">·</span> Docker</div>
+            <div style="margin:22px 0 0; display:flex; gap:22px; font-size:12.5px;">
+              <a href="https://my.makerspaceyk.com" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; transition:border-color .2s;" style-hover="border-color:var(--accent)">↗ live site</a>
+              <a href="https://github.com/University-of-British-Columbia-Okanagan/MSYK_Membership" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; transition:border-color .2s;" style-hover="border-color:var(--accent)">↗ github</a>
+            </div>
+          </div>
+          <figure style="margin:0; display:var(--img-display);">
+            <div style="border:1px solid var(--rule2); padding:6px; background:var(--paper); ">
+              <img src="public/msykpicture.png" alt="Makerspace Platform" style="width:100%; display:block; aspect-ratio:16/10; object-fit:cover; filter:grayscale(1) contrast(1.02); transition:filter .5s ease;" style-hover="filter:none">
+            </div>
+            <figcaption style="margin-top:8px; font-size:10px; letter-spacing:.14em; color:var(--ink-faint);">FIG.01 / MSYK.MEMBERSHIP</figcaption>
+          </figure>
+        </article>
+
+        <!-- WORK 02 -->
+        <article data-reveal style="border-top:1px solid var(--rule2); padding:28px 0 44px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,380px); gap:44px; align-items:start; ">
+          <div>
+            <div style="display:flex; align-items:baseline; gap:14px; font-size:11px; letter-spacing:.14em; color:var(--ink-faint); margin-bottom:14px; ">
+              <span style="color:var(--accent); font-weight:600;">02</span>
+              <span>UBC · RESEARCH ASSISTANT</span>
+              <span style="margin-left:auto; color:#3FB27F;">● LIVE</span>
+            </div>
+            <h3 style="margin:0; font-size:clamp(26px,3.4vw,38px); font-weight:600; letter-spacing:-.035em; line-height:1.02; color:var(--ink);">LearnCoding Platform</h3>
+            <p style="margin:16px 0 0; font-size:14px; line-height:1.72; color:var(--ink-soft); max-width:52ch;">
+              Adaptive learning platform for 500+ CS students — code visualizers,
+              sandboxes, and AI-generated content, with automated Canvas gradebook
+              sync replacing 1,000+ manual grade imports a month.
+            </p>
+            <div style="margin:20px 0 0; font-size:12px; color:var(--ink); line-height:1.9;">PHP <span style="color:var(--ink-faint);">·</span> Laravel <span style="color:var(--ink-faint);">·</span> MySQL <span style="color:var(--ink-faint);">·</span> Docker <span style="color:var(--ink-faint);">·</span> Canvas API <span style="color:var(--ink-faint);">·</span> Matomo <span style="color:var(--ink-faint);">·</span> LLMs</div>
+            <div style="margin:22px 0 0; display:flex; gap:22px; font-size:12.5px;">
+              <a href="https://learncoding.ok.ubc.ca" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; transition:border-color .2s;" style-hover="border-color:var(--accent)">↗ live site</a>
+            </div>
+          </div>
+          <figure style="margin:0; display:var(--img-display);">
+            <div style="border:1px solid var(--rule2); padding:6px; background:var(--paper); ">
+              <img src="public/learncodingpicture.png" alt="LearnCoding Platform" style="width:100%; display:block; aspect-ratio:16/10; object-fit:cover; filter:grayscale(1) contrast(1.02); transition:filter .5s ease;" style-hover="filter:none">
+            </div>
+            <figcaption style="margin-top:8px; font-size:10px; letter-spacing:.14em; color:var(--ink-faint);">FIG.02 / LEARNCODING</figcaption>
+          </figure>
+        </article>
+
+        <!-- WORK 03 -->
+        <article data-reveal style="border-top:1px solid var(--rule2); padding:28px 0 44px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,380px); gap:44px; align-items:start; ">
+          <div>
+            <div style="display:flex; align-items:baseline; gap:14px; font-size:11px; letter-spacing:.14em; color:var(--ink-faint); margin-bottom:14px; ">
+              <span style="color:var(--accent); font-weight:600;">03</span>
+              <span>UBC · WORK STUDY</span>
+            </div>
+            <h3 style="margin:0; font-size:clamp(26px,3.4vw,38px); font-weight:600; letter-spacing:-.035em; line-height:1.02; color:var(--ink);">MDS Admissions</h3>
+            <p style="margin:16px 0 0; font-size:14px; line-height:1.72; color:var(--ink-soft); max-width:52ch;">
+              Admissions platform automating 1,000+ annual graduate applications —
+              3-tier role-based auth for 50+ faculty, atomic CSV batch ingest, and a
+              7-stage review engine that cut reporting from 8 hrs to 2 hrs weekly.
+            </p>
+            <div style="margin:20px 0 0; font-size:12px; color:var(--ink); line-height:1.9;">Python <span style="color:var(--ink-faint);">·</span> Flask <span style="color:var(--ink-faint);">·</span> PostgreSQL <span style="color:var(--ink-faint);">·</span> bcrypt <span style="color:var(--ink-faint);">·</span> AJAX <span style="color:var(--ink-faint);">·</span> Tailwind</div>
+            <div style="margin:22px 0 0; display:flex; gap:22px; font-size:12.5px;">
+              <a href="https://github.com/marga120/mds-application" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; transition:border-color .2s;" style-hover="border-color:var(--accent)">↗ github</a>
+            </div>
+          </div>
+          <figure style="margin:0; display:var(--img-display);">
+            <div style="border:1px solid var(--rule2); padding:6px; background:var(--paper); ">
+              <img src="public/mdsapppicture.png" alt="MDS Admissions" style="width:100%; display:block; aspect-ratio:16/10; object-fit:cover; filter:grayscale(1) contrast(1.02); transition:filter .5s ease;" style-hover="filter:none">
+            </div>
+            <figcaption style="margin-top:8px; font-size:10px; letter-spacing:.14em; color:var(--ink-faint);">FIG.03 / MDS.APPLICATION</figcaption>
+          </figure>
+        </article>
+
+        <!-- WORK 04 -->
+        <article data-reveal style="border-top:1px solid var(--rule2); padding:28px 0 4px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,380px); gap:44px; align-items:start; ">
+          <div>
+            <div style="display:flex; align-items:baseline; gap:14px; font-size:11px; letter-spacing:.14em; color:var(--ink-faint); margin-bottom:14px; ">
+              <span style="color:var(--accent); font-weight:600;">04</span>
+              <span>DOUBL · JUNIOR SWE</span>
+              <span style="margin-left:auto; color:var(--ink-faint);">○ SHOWCASE TBA</span>
+            </div>
+            <h3 style="margin:0; font-size:clamp(26px,3.4vw,38px); font-weight:600; letter-spacing:-.035em; line-height:1.02; color:var(--ink);">DOUBL — B2B &amp; ML</h3>
+            <p style="margin:16px 0 0; font-size:14px; line-height:1.72; color:var(--ink-soft); max-width:52ch;">
+              Full-stack B2B integrations in production — Shopify App Proxy middleware,
+              ML-driven sizing, and automated pipelines on Google Cloud Run. Detailed
+              case study coming soon.
+            </p>
+            <div style="margin:20px 0 0; font-size:12px; color:var(--ink); line-height:1.9;">Python <span style="color:var(--ink-faint);">·</span> Google Cloud <span style="color:var(--ink-faint);">·</span> Next.js <span style="color:var(--ink-faint);">·</span> TypeScript <span style="color:var(--ink-faint);">·</span> Shopify API <span style="color:var(--ink-faint);">·</span> ML <span style="color:var(--ink-faint);">·</span> Zoho</div>
+          </div>
+          <figure style="margin:0; display:var(--img-display);">
+            <div style="border:1px solid var(--rule2); padding:6px; background:var(--paper); position:relative; ">
+              <img src="public/doublpicture.jpeg" alt="DOUBL" style="width:100%; display:block; aspect-ratio:16/10; object-fit:cover; filter:grayscale(1) contrast(1.02); transition:filter .5s ease;" style-hover="filter:none">
+              <div style="position:absolute; inset:6px; display:flex; align-items:flex-end; justify-content:flex-start; padding:12px; background:linear-gradient(to top, rgba(42,44,59,.42), transparent 55%); ">
+                <span style="font-size:10px; letter-spacing:.16em; color:#F4EBD3;">IN PRODUCTION</span>
+              </div>
+            </div>
+            <figcaption style="margin-top:8px; font-size:10px; letter-spacing:.14em; color:var(--ink-faint);">FIG.04 / DOUBL</figcaption>
+          </figure>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCE (git log ledger) ============ -->
+  <section id="experience" style="scroll-margin-top:54px; border-bottom:1px solid var(--rule); background:var(--paper2); ">
+    <div style="max-width:1200px; margin:0 auto; padding:80px 40px; display:grid; grid-template-columns:132px minmax(0,1fr); gap:40px; ">
+      <div style="position:sticky; top:86px; align-self:start; ">
+        <div style="font-size:11px; letter-spacing:.2em; color:var(--accent); ">[ 02 ]</div>
+        <div style="font-size:11px; letter-spacing:.2em; color:var(--ink); margin-top:8px; line-height:1.7;">EXPERIENCE</div>
+        <div style="font-size:11px; color:var(--ink-faint); margin-top:14px;">$ git log</div>
+      </div>
+
+      <div>
+        <div data-reveal style="font-size:11px; color:var(--ink-faint); margin-bottom:8px; letter-spacing:.06em;">git log --oneline --author="ariq" main</div>
+
+        <!-- row -->
+        <div data-reveal style="border-top:1px solid var(--rule2); padding:20px 8px 20px 0; display:grid; grid-template-columns:78px minmax(0,1fr) 128px; gap:20px; align-items:baseline; transition:background .2s, padding-left .2s;" style-hover="background:rgba(85,88,121,.05); padding-left:8px;">
+          <span style="color:var(--accent); font-size:12px;">a1c30f2</span>
+          <div>
+            <div style="font-size:15px; font-weight:600; color:var(--ink); letter-spacing:-.01em;">Junior Software Developer <span style="color:var(--ink-faint); font-weight:400;">@ DOUBL</span></div>
+            <div style="font-size:13px; color:var(--ink-soft); margin-top:6px; line-height:1.6; max-width:60ch;">Shopify App-Proxy middleware, HMAC-signed webhooks, and ML sizing on GCP Cloud Run.</div>
+            <div style="font-size:11px; color:var(--ink-faint); margin-top:8px;">Python · Next.js · Google Cloud · Shopify · Zoho</div>
+          </div>
+          <div style="text-align:right; font-size:11px; color:var(--ink-soft); line-height:1.5;">Sept 2025 —<br><span style="color:#3FB27F;">● present</span></div>
+        </div>
+
+        <div data-reveal style="border-top:1px solid var(--rule); padding:20px 8px 20px 0; display:grid; grid-template-columns:78px minmax(0,1fr) 128px; gap:20px; align-items:baseline; transition:background .2s, padding-left .2s;" style-hover="background:rgba(85,88,121,.05); padding-left:8px;">
+          <span style="color:var(--accent); font-size:12px;">7b4e19d</span>
+          <div>
+            <div style="font-size:15px; font-weight:600; color:var(--ink); letter-spacing:-.01em;">Software Developer <span style="color:var(--ink-faint); font-weight:400;">@ UBC · Makerspace</span></div>
+            <div style="font-size:13px; color:var(--ink-soft); margin-top:6px; line-height:1.6; max-width:60ch;">Built the membership + IoT access platform for 1,000+ members; Stripe, Prisma, ESP32.</div>
+            <div style="font-size:11px; color:var(--ink-faint); margin-top:8px;">TypeScript · React Router v7 · PostgreSQL · Stripe · Docker</div>
+          </div>
+          <div style="text-align:right; font-size:11px; color:var(--ink-soft); line-height:1.5;">Jan 2025 —<br><span style="color:#3FB27F;">● present</span></div>
+        </div>
+
+        <div data-reveal style="border-top:1px solid var(--rule); padding:20px 8px 20px 0; display:grid; grid-template-columns:78px minmax(0,1fr) 128px; gap:20px; align-items:baseline; transition:background .2s, padding-left .2s;" style-hover="background:rgba(85,88,121,.05); padding-left:8px;">
+          <span style="color:var(--accent); font-size:12px;">3f9a02c</span>
+          <div>
+            <div style="font-size:15px; font-weight:600; color:var(--ink); letter-spacing:-.01em;">Software Developer <span style="color:var(--ink-faint); font-weight:400;">@ UBC · LearnCoding</span></div>
+            <div style="font-size:13px; color:var(--ink-soft); margin-top:6px; line-height:1.6; max-width:60ch;">Adaptive learning platform for 500+ students; Laravel, Canvas API grade sync, Docker.</div>
+            <div style="font-size:11px; color:var(--ink-faint); margin-top:8px;">PHP · Laravel · MySQL · Canvas API · Matomo</div>
+          </div>
+          <div style="text-align:right; font-size:11px; color:var(--ink-soft); line-height:1.5;">Sept 2024 —<br><span style="color:#3FB27F;">● present</span></div>
+        </div>
+
+        <div data-reveal style="border-top:1px solid var(--rule); padding:20px 8px 20px 0; display:grid; grid-template-columns:78px minmax(0,1fr) 128px; gap:20px; align-items:baseline; transition:background .2s, padding-left .2s;" style-hover="background:rgba(85,88,121,.05); padding-left:8px;">
+          <span style="color:var(--accent); font-size:12px;">c05d7e1</span>
+          <div>
+            <div style="font-size:15px; font-weight:600; color:var(--ink); letter-spacing:-.01em;">Software Developer <span style="color:var(--ink-faint); font-weight:400;">@ UBC · Work Study</span></div>
+            <div style="font-size:13px; color:var(--ink-soft); margin-top:6px; line-height:1.6; max-width:60ch;">MDS admissions platform; Flask blueprints, normalized PostgreSQL, RBAC for 50+ faculty.</div>
+            <div style="font-size:11px; color:var(--ink-faint); margin-top:8px;">Python · Flask · PostgreSQL · bcrypt · AJAX</div>
+          </div>
+          <div style="text-align:right; font-size:11px; color:var(--ink-soft); line-height:1.5;">Jul 2025 —<br>Sept 2025</div>
+        </div>
+
+        <div data-reveal style="border-top:1px solid var(--rule); border-bottom:1px solid var(--rule2); padding:20px 8px 20px 0; display:grid; grid-template-columns:78px minmax(0,1fr) 128px; gap:20px; align-items:baseline; transition:background .2s, padding-left .2s;" style-hover="background:rgba(85,88,121,.05); padding-left:8px;">
+          <span style="color:var(--accent); font-size:12px;">e82b6a4</span>
+          <div>
+            <div style="font-size:15px; font-weight:600; color:var(--ink); letter-spacing:-.01em;">Undergraduate Teaching Assistant <span style="color:var(--ink-faint); font-weight:400;">@ UBC</span></div>
+            <div style="font-size:13px; color:var(--ink-soft); margin-top:6px; line-height:1.6; max-width:60ch;">Labs &amp; tutoring for 60+ students; designed and graded for 300+ across the two largest CS courses.</div>
+            <div style="font-size:11px; color:var(--ink-faint); margin-top:8px;">Java · Machine Architecture</div>
+          </div>
+          <div style="text-align:right; font-size:11px; color:var(--ink-soft); line-height:1.5;">Sept 2024 —<br><span style="color:#3FB27F;">● present</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section id="projects" style="scroll-margin-top:54px; border-bottom:1px solid var(--rule); ">
+    <div style="max-width:1200px; margin:0 auto; padding:80px 40px; display:grid; grid-template-columns:132px minmax(0,1fr); gap:40px; ">
+      <div style="position:sticky; top:86px; align-self:start; ">
+        <div style="font-size:11px; letter-spacing:.2em; color:var(--accent); ">[ 03 ]</div>
+        <div style="font-size:11px; letter-spacing:.2em; color:var(--ink); margin-top:8px; line-height:1.7;">PROJECTS</div>
+        <div style="font-size:11px; color:var(--ink-faint); margin-top:14px;">$ ls ~/side</div>
+      </div>
+
+      <div>
+        <p data-reveal style="margin:0 0 32px; max-width:60ch; font-size:14px; line-height:1.7; color:var(--ink-soft);">Personal builds — nights, weekends, and coursework taken further than required.</p>
+
+        <a data-reveal href="https://github.com/ariqmuldi/ponotodoro" target="_blank" rel="noopener" style="text-decoration:none; color:inherit; border-top:1px solid var(--rule2); padding:22px 8px; display:grid; grid-template-columns:52px minmax(0,1fr) minmax(0,240px) 24px; gap:20px; align-items:baseline; transition:background .2s, padding-left .2s;" style-hover="background:rgba(85,88,121,.05); padding-left:16px;">
+          <span style="font-size:11px; color:var(--accent); letter-spacing:.1em;">[01]</span>
+          <div>
+            <div style="font-size:17px; font-weight:600; letter-spacing:-.02em; color:var(--ink);">Ponotodoro</div>
+            <div style="font-size:12.5px; color:var(--ink-soft); margin-top:5px;">Pomodoro timer fused with notes &amp; to-do lists.</div>
+          </div>
+          <div style="font-size:11px; color:var(--ink-faint); align-self:center;">React · Node · PostgreSQL</div>
+          <span style="color:var(--accent); text-align:right; align-self:center;">↗</span>
+        </a>
+
+        <a data-reveal href="https://github.com/ariqmuldi/flight-hub" target="_blank" rel="noopener" style="text-decoration:none; color:inherit; border-top:1px solid var(--rule); padding:22px 8px; display:grid; grid-template-columns:52px minmax(0,1fr) minmax(0,240px) 24px; gap:20px; align-items:baseline; transition:background .2s, padding-left .2s;" style-hover="background:rgba(85,88,121,.05); padding-left:16px;">
+          <span style="font-size:11px; color:var(--accent); letter-spacing:.1em;">[02]</span>
+          <div>
+            <div style="font-size:17px; font-weight:600; letter-spacing:-.02em; color:var(--ink);">Flight Hub</div>
+            <div style="font-size:12.5px; color:var(--ink-soft); margin-top:5px;">Flight-deal finder + blog on the Amadeus &amp; Twilio APIs.</div>
+          </div>
+          <div style="font-size:11px; color:var(--ink-faint); align-self:center;">Flask · React · SQLite</div>
+          <span style="color:var(--accent); text-align:right; align-self:center;">↗</span>
+        </a>
+
+        <a data-reveal href="https://github.com/namekeptanonymous/Error404" target="_blank" rel="noopener" style="text-decoration:none; color:inherit; border-top:1px solid var(--rule); padding:22px 8px; display:grid; grid-template-columns:52px minmax(0,1fr) minmax(0,240px) 24px; gap:20px; align-items:baseline; transition:background .2s, padding-left .2s;" style-hover="background:rgba(85,88,121,.05); padding-left:16px;">
+          <span style="font-size:11px; color:var(--accent); letter-spacing:.1em;">[03]</span>
+          <div>
+            <div style="font-size:17px; font-weight:600; letter-spacing:-.02em; color:var(--ink);">ChatterBox</div>
+            <div style="font-size:12.5px; color:var(--ink-soft); margin-top:5px;">Discord-style real-time chat with channels &amp; auth.</div>
+          </div>
+          <div style="font-size:11px; color:var(--ink-faint); align-self:center;">React · Firebase · Tailwind</div>
+          <span style="color:var(--accent); text-align:right; align-self:center;">↗</span>
+        </a>
+
+        <a data-reveal href="https://github.com/ariqmuldi/moodi-jawoodi-grocery" target="_blank" rel="noopener" style="text-decoration:none; color:inherit; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule2); padding:22px 8px; display:grid; grid-template-columns:52px minmax(0,1fr) minmax(0,240px) 24px; gap:20px; align-items:baseline; transition:background .2s, padding-left .2s;" style-hover="background:rgba(85,88,121,.05); padding-left:16px;">
+          <span style="font-size:11px; color:var(--accent); letter-spacing:.1em;">[04]</span>
+          <div>
+            <div style="font-size:17px; font-weight:600; letter-spacing:-.02em; color:var(--ink);">MoodiJawoodi</div>
+            <div style="font-size:12.5px; color:var(--ink-soft); margin-top:5px;">Grocery storefront on Java + JDBC with a MySQL backend.</div>
+          </div>
+          <div style="font-size:11px; color:var(--ink-faint); align-self:center;">Java · MySQL · Docker</div>
+          <span style="color:var(--accent); text-align:right; align-self:center;">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STACK (tree) ============ -->
+  <section id="stack" style="scroll-margin-top:54px; border-bottom:1px solid var(--rule); background:var(--paper2); ">
+    <div style="max-width:1200px; margin:0 auto; padding:80px 40px; display:grid; grid-template-columns:132px minmax(0,1fr); gap:40px; ">
+      <div style="position:sticky; top:86px; align-self:start; ">
+        <div style="font-size:11px; letter-spacing:.2em; color:var(--accent); ">[ 04 ]</div>
+        <div style="font-size:11px; letter-spacing:.2em; color:var(--ink); margin-top:8px; line-height:1.7;">STACK</div>
+        <div style="font-size:11px; color:var(--ink-faint); margin-top:14px;">$ tree</div>
+      </div>
+
+      <div data-reveal style="font-size:14px; line-height:1.5;">
+        <div style="color:var(--ink); margin-bottom:18px;">~/stack</div>
+        <div style="display:flex; gap:16px; padding:9px 0;"><span style="color:var(--accent); white-space:pre;">├──</span><span style="width:130px; flex:none; color:var(--ink); font-weight:500;">languages/</span><span style="color:var(--ink-soft); font-size:13px;">TypeScript · JavaScript · Python · Java · C++ · C · PHP · SQL</span></div>
+        <div style="display:flex; gap:16px; padding:9px 0;"><span style="color:var(--accent); white-space:pre;">├──</span><span style="width:130px; flex:none; color:var(--ink); font-weight:500;">frameworks/</span><span style="color:var(--ink-soft); font-size:13px;">React · Next.js · Node · Express · Prisma · Flask · Laravel · Tailwind</span></div>
+        <div style="display:flex; gap:16px; padding:9px 0;"><span style="color:var(--accent); white-space:pre;">├──</span><span style="width:130px; flex:none; color:var(--ink); font-weight:500;">tools/</span><span style="color:var(--ink-soft); font-size:13px;">Git · Docker · Stripe · Shopify · Zod · Jest · Postman · Figma</span></div>
+        <div style="display:flex; gap:16px; padding:9px 0;"><span style="color:var(--accent); white-space:pre;">├──</span><span style="width:130px; flex:none; color:var(--ink); font-weight:500;">data/</span><span style="color:var(--ink-soft); font-size:13px;">Pandas · NumPy · Matplotlib · Plotly · Jupyter · LLMs</span></div>
+        <div style="display:flex; gap:16px; padding:9px 0;"><span style="color:var(--accent); white-space:pre;">└──</span><span style="width:130px; flex:none; color:var(--ink); font-weight:500;">cloud/</span><span style="color:var(--ink-soft); font-size:13px;">Google Cloud · Firebase · Vercel · Fly.io</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EDUCATION ============ -->
+  <section id="education" style="scroll-margin-top:54px; border-bottom:1px solid var(--rule); ">
+    <div style="max-width:1200px; margin:0 auto; padding:80px 40px; display:grid; grid-template-columns:132px minmax(0,1fr); gap:40px; ">
+      <div style="position:sticky; top:86px; align-self:start; ">
+        <div style="font-size:11px; letter-spacing:.2em; color:var(--accent); ">[ 05 ]</div>
+        <div style="font-size:11px; letter-spacing:.2em; color:var(--ink); margin-top:8px; line-height:1.7;">EDUCATION</div>
+        <div style="font-size:11px; color:var(--ink-faint); margin-top:14px;">$ cat edu.md</div>
+      </div>
+
+      <div>
+        <div data-reveal style="border-top:1px solid var(--rule2); padding-top:28px; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:24px; align-items:start;">
+          <div>
+            <h3 style="margin:0; font-size:clamp(24px,3vw,34px); font-weight:600; letter-spacing:-.03em; color:var(--ink);">University of British Columbia</h3>
+            <div style="font-size:14px; color:var(--ink); margin-top:12px;">B.Sc. Computer Science <span style="color:var(--ink-faint);">·</span> Minor in Data Science</div>
+            <div style="font-size:12.5px; color:var(--ink-soft); margin-top:6px;">Kelowna, BC <span style="color:var(--ink-faint);">·</span> Expected May 2026</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:clamp(28px,3.4vw,40px); font-weight:600; letter-spacing:-.03em; color:var(--accent);">4.21<span style="color:var(--ink-faint); font-size:.5em; font-weight:400;">/4.33</span></div>
+            <div style="font-size:10.5px; letter-spacing:.16em; color:var(--ink-faint); margin-top:4px;">GPA · 90.6%</div>
+          </div>
+        </div>
+
+        <div data-reveal style="margin-top:34px; border-top:1px solid var(--rule); padding-top:24px;">
+          <div style="font-size:10.5px; letter-spacing:.18em; color:var(--ink-faint); margin-bottom:14px;">SELECTED COURSEWORK</div>
+          <div style="font-size:13px; line-height:2; color:var(--ink-soft);">Software Engineering <span style="color:var(--ink-faint);">·</span> Data Structures <span style="color:var(--ink-faint);">·</span> Databases <span style="color:var(--ink-faint);">·</span> Machine Learning <span style="color:var(--ink-faint);">·</span> Analysis of Algorithms <span style="color:var(--ink-faint);">·</span> Networks <span style="color:var(--ink-faint);">·</span> Machine Architecture <span style="color:var(--ink-faint);">·</span> Human–Computer Interaction <span style="color:var(--ink-faint);">·</span> Applied Regression</div>
+        </div>
+
+        <div data-reveal style="margin-top:28px; border-top:1px solid var(--rule); padding-top:24px;">
+          <div style="font-size:10.5px; letter-spacing:.18em; color:var(--ink-faint); margin-bottom:14px;">CERTIFICATIONS</div>
+          <div style="font-size:13px; line-height:1.9; color:var(--ink-soft);">Udemy — The Complete 2024 Web Development Bootcamp<br>Udemy — The Complete Python Pro Bootcamp</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT (dark terminal) ============ -->
+  <section id="contact" style="scroll-margin-top:54px; background:#23242F; color:#EDE7D6; ">
+    <div style="max-width:1200px; margin:0 auto; padding:80px 40px 44px; ">
+      <div style="font-size:13px; color:#98A1BC; margin-bottom:40px;"><span style="color:#7E86A6;">ariq@muldi</span>:<span style="color:#B9AE97;">~</span>$ contact --now<span style="display:inline-block; width:.58em; height:1.02em; background:#98A1BC; vertical-align:-3px; margin-left:.2em; animation:blink 1.05s steps(1) infinite;"></span></div>
+
+      <h2 style="margin:0; font-size:clamp(40px,7vw,88px); line-height:.95; font-weight:600; letter-spacing:-.045em; color:#F4EBD3;">LET'S BUILD<br>SOMETHING.</h2>
+
+      <div style="margin-top:44px; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1px; background:rgba(152,161,188,.2); border:1px solid rgba(152,161,188,.2); ">
+        <a href="mailto:hello@ariqmuldi.com" style="background:#23242F; padding:22px 20px; text-decoration:none; color:#EDE7D6; transition:background .2s;" style-hover="background:#2C2E3B">
+          <div style="font-size:10px; letter-spacing:.18em; color:#7E86A6;">01 / EMAIL</div>
+          <div style="font-size:14px; margin-top:10px; color:#F4EBD3;">hello@ariqmuldi.com <span style="color:#98A1BC;">↗</span></div>
+        </a>
+        <a href="https://github.com/ariqmuldi" target="_blank" rel="noopener" style="background:#23242F; padding:22px 20px; text-decoration:none; color:#EDE7D6; transition:background .2s;" style-hover="background:#2C2E3B">
+          <div style="font-size:10px; letter-spacing:.18em; color:#7E86A6;">02 / GITHUB</div>
+          <div style="font-size:14px; margin-top:10px; color:#F4EBD3;">github.com/ariqmuldi <span style="color:#98A1BC;">↗</span></div>
+        </a>
+        <a href="https://linkedin.com/in/ariqmuldi" target="_blank" rel="noopener" style="background:#23242F; padding:22px 20px; text-decoration:none; color:#EDE7D6; transition:background .2s;" style-hover="background:#2C2E3B">
+          <div style="font-size:10px; letter-spacing:.18em; color:#7E86A6;">03 / LINKEDIN</div>
+          <div style="font-size:14px; margin-top:10px; color:#F4EBD3;">in/ariqmuldi <span style="color:#98A1BC;">↗</span></div>
+        </a>
+        <a href="#top" style="background:#23242F; padding:22px 20px; text-decoration:none; color:#EDE7D6; transition:background .2s;" style-hover="background:#2C2E3B">
+          <div style="font-size:10px; letter-spacing:.18em; color:#7E86A6;">04 / RESUME</div>
+          <div style="font-size:14px; margin-top:10px; color:#F4EBD3;">download .pdf <span style="color:#98A1BC;">↗</span></div>
+        </a>
+      </div>
+
+      <div style="margin-top:44px; padding-top:20px; border-top:1px solid rgba(152,161,188,.2); display:flex; flex-wrap:wrap; gap:10px 28px; font-size:11.5px; color:#7E86A6; ">
+        <span><span style="color:#3FB27F;">●</span> available for 2026 roles</span>
+        <span style="color:#575E76;">|</span>
+        <span>Kelowna, BC</span>
+        <span style="color:#575E76;">|</span>
+        <span>local <span ref="{{ clockRef }}" style="color:#98A1BC;">--:--:--</span></span>
+        <span style="margin-left:auto; color:#575E76;">© 2026 Ariq Muldi — built in mono.</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;monoFont&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;IBM Plex Mono&quot;,&quot;JetBrains Mono&quot;,&quot;Space Mono&quot;],&quot;default&quot;:&quot;IBM Plex Mono&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Type&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#555879&quot;,&quot;options&quot;:[&quot;#555879&quot;,&quot;#3D3F5C&quot;,&quot;#98A1BC&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Color&quot;},&quot;showWorkImages&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Layout&quot;}}">
+class Component extends DCLogic {
+  rootRef = React.createRef();
+  typedRef = React.createRef();
+  pathRef = React.createRef();
+  clockRef = React.createRef();
+
+  applyTheme() {
+    const el = this.rootRef.current;
+    if (!el) return;
+    const font = this.props.monoFont || 'IBM Plex Mono';
+    el.style.fontFamily = "'" + font + "', ui-monospace, monospace";
+    if (this.props.accent) el.style.setProperty('--accent', this.props.accent);
+    el.style.setProperty('--img-display', this.props.showWorkImages === false ? 'none' : 'block');
+  }
+
+  componentDidMount() {
+    this.applyTheme();
+    this.typeWhoami();
+    this.setupReveals();
+    this.setupScrollSpy();
+    this.startClock();
+  }
+
+  componentDidUpdate() { this.applyTheme(); }
+
+  componentWillUnmount() {
+    if (this._clk) clearInterval(this._clk);
+    if (this._io) this._io.disconnect();
+    if (this._spy) this._spy.disconnect();
+  }
+
+  typeWhoami() {
+    const el = this.typedRef.current;
+    if (!el) return;
+    const full = 'whoami';
+    el.textContent = '';
+    let i = 0;
+    const t = setInterval(() => {
+      el.textContent = full.slice(0, ++i);
+      if (i >= full.length) clearInterval(t);
+    }, 95);
+  }
+
+  setupReveals() {
+    const root = this.rootRef.current;
+    if (!root) return;
+    const els = Array.prototype.slice.call(root.querySelectorAll('[data-reveal]'));
+    els.forEach((el) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(16px)';
+      el.style.transition = 'opacity .7s cubic-bezier(.2,.6,.2,1), transform .7s cubic-bezier(.2,.6,.2,1)';
+      el.style.willChange = 'opacity, transform';
+    });
+    this._io = new IntersectionObserver((ents) => {
+      ents.forEach((e) => {
+        if (e.isIntersecting) {
+          const d = parseFloat(e.target.getAttribute('data-delay') || '0');
+          e.target.style.transitionDelay = d + 'ms';
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'none';
+          this._io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' });
+    els.forEach((el) => this._io.observe(el));
+  }
+
+  setupScrollSpy() {
+    const root = this.rootRef.current;
+    if (!root) return;
+    const secs = Array.prototype.slice.call(root.querySelectorAll('section[id]'));
+    const links = Array.prototype.slice.call(root.querySelectorAll('[data-nav]'));
+    const setActive = (id) => {
+      if (this.pathRef.current) this.pathRef.current.textContent = id === 'top' ? '~/' : '~/' + id;
+      links.forEach((l) => {
+        const on = l.getAttribute('data-nav') === id;
+        l.style.color = on ? 'var(--accent)' : 'var(--ink-soft)';
+      });
+    };
+    this._spy = new IntersectionObserver((ents) => {
+      ents.forEach((e) => { if (e.isIntersecting) setActive(e.target.id); });
+    }, { threshold: 0, rootMargin: '-45% 0px -50% 0px' });
+    secs.forEach((s) => this._spy.observe(s));
+  }
+
+  startClock() {
+    const el = this.clockRef.current;
+    if (!el) return;
+    const fmt = () => {
+      try {
+        el.textContent = new Date().toLocaleTimeString('en-CA', { hour12: false, timeZone: 'America/Vancouver' });
+      } catch (err) {
+        el.textContent = new Date().toLocaleTimeString();
+      }
+    };
+    fmt();
+    this._clk = setInterval(fmt, 1000);
+  }
+
+  renderVals() {
+    return {
+      rootRef: this.rootRef,
+      typedRef: this.typedRef,
+      pathRef: this.pathRef,
+      clockRef: this.clockRef,
+    };
+  }
+}
+</script>
+</body>
+</html>

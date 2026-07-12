@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-interface Experience {
+export interface Experience {
   id: number;
   title: string;
   company: string;
@@ -38,7 +38,6 @@ interface Project {
   id: number;
   title: string;
   description: string;
-  image: string;
   technologies: string[];
   featured: boolean;
   github: string;
@@ -214,7 +213,7 @@ const TECH_KEYWORDS = [
   'Proxy', 'Load Balancer', 'CDN', 'Cloudflare', 'FastlyEdge Computing'
 ];
 
-function cleanLatexText(text: string): string {
+export function cleanLatexText(text: string): string {
   // Remove LaTeX color commands
   text = text.replace(/\\textcolor\{[^}]+\}\{([^}]+)\}/g, '$1');
 
@@ -281,12 +280,7 @@ function generateDescription(accomplishments: string[]): string {
   return description;
 }
 
-function generateImagePath(title: string): string {
-  const slug = title.toLowerCase().replace(/[^a-z0-9]/g, '');
-  return `/${slug}picture.jpg`;
-}
-
-function parseResume(latexContent: string): Experience[] {
+export function parseResume(latexContent: string): Experience[] {
   const experiences: Experience[] = [];
 
   // Find the Experience section
@@ -600,9 +594,6 @@ function parseProjects(latexContent: string): Project[] {
     // Generate description from accomplishments
     const description = generateDescription(accomplishments);
 
-    // Generate image path from title
-    const image = generateImagePath(title);
-
     // All projects default to not featured (for MVP)
     const featured = false;
 
@@ -618,7 +609,6 @@ function parseProjects(latexContent: string): Project[] {
       id,
       title,
       description,
-      image,
       technologies,
       featured,
       github
@@ -704,9 +694,12 @@ function updateConfigFile(configPath: string, experiences: Experience[], existin
         hideAccomplishments: "Array of accomplishment indices (1-based) to hide. Example: [1, 3, 5] hides the 1st, 3rd, and 5th accomplishments. Ignored if hideAllAccomplishments is true.",
         hideTechnologies: "Set to true to hide the technologies section for this experience."
       },
+      // These example keys are generic placeholders — replace with your actual experience
+      // keys (see the "Current experience keys" list in notes below). Role titles change, so
+      // examples intentionally don't hardcode a real title.
       examples: {
         hideEntireExperience: {
-          "Undergraduate Teaching Assistant": {
+          "Example Role (Department)": {
             hidden: true,
             hideAllAccomplishments: false,
             hideAccomplishments: [],
@@ -714,7 +707,7 @@ function updateConfigFile(configPath: string, experiences: Experience[], existin
           }
         },
         hideAllAccomplishmentsKeepTech: {
-          "Junior Software Developer": {
+          "Example Role": {
             hidden: false,
             hideAllAccomplishments: true,
             hideAccomplishments: [],
@@ -722,7 +715,7 @@ function updateConfigFile(configPath: string, experiences: Experience[], existin
           }
         },
         hideAccomplishmentsAndTech: {
-          "Junior Software Developer": {
+          "Example Role": {
             hidden: false,
             hideAllAccomplishments: true,
             hideAccomplishments: [],
@@ -730,7 +723,7 @@ function updateConfigFile(configPath: string, experiences: Experience[], existin
           }
         },
         hideSpecificAccomplishments: {
-          "Software Developer (Work Study Program)": {
+          "Another Role (Department)": {
             hidden: false,
             hideAllAccomplishments: false,
             hideAccomplishments: [2, 4, 6, 8],
@@ -837,7 +830,7 @@ function applyConfig(experiences: Experience[], config: ResumeConfig | null): Ex
 
 function generateTypeScriptFile(experiences: Experience[], outputPath: string): void {
   const content = `// THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
-// Generated from: /data/master-resume.tex
+// Generated from: /data/source/master-resume.tex
 
 export interface Experience {
   id: number;
@@ -859,7 +852,7 @@ export const experiences: Experience[] = ${JSON.stringify(experiences, null, 2)}
 
 function generateSkillsTypeScriptFile(skills: Skills, outputPath: string): void {
   const content = `// THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
-// Generated from: /data/master-resume.tex
+// Generated from: /data/source/master-resume.tex
 
 export interface SkillCategory {
   name: string;
@@ -878,7 +871,7 @@ export const skills: Skills = ${JSON.stringify(skills, null, 2)};
 
 function generateEducationTypeScriptFile(education: Education, outputPath: string): void {
   const content = `// THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
-// Generated from: /data/master-resume.tex
+// Generated from: /data/source/master-resume.tex
 
 export interface Education {
   school: string;
@@ -900,13 +893,12 @@ export const education: Education = ${JSON.stringify(education, null, 2)};
 
 function generateProjectsTypeScriptFile(projects: Project[], outputPath: string): void {
   const content = `// THIS FILE IS AUTO-GENERATED - DO NOT EDIT MANUALLY
-// Generated from: /data/master-resume.tex
+// Generated from: /data/source/master-resume.tex
 
 export interface Project {
   id: number;
   title: string;
   description: string;
-  image: string;
   technologies: string[];
   featured: boolean;
   github: string;
@@ -923,12 +915,12 @@ function main() {
     console.log('Reading LaTeX resume file...');
 
     const projectRoot = path.resolve(__dirname, '..');
-    const latexPath = path.join(projectRoot, 'data', 'master-resume.tex');
-    const configPath = path.join(projectRoot, 'data', 'resume-config.json');
-    const outputPath = path.join(projectRoot, 'app', 'data', 'experiences.ts');
-    const skillsOutputPath = path.join(projectRoot, 'app', 'data', 'skills.ts');
-    const educationOutputPath = path.join(projectRoot, 'app', 'data', 'education.ts');
-    const projectsOutputPath = path.join(projectRoot, 'app', 'data', 'projects.ts');
+    const latexPath = path.join(projectRoot, 'data', 'source', 'master-resume.tex');
+    const configPath = path.join(projectRoot, 'data', 'source', 'resume-config.json');
+    const outputPath = path.join(projectRoot, 'data', 'generated', 'experiences.ts');
+    const skillsOutputPath = path.join(projectRoot, 'data', 'generated', 'skills.ts');
+    const educationOutputPath = path.join(projectRoot, 'data', 'generated', 'education.ts');
+    const projectsOutputPath = path.join(projectRoot, 'data', 'generated', 'projects.ts');
 
     if (!fs.existsSync(latexPath)) {
       throw new Error(`LaTeX file not found at: ${latexPath}`);
@@ -1020,4 +1012,9 @@ function main() {
   }
 }
 
-main();
+// Only run the full parse pipeline when executed directly (e.g. `tsx scripts/parse-resume.ts`
+// or `npm run parse:resume`). When imported by another script (e.g. generate-work-experience-content.ts),
+// the exported helpers are used without re-running main() and rewriting data/generated/*.ts.
+if (require.main === module) {
+  main();
+}

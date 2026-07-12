@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</helmet>
+<div style="{{ boxStyle }}">
+  <sc-if value="{{ isF1 }}"><span style="{{ glyphStyle }}">~/</span></sc-if>
+  <sc-if value="{{ isF2 }}"><span style="{{ glyphRow }}"><span style="{{ accentGlyph }}">&gt;</span><span style="{{ cursorStyle }}"></span></span></sc-if>
+  <sc-if value="{{ isF3 }}"><span style="{{ glyphRow }}">am<span style="{{ cursorStyle }}"></span></span></sc-if>
+  <sc-if value="{{ isF4 }}"><span style="{{ glyphStyle }}">A</span><span style="{{ dotTR }}"></span></sc-if>
+  <sc-if value="{{ isF5 }}"><span style="{{ glyphRow }}"><span style="{{ accentGlyph }}">$</span></span><span style="{{ dotBR }}"></span></sc-if>
+  <sc-if value="{{ isF6 }}"><span style="{{ glyphRow }}"><span style="{{ accentGlyph }}">{</span><span>a</span><span style="{{ accentGlyph }}">}</span></span></sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 140, &quot;height&quot;: 140 },
+  &quot;variant&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;f1&quot;,&quot;f2&quot;,&quot;f3&quot;,&quot;f4&quot;,&quot;f5&quot;,&quot;f6&quot;], &quot;default&quot;: &quot;f1&quot;, &quot;tsType&quot;: &quot;string&quot; },
+  &quot;px&quot;: { &quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 104, &quot;min&quot;: 12, &quot;max&quot;: 240, &quot;tsType&quot;: &quot;number&quot; },
+  &quot;theme&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;dark&quot;,&quot;paper&quot;], &quot;default&quot;: &quot;dark&quot;, &quot;tsType&quot;: &quot;string&quot; }
+}">
+class Component extends DCLogic {
+  renderVals() {
+    const px = Number(this.props.px ?? 104);
+    const variant = this.props.variant || 'f1';
+    const dark = (this.props.theme || 'dark') === 'dark';
+    const bg = dark ? '#23242f' : '#faf7f0';
+    const fg = dark ? '#f4ebd3' : '#2a2c3b';
+    const accent = dark ? '#98a1bc' : '#555879';
+    const border = dark ? '#555879' : 'rgba(42,44,59,0.42)';
+    const green = '#3fb27f';
+    const scaleMap = { f1: 0.46, f2: 0.5, f3: 0.4, f4: 0.6, f5: 0.58, f6: 0.42 };
+    const fs = Math.max(6, Math.round(px * (scaleMap[variant] || 0.46)));
+    const dot = Math.max(3, Math.round(px * 0.15));
+    const inset = Math.max(2, Math.round(px * 0.15));
+    const boxStyle = 'width:' + px + 'px; height:' + px + 'px; box-sizing:border-box; background:' + bg + '; border:1px solid ' + border + '; color:' + fg + "; font-family:'IBM Plex Mono',ui-monospace,monospace; font-weight:600; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; letter-spacing:-0.02em;";
+    const glyphStyle = 'font-size:' + fs + 'px; line-height:1;';
+    const glyphRow = 'font-size:' + fs + 'px; line-height:1; display:inline-flex; align-items:center;';
+    const cursorStyle = 'display:inline-block; width:0.5em; height:0.82em; background:' + fg + '; margin-left:0.08em;';
+    const accentGlyph = 'color:' + accent + ';';
+    const dotTR = 'position:absolute; top:' + inset + 'px; right:' + inset + 'px; width:' + dot + 'px; height:' + dot + 'px; border-radius:50%; background:' + green + ';';
+    const dotBR = 'position:absolute; bottom:' + inset + 'px; right:' + inset + 'px; width:' + dot + 'px; height:' + dot + 'px; border-radius:50%; background:' + green + ';';
+    return {
+      isF1: variant === 'f1', isF2: variant === 'f2', isF3: variant === 'f3',
+      isF4: variant === 'f4', isF5: variant === 'f5', isF6: variant === 'f6',
+      boxStyle, glyphStyle, glyphRow, cursorStyle, accentGlyph, dotTR, dotBR
+    };
+  }
+}
+</script>
+</body>
+</html>
