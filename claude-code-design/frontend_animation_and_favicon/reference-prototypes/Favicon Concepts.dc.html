@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; background:#faf7f0; font-family:'IBM Plex Mono', ui-monospace, monospace; -webkit-font-smoothing:antialiased; }
+    ::selection { background: rgba(85,88,121,0.22); color:#2a2c3b; }
+    ::-webkit-scrollbar { width:11px; height:11px; }
+    ::-webkit-scrollbar-track { background:#f0e8d2; }
+    ::-webkit-scrollbar-thumb { background:#98a1bc; border:3px solid #f0e8d2; }
+    a { color:#555879; }
+    a:hover { color:#3d3f5c; }
+  </style>
+</helmet>
+
+<div style="min-height:100vh; background:#faf7f0; color:#2a2c3b;">
+
+  <!-- ===== HEADER ===== -->
+  <div style="max-width:1180px; margin:0 auto; padding:64px 40px 26px;">
+    <div style="font-size:12px; color:#555879; margin-bottom:24px;">ariq@muldi:<span style="color:#b9955f;">~</span>$ <span style="color:rgba(42,44,59,0.7);">ls ./favicon-concepts</span></div>
+    <h1 style="margin:0; font-size:clamp(34px,6vw,64px); font-weight:600; letter-spacing:-0.045em; color:#2a2c3b; line-height:0.92;">FAVICON<br>CONCEPTS</h1>
+    <p style="margin:24px 0 0; max-width:66ch; font-size:14px; line-height:1.72; color:rgba(42,44,59,0.64);">
+      Six directions for <span style="color:#555879;">app/icon.tsx</span>, each built from the site's own terminal vocabulary — the <span style="color:#555879;">~/</span> crumb, the <span style="color:#555879;">$</span> prompt, the <span style="color:#555879;">whoami</span> echo, the green status dot. All are <strong style="font-weight:600; color:#2a2c3b;">square with a 1px hairline</strong> — not a circle — so the mark matches the site's no-radius system. Shown on dark &amp; paper, at real 32px / 16px, and in a browser tab.
+    </p>
+  </div>
+
+  <!-- ===== CURRENT REFERENCE ===== -->
+  <div style="max-width:1180px; margin:0 auto; padding:6px 40px 30px;">
+    <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; border:1px solid rgba(42,44,59,0.16); background:#fffdf7; padding:14px 18px;">
+      <span style="font-size:10px; letter-spacing:0.18em; color:rgba(42,44,59,0.45);">CURRENTLY</span>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div style="width:32px; height:32px; border-radius:50%; background:#2c2e3f; border:1px solid #555879; color:#f4ebd3; font-weight:900; display:flex; align-items:center; justify-content:center; font-size:13px;">AM</div>
+        <div style="width:16px; height:16px; border-radius:50%; background:#2c2e3f; border:1px solid #555879; color:#f4ebd3; font-weight:900; display:flex; align-items:center; justify-content:center; font-size:6.5px;">AM</div>
+      </div>
+      <span style="font-size:12.5px; color:rgba(42,44,59,0.55);">Bold “AM” in a dark-purple circle — legible, but the circle + heavy weight fights the site's square, hairline, monospace system.</span>
+    </div>
+  </div>
+
+  <!-- ===== CONCEPT GRID ===== -->
+  <div style="max-width:1180px; margin:0 auto; padding:0 40px 84px; display:grid; grid-template-columns:repeat(auto-fill, minmax(338px,1fr)); gap:22px;">
+    <sc-for list="{{ concepts }}" as="c" hint-placeholder-count="6">
+      <article style="border:1px solid rgba(42,44,59,0.22); background:#fffdf7; display:flex; flex-direction:column;">
+
+        <!-- header -->
+        <div style="display:flex; align-items:center; gap:11px; padding:15px 18px; border-bottom:1px solid rgba(42,44,59,0.13);">
+          <span style="font-size:11px; letter-spacing:0.12em; color:#f4ebd3; background:#555879; padding:3px 8px;">{{ c.id }}</span>
+          <span style="font-size:15px; font-weight:600; color:#2a2c3b; letter-spacing:-0.01em;">{{ c.name }}</span>
+          <span style="margin-left:auto; font-size:13px; color:rgba(42,44,59,0.5);">{{ c.code }}</span>
+        </div>
+
+        <sc-if value="{{ c.tag }}">
+          <div style="padding:7px 18px; border-bottom:1px solid rgba(42,44,59,0.1); font-size:10px; letter-spacing:0.16em; color:{{ c.tagColor }};">◆ {{ c.tag }}</div>
+        </sc-if>
+
+        <!-- large previews: dark + paper -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(42,44,59,0.13);">
+          <div style="background:#23242f; padding:28px; display:flex; justify-content:center;">
+            <dc-import name="FaviconMark" variant="{{ c.variant }}" px="104" theme="dark" hint-size="104px,104px"></dc-import>
+          </div>
+          <div style="background:#faf7f0; padding:28px; display:flex; justify-content:center;">
+            <dc-import name="FaviconMark" variant="{{ c.variant }}" px="104" theme="paper" hint-size="104px,104px"></dc-import>
+          </div>
+        </div>
+
+        <!-- real size 32 / 16 -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(42,44,59,0.13); border-top:1px solid rgba(42,44,59,0.13);">
+          <div style="background:#23242f; padding:15px; display:flex; align-items:center; justify-content:center; gap:16px;">
+            <dc-import name="FaviconMark" variant="{{ c.variant }}" px="32" theme="dark" hint-size="32px,32px"></dc-import>
+            <dc-import name="FaviconMark" variant="{{ c.variant }}" px="16" theme="dark" hint-size="16px,16px"></dc-import>
+            <span style="font-size:9px; letter-spacing:0.12em; color:#7e86a6;">32·16</span>
+          </div>
+          <div style="background:#faf7f0; padding:15px; display:flex; align-items:center; justify-content:center; gap:16px;">
+            <dc-import name="FaviconMark" variant="{{ c.variant }}" px="32" theme="paper" hint-size="32px,32px"></dc-import>
+            <dc-import name="FaviconMark" variant="{{ c.variant }}" px="16" theme="paper" hint-size="16px,16px"></dc-import>
+            <span style="font-size:9px; letter-spacing:0.12em; color:rgba(42,44,59,0.4);">32·16</span>
+          </div>
+        </div>
+
+        <!-- browser tab mock -->
+        <div style="padding:18px 18px 0; border-top:1px solid rgba(42,44,59,0.13);">
+          <div style="display:flex; align-items:flex-end;">
+            <div style="display:flex; align-items:center; gap:8px; background:#ecebe4; border:1px solid rgba(42,44,59,0.16); border-bottom:none; border-radius:7px 7px 0 0; padding:7px 11px; max-width:210px;">
+              <dc-import name="FaviconMark" variant="{{ c.variant }}" px="15" theme="dark" hint-size="15px,15px"></dc-import>
+              <span style="font-size:11px; color:#2a2c3b; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">ariqmuldi.com</span>
+              <span style="font-size:13px; color:rgba(42,44,59,0.4); line-height:1;">×</span>
+            </div>
+          </div>
+          <div style="height:1px; background:rgba(42,44,59,0.16);"></div>
+        </div>
+
+        <!-- rationale -->
+        <div style="padding:15px 18px 20px; font-size:12.5px; line-height:1.66; color:rgba(42,44,59,0.64);">{{ c.rationale }}</div>
+      </article>
+    </sc-for>
+  </div>
+
+  <!-- ===== FOOTER NOTE ===== -->
+  <div style="max-width:1180px; margin:0 auto; padding:0 40px 70px;">
+    <div style="border-top:1px solid rgba(42,44,59,0.16); padding-top:20px; font-size:12px; line-height:1.7; color:rgba(42,44,59,0.5);">
+      <span style="color:#555879;">$</span> Each mark is generated live at any size — none are image files, so they stay crisp. Tell me which id to ship (e.g. <span style="color:#555879;">F1</span>) and I'll hand you the exact <span style="color:#555879;">app/icon.tsx</span> ImageResponse code.
+    </div>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const CONCEPTS = [
+  { id: 'F1', variant: 'f1', name: 'Home Path', code: '~/', tag: 'RECOMMENDED',
+    rationale: "Your breadcrumb, distilled. The top bar already reads ~/work, ~/projects — so ~/ IS the site. Dead-legible at 16px and unmistakably a shell." },
+  { id: 'F2', variant: 'f2', name: 'Shell Prompt', code: '>_', tag: '',
+    rationale: "The universal \u201Ctype here\u201D glyph: chevron plus a block cursor. Reads as a terminal to anyone, no initials needed — pure and generic in the best way." },
+  { id: 'F3', variant: 'f3', name: 'whoami echo', code: 'am_', tag: 'ALT PICK',
+    rationale: "Keeps the initials, but as terminal output — the lowercase answer to the hero's whoami, with a block cursor. A monogram that tells your story." },
+  { id: 'F4', variant: 'f4', name: 'Signal Mark', code: 'A\u00B7', tag: '',
+    rationale: "A single cream A with the signature green \u201Cavailable\u201D dot — the same status light used across the site. Personal and on-brand, still one clear letter at 16px." },
+  { id: 'F5', variant: 'f5', name: 'Sigil', code: '$\u00B7', tag: '',
+    rationale: "Just the shell sigil in accent purple with the green dot. The most minimal, most abstract option — a mood rather than a monogram." },
+  { id: 'F6', variant: 'f6', name: 'Braced', code: '{a}', tag: '',
+    rationale: "The initial wrapped in code braces — reads as a variable named a. Playful, developer-native, and clearly distinct from the prompt-based marks." }
+];
+
+class Component extends DCLogic {
+  renderVals() {
+    const concepts = CONCEPTS.map((c) => ({
+      ...c,
+      tagColor: c.tag === 'RECOMMENDED' ? '#2f8f66' : '#555879'
+    }));
+    return { concepts };
+  }
+}
+</script>
+</body>
+</html>
