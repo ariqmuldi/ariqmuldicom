@@ -2,15 +2,22 @@
 
 import Image from 'next/image';
 import { experiences } from '@/data/generated/experiences';
-import { useTypewriter } from '@/app/lib/hooks';
+import { useTypewriter, useCountUp } from '@/app/lib/hooks';
+
+// Hooks can't run inside `.map()`, so each metric wraps its number in this tiny client component,
+// which counts up from 0 → target the first time the metric strip scrolls into view.
+function CountUp({ target, pad = 0, suffix = '' }: { target: number; pad?: number; suffix?: string }) {
+	const [ref, text] = useCountUp(target, { pad, suffix });
+	return <span ref={ref}>{text}</span>;
+}
 
 // Hero is static presentation copy (not data-file driven), per the design brief.
 const metrics = [
-	{ num: '1,000+', label: 'USERS SERVED' },
-	{ num: '10,000+', label: 'RECORDS PROCESSED' },
-	{ num: '500+', label: 'STUDENTS IMPACTED' },
+	{ target: 1000, suffix: '+', label: 'USERS SERVED' },
+	{ target: 10000, suffix: '+', label: 'RECORDS PROCESSED' },
+	{ target: 500, suffix: '+', label: 'STUDENTS IMPACTED' },
 	// Role count is derived from the experiences data so it stays in sync.
-	{ num: `${String(experiences.length).padStart(2, '0')}+`, label: 'ROLES' },
+	{ target: experiences.length, pad: 2, suffix: '+', label: 'ROLES' },
 ];
 
 export default function HeroSection() {
@@ -32,7 +39,7 @@ export default function HeroSection() {
 					</h1>
 
 					<div className="hero__title" data-reveal style={{ '--reveal-delay': '160ms' } as React.CSSProperties}>
-						Software Engineer <span className="sep">/</span> Full-Stack <span className="sep">·</span> Cloud &amp; DevOps
+						Software Engineer<span className="sep">/</span>Full-Stack<span className="sep">·</span>Cloud &amp; DevOps
 					</div>
 
 					<p className="hero__intro" data-reveal style={{ '--reveal-delay': '220ms' } as React.CSSProperties}>
@@ -80,10 +87,10 @@ export default function HeroSection() {
 			</div>
 
 			<div className="metric-strip-wrap">
-				<div className="metric-strip" data-reveal>
+				<div className="metric-strip">
 					{metrics.map((m) => (
-						<div className="metric" key={m.label}>
-							<div className="metric__num">{m.num}</div>
+						<div className="metric" data-reveal key={m.label}>
+							<div className="metric__num"><CountUp target={m.target} pad={m.pad} suffix={m.suffix} /></div>
 							<div className="metric__label">{m.label}</div>
 						</div>
 					))}
