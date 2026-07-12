@@ -670,6 +670,9 @@
 .gitlog__show-line {
   font-size: 12px;
   color: var(--ink);
+  /* The commit hash is a single 40-char unbreakable token; let it wrap on narrow
+     screens instead of overflowing (and being clipped by the collapse container). */
+  overflow-wrap: anywhere;
 }
 .gitlog__show-hash {
   color: var(--accent);
@@ -1130,6 +1133,17 @@
   .edu-head__gpa-wrap {
     text-align: left;
   }
+
+  /* Touch targets: the standalone action links (live-site / github / open-on-github) render at
+     ~15–21px tall. Vertical padding lifts the tappable area toward 24px+ on touch screens; the
+     text position is unchanged, so the tight Swiss-mono look is preserved. */
+  .link-underline,
+  .proj-row__link,
+  .proj-row__open {
+    display: inline-block;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
 }
 
 @media (max-width: 700px) {
@@ -1145,14 +1159,33 @@
     display: none;
   }
   .topbar__nav {
-    gap: 10px 14px;
+    /* Row-gap handled by the links' own vertical padding below, so the tap targets
+       touch without a dead gap between wrapped rows. */
+    gap: 2px 14px;
     font-size: 10px;
     width: 100%;
     justify-content: flex-start;
   }
+  /* Touch targets: the raw text is only ~15px tall (below the WCAG 2.2 AA 24px minimum for
+     standalone links). Vertical padding grows the tappable area to ~29px without changing the
+     Swiss-mono look — padding is transparent. */
+  .topbar__link {
+    display: inline-block;
+    padding: 7px 0;
+  }
+  /* The contact link's underline is a bottom border, which the padding would detach from the
+     text — swap it for a text-decoration underline (mobile only) so it hugs the text. */
+  .topbar__link--contact {
+    border-bottom: 0;
+    padding-bottom: 7px;
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 3px;
+  }
   .section,
   .contact {
-    scroll-margin-top: 96px;
+    /* Clears the taller mobile bar (brand row + up to ~2 wrapped nav rows of padded links). */
+    scroll-margin-top: 112px;
   }
 }
 
@@ -2313,6 +2346,9 @@
 .site-footer__link {
   color: var(--blue);
   text-decoration: none;
+  /* Grow the tap target past the ~15px text height toward the 24px touch minimum. */
+  display: inline-block;
+  padding: 5px 0;
 }
 .site-footer__link:hover {
   color: var(--dark-head);
@@ -2482,6 +2518,24 @@
   }
   .cg-input--pw {
     width: 100%;
+  }
+}
+
+/* Very narrow phones: the AI-model dropdown holds a 190px min-width, which — with the
+   "GEMINI_MODEL =" label — overflows the row (and the viewport) below ~340px. Drop the
+   pick to its own full-width line and let the dropdown shrink into it so it can't spill. */
+@media (max-width: 480px) {
+  .cg-model__pick {
+    margin-left: 0;
+    width: 100%;
+  }
+  .cg-model__pick .cg-dropdown {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .cg-model__pick .cg-dropdown__btn {
+    width: 100%;
+    min-width: 0;
   }
 }
 
