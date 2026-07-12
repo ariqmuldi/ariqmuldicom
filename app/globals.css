@@ -109,6 +109,15 @@
   opacity: 1;
   transform: none;
 }
+/* Directional variant: eases in from the left instead of up. Used for the sticky
+   section-index marker column so it slides in from the page edge as its section enters.
+   Scoped under .reveal (added by the observer) so the offset never applies pre-hydration. */
+.reveal.reveal--left {
+  transform: translateX(-14px);
+}
+.reveal.reveal--left.is-visible {
+  transform: none;
+}
 
 /* ============================================================
    Shared layout primitives
@@ -182,6 +191,18 @@
   backdrop-filter: saturate(140%) blur(8px);
   -webkit-backdrop-filter: saturate(140%) blur(8px);
   border-bottom: 1px solid var(--rule);
+  /* One-time entrance: eases down from above on load (both routes share this bar). */
+  animation: topbar-in 0.55s cubic-bezier(0.2, 0.6, 0.2, 1) both;
+}
+@keyframes topbar-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 .topbar__inner {
   max-width: var(--content-max);
@@ -210,7 +231,22 @@
   background: var(--green);
   display: inline-block;
   align-self: center;
+  /* Resting state (also the reduced-motion fallback): the static 3px ring. */
   box-shadow: 0 0 0 3px rgba(63, 178, 127, 0.16);
+  animation: topbar-dot-pulse 2.6s ease-out infinite;
+}
+
+/* Slow "available" pulse: an outer ring expands and fades while the static ring stays put. */
+@keyframes topbar-dot-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(63, 178, 127, 0.45), 0 0 0 3px rgba(63, 178, 127, 0.16);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba(63, 178, 127, 0), 0 0 0 3px rgba(63, 178, 127, 0.16);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(63, 178, 127, 0), 0 0 0 3px rgba(63, 178, 127, 0.16);
+  }
 }
 .topbar__name {
   font-weight: 600;
@@ -290,6 +326,9 @@
 }
 .hero__title .sep {
   color: var(--ink-faint);
+  /* Symmetric spacing on both sides so "/" and "·" sit evenly between the words
+     (spacing is controlled here, not by literal spaces in the markup). */
+  margin: 0 0.5em;
 }
 .hero__intro {
   margin: 22px 0 0;
@@ -315,6 +354,20 @@
 }
 .dot-green {
   color: var(--green);
+  /* Ambient "live" breathe on every green status glyph (available / present / active /
+     approve-to-publish) — slow and gentle so it reads as a heartbeat, not a blink. */
+  animation: dot-breathe 2.8s ease-in-out infinite;
+}
+
+/* Shared by .dot-green and the Work "● LIVE" badge. */
+@keyframes dot-breathe {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 .hero__figure {
@@ -420,6 +473,7 @@
 }
 .work-article__status--live {
   color: var(--green);
+  animation: dot-breathe 2.8s ease-in-out infinite;
 }
 .work-article__title {
   margin: 0;
@@ -657,20 +711,26 @@
   color: var(--ink);
   line-height: 1.6;
 }
-@media (prefers-reduced-motion: no-preference) {
-  .gitlog__show {
-    animation: gitlogExpand 0.26s ease;
-  }
+/* Bidirectional expand/collapse used by the Experience git-show and Projects README panels.
+   The panel is always in the DOM; toggling `.is-open` animates grid-template-rows 0fr→1fr (height)
+   plus opacity, so it eases open AND closed. The inner wrapper's overflow:hidden clips content
+   while collapsed and establishes a BFC so the panel's own top margin animates cleanly. */
+.row-collapse {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition:
+    grid-template-rows 0.3s cubic-bezier(0.2, 0.6, 0.2, 1),
+    opacity 0.3s ease;
+  opacity: 0;
 }
-@keyframes gitlogExpand {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.row-collapse.is-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.row-collapse__inner {
+  overflow: hidden;
+  min-height: 0;
 }
 
 /* ============================================================
@@ -785,12 +845,6 @@
   border-bottom: 1px solid var(--accent);
   padding-bottom: 1px;
 }
-@media (prefers-reduced-motion: no-preference) {
-  .proj-row__readme {
-    animation: gitlogExpand 0.26s ease;
-  }
-}
-
 /* ============================================================
    Stack — tree output
    ============================================================ */
@@ -805,8 +859,16 @@
 .tree__row {
   display: flex;
   gap: 16px;
-  padding: 9px 0;
+  padding: 9px 8px 9px 0;
   align-items: baseline;
+  transition:
+    background 0.2s,
+    padding-left 0.2s;
+}
+/* Hover life, matching the git-log / projects rows: faint tint + a small inward nudge. */
+.tree__row:hover {
+  background: rgba(85, 88, 121, 0.05);
+  padding-left: 8px;
 }
 .tree__glyph {
   color: var(--accent);
@@ -817,6 +879,10 @@
   flex: none;
   color: var(--ink);
   font-weight: 500;
+  transition: color 0.2s;
+}
+.tree__row:hover .tree__label {
+  color: var(--accent);
 }
 .tree__items {
   color: var(--ink-soft);
@@ -1105,6 +1171,21 @@
   .caret,
   .contact__caret {
     animation: none;
+  }
+  .topbar__dot {
+    animation: none;
+  }
+  .dot-green,
+  .work-article__status--live {
+    animation: none;
+  }
+  .topbar,
+  .cg-tabpanel {
+    animation: none;
+  }
+  /* Expand/collapse still works, just without the height/opacity tween. */
+  .row-collapse {
+    transition: none;
   }
   .hero__photo,
   .work-figure__img {
@@ -1585,6 +1666,13 @@
   border-bottom: 2px solid transparent;
   padding: 12px 18px;
   cursor: pointer;
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+}
+.cg-tab:hover:not(.is-active) {
+  color: var(--ink);
+  border-bottom-color: var(--rule-2);
 }
 .cg-tab.is-active {
   color: var(--accent);
@@ -1697,6 +1785,18 @@
 }
 .cg-tabpanel {
   padding-top: 26px;
+  /* Fades/rises in each time a tab is selected (the panel remounts on tab change). */
+  animation: cg-tabpanel-in 0.32s cubic-bezier(0.2, 0.6, 0.2, 1) both;
+}
+@keyframes cg-tabpanel-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* Resume tab */
