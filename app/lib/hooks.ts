@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type RefObject } from 'react';
 
 /** True when the user has requested reduced motion. */
 export function usePrefersReducedMotion(): boolean {
@@ -42,6 +42,55 @@ export function useTypewriter(text: string, speed = 95): string {
 }
 
 /**
+ * Counts 0 → `target` the first time the returned ref's element scrolls into view.
+ * SSR-safe (renders the final formatted value on the server, so no hydration flash) and
+ * honors reduced motion (stays at the final value). Returns [ref, displayText].
+ */
+export function useCountUp(
+	target: number,
+	{ duration = 1150, pad = 0, suffix = '' }: { duration?: number; pad?: number; suffix?: string } = {}
+): [RefObject<HTMLSpanElement | null>, string] {
+	const reduced = usePrefersReducedMotion();
+	const ref = useRef<HTMLSpanElement>(null);
+	const fmt = (n: number) =>
+		(pad > 0 ? String(n).padStart(pad, '0') : n.toLocaleString('en-US')) + suffix;
+	const [text, setText] = useState(() => fmt(target)); // final value = SSR + no-JS + reduced fallback
+
+	useEffect(() => {
+		const el = ref.current;
+		if (!el || reduced) return;
+		let raf = 0;
+		const io = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (!entry.isIntersecting) return;
+					io.unobserve(el);
+					const t0 = performance.now();
+					const tick = (now: number) => {
+						const p = Math.min(1, (now - t0) / duration);
+						const eased = 1 - Math.pow(1 - p, 3);
+						setText(fmt(Math.round(target * eased)));
+						if (p < 1) raf = requestAnimationFrame(tick);
+						else setText(fmt(target));
+					};
+					setText(fmt(0));
+					raf = requestAnimationFrame(tick);
+				});
+			},
+			{ threshold: 0.6 }
+		);
+		io.observe(el);
+		return () => {
+			io.disconnect();
+			cancelAnimationFrame(raf);
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [reduced, target, duration, pad, suffix]);
+
+	return [ref, text];
+}
+
+/**
  * Observes all `[data-reveal]` elements under `document` and adds `.is-visible`
  * once they enter the viewport. Respects reduced motion (reveals immediately).
  */
@@ -52,6 +101,28 @@ export function useScrollReveal(): void {
 
 		const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 		els.forEach((el) => el.classList.add('reveal'));
+
+		// Gentle per-list cascade: assign a delay by sibling index so list rows (Work /
+		// Experience / Projects) reveal in sequence. Skips lone elements and never overrides an
+		// explicit inline --reveal-delay (Hero sets its own), so it's purely additive.
+		if (!reduced) {
+			const groups = new Map<HTMLElement, HTMLElement[]>();
+			els.forEach((el) => {
+				const parent = el.parentElement as HTMLElement | null;
+				if (!parent) return;
+				const list = groups.get(parent) ?? [];
+				list.push(el);
+				groups.set(parent, list);
+			});
+			groups.forEach((list) => {
+				if (list.length < 2) return; // don't stagger lone elements
+				list.forEach((el, i) => {
+					if (!el.style.getPropertyValue('--reveal-delay')) {
+						el.style.setProperty('--reveal-delay', `${Math.min(i * 60, 260)}ms`);
+					}
+				});
+			});
+		}
 
 		if (reduced) {
 			els.forEach((el) => el.classList.add('is-visible'));
