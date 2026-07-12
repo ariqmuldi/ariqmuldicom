@@ -373,7 +373,8 @@ The **Skills section** (`SkillsSection.tsx`, rendered as `tree` output) is autom
 - **Dedicated Skills section**: `SkillsSection.tsx` renders all categories from your LaTeX resume — there is no separate "top skills" list, and skills are no longer shown in the Hero
 - **Tree output**: a `~/stack` root line followed by one row per category, prefixed with tree glyphs (`├──` / `└──`, the last row uses `└──`)
 - **Folder labels**: each category name is reduced to a lowercased first-word folder, e.g. "Programming Languages" → `programming/`, "Cloud & Deployment" → `cloud/`
-- **Reveal**: the whole tree fades in on scroll (IntersectionObserver), respecting reduced motion — no Framer Motion / staggered per-item animation
+- **Reveal**: the `~/stack` root line and each category row reveal on scroll with a subtle per-row cascade (`useScrollReveal`'s sibling-index `--reveal-delay`), respecting reduced motion — CSS/IntersectionObserver only, no Framer Motion
+- **Row hover**: each `tree` row tints and nudges inward on hover (its folder label shifts to the accent color), matching the Experience/Projects log rows
 
 ### Profile Picture Display
 
@@ -388,12 +389,10 @@ The Hero section features a framed profile picture:
 The website uses a dynamically generated favicon:
 - **Source**: `/app/icon.tsx` (Next.js ImageResponse)
 - **Output**: Generates `favicon.ico` / `icon.png` automatically
-- **Design**:
-  - Circular badge with "AM" initials
-  - Dark purple background (`#2c2e3f`)
-  - Cream text (`#F4EBD3`)
-  - Border: 1px solid `#555879`
-  - Font: Bold (900 weight), 12px size
+- **Design** — the "whoami echo" mark (concept F3), matching the site's square + hairline terminal system:
+  - Square (no border radius), 1px solid `#555879` hairline
+  - Dark background (`#23242F`)
+  - Lowercase `am` in cream (`#F4EBD3`), 700 weight, followed by a cream block cursor
 
 ### Adding/Removing Skill Categories
 

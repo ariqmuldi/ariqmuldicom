@@ -18,10 +18,11 @@ throughout, a two-column grid, hairline rules instead of cards, and terminal acc
   (the content pipeline explainer + local authoring UI, `/content-generation` — see below)
 - Sections live in `components/` and are composed, in order, by `app/page.tsx`:
   Hero → Work → Experience → Projects → Skills → Education → Contact. `TopBar.tsx` and
-  `Footer.tsx` are **shared presentational components** used by both routes (each passes its own
-  crumb + nav links / footer items), so the header/footer never drift between pages
-- Client behavior (scroll reveal, scroll-spy, typewriter, live Vancouver clock, decorative
-  commit-hash helper) lives in `app/lib/hooks.ts`
+  `Footer.tsx` are **shared components** used by both routes (each passes its own
+  crumb + nav links / footer items), so the header/footer never drift between pages (`Footer.tsx`
+  also self-reveals on scroll via its own IntersectionObserver)
+- Client behavior (scroll reveal + per-list stagger, hero metric count-up, scroll-spy, typewriter,
+  live Vancouver clock, decorative commit-hash helper) lives in `app/lib/hooks.ts`
 - The whole visual system — design tokens as CSS variables, per-section styles, the
   `/content-generation` UI (`.cg-*`), the shared footer (`.site-footer*`), responsive collapse,
   reduced-motion — is in `app/globals.css`. Tailwind is present but the palette in

@@ -57,7 +57,7 @@ source):
 - `app/globals.css` — the entire visual system: design tokens (CSS variables), base/reset,
   scroll-reveal, per-section styles, the `/content-generation` UI (`.cg-*`), the shared footer
   (`.site-footer*`), responsive collapse, and reduced-motion handling
-- `app/icon.tsx` — dynamically generated favicon ("AM" badge) via `ImageResponse`
+- `app/icon.tsx` — dynamically generated favicon via `ImageResponse`: the "whoami echo" mark — a lowercase `am` + block cursor on a dark, 1px-hairline square (no border radius, matching the site's terminal system)
 - `app/sitemap.ts` · `app/robots.ts` — generate `/sitemap.xml` and `/robots.txt` (robots allows all,
   disallows `/api/`, and points at the sitemap; the sitemap lists only the indexable home page)
 - `app/lib/hooks.ts` — client hooks and helpers (see below)
@@ -75,14 +75,14 @@ source):
 | Section | Component | Data source | Notes |
 |---------|-----------|-------------|-------|
 | Top bar | `TopBar.tsx` | nav links from `page.tsx` | shared presentational component (also used by `/content-generation`); sticky nav, scroll-spy highlight, live `~/path` crumb |
-| Hero | `HeroSection.tsx` | static + `experiences` count | typed `whoami`, framed avatar, metric strip |
+| Hero | `HeroSection.tsx` | static + `experiences` count | typed `whoami`, framed avatar, metric strip whose numbers count up on first reveal |
 | Work | `WorkSection.tsx` | `work.ts` (+ `work-experience-content.json`) | case-study articles, `● LIVE` / `○ SHOWCASE TBA`; AI `description`/`technologies` |
 | Experience | `ExperienceSection.tsx` | `experiences.ts` (+ `work-experience-content.json`) | `git log` ledger: collapsed rows show an AI commit subject + `+N insertions` diffstat, expanding to a full-width `git show` body listing every bullet; AI tech + `commitSubject` overlay |
 | Projects | `ProjectsSection.tsx` | `projects.ts` (+ `project-content.json`) | expandable rows: an AI tagline collapsed, expanding to a `cat README.md` panel + GitHub links |
 | Skills | `SkillsSection.tsx` | `skills.ts` | `tree`-style output, one row per category |
 | Education | `EducationSection.tsx` | `education.ts` | school/GPA header, coursework, certifications |
 | Contact | `ContactSection.tsx` | static links | dark section, live Vancouver clock, résumé download; renders the shared `Footer` below it |
-| Footer | `Footer.tsx` | items from caller | shared presentational footer (also used by `/content-generation`); pipe-separated left items + a `© {year} Ariq Muldi` line (dynamic year) |
+| Footer | `Footer.tsx` | items from caller | shared footer (also used by `/content-generation`); pipe-separated left items + a `© {year} Ariq Muldi` line (dynamic year); fades itself in on scroll via its own IntersectionObserver |
 
 `app/page.tsx` renders them in this order: Hero → Work → Experience → Projects → Skills →
 Education → Contact. Navigation is anchor-based (`#work`, `#experience`, `#projects`,
@@ -122,7 +122,8 @@ is **derived in the components**, not stored in the data files.
 ### Client Hooks (`app/lib/hooks.ts`)
 
 - `useTypewriter(text)` — types the hero's `whoami` (~95ms/char); returns full text immediately under reduced motion
-- `useScrollReveal()` — observes `[data-reveal]` elements and adds `.is-visible` when they enter the viewport
+- `useScrollReveal()` — observes `[data-reveal]` elements and adds `.is-visible` when they enter the viewport; also auto-assigns a per-list stagger (`--reveal-delay` by sibling index, 60ms step capped at 260ms) so grouped rows cascade, without overriding explicit inline delays (e.g. the hero's)
+- `useCountUp(target, { duration, pad, suffix })` — returns `[ref, text]`; counts `0 → target` (ease-out cubic, ~1150ms) the first time the ref's element enters view. SSR-safe (renders the final formatted value, so no hydration flash) and holds the final value under reduced motion. Drives the hero metric strip
 - `useActiveSection()` — scroll-spy over `section[id]`; drives nav highlight and the top-bar path crumb
 - `useClock()` — live `HH:MM:SS` clock in `America/Vancouver`, ticking every second
 - `fakeCommitHash(seed)` — deterministic 7-char hex for the Experience ledger row (decorative, stable, not real)
@@ -149,14 +150,17 @@ or blurred orbs**. The only gradient is the dark image overlay on the DOUBL work
 
 ### Interactions
 
-- **Scroll reveal** — elements fade/translate in on entering the viewport (IntersectionObserver); hero uses staggered `--reveal-delay`
+- **Scroll reveal** — elements fade/translate in on entering the viewport (IntersectionObserver). `useScrollReveal()` auto-staggers grouped list rows (Work/Experience/Projects/Skills/Contact) by sibling index; the hero keeps its explicit `--reveal-delay`; the sticky section-index marker column uses a directional `.reveal--left` (eases in from the page edge)
+- **Count-up metrics** — the four hero metric numbers count from `0` to their value the first time the metric strip enters view (`useCountUp`), preserving thousands separators / zero-pad / trailing `+`
 - **Typewriter** — hero `whoami` types on mount, then a blinking caret
+- **Status pulse** — the green availability dot in the top bar pulses an outer ring (`topbar-dot-pulse`); the `● available / live / present` status glyphs (`.dot-green`, plus the Work `● LIVE` badge) gently breathe (`dot-breathe`). Both routes
+- **Bar & footer entrance** — the shared top bar eases down on load (`topbar-in`); the shared footer fades in when scrolled into view (its own IntersectionObserver, since the page-wide reveal's bottom `rootMargin` would skip it)
 - **Scroll-spy** — active section drives the nav highlight and rewrites the `~/path` crumb
 - **Live clock** — Vancouver time in the Contact footer
 - **Image hover** — avatar and work figures are full color by default and zoom slightly (`scale(1.04)`) on hover
-- **Row hover** — Experience/Projects rows tint and shift right, mimicking selecting a log line
-- **Expandable Experience rows** — each row is collapsed by default (AI commit subject + a green `+N insertions · git show ▸` diffstat + tech + dates); clicking (or Enter/Space on the focused row) toggles a `▸`/`▾` glyph and opens a full-width `git show` body — a commit/Author/Date header plus **every** résumé bullet rendered as a green `+` diff line. Independent per row (no accordion); a role with no accomplishments (DOUBL) shows `● in active development` instead and is not expandable. The reveal eases open unless reduced motion is set
-- **Expandable Projects rows** — each row is collapsed by default (AI tagline + tech + a `github ↗` link); clicking (or Enter/Space) toggles a `▸`/`▾` glyph and opens a `cat README.md` panel that lists the project's description one sentence per line, plus an `↗ open on github` link. Independent per row; the GitHub links open the repo without toggling the row
+- **Row hover** — Experience/Projects/Skills-tree rows tint and shift right, mimicking selecting a log line
+- **Expandable Experience rows** — each row is collapsed by default (AI commit subject + a green `+N insertions · git show ▸` diffstat + tech + dates); clicking (or Enter/Space on the focused row) toggles a `▸`/`▾` glyph and opens a full-width `git show` body — a commit/Author/Date header plus **every** résumé bullet rendered as a green `+` diff line. Independent per row (no accordion); a role with no accomplishments (DOUBL) shows `● in active development` instead and is not expandable. The panel eases both open **and** closed via a `grid-template-rows` collapse (`.row-collapse`, always mounted, `inert` when closed), unless reduced motion is set
+- **Expandable Projects rows** — each row is collapsed by default (AI tagline + tech + a `github ↗` link); clicking (or Enter/Space) toggles a `▸`/`▾` glyph and opens a `cat README.md` panel that lists the project's description one sentence per line, plus an `↗ open on github` link. Same bidirectional `.row-collapse` animation as Experience. Independent per row; the GitHub links open the repo without toggling the row
 
 ### Responsive
 
@@ -233,6 +237,11 @@ password-gated authoring UI over the entire pipeline. It has two sections:
    (`ModelSelect.tsx`), and run `generate:*` — with live previews of the Experience/Work/Projects
    rows and a terminal panel that streams each script's output as it runs
 
+This route shares the main page's motion layer: it calls `useScrollReveal()` (its hero, section
+headers, and pipeline diagram fade in on scroll), each editor tab panel fades in when selected
+(`cg-tabpanel-in`), and it inherits the shared top-bar entrance/pulse, footer reveal, and
+`dot-breathe` status glyphs.
+
 ### How it works (backend)
 
 - The client hydrates from `GET /api/content/state` (files) and `GET /api/content/session`
@@ -288,7 +297,7 @@ app/
   page.tsx            main portfolio: compose sections + page-level hooks + ProfilePage JSON-LD
   layout.tsx          root metadata/SEO, IBM Plex Mono, root HTML
   globals.css         design tokens + all section, content-generation & footer styles
-  icon.tsx            generated favicon
+  icon.tsx            generated favicon (lowercase am + block cursor on a dark hairline square)
   sitemap.ts          /sitemap.xml (home only)
   robots.ts           /robots.txt (allow all, disallow /api/, link the sitemap)
   content-generation/ /content-generation route: page.tsx + layout.tsx (noindex metadata)
