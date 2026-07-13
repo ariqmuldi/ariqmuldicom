@@ -174,8 +174,10 @@ border to a `text-decoration` so it stays snug against the padded text, and the 
 `scroll-margin-top` grows to 112px to clear the taller wrapped bar. The shared footer links carry
 the same padding site-wide. Type scales fluidly via `clamp()`, and long unbreakable tokens (the
 expanded `git show` commit hash) wrap instead of overflowing. On `/content-generation`, the editor
-grids collapse at ≤860px and the AI-model dropdown drops to its own full-width line below ~480px so
-its 190px min-width can't overflow a narrow phone.
+grids collapse at ≤860px — where the résumé-config visibility rows also stack the role title above
+its full-width toggle buttons (`hide role` / `hide all bullets` / `hide tech`) so the toggle group
+can't collapse the title track — and the AI-model dropdown drops to its own full-width line below
+~480px so its 190px min-width can't overflow a narrow phone.
 
 ## LaTeX Resume Pipeline
 
