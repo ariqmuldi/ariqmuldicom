@@ -53,7 +53,9 @@ export default function ContactSection() {
 			<Footer
 				items={[
 					<>
-						<span className="dot-green">●</span> available for {year} roles
+						{/* <span className="dot-green">●</span> available for {year} roles */}
+						<span className="dot-green">●</span> available for 2027 roles
+						
 					</>,
 					'Kelowna, BC',
 					<>
