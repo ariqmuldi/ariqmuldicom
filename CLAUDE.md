@@ -12,6 +12,13 @@ React + TypeScript page with a Swiss-mono design: warm off-white paper, `IBM Ple
 throughout, a two-column grid, hairline rules instead of cards, and terminal accents (a typed
 `whoami`, a `git log` experience ledger, a `tree` skills list, a live clock).
 
+## Local dev & testing
+
+The user usually already has the dev server running at `http://localhost:3000` — assume it is
+up rather than starting your own. Use the Playwright MCP server to test functionality and verify
+changes in the real browser (navigate, resize to check mobile responsiveness at multiple widths,
+screenshot, snapshot). The content pipeline UI is at `http://localhost:3000/content-generation`.
+
 ## Architecture at a glance
 
 - Two routes: `app/page.tsx` (the main portfolio, `/`) and `app/content-generation/page.tsx`
