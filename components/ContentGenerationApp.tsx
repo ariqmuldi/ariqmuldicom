@@ -520,6 +520,11 @@ export default function ContentGenerationApp({
 						<span className="cg-section__label">HOW IT WORKS</span>
 						<span className="cg-section__cmd">$ ./pipeline --watch</span>
 					</div>
+					<p className="cg-lead" data-reveal>
+						In plain terms: the résumé is the single source. Everything below reads left-to-right — a source file,
+						the script that processes it, and what it produces. Two tracks run in parallel, then merge into the live
+						site.
+					</p>
 					<PipelineDiagram modelLabel={modelObj.label} modelShort={modelObj.short} />
 				</div>
 			</section>
