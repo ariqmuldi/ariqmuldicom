@@ -2519,6 +2519,19 @@
   .cg-input--pw {
     width: 100%;
   }
+  /* Visibility rows: the toggle group's intrinsic width collapses the title track,
+     wrapping the role one word per line under the buttons. Stack them instead. */
+  .cg-config__row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  .cg-config__toggles {
+    justify-content: flex-start;
+  }
+  .cg-toggle {
+    flex: 1 1 auto;
+    text-align: center;
+  }
 }
 
 /* Very narrow phones: the AI-model dropdown holds a 190px min-width, which — with the
