@@ -92,8 +92,9 @@ Every section `.map()`s over a module in `data/`:
 - The Experience `git log` ledger is collapsed by default (commit subject + `+N insertions`
   diffstat + tech + dates); clicking a row opens a full-width `git show` body listing every
   résumé bullet as a `+` diff line. A role with no accomplishments (DOUBL) shows
-  `● in active development` and is not expandable. Projects rows are the same pattern (tagline →
-  `cat README.md` panel)
+  `● in active development` and is not expandable. Projects rows are the same pattern (tagline +
+  a per-project `<slug>/README.md ▸` expand hint → `cat README.md` panel, where `<slug>` comes
+  from the title so the collapsed rows read like a `~/side` listing)
 
 ## Content pipeline route (`/content-generation`)
 
@@ -138,8 +139,18 @@ run `parse:resume`, review/approve the AI drafts per role & project, pick the Ge
 ## Design constraints (do not reintroduce the old look)
 
 No border radius (except status dots), 1px hairlines only, no box-shadows (except the green
-status-dot ring), no glassmorphism / gradient text / blurred orbs, no Framer Motion. All motion
-is CSS + IntersectionObserver and must respect `prefers-reduced-motion`.
+status-dot ring), no glassmorphism / gradient text / blurred orbs, no Framer Motion. The top bar
+is solid paper (no backdrop blur). All motion is CSS + IntersectionObserver and must respect
+`prefers-reduced-motion`; keep ambient motion minimal (status dots are steady — no pulse/breathe;
+the pipeline diagram is calm) so nothing competes with the content.
+
+**Emphasis is content-first** (the whole point of the muted restyle). `--accent` (`#555879`) is
+reserved for genuinely interactive elements — links, expand toggles, active nav/tab, the
+`approved: false` callout. Decorative terminal chrome (section numbers, git hashes, `$` prompts,
+`[NN]` numbers, tree glyphs, the caret) is faint ink so names / prose / results / dates lead;
+body prose uses `--ink-prose` (a touch darker than `--ink-soft`). `--green` (`#3fb27f`) is status
+only (available / live / present / active). Don't re-tint decorative chrome with `--accent` or
+spread green/color around — color is rare and meaningful.
 
 ## Keeping docs in sync
 

@@ -78,7 +78,7 @@ source):
 | Hero | `HeroSection.tsx` | static + `experiences` count | typed `whoami`, framed avatar, metric strip whose numbers count up on first reveal |
 | Work | `WorkSection.tsx` | `work.ts` (+ `work-experience-content.json`) | case-study articles, `● LIVE` / `○ SHOWCASE TBA`; AI `description`/`technologies` |
 | Experience | `ExperienceSection.tsx` | `experiences.ts` (+ `work-experience-content.json`) | `git log` ledger: collapsed rows show an AI commit subject + `+N insertions` diffstat, expanding to a full-width `git show` body listing every bullet; AI tech + `commitSubject` overlay |
-| Projects | `ProjectsSection.tsx` | `projects.ts` (+ `project-content.json`) | expandable rows: an AI tagline collapsed, expanding to a `cat README.md` panel + GitHub links |
+| Projects | `ProjectsSection.tsx` | `projects.ts` (+ `project-content.json`) | expandable rows: an AI tagline + a `<slug>/README.md ▸` expand hint collapsed, expanding to a `cat README.md` panel + GitHub links |
 | Skills | `SkillsSection.tsx` | `skills.ts` | `tree`-style output, one row per category |
 | Education | `EducationSection.tsx` | `education.ts` | school/GPA header, coursework, certifications |
 | Contact | `ContactSection.tsx` | static links | dark section, live Vancouver clock, résumé download; renders the shared `Footer` below it |
@@ -138,9 +138,9 @@ Defined as CSS variables in `app/globals.css` (the `tailwind.config.ts` palette 
 largely unused by the current design):
 
 - **Paper**: `#FAF7F0` (page), `#F4EBD3` (warmer bg for Experience & Skills)
-- **Ink**: `#2A2C3B` primary, with `-soft` (62%) and `-faint` (40%) variants
-- **Accent**: `#555879` (prompts, numbers, links, active nav)
-- **Green**: `#3FB27F` (live/available status dots)
+- **Ink**: `#2A2C3B` primary, with `-prose` (72%, body copy), `-soft` (62%), and `-faint` (40%) variants
+- **Accent**: `#555879` (reserved for interactive elements — text links, expand toggles, active nav/tab; decorative prompts, numbers, hashes, and tree glyphs are faint ink so content leads)
+- **Green**: `#3FB27F` (status only — live / available / present / active dots)
 - **Dark (Contact)**: `#23242F` bg, `#F4EBD3` headline, `#98A1BC` accent
 - **Rules**: 1px hairlines only — `rgba(42,44,59,.13)` and `.30`
 
@@ -153,14 +153,14 @@ or blurred orbs**. The only gradient is the dark image overlay on the DOUBL work
 - **Scroll reveal** — elements fade/translate in on entering the viewport (IntersectionObserver). `useScrollReveal()` auto-staggers grouped list rows (Work/Experience/Projects/Skills/Contact) by sibling index; the hero keeps its explicit `--reveal-delay`; the sticky section-index marker column uses a directional `.reveal--left` (eases in from the page edge)
 - **Count-up metrics** — the four hero metric numbers count from `0` to their value the first time the metric strip enters view (`useCountUp`), preserving thousands separators / zero-pad / trailing `+`
 - **Typewriter** — hero `whoami` types on mount, then a blinking caret
-- **Status pulse** — the green availability dot in the top bar pulses an outer ring (`topbar-dot-pulse`); the `● available / live / present` status glyphs (`.dot-green`, plus the Work `● LIVE` badge) gently breathe (`dot-breathe`). Both routes
+- **Steady status dots** — the green `● available / live / present / active` glyphs (`.dot-green`, the top-bar dot, the Work `● LIVE` badge) are static, not animated; ambient pulsing/breathing was removed so no motion competes with the content (the top-bar dot keeps only its small static ring)
 - **Bar & footer entrance** — the shared top bar eases down on load (`topbar-in`); the shared footer fades in when scrolled into view (its own IntersectionObserver, since the page-wide reveal's bottom `rootMargin` would skip it)
 - **Scroll-spy** — active section drives the nav highlight and rewrites the `~/path` crumb
 - **Live clock** — Vancouver time in the Contact footer
 - **Image hover** — avatar and work figures are full color by default and zoom slightly (`scale(1.04)`) on hover
 - **Row hover** — Experience/Projects/Skills-tree rows tint and shift right, mimicking selecting a log line
 - **Expandable Experience rows** — each row is collapsed by default (AI commit subject + a green `+N insertions · git show ▸` diffstat + tech + dates); clicking (or Enter/Space on the focused row) toggles a `▸`/`▾` glyph and opens a full-width `git show` body — a commit/Author/Date header plus **every** résumé bullet rendered as a green `+` diff line. Independent per row (no accordion); a role with no accomplishments (DOUBL) shows `● in active development` instead and is not expandable. The panel eases both open **and** closed via a `grid-template-rows` collapse (`.row-collapse`, always mounted, `inert` when closed), unless reduced motion is set
-- **Expandable Projects rows** — each row is collapsed by default (AI tagline + tech + a `github ↗` link); clicking (or Enter/Space) toggles a `▸`/`▾` glyph and opens a `cat README.md` panel that lists the project's description one sentence per line, plus an `↗ open on github` link. Same bidirectional `.row-collapse` animation as Experience. Independent per row; the GitHub links open the repo without toggling the row
+- **Expandable Projects rows** — each row is collapsed by default (AI tagline + a faint `<slug>/README.md ▸` expand hint + tech + a `github ↗` link); clicking (or Enter/Space) toggles a `▸`/`▾` glyph and opens the matching `$ cat ~/side/<slug>/README.md` panel that lists the project's description one sentence per line, plus an `↗ open on github` link. The per-project `<slug>` (derived from the title) makes the collapsed rows read like a `~/side` directory listing rather than a repeated label. Same bidirectional `.row-collapse` animation as Experience. Independent per row; the GitHub links open the repo without toggling the row
 
 ### Responsive
 
@@ -250,8 +250,9 @@ password-gated authoring UI over the entire pipeline. It has two sections:
 
 This route shares the main page's motion layer: it calls `useScrollReveal()` (its hero, section
 headers, and pipeline diagram fade in on scroll), each editor tab panel fades in when selected
-(`cg-tabpanel-in`), and it inherits the shared top-bar entrance/pulse, footer reveal, and
-`dot-breathe` status glyphs.
+(`cg-tabpanel-in`), and it inherits the shared top-bar entrance (`topbar-in`) and footer reveal.
+Its pipeline diagram is deliberately calm — a single faint packet drifts along each labeled
+connector and a relaxed stepper marks the active node with a darker hairline (no accent glow).
 
 ### How it works (backend)
 

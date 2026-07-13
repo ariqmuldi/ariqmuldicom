@@ -280,9 +280,9 @@ Project descriptions are automatically created by joining accomplishment bullets
 "Developed a full-stack app integrating the Pomodoro technique. Engineered frontend with React and Bootstrap. Designed backend using Node.js and PostgreSQL."
 ```
 
-> **Note:** The Projects section is a text-only terminal list (title, tagline, tech, and an
-> expandable `cat README.md` panel) — it does not render project images, so the parser no longer
-> emits an `image` field.
+> **Note:** The Projects section is a text-only terminal list (title, tagline, a
+> `<slug>/README.md ▸` expand hint, tech, and an expandable `cat README.md` panel) — it does not
+> render project images, so the parser no longer emits an `image` field.
 
 ### GitHub Link Handling
 
