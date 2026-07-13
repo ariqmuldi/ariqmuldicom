@@ -10,6 +10,9 @@
   --paper-2: #f4ebd3;
   --ink: #2a2c3b;
   --ink-soft: rgba(42, 44, 59, 0.62);
+  /* Body prose sits a touch darker than --ink-soft so the actual reading content (intros,
+     descriptions, taglines) is the easiest thing on the page to read. */
+  --ink-prose: rgba(42, 44, 59, 0.72);
   --ink-faint: rgba(42, 44, 59, 0.4);
   --accent: #555879;
   --accent-deep: #3d3f5c;
@@ -147,7 +150,8 @@
 .section-index__num {
   font-size: 11px;
   letter-spacing: 0.2em;
-  color: var(--accent);
+  /* Faint metadata: the [ 0N ] index is a quiet marker, not a highlight competing with content. */
+  color: var(--ink-faint);
 }
 .section-index__label {
   font-size: 11px;
@@ -166,7 +170,8 @@
   display: inline-block;
   width: 0.58em;
   height: 1.02em;
-  background: var(--accent);
+  /* Faint ink, not accent: the blinking block is terminal chrome, not an interactive element. */
+  background: rgba(42, 44, 59, 0.5);
   vertical-align: -3px;
   margin-left: 0.14em;
   animation: caret-blink 1.05s steps(1) infinite;
@@ -177,7 +182,7 @@
   max-width: 60ch;
   font-size: 14px;
   line-height: 1.7;
-  color: var(--ink-soft);
+  color: var(--ink-prose);
 }
 
 /* ============================================================
@@ -187,9 +192,9 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(250, 247, 240, 0.86);
-  backdrop-filter: saturate(140%) blur(8px);
-  -webkit-backdrop-filter: saturate(140%) blur(8px);
+  /* Solid paper (no translucency/blur): calmer, and it also lets screenshot / PDF / PPTX capture
+     render the bar instead of blanking out on backdrop-filter. */
+  background: var(--paper);
   border-bottom: 1px solid var(--rule);
   /* One-time entrance: eases down from above on load (both routes share this bar). */
   animation: topbar-in 0.55s cubic-bezier(0.2, 0.6, 0.2, 1) both;
@@ -231,22 +236,9 @@
   background: var(--green);
   display: inline-block;
   align-self: center;
-  /* Resting state (also the reduced-motion fallback): the static 3px ring. */
+  /* Static "available" marker with a small ring — steady, not pulsing, so it reads as a quiet
+     signal rather than ambient motion pulling the eye away from the content. */
   box-shadow: 0 0 0 3px rgba(63, 178, 127, 0.16);
-  animation: topbar-dot-pulse 2.6s ease-out infinite;
-}
-
-/* Slow "available" pulse: an outer ring expands and fades while the static ring stays put. */
-@keyframes topbar-dot-pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(63, 178, 127, 0.45), 0 0 0 3px rgba(63, 178, 127, 0.16);
-  }
-  70% {
-    box-shadow: 0 0 0 7px rgba(63, 178, 127, 0), 0 0 0 3px rgba(63, 178, 127, 0.16);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(63, 178, 127, 0), 0 0 0 3px rgba(63, 178, 127, 0.16);
-  }
 }
 .topbar__name {
   font-weight: 600;
@@ -255,7 +247,8 @@
   color: var(--ink-faint);
 }
 .topbar__crumb {
-  color: var(--accent);
+  /* The ~/ path crumb is decorative terminal chrome — faint, not accent. */
+  color: rgba(42, 44, 59, 0.5);
   font-size: 12px;
   margin-left: 2px;
 }
@@ -307,7 +300,8 @@
   margin-bottom: 34px;
 }
 .hero__prompt-sign {
-  color: var(--accent);
+  /* The `$` prompt is decorative terminal chrome — faint, so the eye skips past it to the content. */
+  color: var(--ink-faint);
 }
 .hero__name {
   margin: 0;
@@ -335,7 +329,7 @@
   max-width: 56ch;
   font-size: 14.5px;
   line-height: 1.7;
-  color: var(--ink-soft);
+  color: var(--ink-prose);
 }
 .hero__status {
   margin-top: 26px;
@@ -352,22 +346,10 @@
   color: var(--ink);
   font-weight: 400;
 }
+/* The green status glyph (available / present / active / approve-to-publish). Kept green, but
+   steady — no breathing — so the page has no ambient motion competing with the reading content. */
 .dot-green {
   color: var(--green);
-  /* Ambient "live" breathe on every green status glyph (available / present / active /
-     approve-to-publish) — slow and gentle so it reads as a heartbeat, not a blink. */
-  animation: dot-breathe 2.8s ease-in-out infinite;
-}
-
-/* Shared by .dot-green and the Work "● LIVE" badge. */
-@keyframes dot-breathe {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
 }
 
 .hero__figure {
@@ -465,15 +447,16 @@
   flex-wrap: wrap;
 }
 .work-article__num {
-  color: var(--accent);
+  /* Quiet ink index instead of accent — keeps its 600 weight so it still anchors the row. */
+  color: rgba(42, 44, 59, 0.55);
   font-weight: 600;
 }
 .work-article__status {
   margin-left: auto;
 }
 .work-article__status--live {
+  /* Green "live in production" status kept, but static (no breathe) so it doesn't pull the eye. */
   color: var(--green);
-  animation: dot-breathe 2.8s ease-in-out infinite;
 }
 .work-article__title {
   margin: 0;
@@ -487,13 +470,14 @@
   margin: 16px 0 0;
   font-size: 14px;
   line-height: 1.72;
-  color: var(--ink-soft);
+  color: var(--ink-prose);
   max-width: 52ch;
 }
 .work-article__tech {
   margin: 20px 0 0;
   font-size: 12px;
-  color: var(--ink);
+  /* Secondary metadata — softer than the description so the prose leads and the stack follows. */
+  color: var(--ink-soft);
   line-height: 1.9;
 }
 .sep-faint {
@@ -591,11 +575,14 @@
   border-bottom: 1px solid var(--rule-2);
 }
 .gitlog__row:hover {
-  background: rgba(85, 88, 121, 0.05);
+  /* Neutral, barely-there hover tint (was an accent-tinted wash). */
+  background: rgba(42, 44, 59, 0.03);
   padding-left: 8px;
 }
 .gitlog__hash {
-  color: var(--accent);
+  /* The commit hash is decorative terminal chrome — faint. (The ▸/▾ toggle keeps accent below,
+     since it's the interactive expand affordance.) */
+  color: rgba(42, 44, 59, 0.5);
   font-size: 12px;
 }
 .gitlog__title {
@@ -611,12 +598,13 @@
 /* Commit subject — the AI-generated one-line summary; nothing is truncated. */
 .gitlog__summary {
   font-size: 13px;
-  color: var(--ink-soft);
+  color: var(--ink-prose);
   margin-top: 7px;
   line-height: 1.55;
   max-width: 66ch;
 }
-/* Diffstat teaser — "+N insertions · git show ▸"; turns accent on row hover. */
+/* Teaser under the commit subject — "+N insertions · git show ▸". The green insertions count is
+   the git-diff "additions" cue; the rest is faint and turns accent on row hover (the row expands). */
 .gitlog__hint {
   font-size: 11.5px;
   color: var(--ink-faint);
@@ -675,7 +663,7 @@
   overflow-wrap: anywhere;
 }
 .gitlog__show-hash {
-  color: var(--accent);
+  color: var(--ink-faint);
 }
 .gitlog__show-meta {
   font-size: 12px;
@@ -759,7 +747,7 @@
   border-bottom: 1px solid var(--rule-2);
 }
 .proj-row:hover {
-  background: rgba(85, 88, 121, 0.05);
+  background: rgba(42, 44, 59, 0.03);
   padding-left: 8px;
 }
 .proj-row:focus-visible {
@@ -768,7 +756,8 @@
 }
 .proj-row__num {
   font-size: 12px;
-  color: var(--accent);
+  /* Faint [NN] index; the ▸/▾ toggle nested inside keeps accent (it's the interactive part). */
+  color: var(--ink-faint);
   letter-spacing: 0.1em;
   white-space: pre;
 }
@@ -784,9 +773,20 @@
 }
 .proj-row__tagline {
   font-size: 13px;
-  color: var(--ink-soft);
+  color: var(--ink-prose);
   margin-top: 6px;
   line-height: 1.5;
+}
+/* Expand affordance mirroring the Experience "git show ▸" hint — a faint "cat README.md ▸" that
+   turns accent on row hover; opening it reveals the full README panel below. */
+.proj-row__hint {
+  font-size: 11.5px;
+  color: var(--ink-faint);
+  margin-top: 8px;
+  transition: color 0.2s;
+}
+.proj-row:hover .proj-row__hint {
+  color: var(--accent);
 }
 .proj-row__tech {
   font-size: 11px;
@@ -821,7 +821,7 @@
   letter-spacing: 0.04em;
 }
 .proj-row__prompt {
-  color: var(--accent);
+  color: var(--ink-faint);
 }
 .proj-row__readme-body {
   max-width: 82ch;
@@ -831,13 +831,13 @@
   padding-left: 18px;
   margin-top: 9px;
   font-size: 13.5px;
-  color: var(--ink-soft);
+  color: var(--ink-prose);
   line-height: 1.66;
 }
 .proj-row__marker {
   position: absolute;
   left: 0;
-  color: var(--accent);
+  color: var(--ink-faint);
 }
 .proj-row__open {
   display: inline-block;
@@ -870,11 +870,12 @@
 }
 /* Hover life, matching the git-log / projects rows: faint tint + a small inward nudge. */
 .tree__row:hover {
-  background: rgba(85, 88, 121, 0.05);
+  background: rgba(42, 44, 59, 0.03);
   padding-left: 8px;
 }
 .tree__glyph {
-  color: var(--accent);
+  /* Tree-drawing glyphs are decorative structure — faint, so the folder labels + items lead. */
+  color: var(--ink-faint);
   white-space: pre;
 }
 .tree__label {
@@ -927,7 +928,8 @@
   font-size: clamp(28px, 3.4vw, 40px);
   font-weight: 600;
   letter-spacing: -0.03em;
-  color: var(--accent);
+  /* A headline result number, not a link — ink so it reads as content, not an accent highlight. */
+  color: var(--ink);
 }
 .edu-head__gpa small {
   color: var(--ink-faint);
@@ -1205,13 +1207,6 @@
   .contact__caret {
     animation: none;
   }
-  .topbar__dot {
-    animation: none;
-  }
-  .dot-green,
-  .work-article__status--live {
-    animation: none;
-  }
   .topbar,
   .cg-tabpanel {
     animation: none;
@@ -1270,7 +1265,7 @@
   max-width: 64ch;
   font-size: 14.5px;
   line-height: 1.72;
-  color: var(--ink-soft);
+  color: var(--ink-prose);
 }
 .cg-hero__meta {
   margin-top: 24px;
@@ -1299,7 +1294,7 @@
 .cg-section__num {
   font-size: 11px;
   letter-spacing: 0.2em;
-  color: var(--accent);
+  color: var(--ink-faint);
 }
 .cg-section__label {
   font-size: 11px;
@@ -1310,6 +1305,14 @@
   font-size: 11px;
   color: var(--ink-faint);
   margin-left: auto;
+}
+/* Plain-language lead-in above the pipeline diagram, for non-technical readers. */
+.cg-lead {
+  margin: 0 0 22px;
+  max-width: 70ch;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink-soft);
 }
 
 /* Pipeline diagram */
@@ -1348,9 +1351,9 @@
   min-width: 210px;
 }
 .cg-node.is-active {
-  border-color: var(--accent);
-  box-shadow: inset 0 0 0 1px var(--accent);
-  background: rgba(85, 88, 121, 0.06);
+  /* Active node is marked by a slightly darker hairline only — no accent glow or fill, so the
+     autoplaying stepper reads as a quiet pointer rather than a traveling highlight. */
+  border-color: rgba(42, 44, 59, 0.55);
 }
 .cg-node__title {
   font-size: 12.5px;
@@ -1375,8 +1378,8 @@
   color: var(--blue);
 }
 .cg-node--dark.is-active {
-  background: #2c2e3b;
-  box-shadow: inset 0 0 0 1px var(--accent);
+  /* Dark output node: lift the hairline instead of an accent ring. */
+  border-color: rgba(152, 161, 188, 0.55);
 }
 .cg-conn {
   flex: 1;
@@ -1424,28 +1427,27 @@
 }
 .cg-packet {
   position: absolute;
-  top: calc(50% - 2.5px);
-  width: 5px;
-  height: 5px;
-  background: var(--accent);
-  animation: cg-flow 2.5s linear infinite;
-}
-.cg-packet--green {
-  background: var(--green);
+  top: calc(50% - 2px);
+  width: 4px;
+  height: 4px;
+  /* Faint ink, slow, and low-opacity — a bare hint of "flow" left-to-right, not a bright
+     traveling dot in accent/green competing with the diagram. */
+  background: rgba(42, 44, 59, 0.28);
+  animation: cg-flow 3.4s linear infinite;
 }
 @keyframes cg-flow {
   0% {
-    left: -4%;
+    left: -3%;
     opacity: 0;
   }
-  12% {
-    opacity: 1;
+  15% {
+    opacity: 0.5;
   }
-  88% {
-    opacity: 1;
+  85% {
+    opacity: 0.5;
   }
   100% {
-    left: 104%;
+    left: 103%;
     opacity: 0;
   }
 }
@@ -1476,7 +1478,8 @@
   color: var(--ink-faint);
 }
 .cg-pipe__stage {
-  color: var(--accent);
+  /* Narration text under the diagram — reading content, not a control, so it's ink not accent. */
+  color: var(--ink-soft);
 }
 
 /* Auth bar */
@@ -2131,7 +2134,7 @@
   align-items: baseline;
 }
 .cg-prev-exp__hash {
-  color: var(--accent);
+  color: var(--ink-faint);
   font-size: 11px;
 }
 .cg-prev-exp__title {
@@ -2185,10 +2188,11 @@
   margin-bottom: 10px;
 }
 .cg-prev-work__num {
-  color: var(--accent);
+  color: rgba(42, 44, 59, 0.55);
   font-weight: 600;
 }
 .cg-prev-work__live {
+  /* Matches the real Work section: green "live" status, kept. */
   margin-left: auto;
   color: var(--green);
 }
@@ -2221,7 +2225,7 @@
 }
 .cg-prev-proj__num {
   font-size: 10.5px;
-  color: var(--accent);
+  color: var(--ink-faint);
 }
 .cg-prev-proj__title {
   font-size: 15px;
@@ -2488,7 +2492,8 @@
 }
 .hero__pipeline-link .sign,
 .hero__pipeline-link .arrow {
-  color: var(--accent);
+  /* Decorative `$` / `↗` glyphs recede to faint; the link itself keeps its interactive hover. */
+  color: var(--ink-faint);
 }
 .hero__pipeline-link:hover {
   border-color: var(--accent);
@@ -2518,6 +2523,19 @@
   }
   .cg-input--pw {
     width: 100%;
+  }
+  /* Visibility rows: the toggle group's intrinsic width collapses the title track,
+     wrapping the role one word per line under the buttons. Stack them instead. */
+  .cg-config__row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  .cg-config__toggles {
+    justify-content: flex-start;
+  }
+  .cg-toggle {
+    flex: 1 1 auto;
+    text-align: center;
   }
 }
 

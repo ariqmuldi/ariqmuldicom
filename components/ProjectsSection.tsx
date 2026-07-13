@@ -50,7 +50,10 @@ export default function ProjectsSection() {
 					{projects.map((project, i) => {
 						const isOpen = openIds.has(project.id);
 						const tagline = taglineByProjectId.get(project.id) ?? toSentences(project.description)[0];
-						const repo = project.github.split('/').pop();
+						// A clean per-project folder slug (from the title) for the `~/side/<slug>/README.md`
+						// path — shown collapsed as the expand hint and expanded as the `$ cat` command, so
+						// the rows read like a `~/side` directory listing rather than a repeated phrase.
+						const slug = project.title.toLowerCase().replace(/\s+/g, '-');
 
 						return (
 							<div
@@ -77,6 +80,10 @@ export default function ProjectsSection() {
 								<div>
 									<div className="proj-row__name">{project.title}</div>
 									{tagline && <div className="proj-row__tagline">{tagline}</div>}
+									<div className="proj-row__hint">
+										{slug}/README.md{' '}
+										<span aria-hidden="true">{isOpen ? '▾' : '▸'}</span>
+									</div>
 									{project.technologies.length > 0 && (
 										<div className="proj-row__tech">{project.technologies.join(' · ')}</div>
 									)}
@@ -97,7 +104,7 @@ export default function ProjectsSection() {
 								<div className="row-collapse__inner" inert={!isOpen}>
 									<div className="proj-row__readme" onClick={(e) => e.stopPropagation()}>
 										<div className="proj-row__readme-cmd">
-											<span className="proj-row__prompt">$</span> cat ~/side/{repo}/README.md
+											<span className="proj-row__prompt">$</span> cat ~/side/{slug}/README.md
 										</div>
 										<div className="proj-row__readme-body">
 											{toSentences(project.description).map((sentence, s) => (

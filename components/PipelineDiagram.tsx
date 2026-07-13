@@ -4,8 +4,9 @@ import { useEffect, useState } from 'react';
 import { usePrefersReducedMotion } from '@/app/lib/hooks';
 import { CONTENT_FILES, CONTENT_SCRIPTS, DATA_MODULES } from '@/app/lib/content-file-names';
 
-// Section 01 — the auto-playing pipeline diagram. Decorative: CSS packets flow along each
-// connector, and a stepper highlights one node at a time (~1.5s) driving the narration line.
+// Section 01 — the auto-playing pipeline diagram. Decorative and deliberately calm: a single
+// faint packet drifts along each labeled connector, and a relaxed stepper (~2.2s) marks one node
+// at a time with a darker hairline (no accent glow) while driving the narration line.
 // Under reduced motion the packets are hidden (CSS) and the stepper does not run.
 //
 // Two rails + a merge, mirrored so each rail is source → script(s) → output:
@@ -41,7 +42,7 @@ export default function PipelineDiagram({ modelLabel, modelShort }: { modelLabel
 
 	useEffect(() => {
 		if (reduced) return;
-		const t = setInterval(() => setActive((i) => (i + 1) % stages.length), 1500);
+		const t = setInterval(() => setActive((i) => (i + 1) % stages.length), 2200);
 		return () => clearInterval(t);
 		// Cadence is fixed; only the label text depends on the model.
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -67,12 +68,13 @@ export default function PipelineDiagram({ modelLabel, modelShort }: { modelLabel
 		</div>
 	);
 
-	const connector = (label: string, keyId: string) => (
+	// One faint packet only on the labeled connectors (the two script runs), so the diagram hints
+	// at "flow" without a bright dot traveling every hairline. Delay desyncs rail B from rail A.
+	const connector = (label: string, keyId: string, delay = '0s') => (
 		<div className={`cg-conn${label ? ' cg-conn--labeled' : ''}`} key={keyId}>
 			{label && <div className="cg-conn__label">{label}</div>}
 			<div className="cg-conn__line" />
-			<span className="cg-packet cg-packet--green" style={{ animationDelay: '0s' }} />
-			<span className="cg-packet cg-packet--green" style={{ animationDelay: '.8s' }} />
+			{label && <span className="cg-packet" style={{ animationDelay: delay }} aria-hidden />}
 			<span className="cg-conn__arrow" aria-hidden />
 		</div>
 	);
@@ -99,7 +101,7 @@ export default function PipelineDiagram({ modelLabel, modelShort }: { modelLabel
 			<div className="cg-rail-label cg-rail-label--gap">B · TEXT → AI DRAFTS</div>
 			<div className="cg-rail">
 				{node({ id: 3, title: 'experience + project text', sub: 'role accomplishments · project descriptions' })}
-				{connector('generate:content', 'b0')}
+				{connector('generate:content', 'b0', '1.7s')}
 				{node({
 					id: 4,
 					title: `${CONTENT_SCRIPTS.generateWork}\n${CONTENT_SCRIPTS.generateProject}`,

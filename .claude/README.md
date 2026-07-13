@@ -1,7 +1,5 @@
 # ariqmuldi.com — Claude Code
 
-**Last Updated:** July 10, 2026
-
 Claude Code configuration for this repository. Contains custom slash commands and local permission settings.
 
 ---

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #faf7f0; color: #2a2c3b; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-feature-settings: 'ss01','zero'; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-x: hidden; }
+  a { color: #555879; text-decoration: none; }
+  a:hover { color: #3d3f5c; }
+  ::selection { background: rgba(85,88,121,.16); color: #2a2c3b; }
+  @keyframes caret-blink { 0%,48% { opacity: 1; } 49%,100% { opacity: 0; } }
+</style>
+</helmet>
+<div style="min-height:100vh; background:#faf7f0;">
+
+  <!-- ============ TOP BAR ============ -->
+  <header style="position:sticky; top:0; z-index:50; background:#faf7f0; border-bottom:1px solid rgba(42,44,59,.13);">
+    <div style="max-width:1200px; margin:0 auto; padding:0 40px; height:54px; display:flex; align-items:center; justify-content:space-between; gap:24px;">
+      <a href="#top" style="display:flex; align-items:center; gap:8px; color:#2a2c3b; font-size:13px; white-space:nowrap;">
+        <span style="width:6px; height:6px; border-radius:50%; background:#5f9276; display:inline-block;"></span>
+        <span style="font-weight:600;">ariqmuldi</span><span style="color:rgba(42,44,59,.4);">.com</span>
+        <span style="color:rgba(42,44,59,.5); font-size:12px; margin-left:2px;">~/</span>
+      </a>
+      <nav style="display:flex; align-items:center; gap:22px; flex-wrap:wrap; justify-content:flex-end; font-size:11px; letter-spacing:.16em; text-transform:uppercase;">
+        <a href="#work" style="color:rgba(42,44,59,.62);">Work</a>
+        <a href="#experience" style="color:rgba(42,44,59,.62);">Experience</a>
+        <a href="#projects" style="color:rgba(42,44,59,.62);">Projects</a>
+        <a href="#skills" style="color:rgba(42,44,59,.62);">Skills</a>
+        <a href="#education" style="color:rgba(42,44,59,.62);">Education</a>
+        <a href="Content Generation.dc.html" style="color:rgba(42,44,59,.62);">Content</a>
+        <a href="#contact" style="color:#2a2c3b; border-bottom:1px solid #555879; padding-bottom:1px;">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section id="top" style="border-bottom:1px solid rgba(42,44,59,.13);">
+    <div style="max-width:1200px; margin:0 auto; padding:76px 40px 68px; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:48px; align-items:start;">
+      <div>
+        <div style="font-size:13px; color:rgba(42,44,59,.62); margin-bottom:34px;">
+          <span style="color:rgba(42,44,59,.5);">$</span> {{ typed }}<span style="display:inline-block; width:.55em; height:1em; background:rgba(42,44,59,.5); vertical-align:-2px; margin-left:.14em; animation:caret-blink 1.05s steps(1) infinite;"></span>
+        </div>
+        <h1 style="margin:0; font-size:clamp(56px,10.5vw,132px); line-height:.9; font-weight:600; letter-spacing:-.045em; color:#2a2c3b;">ARIQ<br>MULDI</h1>
+        <div style="margin-top:30px; font-size:clamp(15px,1.6vw,19px); font-weight:500; color:#2a2c3b;">Software Engineer<span style="color:rgba(42,44,59,.4); margin:0 .5em;">/</span>Full-Stack<span style="color:rgba(42,44,59,.4); margin:0 .5em;">·</span>Cloud &amp; DevOps</div>
+        <p style="margin:22px 0 0; max-width:56ch; font-size:14.5px; line-height:1.75; color:rgba(42,44,59,.72);">I build production software for problems that have nothing in common — fit preference, graduate admissions, makerspace operations, adaptive learning, and a shelf of side projects — and ship every one end to end.</p>
+        <div style="margin-top:26px; display:flex; flex-wrap:wrap; gap:8px 26px; font-size:12.5px; color:rgba(42,44,59,.66);">
+          <span><span style="color:#5f9276;">●</span> Available — 2027 new-grad SWE roles</span>
+          <span style="color:rgba(42,44,59,.4);">|</span>
+          <span>Currently — SWE @ <span style="color:#2a2c3b;">DOUBL</span> · Research Assistant @ <span style="color:#2a2c3b;">UBC</span></span>
+        </div>
+        <a href="Content Generation.dc.html" style="display:inline-block; margin-top:30px; font-size:12.5px; color:#555879;">
+          <span style="color:rgba(42,44,59,.5);">$</span> ./how-content-is-generated — view the AI content pipeline &amp; editor <span style="color:rgba(42,44,59,.5);">↗</span>
+        </a>
+      </div>
+      <figure style="margin:0; width:clamp(120px,15vw,168px);">
+        <div style="border:1px solid rgba(42,44,59,.3); padding:6px; background:#faf7f0;">
+          <span style="overflow:hidden; position:relative; display:block;">
+            <img src="public/profile-photo.jpg" alt="Ariq Muldi" style="width:100%; height:auto; display:block; aspect-ratio:4/5; object-fit:cover; object-position:50% 10%;">
+          </span>
+        </div>
+        <figcaption style="margin-top:8px; font-size:10px; letter-spacing:.16em; color:rgba(42,44,59,.4);">FIG.00 / ARIQ.MULDI.JPG</figcaption>
+      </figure>
+    </div>
+    <div style="max-width:1200px; margin:0 auto; padding:0 40px 40px;">
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid rgba(42,44,59,.3);">
+        <sc-for list="{{ metrics }}" as="m" hint-placeholder-count="4">
+          <div style="padding:22px 22px 4px; border-right:1px solid rgba(42,44,59,.13);">
+            <div style="font-size:clamp(24px,2.6vw,32px); font-weight:600; letter-spacing:-.03em; color:#2a2c3b;">{{ m.num }}</div>
+            <div style="font-size:10.5px; letter-spacing:.16em; color:rgba(42,44,59,.4); margin-top:4px;">{{ m.label }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WORK ============ -->
+  <section id="work" style="border-bottom:1px solid rgba(42,44,59,.13);">
+    <div style="max-width:1200px; margin:0 auto; padding:80px 40px; display:grid; grid-template-columns:132px minmax(0,1fr); gap:40px;">
+      <div style="position:sticky; top:86px; align-self:start;">
+        <div style="font-size:11px; letter-spacing:.2em; color:rgba(42,44,59,.5);">[ 01 ]</div>
+        <div style="font-size:11px; letter-spacing:.2em; color:#2a2c3b; margin-top:8px;">WORK</div>
+        <sc-if value="{{ showCmd }}" hint-placeholder-val="{{ true }}"><div style="font-size:11px; color:rgba(42,44,59,.4); margin-top:14px;">$ ls ./selected-work</div></sc-if>
+      </div>
+      <div>
+        <p style="margin:0 0 40px; max-width:60ch; font-size:14px; line-height:1.7; color:rgba(42,44,59,.72);">Production systems I've shipped across research, academic, and industry roles — real users, real stakes, real uptime on the line.</p>
+        <sc-for list="{{ workItems }}" as="w" hint-placeholder-count="4">
+          <article style="border-top:1px solid rgba(42,44,59,.3); padding:28px 0 44px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,380px); gap:44px; align-items:start;">
+            <div>
+              <div style="display:flex; align-items:baseline; gap:14px; font-size:11px; letter-spacing:.14em; color:rgba(42,44,59,.4); margin-bottom:14px; flex-wrap:wrap;">
+                <span style="color:rgba(42,44,59,.55); font-weight:600;">{{ w.num }}</span>
+                <span>{{ w.meta }}</span>
+                <sc-if value="{{ w.isTba }}" hint-placeholder-val="{{ false }}"><span style="margin-left:auto;">○ SHOWCASE TBA</span></sc-if>
+                <sc-if value="{{ w.isLive }}" hint-placeholder-val="{{ false }}"><span style="margin-left:auto; color:rgba(42,44,59,.55);">● LIVE</span></sc-if>
+              </div>
+              <h3 style="margin:0; font-size:clamp(26px,3.4vw,38px); font-weight:600; letter-spacing:-.035em; line-height:1.02; color:#2a2c3b;">{{ w.title }}</h3>
+              <sc-if value="{{ w.desc }}" hint-placeholder-val="x"><p style="margin:16px 0 0; font-size:14px; line-height:1.72; color:rgba(42,44,59,.72); max-width:52ch;">{{ w.desc }}</p></sc-if>
+              <div style="margin:20px 0 0; font-size:12px; color:rgba(42,44,59,.62); line-height:1.9;">{{ w.techLine }}</div>
+              <sc-if value="{{ w.hasLinks }}" hint-placeholder-val="{{ false }}">
+                <div style="margin:22px 0 0; display:flex; gap:22px; font-size:12.5px; flex-wrap:wrap;">
+                  <sc-for list="{{ w.links }}" as="lk" hint-placeholder-count="1">
+                    <a href="{{ lk.href }}" target="_blank" rel="noopener" style="color:#555879; border-bottom:1px solid transparent;" style-hover="border-bottom-color:#555879;">↗ {{ lk.label }}</a>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+            <figure style="margin:0;">
+              <div style="position:relative; border:1px solid rgba(42,44,59,.3); padding:6px; background:#faf7f0; overflow:hidden;">
+                <img src="{{ w.img }}" alt="{{ w.title }}" style="{{ w.imgStyle }}">
+                <sc-if value="{{ w.overlay }}" hint-placeholder-val="x"><div style="position:absolute; inset:6px; display:flex; align-items:flex-end; padding:12px; background:linear-gradient(to top, rgba(42,44,59,.42), transparent 55%); pointer-events:none;"><span style="font-size:10px; letter-spacing:.16em; color:#f4ebd3;">{{ w.overlay }}</span></div></sc-if>
+              </div>
+              <figcaption style="margin-top:8px; font-size:10px; letter-spacing:.14em; color:rgba(42,44,59,.4);">FIG.{{ w.num }} / {{ w.fig }}</figcaption>
+            </figure>
+          </article>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCE ============ -->
+  <section id="experience" style="border-bottom:1px solid rgba(42,44,59,.13); background:#f4ebd3;">
+    <div style="max-width:1200px; margin:0 auto; padding:80px 40px; display:grid; grid-template-columns:132px minmax(0,1fr); gap:40px;">
+      <div style="position:sticky; top:86px; align-self:start;">
+        <div style="font-size:11px; letter-spacing:.2em; color:rgba(42,44,59,.5);">[ 02 ]</div>
+        <div style="font-size:11px; letter-spacing:.2em; color:#2a2c3b; margin-top:8px;">EXPERIENCE</div>
+        <sc-if value="{{ showCmd }}" hint-placeholder-val="{{ true }}"><div style="font-size:11px; color:rgba(42,44,59,.4); margin-top:14px;">$ git show</div></sc-if>
+      </div>
+      <div>
+        <sc-if value="{{ showCmd }}" hint-placeholder-val="{{ true }}"><div style="font-size:11px; color:rgba(42,44,59,.4); margin-bottom:8px; letter-spacing:.06em;">git log --oneline --stat --author="ariq" main</div></sc-if>
+        <sc-for list="{{ experiences }}" as="e" hint-placeholder-count="5">
+          <div onClick="{{ e.onToggle }}" style="{{ e.rowStyle }}">
+            <span style="color:rgba(42,44,59,.5); font-size:12px;"><sc-if value="{{ e.expandable }}" hint-placeholder-val="{{ true }}"><span style="color:#555879;">{{ e.glyph }} </span></sc-if>{{ e.hash }}</span>
+            <div>
+              <div style="font-size:15px; font-weight:600; color:#2a2c3b; letter-spacing:-.01em;">{{ e.role }} <span style="color:rgba(42,44,59,.45); font-weight:400;">@ {{ e.at }}</span></div>
+              <sc-if value="{{ e.expandable }}" hint-placeholder-val="{{ true }}">
+                <div style="font-size:13px; color:rgba(42,44,59,.72); margin-top:7px; line-height:1.55; max-width:66ch;">{{ e.commitSubject }}</div>
+                <div style="font-size:11.5px; color:rgba(42,44,59,.45); margin-top:8px;">{{ e.insLabel }}<sc-if value="{{ showCmd }}" hint-placeholder-val="{{ true }}"> · git show {{ e.glyph }}</sc-if></div>
+              </sc-if>
+              <sc-if value="{{ e.notExpandable }}" hint-placeholder-val="{{ false }}">
+                <div style="font-size:12px; color:rgba(42,44,59,.45); margin-top:7px;"><span style="color:#5f9276;">●</span> in active development</div>
+              </sc-if>
+              <div style="font-size:11px; color:rgba(42,44,59,.42); margin-top:8px;">{{ e.techLine }}</div>
+            </div>
+            <div style="text-align:right; font-size:11px; color:rgba(42,44,59,.62); line-height:1.5;">{{ e.dateStart }} —<br><sc-if value="{{ e.current }}" hint-placeholder-val="{{ false }}"><span style="color:#5f9276;">● present</span></sc-if><sc-if value="{{ e.notCurrent }}" hint-placeholder-val="{{ true }}">{{ e.dateEnd }}</sc-if></div>
+            <sc-if value="{{ e.expandable }}" hint-placeholder-val="{{ false }}">
+              <div style="{{ e.collapseStyle }}">
+                <div style="overflow:hidden; min-height:0;">
+                  <div style="margin-top:18px; border-top:1px solid rgba(42,44,59,.3); padding-top:18px;">
+                    <div style="font-size:12px; color:#2a2c3b; overflow-wrap:anywhere;">commit <span style="color:rgba(42,44,59,.5);">{{ e.hashLong }}</span></div>
+                    <div style="font-size:12px; color:rgba(42,44,59,.72); margin-top:4px;">Author: Ariq Muldi &lt;ariq@ariqmuldi.com&gt;</div>
+                    <div style="font-size:12px; color:rgba(42,44,59,.72); margin-top:4px;">Date:&nbsp;&nbsp;&nbsp;{{ e.dateLine }}</div>
+                    <div style="font-size:11px; color:rgba(42,44,59,.42); margin-top:11px; letter-spacing:.02em;">{{ e.diffstat }}</div>
+                    <div style="margin-top:14px; border:1px solid rgba(42,44,59,.13);">
+                      <sc-for list="{{ e.accomplishments }}" as="a" hint-placeholder-count="3">
+                        <div style="display:grid; grid-template-columns:36px minmax(0,1fr); border-bottom:1px solid rgba(42,44,59,.1);">
+                          <span style="text-align:center; padding:10px 0; color:rgba(42,44,59,.4); background:rgba(42,44,59,.03);">+</span>
+                          <span style="padding:10px 16px; font-size:13px; color:#2a2c3b; line-height:1.6;">{{ a }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section id="projects" style="border-bottom:1px solid rgba(42,44,59,.13);">
+    <div style="max-width:1200px; margin:0 auto; padding:80px 40px; display:grid; grid-template-columns:132px minmax(0,1fr); gap:40px;">
+      <div style="position:sticky; top:86px; align-self:start;">
+        <div style="font-size:11px; letter-spacing:.2em; color:rgba(42,44,59,.5);">[ 03 ]</div>
+        <div style="font-size:11px; letter-spacing:.2em; color:#2a2c3b; margin-top:8px;">PROJECTS</div>
+        <sc-if value="{{ showCmd }}" hint-placeholder-val="{{ true }}"><div style="font-size:11px; color:rgba(42,44,59,.4); margin-top:14px;">$ ls ~/side</div></sc-if>
+      </div>
+      <div>
+        <p style="margin:0 0 40px; max-width:60ch; font-size:14px; line-height:1.7; color:rgba(42,44,59,.72);">Personal builds — nights, weekends, and coursework taken further than required.</p>
+        <sc-for list="{{ projects }}" as="p" hint-placeholder-count="4">
+          <div onClick="{{ p.onToggle }}" style="{{ p.rowStyle }}">
+            <span style="font-size:12px; color:rgba(42,44,59,.5); letter-spacing:.1em; white-space:pre;"><span style="color:#555879;">{{ p.glyph }} </span>[{{ p.num }}]</span>
+            <div>
+              <div style="font-size:17px; font-weight:600; letter-spacing:-.02em; color:#2a2c3b;">{{ p.name }}</div>
+              <div style="font-size:13px; color:rgba(42,44,59,.72); margin-top:6px; line-height:1.5;">{{ p.tagline }}</div>
+              <div style="font-size:11px; color:rgba(42,44,59,.42); margin-top:8px; line-height:1.8;">{{ p.techLine }}</div>
+            </div>
+            <div style="text-align:right; align-self:center;">
+              <a href="{{ p.github }}" target="_blank" rel="noopener" onClick="{{ p.stop }}" style="font-size:11.5px; color:#555879;">github ↗</a>
+            </div>
+            <div style="{{ p.collapseStyle }}">
+              <div style="overflow:hidden; min-height:0;">
+                <div style="margin-top:16px; border-top:1px solid rgba(42,44,59,.3); padding-top:16px;">
+                  <sc-if value="{{ showCmd }}" hint-placeholder-val="{{ true }}"><div style="font-size:11px; color:rgba(42,44,59,.4); margin-bottom:11px; letter-spacing:.04em;"><span style="color:#555879;">$</span> cat ~/side/{{ p.repo }}/README.md</div></sc-if>
+                  <div style="max-width:82ch;">
+                    <sc-for list="{{ p.sentences }}" as="s" hint-placeholder-count="3">
+                      <div style="position:relative; padding-left:18px; margin-top:9px; font-size:13.5px; color:rgba(42,44,59,.72); line-height:1.66;"><span style="position:absolute; left:0; color:rgba(42,44,59,.4);">-</span>{{ s }}</div>
+                    </sc-for>
+                  </div>
+                  <a href="{{ p.github }}" target="_blank" rel="noopener" onClick="{{ p.stop }}" style="display:inline-block; margin-top:15px; font-size:12.5px; color:#555879; border-bottom:1px solid #555879; padding-bottom:1px;">↗ open on github</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section id="skills" style="border-bottom:1px solid rgba(42,44,59,.13); background:#f4ebd3;">
+    <div style="max-width:1200px; margin:0 auto; padding:80px 40px; display:grid; grid-template-columns:132px minmax(0,1fr); gap:40px;">
+      <div style="position:sticky; top:86px; align-self:start;">
+        <div style="font-size:11px; letter-spacing:.2em; color:rgba(42,44,59,.5);">[ 04 ]</div>
+        <div style="font-size:11px; letter-spacing:.2em; color:#2a2c3b; margin-top:8px;">SKILLS</div>
+        <sc-if value="{{ showCmd }}" hint-placeholder-val="{{ true }}"><div style="font-size:11px; color:rgba(42,44,59,.4); margin-top:14px;">$ tree</div></sc-if>
+      </div>
+      <div style="font-size:14px; line-height:1.5;">
+        <div style="color:#2a2c3b; margin-bottom:18px;">~/stack</div>
+        <sc-for list="{{ skillRows }}" as="s" hint-placeholder-count="7">
+          <div style="display:flex; gap:16px; padding:9px 8px 9px 0; align-items:baseline;">
+            <span style="color:rgba(42,44,59,.45); white-space:pre;">{{ s.glyph }}</span>
+            <span style="width:130px; flex:none; color:#2a2c3b; font-weight:500;">{{ s.label }}</span>
+            <span style="color:rgba(42,44,59,.66); font-size:13px;">{{ s.items }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EDUCATION ============ -->
+  <section id="education" style="border-bottom:1px solid rgba(42,44,59,.13);">
+    <div style="max-width:1200px; margin:0 auto; padding:80px 40px; display:grid; grid-template-columns:132px minmax(0,1fr); gap:40px;">
+      <div style="position:sticky; top:86px; align-self:start;">
+        <div style="font-size:11px; letter-spacing:.2em; color:rgba(42,44,59,.5);">[ 05 ]</div>
+        <div style="font-size:11px; letter-spacing:.2em; color:#2a2c3b; margin-top:8px;">EDUCATION</div>
+        <sc-if value="{{ showCmd }}" hint-placeholder-val="{{ true }}"><div style="font-size:11px; color:rgba(42,44,59,.4); margin-top:14px;">$ cat edu.md</div></sc-if>
+      </div>
+      <div>
+        <div style="border-top:1px solid rgba(42,44,59,.3); padding-top:28px; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:24px; align-items:start;">
+          <div>
+            <h3 style="margin:0; font-size:clamp(24px,3vw,34px); font-weight:600; letter-spacing:-.03em; color:#2a2c3b;">University of British Columbia</h3>
+            <div style="font-size:14px; color:#2a2c3b; margin-top:12px;">Bachelor of Science Major in Computer Science<span style="color:rgba(42,44,59,.4);"> · </span>Minor in Data Science</div>
+            <div style="font-size:12.5px; color:rgba(42,44,59,.66); margin-top:6px;">Kelowna, BC <span style="color:rgba(42,44,59,.4);">·</span> Expected Graduation, May 2027</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:clamp(28px,3.4vw,40px); font-weight:600; letter-spacing:-.03em; color:#2a2c3b;">4.21<small style="color:rgba(42,44,59,.4); font-size:.5em; font-weight:400;">/4.33</small></div>
+            <div style="font-size:10.5px; letter-spacing:.16em; color:rgba(42,44,59,.4); margin-top:4px;">GPA · 90.6%</div>
+          </div>
+        </div>
+        <div style="margin-top:34px; border-top:1px solid rgba(42,44,59,.13); padding-top:24px;">
+          <div style="font-size:10.5px; letter-spacing:.18em; color:rgba(42,44,59,.4); margin-bottom:14px;">SELECTED COURSEWORK</div>
+          <div style="font-size:13px; line-height:2; color:rgba(42,44,59,.66);">{{ coursework }}</div>
+        </div>
+        <div style="margin-top:28px; border-top:1px solid rgba(42,44,59,.13); padding-top:24px;">
+          <div style="font-size:10.5px; letter-spacing:.18em; color:rgba(42,44,59,.4); margin-bottom:14px;">CERTIFICATIONS</div>
+          <div style="font-size:13px; line-height:1.9; color:rgba(42,44,59,.66);">
+            <div>Udemy The Complete 2024 Web Development Bootcamp</div>
+            <div>Udemy The Complete Python Pro Bootcamp</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" style="background:#23242f; color:#ede7d6;">
+    <div style="max-width:1200px; margin:0 auto; padding:80px 40px 44px;">
+      <div style="font-size:13px; color:#98a1bc; margin-bottom:40px;">
+        <span style="color:#7e86a6;">ariq@muldi</span>:<span style="color:#b9ae97;">~</span>$ contact --now<span style="display:inline-block; width:.55em; height:1em; background:#98a1bc; vertical-align:-2px; margin-left:.2em; animation:caret-blink 1.05s steps(1) infinite;"></span>
+      </div>
+      <h2 style="margin:0; font-size:clamp(40px,7vw,88px); line-height:.95; font-weight:600; letter-spacing:-.045em; color:#f4ebd3;">LET'S BUILD<br>SOMETHING.</h2>
+      <div style="margin-top:44px; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1px; background:rgba(152,161,188,.2); border:1px solid rgba(152,161,188,.2);">
+        <sc-for list="{{ contactLinks }}" as="c" hint-placeholder-count="4">
+          <a href="{{ c.href }}" target="{{ c.target }}" style="background:#23242f; padding:22px 20px; color:#ede7d6;" style-hover="background:#2c2e3b;">
+            <div style="font-size:10px; letter-spacing:.18em; color:#7e86a6;">{{ c.label }}</div>
+            <div style="font-size:14px; margin-top:10px; color:#f4ebd3;">{{ c.value }} <span style="color:#98a1bc;">↗</span></div>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="background:#23242f; color:#7e86a6; border-top:1px solid rgba(152,161,188,.2);">
+    <div style="max-width:1200px; margin:0 auto; padding:22px 40px; display:flex; flex-wrap:wrap; gap:10px 24px; font-size:11.5px; align-items:center;">
+      <span><span style="color:#5f9276;">●</span> available for 2026 roles</span>
+      <span style="color:#575e76;">|</span>
+      <span>Kelowna, BC</span>
+      <span style="color:#575e76;">|</span>
+      <span>local <span style="color:#98a1bc;">{{ clock }}</span></span>
+      <span style="margin-left:auto; color:#575e76;">© 2026 Ariq Muldi</span>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCommandHints&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Clarity&quot;},&quot;expandAll&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Clarity&quot;}}">
+class Component extends DCLogic {
+  state = { typed: '', clock: '', open: {} };
+
+  componentDidMount() {
+    const full = 'whoami';
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) { this.setState({ typed: full }); } else {
+      let i = 0;
+      this._tw = setInterval(() => {
+        i++; this.setState({ typed: full.slice(0, i) });
+        if (i >= full.length) clearInterval(this._tw);
+      }, 95);
+    }
+    this.tick();
+    this._clk = setInterval(() => this.tick(), 1000);
+  }
+  componentWillUnmount() { clearInterval(this._tw); clearInterval(this._clk); }
+
+  tick() {
+    try {
+      const t = new Date().toLocaleTimeString('en-CA', { hour12: false, timeZone: 'America/Vancouver' });
+      this.setState({ clock: t });
+    } catch { this.setState({ clock: new Date().toTimeString().slice(0, 8) }); }
+  }
+
+  toggle(id) { this.setState(s => ({ open: { ...s.open, [id]: !s.open[id] } })); }
+
+  renderVals() {
+    const showCmd = this.props.showCommandHints ?? true;
+    const expandAll = this.props.expandAll ?? false;
+    const isOpen = (id) => expandAll || !!this.state.open[id];
+    const tint = 'rgba(42,44,59,.032)';
+
+    const metrics = [
+      { num: '1,000+', label: 'USERS SERVED' },
+      { num: '10,000+', label: 'RECORDS PROCESSED' },
+      { num: '500+', label: 'STUDENTS IMPACTED' },
+      { num: '05+', label: 'ROLES' },
+    ];
+
+    const workItems = [
+      { num: '01', meta: 'DOUBL · LEAD SOFTWARE DEVELOPER', isTba: true, isLive: false, title: 'Professional Showcase (TBA)', desc: '', techLine: 'Python · Google Cloud (Run, Firestore) · Next.js · React · Typescript · Shopify · Zoho Suite · Machine Learning · iOS · Android', links: [], hasLinks: false, img: 'public/doubl-picture.png', imgStyle: 'width:100%; height:auto; display:block; aspect-ratio:16/10; object-fit:contain; background:#faf7f0;', fig: 'DOUBL', overlay: 'IN PRODUCTION' },
+      { num: '02', meta: 'UBC · SOFTWARE DEVELOPER', isTba: false, isLive: true, title: 'Makerspace Platform', desc: 'Architected a comprehensive full-stack membership platform serving 1,000+ members, digitizing workshop enrollments, equipment reservations, and secure recurring payments. Engineered robust backend systems for automated physical access control, real-time notifications, and administrative oversight, significantly streamlining operations and enhancing user experience.', techLine: 'TypeScript · React Router v7 · PostgreSQL · Tailwind CSS · Stripe · Mailgun · ESP32 (IoT) · Brivo Enterprise API · Node.js · Prisma', links: [{ label: 'live site', href: 'https://my.makerspaceyk.com' }, { label: 'github', href: 'https://github.com/University-of-British-Columbia-Okanagan/MSYK_Membership' }], hasLinks: true, img: 'public/msyk-picture.png', imgStyle: 'width:100%; height:auto; display:block; aspect-ratio:16/10; object-fit:cover;', fig: 'MSYK.MEMBERSHIP', overlay: '' },
+      { num: '03', meta: 'UBC · SOFTWARE DEVELOPER', isTba: false, isLive: true, title: 'LearnCoding Platform', desc: 'Engineered an adaptive learning platform serving over 500 students with interactive code visualizers, gamified learning paths, and AI-powered content generation for personalized, multi-language instruction. Integrated with the UBC Canvas API to automate grade posting, established robust role-based access controls for 60+ faculty, and managed full-stack infrastructure, significantly reducing administrative overhead and enhancing user engagement.', techLine: 'Laravel · MySQL · HTML · CSS · JavaScript · PHP · Matomo Analytics · Docker · Apache · Canvas API · AI', links: [{ label: 'live site', href: 'https://learncoding.ok.ubc.ca' }], hasLinks: true, img: 'public/learncoding-picture.png', imgStyle: 'width:100%; height:auto; display:block; aspect-ratio:16/10; object-fit:cover;', fig: 'LEARNCODING', overlay: '' },
+      { num: '04', meta: 'UBC · SOFTWARE DEVELOPER', isTba: false, isLive: false, title: 'MDS Application', desc: 'Engineered a full-stack platform to automate the Masters of Data Science graduate admissions process, managing over 1,000 annual applications for 50+ faculty. Developed a comprehensive system featuring secure role-based access, robust data integrity, real-time interactive dashboards, and automated review and reporting engines, significantly streamlining the entire workflow from applicant ingestion to final decision-making.', techLine: 'Python · PostgreSQL · JavaScript · Flask · bcrypt · Tailwind CSS · AJAX', links: [{ label: 'github', href: 'https://github.com/marga120/mds-application' }], hasLinks: true, img: 'public/mds-picture.png', imgStyle: 'width:100%; height:auto; display:block; aspect-ratio:16/10; object-fit:cover;', fig: 'MDS.APPLICATION', overlay: '' },
+    ];
+
+    const rawExp = [
+      { id: 1, hash: 'a1f3c92', hashLong: 'a1f3c92e7b4d0c15f88a2d3e91b60774c5290ad3', role: 'Lead Software Developer', at: 'DOUBL', expandable: false, commitSubject: '', ins: 0, techLine: 'Python · Google Cloud (Run, Firestore) · Next.js · React · Typescript · Shopify · Zoho Suite · Machine Learning · iOS · Android', dateStart: 'Sept 2025', dateEnd: 'present', current: true, dateLine: 'Sept 2025 — present', accomplishments: [] },
+      { id: 2, hash: '7b4e0d1', hashLong: '7b4e0d1a93c6f025e18b4477de2c0091a5f3bb62', role: 'Software Developer', at: 'UBC · Work Study Program', expandable: true, commitSubject: 'feat(admissions): automate graduate data science applications', ins: 8, techLine: 'Python · PostgreSQL · JavaScript · Flask · bcrypt · Tailwind CSS · AJAX', dateStart: 'Jul 2025', dateEnd: 'Sept 2025', current: false, dateLine: 'Jul 2025 — Sept 2025', accomplishments: ["Developed full-stack Masters of Data Science application management platform using Python, PostgreSQL, and JavaScript, automating graduate admissions workflow for 1,000+ annual student applications and eliminating manual CSV-based processes on ranking applicants", "Structured backend using Flask Blueprints to segregate APIs for distinct services, implementing a 3-tier role-based authentication system with session management and bcrypt encryption to secure data for 50+ faculty", "Designed a normalized PostgreSQL database schema with foreign key constraints and performance indexing to maintain data integrity across applicant records, test scores, and institutional transcripts", "Built frontend using JavaScript and Tailwind CSS, implementing an AJAX-driven table for 1,000+ records that features real-time multi-field filtering, inline status editing, and mobile-responsive design for 50+ reviewers", "Constructed a CSV batch processing engine with validation pipelines to sanitize and ingest 1,000+ application records, utilizing atomic database transactions to ensure all-or-nothing data integrity during bulk uploads", "Implemented an automated reporting dashboard and comprehensive audit logging system, tracking 500+ user interactions and reducing administrative reporting time from 8 hours to 2 hours weekly", "Orchestrated a 7-stage review engine enabling faculty to rate and comment on applications, utilizing automated ranking logic to prioritize candidates and streamline academic record maintenance", "Engineered a CSV export module using Python, enabling administrators to generate custom datasets of ranked applicants, test scores, and demographics to facilitate final committee decision-making"] },
+      { id: 3, hash: 'c3902af', hashLong: 'c3902af5d81e64b0729ac3f16b8850e42d771f09', role: 'Software Developer', at: 'UBC · Makerspace Platform · Undergraduate Research Assistant & Directed Studies', expandable: true, commitSubject: 'feat(membership): automate enrollment, booking, and access for 1000+ members', ins: 16, techLine: 'TypeScript · React Router v7 · PostgreSQL · Tailwind CSS · Stripe · Mailgun · ESP32 (IoT) · Brivo Enterprise API · Node.js · Prisma', dateStart: 'Jan 2025', dateEnd: 'Jan 2026', current: false, dateLine: 'Jan 2025 — Jan 2026', accomplishments: ["Architected a full-stack membership platform in TypeScript, React Router v7, PostgreSQL, and Tailwind CSS serving 1,000+ members, digitizing workshop enrollments, equipment reservations, and membership management", "Integrated Stripe to process $1,000+ monthly revenue via checkout sessions and tokenized one-click payments, generating waivers by overlaying digital signatures using pdf-lib with AES-256 encryption", "Built a service that automatically 100+ syncs every workshop, equipment item, and membership plan into Stripe products, enabling discount codes for specific items, with an admin panel to link all items", "Engineered an equipment booking engine with a time-slot visualization grid, enforcing a 4-tier role-based access system and prerequisite chains to prevent unauthorized usage across 200+ daily reservations", "Developed a centralized admin dashboard consolidating space closure management, per-occurrence workshop cancellations with automatic member notifications, CSV financial reporting, and access-limit enforcement into a single operator interface", "Implemented a Mailgun email pipeline delivering 700+ monthly notifications with iCalendar attachments, JWT-secured password reset links, and live Google Calendar syncing via a custom OAuth2 flow with AES-encrypted token storage", "Programmed ESP32 firmware in C++ to authenticate RFID scans via HTTPS and log access events for restricted equipment and doors, with an admin interface for assigning per-card permissions", "Automated physical building access for 1,000+ members by integrating the Brivo Enterprise API to provision digital key passes and validate 500+ daily door-scan events using tamper-proof HMAC webhook signatures", "Designed a Node.js background job system to automate membership payment audits, access tier synchronization, and workshop lifecycle transitions, eliminating recurring manual administrative tasks", "Enforced platform-wide data integrity with Zod validation, case-insensitive email normalization, 3-hour session timeouts with per-request validation, and 100+ version-controlled Prisma schema migrations", "Established production reliability with Jest integration tests, Docker deployments over OpenVPN, and Winston structured logging with an in-browser admin log viewer for real-time production diagnostics", "Engineered a recurring billing engine supporting 4 subscription cycles with prorated upgrade charges, GST calculation, automated Stripe refunds on cancellation, and a member-controlled auto-renew toggle", "Designed multi-tier workshop pricing with independent seat limits per price level (e.g., Student, Member, General), automatically blocking purchases when any tier sells out", "Built multi-day workshop series support with automatic enrollment for newly added sessions and a re-offer system for recurring workshops, preserving all historical registration data across scheduling cycles", "Implemented an atomic admin suspension system that cancels all active plans, blocks re-enrollment, logs the admin's reason and timestamp, and notifies the member by email in a single fail-safe database transaction", "Developed a physical access analytics dashboard pairing IoT entry and exit scans to measure per-member machine usage time, with a searchable raw scan log filterable by user, equipment, and timestamp"] },
+      { id: 4, hash: '2e6b8f4', hashLong: '2e6b8f4c0197ad35e6community', role: 'Software Developer', at: 'UBC · LearnCoding Platform · Undergraduate Research Assistant & Directed Studies', expandable: true, commitSubject: 'feat(learn): build adaptive learning platform with AI and gamification', ins: 10, techLine: 'Laravel · MySQL · HTML · CSS · JavaScript · PHP · Matomo Analytics · Docker · Apache · Canvas API · AI', dateStart: 'Sept 2024', dateEnd: 'Sept 2025', current: false, dateLine: 'Sept 2024 — Sept 2025', accomplishments: ["Developed adaptive learning platform serving 500+ students with code visualizers, multi-language switching, sandbox environments, and badge-based gamification to solidify coding concepts across UBC's Faculty of Science", "Integrated UBC Canvas API to automatically post assessment scores to official gradebooks, replacing manual CSV grade imports for 1,000+ monthly submissions and reducing grading overhead by 6 hours weekly", "Established secure routing authentication using Laravel and MySQL to enforce role-based access control, securing access to system-wide resources and API endpoints for 60+ faculty members", "Redesigned user interface using HTML, CSS, and JavaScript to implement responsive layouts, restructuring navigation patterns and interactive elements to enhance usability across mobile and desktop devices", "Created a landing page showcasing the platform's core capabilities, video demos, and centralized onboarding resources, driving 20+ monthly institutional inquiries and accelerating faculty adoption", "Constructed granular access controls using PHP and MySQL to dynamically configure instructor permissions for lesson and quiz management, streamlining administrative workflows", "Deployed Matomo Analytics, a self-hosted analytics platform using Docker across development and production environments to capture user navigation patterns, enabling CSV exports for route frequency analysis and institutional assessments", "Engineered an AI-powered content generator orchestrating industry-leading models to automate cross-language code translation and personalize student learning paths", "Migrated platform from VPN to public access by transferring the MySQL database, Docker services, and application storage, while reconfiguring Apache, firewalls, and cron jobs in compliance with UBC protocols", "Maintained production and development servers managing Apache, MySQL, and Docker for 500+ daily sessions, performing updates and security patches, and resolving 10+ incidents via log analysis to reduce resolution time"] },
+      { id: 5, hash: '9d17c05', hashLong: '9d17c05b2a4e83f61c07d9928ee5340ab1f7c6d8', role: 'Undergraduate Teaching Assistant', at: 'UBC', expandable: true, commitSubject: 'feat(teaching): instructed and evaluated 350+ CS students', ins: 2, techLine: 'MIPS Assembly · Java', dateStart: 'Sept 2024', dateEnd: 'Sept 2025', current: false, dateLine: 'Sept 2024 — Sept 2025', accomplishments: ["Facilitated lab sessions and tutoring for over 60+ students, employing exercises and coding challenges to enhance understanding of machine architecture using MIPS Assembly, Java programming, and general coding concepts", "Designed and graded assignments and exams for 300+ students for the two largest computer science courses at UBC"] },
+    ];
+    // fix an accidental token in id4 hashLong
+    rawExp[3].hashLong = '2e6b8f4c0197ad35e6b2f8014a97c3d5820ef146';
+
+    const experiences = rawExp.map(e => {
+      const open = e.expandable && isOpen('e' + e.id);
+      return {
+        ...e,
+        glyph: open ? '▾' : '▸',
+        notExpandable: !e.expandable,
+        notCurrent: !e.current,
+        insLabel: e.ins + ' accomplishments',
+        diffstat: e.ins + ' files changed, ' + e.ins + ' insertions(+)',
+        onToggle: e.expandable ? () => this.toggle('e' + e.id) : undefined,
+        rowStyle: 'border-top:1px solid rgba(42,44,59,.13); padding:20px 8px 20px 0; display:grid; grid-template-columns:88px minmax(0,1fr) 128px; gap:20px; align-items:baseline;' + (e.expandable ? ' cursor:pointer;' : ''),
+        collapseStyle: 'grid-column:1 / -1; display:grid; grid-template-rows:' + (open ? '1fr' : '0fr') + '; opacity:' + (open ? '1' : '0') + '; transition:grid-template-rows .3s cubic-bezier(.2,.6,.2,1), opacity .3s ease;',
+      };
+    });
+
+    const rawProj = [
+      { id: 1, num: '01', name: 'Ponotodoro', tagline: 'Pomodoro timer fused with notes & to-do lists', techLine: 'JavaScript · React · Node.js · Next.js · PostgreSQL · Bootstrap · HTML/CSS', github: 'https://github.com/ariqmuldi/ponotodoro', repo: 'ponotodoro', desc: "Developed a full-stack app integrating the Pomodoro technique with note-taking and to-do lists functionality to combine time management and task tracking techniques to improve personal productivity for 10+ users. Engineered frontend with React and Bootstrap, to structure the platform's task management system. Designed backend using Node.js and PostgreSQL for efficient data management and user authentication." },
+      { id: 2, num: '02', name: 'Flight Hub', tagline: 'Flight-deal finder + blog, via Amadeus & Twilio', techLine: 'Python · JavaScript · Flask · React · SQLite · Bootstrap · HTML/CSS', github: 'https://github.com/ariqmuldi/flight-hub', repo: 'flight-hub', desc: "Constructed a full-stack web application that streamlines flight offers by integrating Amadeus and Twilio API. Produced a full-stack blog feature enabling users to create, edit, and manage posts regarding flight-related topics. Created frontend using React and Bootstrap and backend with Flask and SQLite for usability and security." },
+      { id: 3, num: '03', name: 'ChatterBox', tagline: 'Real-time Discord-style group chat on Firebase', techLine: 'JavaScript · React · Firebase · Tailwind CSS · HTML/SCSS', github: 'https://github.com/namekeptanonymous/Error404', repo: 'Error404', desc: "Developed a full-stack chat application replicating core Discord functionalities, including real-time messaging, user authentication, and channel management, facilitating communication for 5+ active users across 5+ channels. Engineered Discord-like frontend using React and Tailwind CSS to enhance user experience and responsiveness. Implemented backend with Firebase managing 100+ messages, user data, channel info, and communication." },
+      { id: 4, num: '04', name: 'MoodiJawoodi', tagline: 'Responsive Java + MySQL shopping app via JDBC', techLine: 'Java · HTML/CSS · MySQL · Docker', github: 'https://github.com/ariqmuldi/moodi-jawoodi-grocery', repo: 'moodi-jawoodi-grocery', desc: "Produced responsive interface with HTML/CSS and Java with the JDBC API to enhance shopping experience. Designed backend system with Java and MySQL, optimizing data handling and processing of products." },
+    ];
+    const splitSentences = (d) => d.split(/(?<=[.!?])\s+/).map(s => s.trim()).filter(Boolean);
+    const projects = rawProj.map(p => {
+      const open = isOpen('p' + p.id);
+      return {
+        ...p,
+        glyph: open ? '▾' : '▸',
+        sentences: splitSentences(p.desc),
+        onToggle: () => this.toggle('p' + p.id),
+        stop: (ev) => { if (ev && ev.stopPropagation) ev.stopPropagation(); },
+        rowStyle: 'border-top:1px solid rgba(42,44,59,.13); padding:22px 0; display:grid; grid-template-columns:56px minmax(0,1fr) 120px; gap:20px; align-items:baseline; cursor:pointer;',
+        collapseStyle: 'grid-column:1 / -1; display:grid; grid-template-rows:' + (open ? '1fr' : '0fr') + '; opacity:' + (open ? '1' : '0') + '; transition:grid-template-rows .3s cubic-bezier(.2,.6,.2,1), opacity .3s ease;',
+      };
+    });
+
+    const skillRows = [
+      { label: 'programming/', items: 'JavaScript · TypeScript · Python · Java · C++ · C · PHP · Liquid · SQL (PostgreSQL, MySQL) · HTML/CSS · MIPS Assembly · Deluge' },
+      { label: 'frameworks/', items: 'React · Node.js · Next.js · Express.js · Prisma · React Router v7 · Redux.js · Flask · Laravel · Tailwind CSS · Bootstrap · jQuery · Jest' },
+      { label: 'developer/', items: 'Git · GitHub · Docker · Vite · Zod · Vitest · Postman · Visual Studio · Eclipse · Figma · Selenium · BeautifulSoup · Zoho · Shopify · Apache · Stripe' },
+      { label: 'data/', items: 'Pandas · NumPy · Matplotlib · Plotly · smtplib · Jupyter Notebook · Generative AI (LLMs)' },
+      { label: 'scripting/', items: 'REST APIs · JSON · Turtle · Tkinter · OAuth2 · IoT (ESP32)' },
+      { label: 'cloud/', items: 'Google Cloud Platform · Firebase · Vercel · Fly.io' },
+      { label: 'certifications/', items: 'Udemy The Complete 2024 Web Development Bootcamp · Udemy The Complete Python Pro Bootcamp' },
+    ].map((s, i, arr) => ({ ...s, glyph: i === arr.length - 1 ? '└──' : '├──' }));
+
+    const coursework = ['Software Engineering', 'Software Development and Maintenance', 'Data Structures', 'Introduction to Databases', 'Machine Learning', 'Analysis of Algorithms', 'Introduction to Networks', 'Machine Architecture', 'Human Computer Interaction', 'Introduction to Discrete Structures', 'Computer Programming I & II', 'Making Predictions with Data', 'Computer Ethics', 'Applied Regression Analysis', 'Introduction to Data Analytics', 'Applied Time Series and Forecasting', 'Intermediate Probability', 'Introductory Statistics'].join(' · ');
+
+    const contactLinks = [
+      { label: '01 / EMAIL', value: 'ariqmuldi@gmail.com', href: 'mailto:ariqmuldi@gmail.com', target: '_self' },
+      { label: '02 / GITHUB', value: 'github.com/ariqmuldi', href: 'https://github.com/ariqmuldi', target: '_blank' },
+      { label: '03 / LINKEDIN', value: 'in/ariqmuldi', href: 'https://linkedin.com/in/ariqmuldi', target: '_blank' },
+      { label: '04 / MASTER RESUME', value: 'download .pdf', href: '#', target: '_self' },
+    ];
+
+    return {
+      typed: this.state.typed, clock: this.state.clock, showCmd,
+      metrics, workItems, experiences, projects, skillRows, coursework, contactLinks,
+    };
+  }
+}
+</script>
+</body>
+</html>
