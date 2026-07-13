@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #faf7f0; color: #2a2c3b; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-feature-settings: 'ss01','zero'; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-x: hidden; }
+  a { color: #555879; text-decoration: none; }
+  a:hover { color: #3d3f5c; }
+  ::selection { background: rgba(85,88,121,.16); color: #2a2c3b; }
+  @keyframes caret-blink { 0%,48% { opacity: 1; } 49%,100% { opacity: 0; } }
+  @keyframes cg-flow { 0% { left: -3%; opacity: 0; } 15% { opacity: .5; } 85% { opacity: .5; } 100% { left: 103%; opacity: 0; } }
+</style>
+</helmet>
+<div style="min-height:100vh; background:#faf7f0;">
+
+  <!-- ============ TOP BAR ============ -->
+  <header style="position:sticky; top:0; z-index:50; background:#faf7f0; border-bottom:1px solid rgba(42,44,59,.13);">
+    <div style="max-width:1200px; margin:0 auto; padding:0 40px; height:54px; display:flex; align-items:center; justify-content:space-between; gap:24px;">
+      <a href="Ariq Muldi - Portfolio.dc.html" style="display:flex; align-items:center; gap:8px; color:#2a2c3b; font-size:13px; white-space:nowrap;">
+        <span style="width:6px; height:6px; border-radius:50%; background:#5f9276; display:inline-block;"></span>
+        <span style="font-weight:600;">ariqmuldi</span><span style="color:rgba(42,44,59,.4);">.com</span>
+        <span style="color:rgba(42,44,59,.5); font-size:12px; margin-left:2px;">~/content-generation</span>
+      </a>
+      <nav style="display:flex; align-items:center; gap:22px; flex-wrap:wrap; justify-content:flex-end; font-size:11px; letter-spacing:.16em; text-transform:uppercase;">
+        <a href="#how" style="color:rgba(42,44,59,.62);">How it works</a>
+        <a href="#editor" style="color:rgba(42,44,59,.62);">Editor</a>
+        <a href="Ariq Muldi - Portfolio.dc.html" style="color:#2a2c3b; border-bottom:1px solid #555879; padding-bottom:1px;">← Back to site</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section style="border-bottom:1px solid rgba(42,44,59,.13);">
+    <div style="max-width:1200px; margin:0 auto; padding:64px 40px 52px;">
+      <div style="font-size:13px; color:rgba(42,44,59,.62); margin-bottom:26px;">
+        <span style="color:rgba(42,44,59,.5);">$</span> cat ./how-content-is-generated<span style="display:inline-block; width:.55em; height:1em; background:rgba(42,44,59,.5); vertical-align:-2px; margin-left:.14em; animation:caret-blink 1.05s steps(1) infinite;"></span>
+      </div>
+      <h1 style="margin:0; font-size:clamp(40px,7vw,84px); line-height:.92; font-weight:600; letter-spacing:-.045em; color:#2a2c3b;">CONTENT<br>PIPELINE</h1>
+      <p style="margin:24px 0 0; max-width:64ch; font-size:14.5px; line-height:1.72; color:rgba(42,44,59,.72);">The résumé and project copy on this site isn't hand-typed into components. A single LaTeX master résumé is parsed into data, an LLM drafts the prose, taglines and commit subjects, and every draft is reviewed and approved before it ships. Below: how it flows — then the console to drive it.</p>
+      <div style="margin-top:24px; display:flex; flex-wrap:wrap; gap:8px 26px; font-size:12px; color:rgba(42,44,59,.66);">
+        <span>source of truth <span style="color:#2a2c3b;">master-resume.tex</span></span>
+        <span style="color:rgba(42,44,59,.4);">|</span>
+        <span>drafts by <span style="color:#2a2c3b;">Gemini 2.5 Flash-Lite</span></span>
+        <span style="color:rgba(42,44,59,.4);">|</span>
+        <span><span style="color:#5f9276;">●</span> approve-to-publish</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 01 · HOW IT WORKS ============ -->
+  <section id="how" style="border-bottom:1px solid rgba(42,44,59,.13); background:#f4ebd3;">
+    <div style="max-width:1200px; margin:0 auto; padding:72px 40px;">
+      <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:14px;">
+        <span style="font-size:11px; letter-spacing:.2em; color:rgba(42,44,59,.5);">[ 01 ]</span>
+        <span style="font-size:11px; letter-spacing:.2em; color:#2a2c3b;">HOW IT WORKS</span>
+        <span style="font-size:11px; color:rgba(42,44,59,.4); margin-left:auto;">$ ./pipeline --watch</span>
+      </div>
+      <p style="margin:0 0 22px; max-width:70ch; font-size:13px; line-height:1.7; color:rgba(42,44,59,.66);">In plain terms: the résumé is the single source. Everything below reads left-to-right — a source file, the script that processes it, and what it produces. Two tracks run in parallel, then merge into the live site.</p>
+
+      <div style="border:1px solid rgba(42,44,59,.3); background:#faf7f0; padding:30px 30px 26px; overflow-x:auto;">
+        <!-- RAIL A -->
+        <div style="font-size:10px; letter-spacing:.18em; color:rgba(42,44,59,.4); margin-bottom:12px;">A · LATEX → DATA</div>
+        <div style="display:flex; align-items:stretch; gap:0; min-width:640px;">
+          <div style="border:1px solid rgba(42,44,59,.3); background:#faf7f0; padding:12px 14px; min-width:150px;"><div style="font-size:12.5px; font-weight:600; color:#2a2c3b; line-height:1.7;">master-resume.tex</div><div style="font-size:10px; color:rgba(42,44,59,.4); margin-top:5px;">LaTeX · Overleaf</div></div>
+          <div style="flex:1; min-width:132px; position:relative; display:flex; align-items:center;"><div style="position:absolute; top:calc(50% - 13px); left:0; right:0; text-align:center; font-size:9.5px; letter-spacing:.06em; color:rgba(42,44,59,.4);">parse:resume</div><div style="position:absolute; left:6px; right:8px; top:50%; height:1px; background:rgba(42,44,59,.3);"></div><span style="position:absolute; top:calc(50% - 2px); width:4px; height:4px; background:rgba(42,44,59,.28); animation:cg-flow 3.4s linear infinite;"></span><span style="position:absolute; right:2px; top:50%; transform:translateY(-50%); width:0; height:0; border-top:3px solid transparent; border-bottom:3px solid transparent; border-left:6px solid rgba(42,44,59,.3);"></span></div>
+          <div style="border:1px solid rgba(42,44,59,.3); background:#faf7f0; padding:12px 14px; min-width:130px;"><div style="font-size:12.5px; font-weight:600; color:#2a2c3b; line-height:1.7;">parse-resume.ts</div><div style="font-size:10px; color:rgba(42,44,59,.4); margin-top:5px;">tsx parser</div></div>
+          <div style="flex:1; min-width:56px; position:relative; display:flex; align-items:center;"><div style="position:absolute; left:6px; right:8px; top:50%; height:1px; background:rgba(42,44,59,.3);"></div><span style="position:absolute; right:2px; top:50%; transform:translateY(-50%); width:0; height:0; border-top:3px solid transparent; border-bottom:3px solid transparent; border-left:6px solid rgba(42,44,59,.3);"></span></div>
+          <div style="border:1px solid rgba(42,44,59,.3); background:#faf7f0; padding:12px 14px; min-width:210px;"><div style="font-size:12.5px; font-weight:600; color:#2a2c3b; line-height:1.7;">work.ts · experiences.ts<br>projects.ts · skills.ts</div><div style="font-size:10px; color:rgba(42,44,59,.4); margin-top:5px;">+ education.ts · resume-config.json</div></div>
+        </div>
+        <!-- RAIL B -->
+        <div style="font-size:10px; letter-spacing:.18em; color:rgba(42,44,59,.4); margin:26px 0 12px;">B · TEXT → AI DRAFTS</div>
+        <div style="display:flex; align-items:stretch; gap:0; min-width:640px;">
+          <div style="border:1px solid rgba(42,44,59,.3); background:#faf7f0; padding:12px 14px; min-width:150px;"><div style="font-size:12.5px; font-weight:600; color:#2a2c3b; line-height:1.7;">experience + project text</div><div style="font-size:10px; color:rgba(42,44,59,.4); margin-top:5px;">role accomplishments · project descriptions</div></div>
+          <div style="flex:1; min-width:132px; position:relative; display:flex; align-items:center;"><div style="position:absolute; top:calc(50% - 13px); left:0; right:0; text-align:center; font-size:9.5px; letter-spacing:.06em; color:rgba(42,44,59,.4);">generate:content</div><div style="position:absolute; left:6px; right:8px; top:50%; height:1px; background:rgba(42,44,59,.3);"></div><span style="position:absolute; top:calc(50% - 2px); width:4px; height:4px; background:rgba(42,44,59,.28); animation:cg-flow 3.4s linear infinite; animation-delay:.6s;"></span><span style="position:absolute; right:2px; top:50%; transform:translateY(-50%); width:0; height:0; border-top:3px solid transparent; border-bottom:3px solid transparent; border-left:6px solid rgba(42,44,59,.3);"></span></div>
+          <div style="border:1px solid rgba(42,44,59,.3); background:#faf7f0; padding:12px 14px; min-width:210px;"><div style="font-size:12.5px; font-weight:600; color:#2a2c3b; line-height:1.7;">generate-work-experience-content.ts<br>generate-project-content.ts</div><div style="font-size:10px; color:rgba(42,44,59,.4); margin-top:5px;">tsx generators</div></div>
+          <div style="flex:1; min-width:56px; position:relative; display:flex; align-items:center;"><div style="position:absolute; left:6px; right:8px; top:50%; height:1px; background:rgba(42,44,59,.3);"></div><span style="position:absolute; right:2px; top:50%; transform:translateY(-50%); width:0; height:0; border-top:3px solid transparent; border-bottom:3px solid transparent; border-left:6px solid rgba(42,44,59,.3);"></span></div>
+          <div style="border:1px solid rgba(42,44,59,.3); background:#faf7f0; padding:12px 14px; min-width:130px;"><div style="font-size:12.5px; font-weight:600; color:#2a2c3b; line-height:1.7;">Gemini</div><div style="font-size:10px; color:rgba(42,44,59,.4); margin-top:5px;">2.5 Flash-Lite</div></div>
+          <div style="flex:1; min-width:56px; position:relative; display:flex; align-items:center;"><div style="position:absolute; left:6px; right:8px; top:50%; height:1px; background:rgba(42,44,59,.3);"></div><span style="position:absolute; right:2px; top:50%; transform:translateY(-50%); width:0; height:0; border-top:3px solid transparent; border-bottom:3px solid transparent; border-left:6px solid rgba(42,44,59,.3);"></span></div>
+          <div style="border:1px solid rgba(42,44,59,.3); background:#faf7f0; padding:12px 14px; min-width:210px;"><div style="font-size:12.5px; font-weight:600; color:#2a2c3b; line-height:1.7;">work-experience-content.json<br>project-content.json</div><div style="font-size:10px; color:rgba(42,44,59,.4); margin-top:5px;">approved: false — awaiting review</div></div>
+        </div>
+        <!-- MERGE -->
+        <div style="display:flex; justify-content:center; margin:18px 0 6px; color:rgba(42,44,59,.4); font-size:14px;">↓</div>
+        <div style="display:flex; align-items:stretch; gap:0; min-width:640px;">
+          <div style="border:1px solid rgba(42,44,59,.3); background:#faf7f0; padding:12px 14px; min-width:150px;"><div style="font-size:12.5px; font-weight:600; color:#2a2c3b; line-height:1.7;">review &amp; approve</div><div style="font-size:10px; color:rgba(42,44,59,.4); margin-top:5px;">approved: true · locked · committed</div></div>
+          <div style="flex:1; min-width:56px; position:relative; display:flex; align-items:center;"><div style="position:absolute; left:6px; right:8px; top:50%; height:1px; background:rgba(42,44,59,.3);"></div><span style="position:absolute; right:2px; top:50%; transform:translateY(-50%); width:0; height:0; border-top:3px solid transparent; border-bottom:3px solid transparent; border-left:6px solid rgba(42,44,59,.3);"></span></div>
+          <div style="border:1px solid #2a2c3b; background:#23242f; padding:12px 14px; min-width:210px;"><div style="font-size:12.5px; font-weight:600; color:#f4ebd3; line-height:1.7;">ariqmuldi.com</div><div style="font-size:10px; color:#98a1bc; margin-top:5px;">renders Work · Experience · Projects</div></div>
+        </div>
+        <!-- console narration -->
+        <div style="margin-top:24px; border-top:1px solid rgba(42,44,59,.13); padding-top:14px; display:flex; align-items:center; gap:10px; font-size:12px;">
+          <span style="width:6px; height:6px; border-radius:50%; background:#5f9276; display:inline-block;"></span>
+          <span style="color:rgba(42,44,59,.4);">stage</span>
+          <span style="color:rgba(42,44,59,.66);">{{ stage }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 · EDITOR ============ -->
+  <section id="editor" style="border-bottom:1px solid rgba(42,44,59,.13);">
+    <div style="max-width:1200px; margin:0 auto; padding:72px 40px;">
+      <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:22px;">
+        <span style="font-size:11px; letter-spacing:.2em; color:rgba(42,44,59,.5);">[ 02 ]</span>
+        <span style="font-size:11px; letter-spacing:.2em; color:#2a2c3b;">EDITOR</span>
+        <span style="font-size:11px; color:rgba(42,44,59,.4); margin-left:auto;">$ sudo edit ./data</span>
+      </div>
+
+      <!-- AUTH BAR (read-only) -->
+      <div style="border:1px solid rgba(42,44,59,.3); background:#f4ebd3; padding:16px 18px; display:flex; flex-wrap:wrap; align-items:center; gap:14px 18px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="width:9px; height:9px; border-radius:2px; background:rgba(42,44,59,.4); flex:none;"></span>
+          <div>
+            <div style="font-size:12.5px; font-weight:600; color:#2a2c3b;">READ-ONLY SHOWCASE</div>
+            <div style="font-size:11px; color:rgba(42,44,59,.72); margin-top:2px; max-width:78ch; line-height:1.55;">This console is a live authoring tool. Run locally, it lets the owner edit the master résumé, re-run the parser, review &amp; approve the AI-drafted copy, switch the Gemini model, and regenerate everything. It's <span style="color:#2a2c3b;">read-only in production</span> — the public site can't be edited here, only viewed.</div>
+          </div>
+        </div>
+        <div style="margin-left:auto; display:flex; align-items:center; gap:10px;">
+          <span style="font-size:11px; color:rgba(42,44,59,.66); letter-spacing:.04em; border:1px solid rgba(42,44,59,.3); padding:8px 12px; white-space:nowrap;">◆ editable on localhost only</span>
+        </div>
+      </div>
+
+      <!-- MODEL SELECTOR -->
+      <div style="margin-top:14px; border:1px solid rgba(42,44,59,.3); background:#faf7f0; padding:14px 16px; display:flex; flex-wrap:wrap; align-items:center; gap:12px 16px;">
+        <div>
+          <div style="font-size:11px; letter-spacing:.14em; color:#2a2c3b; font-weight:600;">AI MODEL</div>
+          <div style="font-size:10.5px; color:rgba(42,44,59,.66); margin-top:3px;">used by every generate:* run — Google Gemini</div>
+        </div>
+        <div style="margin-left:auto; display:flex; align-items:center; gap:10px;">
+          <span style="font-size:10.5px; color:rgba(42,44,59,.4);">GEMINI_MODEL =</span>
+          <span style="display:inline-flex; align-items:center; justify-content:space-between; gap:12px; min-width:190px; font-size:12px; color:rgba(42,44,59,.5); background:#f4ebd3; border:1px solid rgba(42,44,59,.3); padding:8px 12px; opacity:.7;">Gemini 2.5 Flash-Lite<span style="color:rgba(42,44,59,.4); font-size:10px;">▾</span></span>
+        </div>
+      </div>
+
+      <!-- TABS -->
+      <div style="display:flex; margin-top:24px; border-bottom:1px solid rgba(42,44,59,.3);">
+        <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+          <button onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</button>
+        </sc-for>
+      </div>
+
+      <!-- RESUME TAB -->
+      <sc-if value="{{ isResume }}" hint-placeholder-val="{{ true }}">
+      <div style="padding-top:26px;">
+        <div style="display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); gap:28px; align-items:start;">
+          <div>
+            <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:10px;">
+              <span style="font-size:11px; letter-spacing:.14em; color:rgba(42,44,59,.4);">DATA/SOURCE/MASTER-RESUME.TEX</span>
+              <span style="font-size:10.5px; color:rgba(42,44,59,.5);">✓ in sync</span>
+            </div>
+            <pre style="width:100%; height:440px; margin:0; box-sizing:border-box; font-family:inherit; font-size:11.5px; line-height:1.65; color:#e7e2d2; background:#23242f; border:1px solid rgba(42,44,59,.3); padding:14px 16px; overflow:auto; tab-size:2; white-space:pre;">{{ tex }}</pre>
+            <div style="margin-top:12px; display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+              <button disabled style="font-family:inherit; font-size:12px; letter-spacing:.03em; padding:9px 16px; border:1px solid rgba(42,44,59,.3); background:rgba(42,44,59,.3); color:rgba(42,44,59,.4); cursor:not-allowed;">$ parse:resume</button>
+              <span style="font-size:10.5px; color:rgba(42,44,59,.4);">runs <span style="color:rgba(42,44,59,.66);">npm run parse:resume</span> → regenerates the 4 data files</span>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:11px; letter-spacing:.14em; color:rgba(42,44,59,.4); display:block; margin-bottom:10px;">PREVIEW YOUR CHANGES</div>
+            <div style="border:1px solid rgba(42,44,59,.3); background:#faf7f0; padding:18px;">
+              <div style="font-size:12.5px; color:rgba(42,44,59,.72); line-height:1.7;">Editing the résumé regenerates the data files. To see how the changes look, open the live site — the Experience &amp; Projects sections render straight from this data.</div>
+              <a href="Ariq Muldi - Portfolio.dc.html" style="margin-top:16px; display:inline-flex; align-items:center; gap:8px; font-size:12px; letter-spacing:.03em; padding:9px 16px; color:#faf7f0; background:#2a2c3b; border:1px solid #2a2c3b;">view on ariqmuldi.com ↗</a>
+              <div style="font-size:10px; color:rgba(42,44,59,.4); margin-top:10px;">opens the site · local edits show after a re-parse; the deployed site updates once you commit &amp; push</div>
+            </div>
+            <div style="margin-top:14px; border:1px solid rgba(42,44,59,.13); background:#f4ebd3; padding:12px 14px; font-size:11.5px; color:rgba(42,44,59,.72); line-height:1.7;">
+              <div style="color:rgba(42,44,59,.4); font-size:10px; letter-spacing:.14em; margin-bottom:6px;">LAST PARSE</div>
+              <div>experiences <span style="color:#2a2c3b;">5</span> · projects <span style="color:#2a2c3b;">4</span> · skills <span style="color:#2a2c3b;">7</span> · education <span style="color:#2a2c3b;">1</span></div>
+              <div style="margin-top:4px; color:rgba(42,44,59,.4);">changed source flips affected AI entries back to <span style="color:#555879;">approved: false</span> for re-review.</div>
+            </div>
+          </div>
+        </div>
+        <!-- resume-config visibility -->
+        <div style="margin-top:34px;">
+          <div style="font-size:11px; letter-spacing:.14em; color:rgba(42,44,59,.4);">DATA/SOURCE/RESUME-CONFIG.JSON — VISIBILITY</div>
+          <div style="font-size:11px; color:rgba(42,44,59,.72); margin:4px 0 14px;">Hide an experience, all/specific accomplishments, or its technologies. Applied by the parser on next run.</div>
+          <sc-for list="{{ configRows }}" as="c" hint-placeholder-count="5">
+            <div style="border-top:1px solid rgba(42,44,59,.13); padding:16px 0; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:18px; align-items:start;">
+              <div>
+                <div style="font-size:13px; color:#2a2c3b; font-weight:600;">{{ c.title }}</div>
+                <div style="font-size:10.5px; color:rgba(42,44,59,.4); margin-top:4px;">experienceId {{ c.expId }} · {{ c.accCount }} accomplishments</div>
+                <sc-if value="{{ c.hasChips }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:10px; display:flex; flex-wrap:wrap; gap:6px; align-items:center;">
+                    <span style="font-size:10px; color:rgba(42,44,59,.4); margin-right:2px;">hide #</span>
+                    <sc-for list="{{ c.chips }}" as="n" hint-placeholder-count="4">
+                      <span style="font-size:10.5px; color:rgba(42,44,59,.5); border:1px solid rgba(42,44,59,.3); padding:3px 8px;">{{ n }}</span>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+              <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end;">
+                <span style="font-size:10.5px; letter-spacing:.03em; color:rgba(42,44,59,.5); border:1px solid rgba(42,44,59,.3); padding:6px 11px;">hide role</span>
+                <span style="font-size:10.5px; letter-spacing:.03em; color:rgba(42,44,59,.5); border:1px solid rgba(42,44,59,.3); padding:6px 11px;">hide all bullets</span>
+                <span style="font-size:10.5px; letter-spacing:.03em; color:rgba(42,44,59,.5); border:1px solid rgba(42,44,59,.3); padding:6px 11px;">hide tech</span>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- WORK / PROJECTS TABS -->
+      <sc-if value="{{ isCards }}" hint-placeholder-val="{{ false }}">
+      <div style="padding-top:26px;">
+        <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px 16px; border:1px solid rgba(42,44,59,.13); background:#f4ebd3; padding:14px 16px;">
+          <span style="font-size:11px; color:rgba(42,44,59,.72);">$ npm run <span style="color:#2a2c3b;">{{ genScript }}</span></span>
+          <span style="font-size:11px; color:rgba(42,44,59,.4);">{{ approvedCount }} approved</span>
+          <div style="margin-left:auto; display:flex; gap:8px;">
+            <span style="font-size:11.5px; padding:8px 14px; border:1px solid rgba(42,44,59,.3); background:rgba(42,44,59,.3); color:rgba(42,44,59,.4);">generate (drafts)</span>
+            <span style="font-size:11.5px; padding:8px 14px; border:1px solid rgba(42,44,59,.3); color:rgba(42,44,59,.4);">--force (redraft all)</span>
+          </div>
+        </div>
+        <sc-for list="{{ cards }}" as="c" hint-placeholder-count="4">
+          <div style="border:1px solid rgba(42,44,59,.3); border-top:0; background:#faf7f0; padding:20px 20px 22px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,420px); gap:30px; align-items:start;">
+            <div>
+              <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; margin-bottom:14px;">
+                <span style="font-size:13px; font-weight:600; color:#2a2c3b;">{{ c.key }}</span>
+                <span style="font-size:10px; color:rgba(42,44,59,.4);">{{ c.idLabel }}</span>
+                <span style="font-size:10px; color:rgba(42,44,59,.4);">#{{ c.hash }}</span>
+                <span style="font-size:10.5px; color:#5f9276; border:1px solid rgba(95,146,118,.5); padding:2px 8px; margin-left:auto;">● approved</span>
+              </div>
+              <div style="font-size:10px; letter-spacing:.12em; color:rgba(42,44,59,.4); margin-bottom:6px;">{{ c.label1 }} <span style="color:rgba(42,44,59,.4);">· {{ c.label1sub }}</span></div>
+              <div style="width:100%; font-size:12.5px; color:#2a2c3b; background:#f4ebd3; border:1px solid rgba(42,44,59,.3); padding:9px 11px;">{{ c.val1 }}</div>
+              <sc-if value="{{ c.hasVal2 }}" hint-placeholder-val="{{ true }}">
+                <div style="font-size:10px; letter-spacing:.12em; color:rgba(42,44,59,.4); margin:14px 0 6px;">{{ c.label2 }} <span style="color:rgba(42,44,59,.4);">· {{ c.label2sub }}</span></div>
+                <div style="width:100%; font-size:12.5px; color:#2a2c3b; background:#f4ebd3; border:1px solid rgba(42,44,59,.3); padding:9px 11px;">{{ c.val2 }}</div>
+              </sc-if>
+              <sc-if value="{{ c.hasDesc }}" hint-placeholder-val="{{ false }}">
+                <div style="font-size:10px; letter-spacing:.12em; color:rgba(42,44,59,.4); margin:14px 0 6px;">DESCRIPTION <span style="color:rgba(42,44,59,.4);">· Work case-study card</span></div>
+                <div style="width:100%; font-size:12px; line-height:1.6; color:#2a2c3b; background:#f4ebd3; border:1px solid rgba(42,44,59,.3); padding:9px 11px;">{{ c.desc }}</div>
+              </sc-if>
+              <sc-if value="{{ c.noDesc }}" hint-placeholder-val="{{ false }}"><div style="font-size:10.5px; color:rgba(42,44,59,.4); margin-top:14px;">{{ c.noDescNote }}</div></sc-if>
+              <div style="margin-top:16px; display:flex; flex-wrap:wrap; gap:8px;">
+                <span style="font-size:11px; padding:7px 13px; border:1px solid rgba(42,44,59,.3); color:rgba(42,44,59,.5);">✓ approved — unlock</span>
+                <span style="font-size:11px; padding:7px 13px; border:1px solid rgba(42,44,59,.3); color:rgba(42,44,59,.4);">regenerate --force {{ c.key }}</span>
+              </div>
+            </div>
+            <div style="border-left:1px solid rgba(42,44,59,.13); padding-left:26px;">
+              <div style="font-size:10px; letter-spacing:.14em; color:rgba(42,44,59,.4); margin-bottom:12px;">LIVE PREVIEW</div>
+              <sc-if value="{{ c.isWork }}" hint-placeholder-val="{{ true }}">
+                <div style="display:grid; grid-template-columns:64px minmax(0,1fr); gap:12px; align-items:baseline;">
+                  <span style="color:rgba(42,44,59,.5); font-size:11px;">{{ c.prevHash }}</span>
+                  <div>
+                    <div style="font-size:13px; font-weight:600; color:#2a2c3b; letter-spacing:-.01em;">{{ c.role }} <span style="color:rgba(42,44,59,.45); font-weight:400;">@ {{ c.at }}</span></div>
+                    <sc-if value="{{ c.expandable }}" hint-placeholder-val="{{ true }}">
+                      <div style="font-size:12px; color:rgba(42,44,59,.72); margin-top:5px; line-height:1.5;">{{ c.val1 }}</div>
+                      <div style="font-size:10.5px; color:rgba(42,44,59,.4); margin-top:5px;">{{ c.insLabel }} · git show ▸</div>
+                    </sc-if>
+                    <sc-if value="{{ c.noDesc }}" hint-placeholder-val="{{ false }}">
+                      <div style="font-size:11px; color:rgba(42,44,59,.4); margin-top:5px;"><sc-if value="{{ c.isDoubl }}" hint-placeholder-val="{{ false }}"><span style="color:#5f9276;">●</span> in active development</sc-if></div>
+                    </sc-if>
+                    <div style="font-size:10.5px; color:rgba(42,44,59,.4); margin-top:6px;">{{ c.techPreview }}</div>
+                  </div>
+                </div>
+                <sc-if value="{{ c.hasDesc }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:18px; border-top:1px solid rgba(42,44,59,.3); padding-top:16px;">
+                    <div style="display:flex; align-items:baseline; gap:12px; font-size:10px; letter-spacing:.14em; color:rgba(42,44,59,.4); margin-bottom:10px;">
+                      <span style="color:rgba(42,44,59,.55); font-weight:600;">{{ c.workNum }}</span>
+                      <span>{{ c.workMeta }}</span>
+                      <span style="margin-left:auto; color:rgba(42,44,59,.55);">● LIVE</span>
+                    </div>
+                    <div style="font-size:20px; font-weight:600; letter-spacing:-.03em; color:#2a2c3b; line-height:1.05;">{{ c.role }}</div>
+                    <div style="font-size:12.5px; line-height:1.65; color:rgba(42,44,59,.72); margin-top:10px;">{{ c.desc }}</div>
+                    <div style="font-size:11px; color:rgba(42,44,59,.4); margin-top:12px; line-height:1.7;">{{ c.techPreview }}</div>
+                  </div>
+                </sc-if>
+              </sc-if>
+              <sc-if value="{{ c.isProj }}" hint-placeholder-val="{{ false }}">
+                <div style="display:grid; grid-template-columns:38px minmax(0,1fr) 20px; gap:12px; align-items:baseline;">
+                  <span style="font-size:10.5px; color:rgba(42,44,59,.5);">[{{ c.num }}]</span>
+                  <div>
+                    <div style="font-size:15px; font-weight:600; color:#2a2c3b; letter-spacing:-.02em;">{{ c.title }}</div>
+                    <div style="font-size:12px; color:rgba(42,44,59,.72); margin-top:5px;">{{ c.val1 }}</div>
+                    <div style="font-size:10.5px; color:rgba(42,44,59,.4); margin-top:6px;">{{ c.techPreview }}</div>
+                  </div>
+                  <span style="color:#555879; text-align:right;">↗</span>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      </sc-if>
+
+      <!-- GENERATE ALL -->
+      <div style="margin-top:30px; border:1px solid rgba(42,44,59,.3); background:#f4ebd3; padding:20px; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:24px; align-items:center;">
+        <div>
+          <div style="font-size:11px; letter-spacing:.14em; color:rgba(42,44,59,.4); margin-bottom:8px;">GENERATE ALL CONTENT</div>
+          <div style="font-size:12.5px; color:rgba(42,44,59,.72); line-height:1.65;">Runs <span style="color:#2a2c3b;">npm run generate:content</span> with <span style="color:#2a2c3b;">GEMINI_MODEL=gemini-2.5-flash-lite</span> — drafts every unapproved or source-changed role &amp; project (approved + unchanged entries are skipped), each landing as <span style="color:#555879;">approved: false</span> for review above.</div>
+          <div style="font-size:11px; color:rgba(42,44,59,.4); margin-top:10px;">5/5 roles · 4/4 projects approved · commit the changed files from your editor when done</div>
+        </div>
+        <span style="font-size:12px; letter-spacing:.03em; padding:11px 18px; white-space:nowrap; border:1px solid rgba(42,44,59,.3); background:rgba(42,44,59,.3); color:rgba(42,44,59,.4);">$ npm run generate:content</span>
+      </div>
+
+      <!-- TERMINAL -->
+      <div style="margin-top:16px; border:1px solid #2a2c3b; background:#23242f;">
+        <div style="display:flex; align-items:center; gap:8px; padding:10px 14px; border-bottom:1px solid rgba(152,161,188,.18);">
+          <span style="width:8px; height:8px; border-radius:50%; background:#6b6f7d; display:inline-block;"></span>
+          <span style="width:8px; height:8px; border-radius:50%; background:#6b6f7d; display:inline-block;"></span>
+          <span style="width:8px; height:8px; border-radius:50%; background:#6b6f7d; display:inline-block;"></span>
+          <span style="font-size:10.5px; color:#7e86a6; margin-left:6px; letter-spacing:.1em;">ariq@muldi — content-console</span>
+        </div>
+        <div style="padding:14px 16px; max-height:200px; overflow:auto; font-size:11.5px; line-height:1.85;">
+          <div style="white-space:pre-wrap; color:#98a1bc;">ariq@muldi:~/ariqmuldicom$ content-console --init</div>
+          <div style="white-space:pre-wrap; color:#7e86a6;">loading data/content/work-experience-content.json · project-content.json …</div>
+          <div style="white-space:pre-wrap; color:#9aa1b4;">loaded 5 roles · 4 projects — read-only (enter password to edit)</div>
+        </div>
+      </div>
+
+      <p style="margin-top:22px; font-size:10.5px; color:rgba(42,44,59,.4); line-height:1.7; max-width:80ch;">local-development authoring tool — each button hits a Next.js route that runs the matching script (parse:resume · generate:* with <span style="color:rgba(42,44,59,.66);">GEMINI_MODEL</span>) and writes the files on your machine; you then commit them with git. Editing only works on <span style="color:rgba(42,44,59,.66);">localhost</span>: the unlock route checks the password against <span style="color:rgba(42,44,59,.66);">CONTENT_GENERATION_PASSWORD</span> server-side and refuses in production, so the deployed site stays read-only.</p>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="background:#23242f; color:#7e86a6; border-top:1px solid rgba(152,161,188,.2);">
+    <div style="max-width:1200px; margin:0 auto; padding:22px 40px; display:flex; flex-wrap:wrap; gap:10px 24px; font-size:11.5px; align-items:center;">
+      <span><span style="color:#5f9276;">●</span> content pipeline</span>
+      <span style="color:#575e76;">|</span>
+      <a href="Ariq Muldi - Portfolio.dc.html" style="color:#98a1bc; display:inline-block; padding:5px 0;">← ariqmuldi.com</a>
+      <span style="margin-left:auto; color:#575e76;">© 2026 Ariq Muldi</span>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { activeTab: 'resume', stageIdx: 0 };
+
+  componentDidMount() {
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce) this._st = setInterval(() => this.setState(s => ({ stageIdx: (s.stageIdx + 1) % 9 })), 2200);
+  }
+  componentWillUnmount() { clearInterval(this._st); }
+
+  setTab(t) { this.setState({ activeTab: t }); }
+
+  renderVals() {
+    const active = this.state.activeTab;
+    const stages = [
+      'read master-resume.tex',
+      '$ npm run parse:resume — parsing LaTeX',
+      'write work.ts · experiences.ts · projects.ts · skills.ts',
+      'collect experience bullets + project descriptions',
+      '$ npm run generate:content — generate-work-experience-content.ts · generate-project-content.ts',
+      'Gemini 2.5 Flash-Lite drafts prose · taglines · commit subjects',
+      'draft work-experience-content.json · project-content.json (approved: false)',
+      'review & approve (approved: true, locked)',
+      'ariqmuldi.com renders Work · Experience · Projects',
+    ];
+
+    const tabDefs = [
+      { id: 'resume', label: 'master-resume.tex' },
+      { id: 'work', label: 'work-experience-content.json' },
+      { id: 'projects', label: 'project-content.json' },
+    ];
+    const tabs = tabDefs.map(t => ({
+      label: t.label,
+      onClick: () => this.setTab(t.id),
+      style: 'font-family:inherit; font-size:12px; letter-spacing:.04em; background:transparent; border:0; border-bottom:2px solid ' + (active === t.id ? '#555879' : 'transparent') + '; padding:12px 18px; cursor:pointer; color:' + (active === t.id ? '#555879' : 'rgba(42,44,59,.4)') + ';',
+    }));
+
+    const tex = ['%% master-resume.tex — source of truth (Overleaf)',
+      '\\documentclass[letterpaper,11pt]{article}',
+      '',
+      '\\name{Ariq Muldi}',
+      '\\title{Software Engineer \\textbar{} Full-Stack \\textbar{} Cloud \\& DevOps}',
+      '',
+      '\\section{Education}',
+      '\\resumeSubheading',
+      '  {University of British Columbia}{Kelowna, BC}',
+      '  {B.Sc. Major in Computer Science, Minor in Data Science}{May 2027}',
+      '  {GPA: 4.21/4.33 (90.6\\%)}{}',
+      '',
+      '\\section{Experience}',
+      '\\resumeSubheading',
+      '  {Lead Software Developer}{Sept. 2025 -- Present}',
+      '  {DOUBL}{Remote}',
+      '',
+      '\\resumeSubheading',
+      '  {Software Developer}{Jul. 2025 -- Sept. 2025}',
+      '  {University of British Columbia}{Kelowna, BC}',
+      '  \\resumeItem{Developed full-stack Masters of Data Science application',
+      '    management platform using Python, PostgreSQL, and JavaScript ...}',
+      '  \\resumeItem{Structured backend using Flask Blueprints to segregate',
+      '    APIs, with a 3-tier role-based authentication system ...}',
+      '',
+      '\\resumeSubheading',
+      '  {Software Developer -- Makerspace Platform}{Jan. 2025 -- Jan. 2026}',
+      '  {University of British Columbia}{Remote}',
+      '  \\resumeItem{Architected a full-stack membership platform in',
+      '    TypeScript, React Router v7, PostgreSQL serving 1,000+ members ...}',
+      '',
+      '\\section{Projects}',
+      '\\resumeProject{Ponotodoro}{React, Node.js, PostgreSQL}',
+      '\\resumeProject{Flight Hub}{Flask, React, SQLite}',
+      '',
+      '\\section{Skills}',
+      '\\resumeSkill{Languages}{JavaScript, TypeScript, Python, Java, C++ ...}',
+      '\\resumeSkill{Frameworks}{React, Node.js, Next.js, Flask, Laravel ...}',
+    ].join('\n');
+
+    const configRows = [
+      { title: 'Lead Software Developer', expId: 1, accCount: 0 },
+      { title: 'Software Developer (Work Study Program)', expId: 2, accCount: 8 },
+      { title: 'Software Developer -- Makerspace Platform (Undergraduate Research Assistant & Directed Studies)', expId: 3, accCount: 16 },
+      { title: 'Software Developer -- LearnCoding Platform (Undergraduate Research Assistant & Directed Studies)', expId: 4, accCount: 10 },
+      { title: 'Undergraduate Teaching Assistant', expId: 5, accCount: 2 },
+    ].map(c => ({ ...c, hasChips: c.accCount > 0, chips: Array.from({ length: c.accCount }, (_, i) => i + 1) }));
+
+    const work = [
+      { key: 'doubl', idLabel: 'experienceId 1', hash: '2fd0eb35', prevHash: 'a1f3c92', role: 'Lead Software Developer', at: 'DOUBL', expandable: false, isDoubl: true, ins: 0, val1: 'feat(product): develop fit preference, prediction, and recommendation software', tech: 'Python, Google Cloud (Run, Firestore), Next.js, React, Typescript, Shopify, Zoho Suite, Machine Learning, iOS, Android', hasDesc: false, noDescNote: 'no Work card · commit subject unused while accomplishments are hidden (config: hideAllAccomplishments)', workNum: '01', desc: '' },
+      { key: 'mds', idLabel: 'experienceId 2', hash: '969cde6f', prevHash: '7b4e0d1', role: 'Software Developer', at: 'UBC · Work Study Program', expandable: true, ins: 8, val1: 'feat(admissions): automate graduate data science applications', tech: 'Python, PostgreSQL, JavaScript, Flask, bcrypt, Tailwind CSS, AJAX', hasDesc: true, desc: 'Engineered a full-stack platform to automate the Masters of Data Science graduate admissions process, managing over 1,000 annual applications for 50+ faculty. Developed a comprehensive system featuring secure role-based access, robust data integrity, real-time interactive dashboards, and automated review and reporting engines, significantly streamlining the entire workflow from applicant ingestion to final decision-making.', workNum: '02', workMeta: 'UBC · SOFTWARE DEVELOPER' },
+      { key: 'makerspace', idLabel: 'experienceId 3', hash: '8295f252', prevHash: 'c3902af', role: 'Software Developer', at: 'UBC · Makerspace Platform · Undergraduate Research Assistant & Directed Studies', expandable: true, ins: 16, val1: 'feat(membership): automate enrollment, booking, and access for 1000+ members', tech: 'TypeScript, React Router v7, PostgreSQL, Tailwind CSS, Stripe, Mailgun, ESP32 (IoT), Brivo Enterprise API, Node.js, Prisma', hasDesc: true, desc: 'Architected a comprehensive full-stack membership platform serving 1,000+ members, digitizing workshop enrollments, equipment reservations, and secure recurring payments. Engineered robust backend systems for automated physical access control, real-time notifications, and administrative oversight, significantly streamlining operations and enhancing user experience.', workNum: '03', workMeta: 'UBC · SOFTWARE DEVELOPER' },
+      { key: 'learncoding', idLabel: 'experienceId 4', hash: '81e26194', prevHash: '2e6b8f4', role: 'Software Developer', at: 'UBC · LearnCoding Platform · Undergraduate Research Assistant & Directed Studies', expandable: true, ins: 10, val1: 'feat(learn): build adaptive learning platform with AI and gamification', tech: 'Laravel, MySQL, HTML, CSS, JavaScript, PHP, Matomo Analytics, Docker, Apache, Canvas API, AI', hasDesc: true, desc: 'Engineered an adaptive learning platform serving over 500 students with interactive code visualizers, gamified learning paths, and AI-powered content generation for personalized, multi-language instruction. Integrated with the UBC Canvas API to automate grade posting, established robust role-based access controls for 60+ faculty, and managed full-stack infrastructure, significantly reducing administrative overhead and enhancing user engagement.', workNum: '04', workMeta: 'UBC · SOFTWARE DEVELOPER' },
+      { key: 'teaching-assistant', idLabel: 'experienceId 5', hash: '4836db97', prevHash: '9d17c05', role: 'Undergraduate Teaching Assistant', at: 'UBC', expandable: true, ins: 2, val1: 'feat(teaching): instructed and evaluated 350+ CS students', tech: 'MIPS Assembly, Java', hasDesc: false, noDescNote: 'no Work card — technologies shown in Experience only', workNum: '05', desc: '' },
+    ].map(w => ({
+      ...w, isWork: true, isProj: false,
+      label1: 'COMMIT SUBJECT', label1sub: 'Experience row',
+      label2: 'TECHNOLOGIES', label2sub: 'comma-separated · shared by Work + Experience', hasVal2: true, val2: w.tech,
+      noDesc: !w.hasDesc,
+      insLabel: w.ins + ' accomplishments',
+      techPreview: w.tech.split(', ').join(' · '),
+    }));
+
+    const proj = [
+      { key: 'ponotodoro', idLabel: 'projectId 1', hash: '5460475b', title: 'Ponotodoro', num: '01', val1: 'Pomodoro timer fused with notes & to-do lists', tech: 'JavaScript · React · Node.js · Next.js · PostgreSQL · Bootstrap · HTML/CSS' },
+      { key: 'flight-hub', idLabel: 'projectId 2', hash: '6d74b6e7', title: 'Flight Hub', num: '02', val1: 'Flight-deal finder + blog, via Amadeus & Twilio', tech: 'Python · JavaScript · Flask · React · SQLite · Bootstrap · HTML/CSS' },
+      { key: 'chatterbox', idLabel: 'projectId 3', hash: '263d232e', title: 'ChatterBox', num: '03', val1: 'Real-time Discord-style group chat on Firebase', tech: 'JavaScript · React · Firebase · Tailwind CSS · HTML/SCSS' },
+      { key: 'moodijawoodi', idLabel: 'projectId 4', hash: '774872ed', title: 'MoodiJawoodi', num: '04', val1: 'Responsive Java + MySQL shopping app via JDBC', tech: 'Java · HTML/CSS · MySQL · Docker' },
+    ].map(p => ({
+      ...p, isWork: false, isProj: true, hasDesc: false, noDesc: false, hasVal2: false,
+      label1: 'TAGLINE', label1sub: 'collapsed Projects row',
+      techPreview: p.tech,
+    }));
+
+    return {
+      stage: stages[this.state.stageIdx],
+      tabs,
+      isResume: active === 'resume',
+      isCards: active === 'work' || active === 'projects',
+      genScript: active === 'work' ? 'generate:work-experience-content' : 'generate:project-content',
+      approvedCount: active === 'work' ? '5/5' : '4/4',
+      cards: active === 'work' ? work : proj,
+      tex, configRows,
+    };
+  }
+}
+</script>
+</body>
+</html>
