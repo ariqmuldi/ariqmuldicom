@@ -578,17 +578,6 @@
 	height: 100%;
 	object-fit: cover;
 }
-.hatch {
-	background: repeating-linear-gradient(45deg, #efe6d6, #efe6d6 12px, #e8ddc9 12px, #e8ddc9 24px);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-.hatch span {
-	font-family: var(--font-mono);
-	font-size: 11px;
-	color: #a58f6a;
-}
 .carouselBtn {
 	position: absolute;
 	top: 50%;

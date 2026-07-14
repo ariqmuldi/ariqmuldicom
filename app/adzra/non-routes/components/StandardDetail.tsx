@@ -13,7 +13,6 @@ export default function StandardDetail({ entry }: { entry: Entry }) {
 				<DetailTopBar no={entry.no} />
 				<Carousel
 					photos={entry.photos}
-					extraSlots={entry.extraPhotoSlots}
 					title={entry.detailTitle}
 					objectPosition={entry.objectPosition}
 				/>

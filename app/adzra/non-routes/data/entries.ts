@@ -54,10 +54,9 @@ export interface Entry {
 	/** CSS object-position for the cover/carousel crop (e.g. "center 30%" to show a subject that
 	 * sits high or low in the frame). Defaults to "center" when omitted. */
 	objectPosition?: string;
-	/** Carousel photos (first is usually the cover). */
+	/** Carousel photos (first is usually the cover). The detail page shows ‹ / › arrows only when
+	 * there is more than one — add photos here to enable paging. */
 	photos: StaticImageData[];
-	/** Extra empty "+ another photo" hatch slots appended after `photos`. */
-	extraPhotoSlots: number;
 	/** The Caveat "a little note" blurb. */
 	noteBlurb: string;
 	/** Shows the "🌷 came with flowers" pill under the note. */
@@ -84,7 +83,6 @@ export const ENTRIES: Entry[] = [
 		cover: confessionFlowers,
 		ringColor: '#A9BE8A',
 		photos: [confessionFlowers],
-		extraPhotoSlots: 2,
 		noteBlurb:
 			'[ a short blurb about this memory — what one month meant, where we were, how I felt. Replace with your own words, sayang. ]',
 		mainType: 'message',
@@ -110,7 +108,6 @@ export const ENTRIES: Entry[] = [
 		cover: bloomed1,
 		ringColor: '#E79ABF',
 		photos: [bloomed1, bloomed2, beforeBloom],
-		extraPhotoSlots: 0,
 		noteBlurb:
 			'[ two months in — and this time I sent you lilies 🌷. A short blurb about the flowers and the message. Replace with your words. ]',
 		cameWithFlowers: true,
@@ -137,7 +134,6 @@ export const ENTRIES: Entry[] = [
 		cover: limeCloseup,
 		ringColor: '#DE5551',
 		photos: [limeCloseup],
-		extraPhotoSlots: 0,
 		noteBlurb: '',
 		mainType: 'lime',
 		// Ported from the original /adzra lime page — the real words, kept intact.
@@ -157,7 +153,6 @@ export const ENTRIES: Entry[] = [
 		// she stays in frame instead of being cut off at the top of the fence.
 		objectPosition: 'center 88%',
 		photos: [oxford],
-		extraPhotoSlots: 1,
 		noteBlurb:
 			'[ same layout as one & two months — you’ll write this one when the day comes, sayang. ]',
 		mainType: 'placeholder',

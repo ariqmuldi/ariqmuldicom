@@ -5,21 +5,21 @@ import Image from 'next/image';
 import type { StaticImageData } from 'next/image';
 import styles from '../adzra.module.css';
 
-// Horizontal scroll-snap photo carousel for the detail pages. The first slide is the cover; any
-// `extraSlots` render as diagonal-hatch "+ another photo" placeholders. ‹ / › scroll one image
-// width; touch swipe works via scroll-snap.
+// Horizontal scroll-snap photo carousel for the detail pages. With a single photo it renders just
+// that image — no ‹ / › arrows. With more than one, the arrows appear and scroll one image width
+// (touch swipe works via scroll-snap). Add photos to an entry's `photos` array to enable paging.
 export default function Carousel({
 	photos,
-	extraSlots = 0,
 	title,
 	objectPosition = 'center',
 }: {
 	photos: StaticImageData[];
-	extraSlots?: number;
 	title: string;
 	objectPosition?: string;
 }) {
 	const ref = useRef<HTMLDivElement>(null);
+	const hasMultiple = photos.length > 1;
+
 	const flip = (dir: number) => {
 		const el = ref.current;
 		if (!el) return;
@@ -42,28 +42,27 @@ export default function Carousel({
 						/>
 					</div>
 				))}
-				{Array.from({ length: extraSlots }).map((_, i) => (
-					<div key={`slot-${i}`} className={`${styles.carouselSlide} ${styles.hatch}`}>
-						<span>+ another photo</span>
-					</div>
-				))}
 			</div>
-			<button
-				type="button"
-				className={`${styles.carouselBtn} ${styles.carouselBtnLeft}`}
-				onClick={() => flip(-1)}
-				aria-label="previous photo"
-			>
-				‹
-			</button>
-			<button
-				type="button"
-				className={`${styles.carouselBtn} ${styles.carouselBtnRight}`}
-				onClick={() => flip(1)}
-				aria-label="next photo"
-			>
-				›
-			</button>
+			{hasMultiple && (
+				<>
+					<button
+						type="button"
+						className={`${styles.carouselBtn} ${styles.carouselBtnLeft}`}
+						onClick={() => flip(-1)}
+						aria-label="previous photo"
+					>
+						‹
+					</button>
+					<button
+						type="button"
+						className={`${styles.carouselBtn} ${styles.carouselBtnRight}`}
+						onClick={() => flip(1)}
+						aria-label="next photo"
+					>
+						›
+					</button>
+				</>
+			)}
 		</div>
 	);
 }
