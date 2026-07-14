@@ -34,17 +34,19 @@ personal handwritten-style message appears.
   reveal still works, just without the ambient animation.
 - **Images** — the second image is preloaded on mount so the reveal is instant.
 
-## Assets (the `public/` folder)
+## Assets (the `non-routes/public/` folder)
 
-This route keeps its assets in the route-local [`public/`](./public/) folder — today the two
-photos (`lime.jpeg`, `lime-with-two-friends.jpeg`), but it may hold other things in the future.
+This route keeps its assets in the route-local [`non-routes/public/`](./non-routes/public/)
+folder — today the two photos (`lime.jpeg`, `lime-with-two-friends.jpeg`), but it may hold
+other things in the future.
 
 Despite the name, this is **not** the Next.js root `/public` static directory — it's a plain
-folder inside the route. The images are `import`ed as modules in [`page.tsx`](./page.tsx)
-(`import lime from './public/lime.jpeg'`), so webpack bundles them into hashed, unguessable URLs
-rather than exposing them at a predictable public path. Keeping them here (instead of a
-repo-root folder) is what makes the route fully self-contained — everything `/adzra` needs
-lives under `app/adzra/`.
+folder inside the route, namespaced under `non-routes/` so it's clearly not a route segment. The
+images are `import`ed as modules in [`page.tsx`](./page.tsx)
+(`import lime from './non-routes/public/lime.jpeg'`), so webpack bundles them into hashed,
+unguessable URLs rather than exposing them at a predictable public path. Keeping them here
+(instead of a repo-root folder) is what makes the route fully self-contained — everything
+`/adzra` needs lives under `app/adzra/`.
 
 > These files are committed to the repo (so the page builds on deploy) and are therefore visible
 > in the public GitHub source — they are unguessable in production, not secret in source.

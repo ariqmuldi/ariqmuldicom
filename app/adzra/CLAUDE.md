@@ -32,7 +32,8 @@ That means, concretely:
 If a change to `/adzra` seems to require touching a file outside `app/adzra/`, stop and
 reconsider — the correct move is almost always to bring that concern *inside* this folder
 instead. The route is currently fully self-contained, including its image assets in
-[`public/`](./public/) (a plain route-local folder, not the Next.js root `/public`). Keep it
+[`non-routes/public/`](./non-routes/public/) (a plain route-local folder, not the Next.js root
+`/public`, and namespaced under `non-routes/` so it's clearly not a route segment). Keep it
 that way — do not add dependencies outside `app/adzra/`.
 
 ## Style note
