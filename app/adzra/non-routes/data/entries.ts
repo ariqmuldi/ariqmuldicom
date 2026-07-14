@@ -84,16 +84,16 @@ export const ENTRIES: Entry[] = [
 		ringColor: '#A9BE8A',
 		photos: [confessionFlowers],
 		noteBlurb:
-			'[ a short blurb about this memory — what one month meant, where we were, how I felt. Replace with your own words, sayang. ]',
+			'its our picture from the day you said yes to me (even though it took a long time for you to say yes) and the flowers I gave you that day 🌷. and of course, my whatsapp text (below) to you when it had been a month (yea I remember you being surprised i sent, but just remember, I love you more)',
 		mainType: 'message',
 		mainEyebrow: 'the message I sent',
 		message: {
 			dateChip: 'May 17, 2026',
 			bubbles: [
-				{ text: 'Happy one month, sayang 🤍', time: '9:41 pm' },
 				{
-					text: '[ paste your long one-month message here — it will flow inside this bubble exactly like the real thread. Keep it as long as you like. ]',
-					time: '9:41 pm',
+					// Time shown in Kelowna time (PDT). Sent at 12:35 AM Jakarta (UTC+7) → 10:35 AM Kelowna.
+					text: 'Hello sayang\n\nIt’s not May 17 for me but it is for you. But happy one month anniversary HAHAHA ❤️. Thank you for coming into my life, it is so hard for me to even consider people (in a significant way) into my life, especially as a girlfriend but I just knew from your character and you as a person I needed you (just meeting criteria was just the first step 🤓) I don’t lie when I say the things I say and I hope as time goes on we will get to know each other more and eventually build that trust (which I’m also working on). Sleep well sayang I know what I just happened is hard on you but hopefully you’ll feel better when u wake up',
+					time: '10:35 am',
 				},
 			],
 		},
@@ -109,17 +109,21 @@ export const ENTRIES: Entry[] = [
 		ringColor: '#E79ABF',
 		photos: [bloomed1, bloomed2, beforeBloom],
 		noteBlurb:
-			'[ two months in — and this time I sent you lilies 🌷. A short blurb about the flowers and the message. Replace with your words. ]',
-		cameWithFlowers: true,
+			'two months in — and this time I sent you lilies 🌷. i cooked so hard on figuring out how to get those flowers delivered to you in literally less than an hour (finding the place and ordering it)',
 		mainType: 'message',
 		mainEyebrow: 'the message I sent',
 		message: {
 			dateChip: 'June 17, 2026',
+			// Times shown in Kelowna time (PDT). Sent ~12:19–12:24 AM Jakarta (UTC+7) → ~10:19–10:24 AM Kelowna.
 			bubbles: [
-				{ text: 'happy 2 months, my sayang 🌷', time: '8:12 pm' },
+				{ text: 'Wat whyyyy', time: '10:19 am' },
 				{
-					text: '[ paste your two-month message here — same as the one-month page, room for as much as you want. ]',
-					time: '8:12 pm',
+					text: 'Sayang I have to prepare for my meeting a bit okay so I will call u after oke I wanted to send u this msg after the call but heh I think u hate me rn for some reason so',
+					time: '10:23 am',
+				},
+				{
+					text: 'Hey sayang, oh my god it’s 2 months. Isn’t it crazy sayang. My sayang. I can’t believe it. The first month I called u sayang and now the second month I call u my sayang now. Look at the progress heh. You like it don’t you? I’ll call you that anytime\n\nI still find it crazy how much I fell in love with you. And how deeply I did. I told you that in a relationship I look for peace. A place where I can return to where I feel safe and secured. Even tho u are a war, a transparent sheep, etc, you bring me peace. A gemash potato, avocado, olive brings me peace. It sucks that we are LDR. But I love that the only thing we have to worry about is missing each other. I miss you so much everyday and I continue to love you more and more where words cannot explain how much I do\n\nI was scared that I could never find such peace but here I am now. I really hope you choose me sayang. I promise to give it my all to always win you over. Over and over again. I will literally do whatever it takes. I need you my sayang. You are my finish line my sayang. You always have been. There has not been a single time where I havent considered you in my future. I think about you all the time. The thought of you possibly being my forever. I can’t even imagine it. I need it to be a reality and I can’t wait for when that time comes. Don’t worry, I will be asking you and your parents blessing. Just wait for me\n\nMy sayang, I really love how easy this relationship is and how we grow together. When I say I’m proud of the things you do sayang I really am. I really hope I can be there for all your victories and your ambitions. I wish you could understand how I feel about you. It is something words cannot explain. I just feel so inspired and strongly of you. You really do impress me sayang. My beautiful, pretty, smart, funny, kind sayang. I can’t wait to see what else you do that will impress me\n\nOn everyday where I come home from a long day of work, the thought of you calms me and softens the world around me. I hope that one day I can do the same for you, where I can also become your peace and protects your peace. Someone who can add comfort into your life. Every future plan, it becomes so exciting since I imagine you by my side. Throughout this relationship I hope to always be by your side always supporting you my sayang. Even in the moments where it becomes difficult, I know that id choose you all the time, every single time\n\nI hope that this relationship lasts forever. There is no one I want to be with but you. I am slowly building up that trust with you and I promise you, I’ll give it my all. The effort, the sabr, and the prayers will all be worth it. Happy 2 months my sayang',
+					time: '10:24 am',
 				},
 			],
 		},
