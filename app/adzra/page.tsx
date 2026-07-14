@@ -4,12 +4,13 @@ import { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { AnimatePresence, motion, useAnimation, useReducedMotion } from 'framer-motion';
 
-// Route-local assets. This is a plain folder (NOT the Next.js root `/public` static dir) —
-// importing the images as modules lets webpack bundle them into hashed, unguessable URLs
-// instead of exposing them at a predictable public path. Keeping them here (rather than a
-// repo-root folder) makes the /adzra route fully self-contained.
-import lime from './public/lime.jpeg';
-import limeWithFriends from './public/lime-with-two-friends.jpeg';
+// Route-local assets in `non-routes/public/` — a plain folder (NOT the Next.js root `/public`
+// static dir, and named so it's clearly not a route segment). Importing the images as modules
+// lets webpack bundle them into hashed, unguessable URLs instead of exposing them at a
+// predictable public path. Keeping them here (rather than a repo-root folder) makes the /adzra
+// route fully self-contained.
+import lime from './non-routes/public/lime.jpeg';
+import limeWithFriends from './non-routes/public/lime-with-two-friends.jpeg';
 
 // How many clicks before the surprise. Tweak freely (she'll never count).
 const CLICKS_TO_REVEAL = 7;
