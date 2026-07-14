@@ -16,11 +16,14 @@ That means, concretely:
   or any other markdown, comment, or config outside `app/adzra/`. When you run
   `/update-all-docs` or any doc-sync task, treat `app/adzra/**` as **out of scope** — never
   surface it in a doc that lives above this directory.
-- **All code for this route lives under `app/adzra/`.** If the route needs:
-  - a UI component → `app/adzra/components/`
-  - a helper / hook / util → `app/adzra/lib/`
-  - constants, data, types → `app/adzra/` (e.g. `app/adzra/data/`)
-  - styles → co-located here (inline / a local module), **not** in `app/globals.css`
+- **All code for this route lives under `app/adzra/`.** The route is already organized this way:
+  - UI components → `app/adzra/components/` (`Lock`, `Collection`, `Carousel`, `LimeExperience`)
+  - helpers / hooks / utils → `app/adzra/lib/` (`adzra-auth.ts` — the server-side gate)
+  - server actions → `app/adzra/actions.ts`
+  - constants, data, types → `app/adzra/data/` (`entries.ts` — the one list every screen is
+    generated from)
+  - styles → the co-located CSS module `app/adzra/adzra.module.css`, **not** `app/globals.css`
+  - fonts → loaded in `app/adzra/layout.tsx` via `next/font` and scoped to this route
 
   Do **not** reach for the site-wide `components/`, `app/lib/`, `data/`, or `app/globals.css`,
   and do **not** add anything there for this route's sake.
@@ -36,8 +39,23 @@ instead. The route is currently fully self-contained, including its image assets
 `/public`, and namespaced under `non-routes/` so it's clearly not a route segment). Keep it
 that way — do not add dependencies outside `app/adzra/`.
 
+## Auth rule: server-side, no content before unlock
+
+This route is genuinely private. The secret answer is checked **only on the server**
+([`lib/adzra-auth.ts`](./lib/adzra-auth.ts) + [`actions.ts`](./actions.ts)), never in the browser,
+and **no memory content is rendered until the session cookie is present** — the collection and every
+detail page are `force-dynamic` and gate on `isUnlocked()`. Keep it that way: never move the answer
+check client-side, and never render an entry's photos/note/message on a page that hasn't gated
+first. The answer lives ONLY in the `SUPER_SECRET_PASSWORD` env var (never in source or the design
+folder); `SUPER_SECRET_SESSION_SECRET` signs the cookie (falls back to the password). Never commit
+these values or write the real answer into any tracked file.
+
 ## Style note
 
-This page uses Tailwind utility classes and `framer-motion` directly and deliberately —
-that is a local choice for this route and does **not** reflect (or override) the main site's
-design constraints. Do not "fix" it to match the Swiss-mono system; the two are independent.
+This route has its own tender, pressed-flower design system — Cormorant Garamond / Nunito / Caveat /
+IBM Plex Mono, cream + confession-lily palette, arched cards, CSS keyframe motion — kept in the
+co-located CSS module [`adzra.module.css`](./adzra.module.css) and fonts loaded in
+[`layout.tsx`](./layout.tsx). This is a deliberate **local** choice and does **not** reflect (or
+override) the main site's Swiss-mono design constraints. Do not "fix" it to match the main site, and
+do not fold its styles/fonts into `app/globals.css` or the root layout; the two systems are
+independent and must stay that way. All motion respects `prefers-reduced-motion`.
