@@ -144,7 +144,7 @@ export default function Collection({ cards }: { cards: CollectionCard[] }) {
 			</div>
 
 			<div className={styles.collectionCaption}>
-				tap a thumbnail to jump anywhere · newest &amp; oldest all reachable
+				tap a thumbnail to jump anywhere
 			</div>
 
 			<ExitButton />
