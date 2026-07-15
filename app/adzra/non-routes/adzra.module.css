@@ -713,6 +713,109 @@
 	margin-top: 4px;
 }
 
+/* letter main thing — a brown/kraft envelope you tap to open, revealing the note on cream paper */
+.envelope {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 190px;
+	padding: 0;
+	border: none;
+	cursor: pointer;
+	border-radius: 14px;
+	overflow: hidden;
+	background: linear-gradient(160deg, #d8c39a 0%, #c6a56b 58%, #b8975c 100%);
+	box-shadow: var(--shadow-plate);
+	transition: transform 0.25s ease;
+}
+.envelope:hover {
+	transform: translateY(-3px);
+}
+/* the envelope's pocket seams (two diagonals meeting at the centre) */
+.envelope::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background:
+		linear-gradient(to top right, transparent calc(50% - 0.5px), rgba(90, 62, 30, 0.16) 50%, transparent calc(50% + 0.5px)),
+		linear-gradient(to top left, transparent calc(50% - 0.5px), rgba(90, 62, 30, 0.16) 50%, transparent calc(50% + 0.5px));
+	pointer-events: none;
+}
+/* the top flap, a downward triangle */
+.envFlap {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 62%;
+	background: linear-gradient(180deg, #e2cfa4, #cbab73);
+	clip-path: polygon(0 0, 100% 0, 50% 100%);
+	box-shadow: 0 2px 4px rgba(90, 62, 30, 0.15);
+	z-index: 1;
+}
+/* the wax seal */
+.envSeal {
+	position: absolute;
+	top: 44%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 46px;
+	height: 46px;
+	border-radius: 50%;
+	background: radial-gradient(circle at 35% 30%, #e88aa8, #c85c86);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 18px;
+	box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+	z-index: 2;
+}
+.envHint {
+	position: absolute;
+	bottom: 16px;
+	left: 0;
+	right: 0;
+	text-align: center;
+	font-family: var(--font-hand);
+	font-size: 18px;
+	color: #fff8ec;
+	text-shadow: 0 1px 3px rgba(90, 62, 30, 0.4);
+	z-index: 2;
+}
+/* the opened letter — the note on cream stationery */
+.letterPaper {
+	background: linear-gradient(180deg, #fffdf7, var(--cream-3));
+	border: 1px solid var(--card-border);
+	border-radius: 16px;
+	padding: 28px 24px 22px;
+	box-shadow: var(--shadow-card);
+	animation: fadeUp 0.55s ease both;
+}
+.letterPaper p {
+	font-family: var(--font-body);
+	font-size: 14.5px;
+	line-height: 1.85;
+	color: var(--ink);
+	margin: 0 0 15px;
+}
+.letterPaper p:last-child {
+	margin-bottom: 0;
+}
+.letterFold {
+	display: block;
+	margin: 18px auto 0;
+	border: none;
+	background: none;
+	cursor: pointer;
+	font-family: var(--font-mono);
+	font-size: 11px;
+	letter-spacing: 0.5px;
+	color: #8a6b4a;
+}
+.letterFold:hover {
+	color: var(--rose);
+}
+
 /* placeholder main thing */
 .placeholderBox {
 	border: 1.5px dashed #d2be97;
@@ -883,8 +986,12 @@
 	.limeRevealEmoji,
 	.limeReveal,
 	.floater,
+	.letterPaper,
 	.plate {
 		animation: none !important;
+	}
+	.envelope:hover {
+		transform: none;
 	}
 	.press,
 	.carouselTrack {

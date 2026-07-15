@@ -1,6 +1,7 @@
 import type { Entry } from '../data/entries';
 import DetailTopBar from './DetailTopBar';
 import Carousel from './Carousel';
+import LetterCard from './LetterCard';
 import styles from '../adzra.module.css';
 
 // The "standard" memory layout: photo carousel → a little note → the main thing (a chat message,
@@ -40,6 +41,10 @@ export default function StandardDetail({ entry }: { entry: Entry }) {
 								</div>
 							))}
 						</div>
+					)}
+
+					{entry.mainType === 'letter' && entry.letter && (
+						<LetterCard letter={entry.letter} />
 					)}
 
 					{entry.mainType === 'placeholder' && (

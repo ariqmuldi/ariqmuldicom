@@ -21,9 +21,10 @@ import mapSystemComp from '../public/adzra-map-the-system-comp-pic.jpeg';
 
 // The "main thing" on a detail page:
 //  - 'message'     → a chat mockup (the message I sent)
+//  - 'letter'      → a handwritten-style letter on stationery (a longer, heartfelt note)
 //  - 'lime'        → the click-to-reveal lime experience (the July 4 one-off)
 //  - 'placeholder' → a soft dashed "to be written & pressed" box (not yet lived)
-export type MainType = 'message' | 'lime' | 'placeholder';
+export type MainType = 'message' | 'letter' | 'lime' | 'placeholder';
 
 export interface ChatBubble {
 	/** The bubble text. The long ones flow/wrap naturally. */
@@ -77,6 +78,8 @@ export interface Entry {
 	/** Eyebrow above the main thing (message entries), e.g. "the message I sent". */
 	mainEyebrow?: string;
 	message?: ChatMessage;
+	/** Letter body for mainType 'letter'. Paragraphs are separated by a blank line (\n\n). */
+	letter?: string;
 	/** Reveal note for the lime entry (mainType 'lime'). */
 	limeMessage?: string;
 }
@@ -175,9 +178,11 @@ export const ENTRIES: Entry[] = [
 			{ src: mapSystemComp, fit: 'contain' },
 		],
 		noteBlurb:
-			'hey sayang, happy 3 months! i am writing this on my birthday, and currently actively still making this collection page haha. my plan is that when you arrive back in indo on july 19th, i will send you two flowers. one for the uk, one for our 3 months. haha i hope it works out hehe',
-		mainType: 'placeholder',
-		mainEyebrow: 'the message I’ll send',
+			'hey sayang, happy 3 months! i am writing this on my birthday, and currently actively still making this collection page haha. my plan is that when you arrive back in indo on july 19th, i will send you two flowers. one for the uk, one for our 3 months. haha i hope it works out hehe. haha and for the message ill write below and all of this collection stuff i made, i made it, starting with the world cup game started at 2 am until like almost 9 am. cos i love you more',
+		mainType: 'letter',
+		mainEyebrow: 'the letter for my sayang',
+		letter:
+			'Hey sayangggg, we 3 months in heheheh. However, I am writing this on my bday so not exactly but it is okay. See sayang, told you the time would fly by. From complaining on how far we were from each other from May 17, June 17, late June, early July, mid July, and now we almost about to see each other sayang (inshallah, we need to make it happen oke). After 3 monthsss, all because of you but whatever lah meh meh meh\n\nAnyways, sayang. I love you. I love you so much. More than you can imagine. Haha sayang. Do you remember when I told you about how you wanted to move to the UK and live there and blah blah blah. Sayang, I actually took that seriously hahaha. Ever since you said that until now, I was genuinely thinking about it so much. I even brought it up to my parents about their thoughts, about going to the UK and stuff like that haha (before they knew I brought it up because of you) to just discuss and whatever. I later than told my mom I brought it up because it was regarding you, and she was like “haha you know Ariq, I was curious why you brought it up and thought something was happening”. Oh well well well\n\nSayang, you know I want to make you happy. You know sayang, when my dad moved to Saudi Arabia from Indo. My mom told me that when they were moving, my dad wanted to make sure my mom was happy when they were in Saudi, and if not, they would go somewhere else and my dad would find another job. This is literally what I want to do. I want to make sure where we live in comfortable, safe, and stable. Well, thats if you say yes to marrying me at least haha. Uuuppsss. Please do, I need u. Ac nvm, it up to you. Meh meh meh\n\nYou know sayang, ever since you mentioned about the UK and how much you mention it to me, I thought about it a LOTTTTT like after I brought up the initial discussion (2nd paragraph) with my parents, I kept thinking about it more and more. The way for this to happen, I made many plans and thought about all cases while staying realistic and also to make the highest rate of success (the less riskiest of all the riskiness). We can def talk about this in person sayang but just know, I really do consider it sayang. Cos I love you more\n\nAnd for the competition you had in UK, I am so proud of you sayang. A top 6 finalist?? Sayang it is already impressive that you have made it in the first place. I am genuinely so impressed by and you are an inspiration. You worked so hard and I seen it all. Genuinely could not be more proud of you sayang. And then right after this, you went to our cousin after 7 years!!! So happy for you sayang\n\nSayang. Am I a part of your future? Do you really consider me in the future? Do you love me? Will we overcome anything that comes to us? In the future sayang, I hope you are there by my side. I know there will many obstacles that can come our way and I hope that we will get through it together. I hope to be with you forever in the future. I am very sure of you and I hope you are sure of me. Happy 3 months my sayang',
 	},
 ];
 
