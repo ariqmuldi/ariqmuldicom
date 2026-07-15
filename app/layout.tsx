@@ -67,7 +67,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" className={ibmPlexMono.variable}>
+		<html lang="en" className={ibmPlexMono.variable} data-scroll-behavior="smooth">
 			<body>{children}</body>
 		</html>
 	);

@@ -1,17 +1,44 @@
 import type { Metadata } from 'next';
+import { Cormorant_Garamond, Nunito, Caveat } from 'next/font/google';
 
 // Segment layout for /adzra. Following the App Router convention used by the other routes
 // (see app/content-generation/layout.tsx), this layout is the single source of truth for the
-// segment's metadata and otherwise passes children straight through — the <html>/<body> shell,
-// fonts, and design tokens all come from the root app/layout.tsx.
+// segment's metadata.
 //
-// Unlike the rest of the site, this route is a PRIVATE surprise: it must never be indexed or
-// discoverable via search, and it is not linked from anywhere (no nav, no sitemap entry, no
-// internal links). The metadata below is deliberately vague and locks the page out of search.
+// FONTS: The Sayang Collection has its own type system (Cormorant Garamond, Nunito, Caveat) that
+// the rest of the site does not use. Rather than add them to the root layout, they are loaded here
+// and exposed as CSS variables on a wrapper that scopes them to this route only — keeping /adzra
+// self-contained. IBM Plex Mono is already global (--font-plex-mono) and is reused for labels.
+//
+// Unlike the rest of the site, this route is a PRIVATE, password-gated keepsake: it must never be
+// indexed or discoverable via search, and it is not linked from anywhere (no nav, no sitemap entry,
+// no internal links). The metadata below is warm but deliberately vague — it names the keepsake for
+// the person who has the link, without revealing any of the private memories in a shared unfurl,
+// and it locks the page out of search.
 
-// Intentionally vague — enough for a browser tab, nothing that reveals what this page is.
-const TITLE = 'a little something for you 🍋';
-const DESCRIPTION = 'a small surprise';
+// Enough for a browser tab / a shared link's card — on-theme, but nothing that spills what's inside.
+const TITLE = 'The Sayang Collection 🤍';
+const DESCRIPTION = 'a little keepsake, just for you';
+
+const cormorant = Cormorant_Garamond({
+	variable: '--adzra-font-serif',
+	subsets: ['latin'],
+	weight: ['500', '600'],
+	style: ['normal', 'italic'],
+	display: 'swap',
+});
+const nunito = Nunito({
+	variable: '--adzra-font-body',
+	subsets: ['latin'],
+	weight: ['400', '600', '700', '800'],
+	display: 'swap',
+});
+const caveat = Caveat({
+	variable: '--adzra-font-hand',
+	subsets: ['latin'],
+	weight: ['500', '700'],
+	display: 'swap',
+});
 
 export const metadata: Metadata = {
 	title: TITLE,
@@ -76,5 +103,9 @@ export default function AdzraLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	return <>{children}</>;
+	return (
+		<div className={`${cormorant.variable} ${nunito.variable} ${caveat.variable}`}>
+			{children}
+		</div>
+	);
 }
