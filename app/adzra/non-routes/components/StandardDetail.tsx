@@ -11,11 +11,7 @@ export default function StandardDetail({ entry }: { entry: Entry }) {
 		<main className={`${styles.screen} ${styles.detailScreen}`}>
 			<div className={styles.detailWrap}>
 				<DetailTopBar no={entry.no} />
-				<Carousel
-					photos={entry.photos}
-					title={entry.detailTitle}
-					objectPosition={entry.objectPosition}
-				/>
+				<Carousel photos={entry.photos} title={entry.detailTitle} />
 				<div className={styles.detailBody}>
 					<div className={styles.detailEyebrow}>{entry.dateEyebrow}</div>
 					<h1 className={styles.detailTitle}>{entry.detailTitle}</h1>

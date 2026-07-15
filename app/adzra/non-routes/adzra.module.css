@@ -572,6 +572,8 @@
 	flex: 0 0 100%;
 	scroll-snap-align: start;
 	position: relative;
+	/* soft cream mat behind photos shown with fit: 'contain' (cover photos hide it) */
+	background: var(--cream-2);
 }
 .carouselSlide img {
 	width: 100%;

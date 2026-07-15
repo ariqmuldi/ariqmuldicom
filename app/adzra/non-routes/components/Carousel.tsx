@@ -2,20 +2,19 @@
 
 import { useRef } from 'react';
 import Image from 'next/image';
-import type { StaticImageData } from 'next/image';
 import styles from '../adzra.module.css';
+import type { CarouselPhoto } from '../data/entries';
 
 // Horizontal scroll-snap photo carousel for the detail pages. With a single photo it renders just
 // that image — no ‹ / › arrows. With more than one, the arrows appear and scroll one image width
-// (touch swipe works via scroll-snap). Add photos to an entry's `photos` array to enable paging.
+// (touch swipe works via scroll-snap). Add photos to an entry's `photos` array to enable paging;
+// each photo can set its own `objectPosition` crop.
 export default function Carousel({
 	photos,
 	title,
-	objectPosition = 'center',
 }: {
-	photos: StaticImageData[];
+	photos: CarouselPhoto[];
 	title: string;
-	objectPosition?: string;
 }) {
 	const ref = useRef<HTMLDivElement>(null);
 	const hasMultiple = photos.length > 1;
@@ -32,13 +31,16 @@ export default function Carousel({
 				{photos.map((p, i) => (
 					<div key={i} className={styles.carouselSlide}>
 						<Image
-							src={p}
+							src={p.src}
 							alt={`${title} — photo ${i + 1}`}
 							fill
 							placeholder="blur"
 							sizes="(max-width: 560px) 100vw, 560px"
 							priority={i === 0}
-							style={{ objectPosition }}
+							style={{
+								objectFit: p.fit ?? 'cover',
+								objectPosition: p.objectPosition ?? 'center',
+							}}
 						/>
 					</div>
 				))}

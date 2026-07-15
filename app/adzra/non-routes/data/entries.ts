@@ -16,6 +16,8 @@ import bloomed2 from '../public/adzra-2-months-bloomed-flowers-2.jpeg';
 import beforeBloom from '../public/adzra-2-months-before-bloom.jpeg';
 import limeCloseup from '../public/lime-closeup.jpeg';
 import oxford from '../public/adzra-in-oxford.jpeg';
+import exploreUk from '../public/adzra-explore-uk-after-comp.jpeg';
+import mapSystemComp from '../public/adzra-map-the-system-comp-pic.jpeg';
 
 // The "main thing" on a detail page:
 //  - 'message'     → a chat mockup (the message I sent)
@@ -37,6 +39,16 @@ export interface ChatMessage {
 	bubbles: ChatBubble[];
 }
 
+export interface CarouselPhoto {
+	src: StaticImageData;
+	/** CSS object-position for this photo's crop in the 300px carousel (e.g. "center 88%" to keep a
+	 * low subject in frame). Defaults to "center" when omitted. Only meaningful with fit 'cover'. */
+	objectPosition?: string;
+	/** How the photo fills the 300px carousel. 'cover' (default) crops to fill; 'contain' shows the
+	 * whole photo on a soft cream mat (use for tall/awkward shots that 'cover' would crop too hard). */
+	fit?: 'cover' | 'contain';
+}
+
 export interface Entry {
 	slug: string;
 	no: number;
@@ -51,12 +63,12 @@ export interface Entry {
 	cover: StaticImageData;
 	/** Per-entry inset ring colour on the plate + active thumbnail accent. */
 	ringColor: string;
-	/** CSS object-position for the cover/carousel crop (e.g. "center 30%" to show a subject that
-	 * sits high or low in the frame). Defaults to "center" when omitted. */
+	/** CSS object-position for the collection plate + thumbnail crop of `cover` (e.g. "center 30%"
+	 * to show a subject that sits high or low in the frame). Defaults to "center" when omitted. */
 	objectPosition?: string;
 	/** Carousel photos (first is usually the cover). The detail page shows ‹ / › arrows only when
-	 * there is more than one — add photos here to enable paging. */
-	photos: StaticImageData[];
+	 * there is more than one — add photos here to enable paging. Each may set its own crop. */
+	photos: CarouselPhoto[];
 	/** The Caveat "a little note" blurb. */
 	noteBlurb: string;
 	/** Shows the "🌷 came with flowers" pill under the note. */
@@ -82,7 +94,7 @@ export const ENTRIES: Entry[] = [
 		tapHint: 'tap to open 🤍',
 		cover: confessionFlowers,
 		ringColor: '#A9BE8A',
-		photos: [confessionFlowers],
+		photos: [{ src: confessionFlowers }],
 		noteBlurb:
 			'its our picture from the day you said yes to me (even though it took a long time for you to say yes) and the flowers I gave you that day 🌷. and of course, my whatsapp text (below) to you when it had been a month (yea I remember you being surprised i sent, but just remember, I love you more)',
 		mainType: 'message',
@@ -107,7 +119,7 @@ export const ENTRIES: Entry[] = [
 		tapHint: 'tap to open 🌸',
 		cover: bloomed1,
 		ringColor: '#E79ABF',
-		photos: [bloomed1, bloomed2, beforeBloom],
+		photos: [{ src: bloomed1 }, { src: bloomed2 }, { src: beforeBloom }],
 		noteBlurb:
 			'two months in — and this time I sent you lilies 🌷. i cooked so hard on figuring out how to get those flowers delivered to you in literally less than an hour (finding the place and ordering it)',
 		mainType: 'message',
@@ -131,13 +143,13 @@ export const ENTRIES: Entry[] = [
 	{
 		slug: 'july4-2026',
 		no: 3,
-		plateTitle: 'For Sayang, Working in the UK',
-		detailTitle: 'For Sayang, Working in the UK',
+		plateTitle: 'For Sayang, Competition in the UK',
+		detailTitle: 'For Sayang, Competition in the UK',
 		dateEyebrow: 'july 4, 2026',
 		tapHint: 'tap to open 🍋',
 		cover: limeCloseup,
 		ringColor: '#DE5551',
-		photos: [limeCloseup],
+		photos: [{ src: limeCloseup }],
 		noteBlurb: '',
 		mainType: 'lime',
 		// Ported from the original /adzra lime page — the real words, kept intact.
@@ -153,12 +165,17 @@ export const ENTRIES: Entry[] = [
 		tapHint: 'tap to open 🤍',
 		cover: oxford,
 		ringColor: '#C6A56B',
-		// The subject stands low-centre in front of the Radcliffe Camera; focus the crop lower so
-		// she stays in frame instead of being cut off at the top of the fence.
+		// The plate/thumbnail cover (oxford) sits low in frame; focus its crop lower so she stays
+		// in frame instead of being cut off at the top of the fence.
 		objectPosition: 'center 88%',
-		photos: [oxford],
+		photos: [
+			{ src: oxford, objectPosition: 'center 88%' },
+			// Tall/wide shots — show the whole photo on a cream mat instead of cropping to a face.
+			{ src: exploreUk, fit: 'contain' },
+			{ src: mapSystemComp, fit: 'contain' },
+		],
 		noteBlurb:
-			'[ same layout as one & two months — you’ll write this one when the day comes, sayang. ]',
+			'hey sayang, happy 3 months! i am writing this on my birthday, and currently actively still making this collection page haha. my plan is that when you arrive back in indo on july 19th, i will send you two flowers. one for the uk, one for our 3 months. haha i hope it works out hehe',
 		mainType: 'placeholder',
 		mainEyebrow: 'the message I’ll send',
 	},
